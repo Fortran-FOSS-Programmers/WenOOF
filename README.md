@@ -38,6 +38,26 @@ Modern Fortran standards (2003+) have introduced support for Object Oriented Pro
 
 ### What is WENO?
 
+Starting from the original paper of Liu, Osher and Chan<sup>1</sup> WENO interpolation schemes have gained attention mainly for solving hyperbolic partial differential equations (PDEs) whose solutions admit strong discontinuities as well complex smooth solution features. Consequently, WENO schemes are a common build-block of nonlinear, conservative finite volume methods, however they are not strictly related to the PDEs solution, they being a general, **non linear interpolation (approximation) procedure**.
+
+A clear, yet brief online introduction of WENO schemes family can be found at Prof. Shu's WENO methods page hosted on [scholarpedia](http://www.scholarpedia.org/article/WENO_methods).
+
+Since 1994 the WENO literature has _blowing up_, a superficial search on [sciencedirect](http://www.sciencedirect.com/) for `weno scheme` resulting in more than 1500 matches. During the last 2 decades many new WENO schemes have been proposed: the efficient implementation of Jiang and Shu<sup>2</sup>, the hybrid Compact-WENO scheme of Pirozzoli<sup>3</sup>, the bandwidth-optimized WENO scheme of Martin et al.<sup>4</sup>, the WENO-Z scheme of Borges et al.<sup>5</sup> and many others.
+
+WenOOF is designed to provide a KISS, Object Oriented Fortran API for computing WENO interpolations accordingly the main relevant WENO schemes ever devised and with a new ones we will develop :-)
+
+#### Cited references
+
+[1] _Weighted Essentially Non-oscillatory Schemes_, Xu-Dong Liu, Stanley Osher, Tony Chan, JCP, 1994, vol. 115, pp. 200--212, doi:10.1006/jcph.1994.1187
+
+[2] _Efficient Implementation of Weighted ENO Schemes_, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130
+
+[3] _Conservative Hybrid Compact-WENO Schemes for Shock-Turbulence Interaction_, Sergio Pirozzoli, JCP, 2002, vol. 178, pp. 81--117, doi:10.1006/jcph.2002.7021
+
+[4] _A bandwidth-optimized WENO scheme for the effective direct numerical simulation of compressible turbulence_, M.P. Martín, E.M. Taylor, M. Wu, V.G. Weirs, JCP, 2006, vol. 220, pp. 270--289, doi:10.1016/j.jcp.2006.05.009
+
+[5] _An improved weighted essentially non-oscillatory scheme for hyperbolic conservation laws_, Rafael Borges, Monique Carmona, Bruno Costa, Wai Sun Don, JCP, 2007, vol. 227, pp. 3191--3211, doi:10.1016/j.jcp.2007.11.038
+
 Go to [Top](#top)
 
 ## Main features
