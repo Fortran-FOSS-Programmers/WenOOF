@@ -3,6 +3,8 @@ modes = shared-gnu static-gnu
         shared-gnu-debug static-gnu-debug
         shared-intel static-intel
         shared-intel-debug static-intel-debug
+        tests-gnu tests-intel
+        tests-gnu-debug tests-intel-debug
 
 [common-variables]
 $CSHARED_GNU = -cpp -c -fPIC -frealloc-lhs
@@ -62,6 +64,58 @@ template  = template-static-intel-debug
 build_dir = static
 output    = libwenoof.a
 mklib     = static
+
+[tests-gnu]
+compiler  = gnu
+cflags    = $CSTATIC_GNU $OPTIMIZE
+lflags    = $OPTIMIZE
+build_dir = tests
+mod_dir   = mod
+obj_dir   = obj
+src       = src/
+colors    = True
+quiet     = False
+log       = True
+jobs      = 2
+
+[tests-intel]
+compiler  = intel
+cflags    = $CSTATIC_INT $OPTIMIZE
+lflags    = $OPTIMIZE
+build_dir = tests
+mod_dir   = mod
+obj_dir   = obj
+src       = src/
+colors    = True
+quiet     = False
+log       = True
+jobs      = 2
+
+[tests-gnu-debug]
+compiler  = gnu
+cflags    = $CSTATIC_GNU $DEBUG_GNU
+lflags    = $DEBUG_GNU
+build_dir = tests
+mod_dir   = mod
+obj_dir   = obj
+src       = src/
+colors    = True
+quiet     = False
+log       = True
+jobs      = 2
+
+[tests-intel-debug]
+compiler  = intel
+cflags    = $CSTATIC_INT $DEBUG_INT
+lflags    = $DEBUG_INT
+build_dir = tests
+mod_dir   = mod
+obj_dir   = obj
+src       = src/
+colors    = True
+quiet     = False
+log       = True
+jobs      = 2
 
 #templates
 [template-shared-gnu]
