@@ -4,22 +4,23 @@ program sin_reconstruction
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
+use IR_Precision, only : I_P, R_P, FR_P
 use wenoof, only : weno_factory, weno_constructor_upwind, weno_interpolator
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
-type(weno_factory)                    :: factory                  !< WENO factory.
-class(weno_interpolator), allocatable :: interpolator             !< WENO interpolator.
-integer, parameter                    :: S = 3                    !< Stencils used.
-integer, parameter                    :: Nv = 30                  !< Number of discretized values to be interpolated.
-real,    parameter                    :: pi = 4. * atan(1.)       !< Extent of domain.
-real                                  :: x(1-S:Nv+S)              !< Whole domain.
-real                                  :: fx(1-S:Nv+S)             !< Discretized values to be interpolated.
-real                                  :: xi(1:Nv)                 !< Domain of the interpolation.
-real                                  :: fx_ref(1:Nv)             !< Reference values.
-real                                  :: interpolation(1:1, 1:Nv) !< Interpolated values.
-integer                               :: i, j, f                  !< Counters.
+type(weno_factory)                    :: factory                    !< WENO factory.
+class(weno_interpolator), allocatable :: interpolator               !< WENO interpolator.
+integer(I_P), parameter               :: S = 3_I_P                  !< Stencils used.
+integer(I_P), parameter               :: Nv = 30_I_P                !< Number of discretized values to be interpolated.
+real(R_P),    parameter               :: pi = 4._R_P * atan(1._R_P) !< Extent of domain.
+real(R_P)                             :: x(1-S:Nv+S)                !< Whole domain.
+real(R_P)                             :: fx(1-S:Nv+S)               !< Discretized values to be interpolated.
+real(R_P)                             :: xi(1:Nv)                   !< Domain of the interpolation.
+real(R_P)                             :: fx_ref(1:Nv)               !< Reference values.
+real(R_P)                             :: interpolation(1:1, 1:Nv)   !< Interpolated values.
+integer                               :: i, j, f                    !< Counters.
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -50,7 +51,7 @@ enddo
 ! print results
 print "(A)", '# x, sin(x), weno_interpolation(x)'
 do i = 1, Nv
-  print "(3(E13.6E2, 1X))", xi(i), fx_ref(i), interpolation(1, i)
+  print "(3("//FR_P//", 1X))", xi(i), fx_ref(i), interpolation(1, i)
 enddo
 stop
 !-----------------------------------------------------------------------------------------------------------------------------------

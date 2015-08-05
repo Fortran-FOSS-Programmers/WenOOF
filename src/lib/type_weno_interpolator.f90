@@ -4,6 +4,10 @@ module type_weno_interpolator
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
+use IR_Precision, only : I_P, R_P
+!-----------------------------------------------------------------------------------------------------------------------------------
+
+!-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
 private
 save
@@ -67,12 +71,12 @@ abstract interface
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Interpolate the stecil input values computing the actual interpolation.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_interpolator
+  import :: weno_interpolator, I_P, R_P
   class(weno_interpolator), intent(IN)  :: self                !< WENO interpolator.
-  integer,                  intent(IN)  :: S                   !< Number of stencils used.
-  real,                     intent(IN)  :: stencil(1:, 1 - S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P),             intent(IN)  :: S                   !< Number of stencils used.
+  real(R_P),                intent(IN)  :: stencil(1:, 1 - S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
   character(*),             intent(IN)  :: location            !< Location of interpolated value(s): central, left, right, both.
-  real,                     intent(OUT) :: interpolation(1:)   !< Result of the interpolation, [1:2].
+  real(R_P),                intent(OUT) :: interpolation(1:)   !< Result of the interpolation, [1:2].
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine abstract_interpolate
 endinterface
