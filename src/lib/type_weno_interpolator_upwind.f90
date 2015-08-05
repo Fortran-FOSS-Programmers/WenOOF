@@ -1,6 +1,9 @@
 module type_weno_interpolator_upwind
 !-----------------------------------------------------------------------------------------------------------------------------------
-!< Upwind biased WENO interpolator object,
+!< Module providing upwind biased WENO interpolator object and constructor,
+!<
+!< @note The provided WENO interpolator implements the *Efficient Implementation of Weighted ENO Schemes*,
+!< Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -16,6 +19,10 @@ public :: weno_interpolator_upwind, weno_constructor_upwind
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 type, extends(weno_constructor) :: weno_constructor_upwind
+  !< Upwind biased WENO interpolator constructor,
+  !<
+  !< @note The constructed WENO interpolator implements the *Efficient Implementation of Weighted ENO Schemes*,
+  !< Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
   integer :: S = 0 !< Stencils dimension.
 endtype weno_constructor_upwind
 interface weno_constructor_upwind
@@ -23,6 +30,13 @@ interface weno_constructor_upwind
 endinterface
 
 type, extends(weno_interpolator) :: weno_interpolator_upwind
+  !< Upwind biased WENO interpolator object,
+  !<
+  !< @note The WENO interpolator implemented is the *Efficient Implementation of Weighted ENO Schemes*,
+  !< Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
+  !<
+  !< @note The supported accuracy formal order are: 3rd, 5th, 7th corresponding to use 2, 3, 4 stencils composed of 2, 3, 4 values,
+  !< respectively.
   private
   integer           :: S = 0              !< Stencil dimension.
   real              :: eps = 1.E-16       !< Parameter for avoiding divided by zero when computing smoothness indicators.
@@ -31,10 +45,10 @@ type, extends(weno_interpolator) :: weno_interpolator_upwind
   real, allocatable :: smooth_coef(:,:,:) !< Smoothness indicators coefficients [0:S-1,0:S-1,0:S-1].
   contains
     ! public methods
-    procedure, public :: destroy
-    procedure, public :: create
-    procedure, public :: description
-    procedure, public :: interpolate
+    procedure, pass(self), public :: destroy
+    procedure, pass(self), public :: create
+    procedure, pass(self), public :: description
+    procedure, pass(self), public :: interpolate
     ! private methods
     final :: finalize
 endtype weno_interpolator_upwind
@@ -43,9 +57,14 @@ contains
   ! weno_constructor_upwind
   elemental function  weno_constructor_upwind_init(S) result(constructor)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Destoy the WENO interpolator.
+  !< Create (initialize) the WENO interpolator.
+  !<
+  !< @note For this class of interpolators it is sufficient to provide the maximum number of stencils used (that is also the
+  !< dimension, i.e. number of values, of each stencil). During the actual interpolation phase the client code can specify, for each
+  !< intepolation a different number of stencil bounded by this maximum value. This is useful for coupling the interpolator with
+  !< algorithm like the Recursive Order Reduction (ROR) strategy.
   !---------------------------------------------------------------------------------------------------------------------------------
-  integer, intent(IN)           :: S           !< Stencils dimension.
+  integer, intent(IN)           :: S           !< Maximum stencils dimension.
   type(weno_constructor_upwind) :: constructor !<WENO constructor.
   !---------------------------------------------------------------------------------------------------------------------------------
 
@@ -272,61 +291,77 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing the WENO interpolator.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(IN)  :: self   !< WENO interpolator.
-  character(len=:), allocatable,   intent(OUT) :: string !< String returned.
-  character(len=1)                             :: dummy  !< Dummy string.
+  class(weno_interpolator_upwind), intent(IN)  :: self             !< WENO interpolator.
+  character(len=:), allocatable,   intent(OUT) :: string           !< String returned.
+  character(len=1)                             :: dummy            !< Dummy string.
+  character(len=1), parameter                  :: nl=new_line('a') !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  string = 'WENO upwind-biased interpolator'//new_line('a')
-  string = string//'  Based on the scheme proposed by ...'//new_line('a')
+  string = 'WENO upwind-biased interpolator'//nl
+  string = string//'  Based on the scheme proposed by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
+           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130'//nl
   write(dummy, '(I1)') 2*self%S - 1
-  string = string//'  Provide a formal order of accuracy equals to: '//dummy//new_line('a')
+  string = string//'  Provide a formal order of accuracy equals to: '//dummy//nl
   write(dummy, '(I1)') self%S
-  string = string//'  Use '//dummy//' stencils composed by '//dummy//' values'//new_line('a')
-  string = string//'  The "interpolate" method has the following public API'//new_line('a')
-  string = string//'    interpolate(S, stencil, interpolation)'//new_line('a')
-  string = string//'  where:'//new_line('a')
-  string = string//'    S: integer, intent(IN), the number of stencils actually used'//new_line('a')
-  string = string//'    stencil(1:2, 1-S:-1+S): real, intent(IN), the stencils used'//new_line('a')
-  string = string//'    interpolation(1:2, 1-S:-1+S): real, intent(OUT), the interpolated values'
+  string = string//'  Use '//dummy//' stencils composed by '//dummy//' values'//nl
+  string = string//'  The "interpolate" method has the following public API'//nl
+  string = string//'    interpolate(S, stencil, location, interpolation)'//nl
+  string = string//'  where:'//nl
+  string = string//'    S: integer, intent(IN), the number of stencils actually used'//nl
+  string = string//'    stencil(1:, 1-S:-1+S): real, intent(IN), the stencils used'//nl
+  string = string//'    location: character(*), intent(IN), the location of interpolation {left, right, both}'//nl
+  string = string//'    interpolation(1:, 1-S:-1+S): real, intent(OUT), the interpolated values'
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description
 
-  pure subroutine interpolate(self, S, stencil, interpolation)
+  pure subroutine interpolate(self, S, stencil, location, interpolation)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Interpolate the stecil input values computing the actual interpolation.
   !---------------------------------------------------------------------------------------------------------------------------------
   class(weno_interpolator_upwind), intent(IN)  :: self                      !< WENO interpolator.
-  integer,                         intent(IN)  :: S                         !< Number of stencils used.
+  integer,                         intent(IN)  :: S                         !< Number of stencils actually used.
   real,                            intent(IN)  :: stencil(1:, 1 - S:)       !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  character(*),                    intent(IN)  :: location                  !< Location of interpolated value(s): left, right, both.
   real,                            intent(OUT) :: interpolation(1:)         !< Result of the interpolation, [1:2].
   real                                         :: polynomials(1:2, 0:S - 1) !< Polynomial reconstructions.
   real                                         :: weights(1:2, 0:S - 1)     !< Weights of the stencils.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  call compute_polynomials(polynomials=polynomials)
-  call compute_weights(weights=weights)
-  call compute_convolution(interpolation=interpolation)
+  select case(location)
+  case('both', 'b')
+    call compute_polynomials(f1=1, f2=2, ff=0, polynomials=polynomials)
+    call compute_weights(f1=1, f2=2, ff=0, weights=weights)
+    call compute_convolution(f1=1, f2=2, ff=0, interpolation=interpolation)
+  case('left', 'l')
+    call compute_polynomials(f1=1, f2=1, ff=0, polynomials=polynomials)
+    call compute_weights(f1=1, f2=1, ff=0, weights=weights)
+    call compute_convolution(f1=1, f2=1, ff=0, interpolation=interpolation)
+  case('right', 'r')
+    call compute_polynomials(f1=2, f2=2, ff=-1, polynomials=polynomials)
+    call compute_weights(f1=2, f2=2, ff=-1, weights=weights)
+    call compute_convolution(f1=2, f2=2, ff=-1, interpolation=interpolation)
+  endselect
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   contains
-    pure subroutine compute_polynomials(polynomials)
+    pure subroutine compute_polynomials(f1, f2, ff, polynomials)
     !-------------------------------------------------------------------------------------------------------------------------------
     !< Compute the polynomials reconstructions.
     !-------------------------------------------------------------------------------------------------------------------------------
-    real, intent(OUT) :: polynomials(1:, 0:) !< Polynomial reconstructions.
-    integer           :: s1, s2, f !< Counters.
+    integer, intent(IN)  :: f1, f2, ff          !< Faces to be computed.
+    real,    intent(OUT) :: polynomials(1:, 0:) !< Polynomial reconstructions.
+    integer              :: s1, s2, f           !< Counters.
     !-------------------------------------------------------------------------------------------------------------------------------
 
     !-------------------------------------------------------------------------------------------------------------------------------
     polynomials = 0.
     do s1 = 0, S - 1 ! stencils loop
       do s2 = 0, S - 1 ! values loop
-        do f = 1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-          polynomials(f, s1) = polynomials(f, s1) + self%poly_coef(f, s2, s1) * stencil(f, -s2 + s1)
+        do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+          polynomials(f, s1) = polynomials(f, s1) + self%poly_coef(f, s2, s1) * stencil(f + ff, -s2 + s1)
         enddo
       enddo
     enddo
@@ -334,25 +369,26 @@ contains
     !-------------------------------------------------------------------------------------------------------------------------------
     endsubroutine compute_polynomials
 
-    pure subroutine compute_weights(weights)
+    pure subroutine compute_weights(f1, f2, ff, weights)
     !-------------------------------------------------------------------------------------------------------------------------------
     !< Compute the stencils weights.
     !-------------------------------------------------------------------------------------------------------------------------------
-    real, intent(OUT) :: weights(1:, 0:)  !< Weights of the stencils, [1:2, 0:S - 1 ].
-    real              :: IS(1:2, 0:S - 1) !< Smoothness indicators of the stencils.
-    real              :: a(1:2, 0:S - 1)  !< Alpha coefficients for the weights.
-    real              :: a_tot(1:2)       !< Sum of the alpha coefficients.
-    integer           :: s1, s2, s3, f    !< Counters.
+    integer, intent(IN)  :: f1, f2, ff       !< Faces to be computed.
+    real,    intent(OUT) :: weights(1:, 0:)  !< Weights of the stencils, [1:2, 0:S - 1 ].
+    real                 :: IS(1:2, 0:S - 1) !< Smoothness indicators of the stencils.
+    real                 :: a(1:2, 0:S - 1)  !< Alpha coefficients for the weights.
+    real                 :: a_tot(1:2)       !< Sum of the alpha coefficients.
+    integer              :: s1, s2, s3, f    !< Counters.
     !-------------------------------------------------------------------------------------------------------------------------------
 
     !-------------------------------------------------------------------------------------------------------------------------------
     ! computing smoothness indicators
     do s1 = 0, S - 1 ! stencils loop
-      do f = 1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
         IS(f, s1) = 0.
         do s2 = 0, S - 1
           do s3 = 0, S - 1
-            IS(f, s1) = IS(f, s1) + self%smooth_coef(s3, s2, s1) * stencil(f, s1 - s3) * stencil(f, s1 - s2)
+            IS(f, s1) = IS(f, s1) + self%smooth_coef(s3, s2, s1) * stencil(f + ff, s1 - s3) * stencil(f + ff, s1 - s2)
           enddo
         enddo
       enddo
@@ -360,13 +396,13 @@ contains
     ! computing alfa coefficients
     a_tot = 0.
     do s1 = 0, S - 1 ! stencil loops
-      do f = 1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
         a(f, s1) = self%weights_opt(f, s1) * (1./(self%eps + IS(f, s1))**S) ; a_tot(f) = a_tot(f) + a(f, s1)
       enddo
     enddo
     ! computing the weights
     do s1 = 0, S - 1 ! stencils loop
-      do f = 1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
         weights(f, s1) = a(f, s1) / a_tot(f)
       enddo
     enddo
@@ -374,20 +410,21 @@ contains
     !-------------------------------------------------------------------------------------------------------------------------------
     endsubroutine compute_weights
 
-    pure subroutine compute_convolution(interpolation)
+    pure subroutine compute_convolution(f1, f2, ff, interpolation)
     !-------------------------------------------------------------------------------------------------------------------------------
     !< Compute the polynomials convolution.
     !-------------------------------------------------------------------------------------------------------------------------------
-    real, intent(OUT) :: interpolation(1:) !< Left and right (1,2) interface value of reconstructed.
-    integer           :: k, f              !< Counters.
+    integer, intent(IN)  :: f1, f2, ff        !< Faces to be computed.
+    real,    intent(OUT) :: interpolation(1:) !< Left and right (1,2) interface value of reconstructed.
+    integer              :: k, f              !< Counters.
     !-------------------------------------------------------------------------------------------------------------------------------
 
     !-------------------------------------------------------------------------------------------------------------------------------
     ! computing the convultion
     interpolation = 0.
     do k = 0, S - 1 ! stencils loop
-      do f = 1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-        interpolation(f) = interpolation(f) + weights(f, k) * polynomials(f, k)
+      do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+        interpolation(f + ff) = interpolation(f + ff) + weights(f, k) * polynomials(f, k)
       enddo
     enddo
     return

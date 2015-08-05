@@ -4,21 +4,19 @@ program module_imports
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-use wenoof
+use wenoof, only : weno_factory, weno_constructor_upwind, weno_interpolator
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
-type(weno_constructor_upwind)         :: upwind_constructor
-class(weno_interpolator), allocatable :: weno
+type(weno_factory)                    :: factory
+class(weno_interpolator), allocatable :: interpolator
 character(len=:),         allocatable :: description
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-allocate(weno_interpolator_upwind :: weno)
-upwind_constructor = weno_constructor_upwind(S=4)
-call weno%create(constructor=upwind_constructor)
-call weno%description(string=description)
+call factory%create(constructor=weno_constructor_upwind(S=3), interpolator=interpolator)
+call interpolator%description(string=description)
 print "(A)", description
 stop
 !-----------------------------------------------------------------------------------------------------------------------------------

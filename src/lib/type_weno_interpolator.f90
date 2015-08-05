@@ -11,26 +11,24 @@ public :: weno_interpolator, weno_constructor
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, abstract :: weno_interpolator
-  !< WENO interpolator factory object.
-  !<
-  !< @note Do not implement any real interpolator: provide the interface for the different interpolators implemented.
-  !<
-  !< @note A concrete implementation must define its own **interpolate** method: it is not provide as abstract deferred type
-  !< because it could have very diffirent signature for each different interpolator.
-  private
-  contains
-    procedure(abstract_destructor),  pass(self), deferred :: destroy
-    procedure(abstract_constructor), pass(self), deferred :: create
-    procedure(abstract_description), pass(self), deferred :: description
-endtype weno_interpolator
-
 type, abstract :: weno_constructor
   !< Abstract type used for create new concrete WENO interpolators.
   !<
   !< @note Every concrete WENO interpolator implementations must define their own constructor type.
   private
 endtype weno_constructor
+
+type, abstract :: weno_interpolator
+  !< WENO interpolator object.
+  !<
+  !< @note Do not implement any real interpolator: provide the interface for the different interpolators implemented.
+  private
+  contains
+    procedure(abstract_destructor),  pass(self), deferred, public :: destroy
+    procedure(abstract_constructor), pass(self), deferred, public :: create
+    procedure(abstract_description), pass(self), deferred, public :: description
+    procedure(abstract_interpolate), pass(self), deferred, public :: interpolate
+endtype weno_interpolator
 
 abstract interface
   elemental subroutine abstract_destructor(self)
@@ -64,6 +62,19 @@ abstract interface
   character(len=:), allocatable, intent(OUT) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine abstract_description
+
+  pure subroutine abstract_interpolate(self, S, stencil, location, interpolation)
+  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Interpolate the stecil input values computing the actual interpolation.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  import :: weno_interpolator
+  class(weno_interpolator), intent(IN)  :: self                !< WENO interpolator.
+  integer,                  intent(IN)  :: S                   !< Number of stencils used.
+  real,                     intent(IN)  :: stencil(1:, 1 - S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  character(*),             intent(IN)  :: location            !< Location of interpolated value(s): central, left, right, both.
+  real,                     intent(OUT) :: interpolation(1:)   !< Result of the interpolation, [1:2].
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endsubroutine abstract_interpolate
 endinterface
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule type_weno_interpolator
