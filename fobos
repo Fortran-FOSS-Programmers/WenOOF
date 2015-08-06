@@ -222,6 +222,7 @@ quiet    = False
 log      = True
 jobs     = 2
 
+# rules
 [rule-makedoc]
 help   = Rule for building documentation from source files
 rule_1 = rm -rf doc/html/*
