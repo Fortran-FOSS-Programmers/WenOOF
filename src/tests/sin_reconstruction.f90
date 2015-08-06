@@ -6,6 +6,7 @@ program sin_reconstruction
 !-----------------------------------------------------------------------------------------------------------------------------------
 use IR_Precision, only : I_P, R_P, str
 use wenoof, only : weno_factory, weno_constructor_upwind, weno_interpolator
+use pyplot_module, only :  pyplot
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -20,6 +21,7 @@ real(R_P)                             :: fx(1-S:Nv+S)               !< Discretiz
 real(R_P)                             :: xi(1:Nv)                   !< Domain of the interpolation.
 real(R_P)                             :: fx_ref(1:Nv)               !< Reference values.
 real(R_P)                             :: interpolation(1:1, 1:Nv)   !< Interpolated values.
+type(pyplot)                          :: plt                        !< Plotter handler.
 integer                               :: i, j, f                    !< Counters.
 !-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -51,9 +53,22 @@ enddo
 ! print results
 print "(A)", '# x, sin(x), weno_interpolation(x)'
 do i = 1, Nv
-  print "(A)", str(n=xi(i))//' '//str(n=fx_ref(i))//' '//str(n=interpolation(1, i))//' '//str(n=x(i))//' '//str(n=fx(i))
+  print "(A)", str(n=xi(i))//' '//str(n=fx_ref(i))//' '//str(n=interpolation(1, i))
 enddo
+
+! plotting graph to image file
+call plt%initialize(grid=.true., xlabel='angle (rad)', title='WENO interpolation of $\sin(x)$', legend=.true.)
+call plt%add_plot(x=xi(1:Nv),        &
+                  y=fx_ref(1:Nv),    &
+                  label='$\sin(x)$', &
+                  linestyle='k-',    &
+                  linewidth=2)
+call plt%add_plot(x=xi(1:Nv),                 &
+                  y=interpolation(1, 1:Nv),   &
+                  label='WENO interpolation', &
+                  linestyle='ro',             &
+                  markersize=6)
+call plt%savefig('sin_reconstruction.png')
 stop
 !-----------------------------------------------------------------------------------------------------------------------------------
 endprogram sin_reconstruction
-
