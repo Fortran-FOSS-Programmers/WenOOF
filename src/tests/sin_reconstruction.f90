@@ -4,7 +4,7 @@ program sin_reconstruction
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-use IR_Precision, only : I_P, R_P, FR_P
+use IR_Precision, only : I_P, R_P, str
 use wenoof, only : weno_factory, weno_constructor_upwind, weno_interpolator
 !-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ do i = 1, Nv
 enddo
 
 ! prepare the weno interpolator
-call factory%create(constructor=weno_constructor_upwind(S=S), interpolator=interpolator)
+call factory%create(constructor=weno_constructor_upwind(S=S, eps=10._R_P**(-40)), interpolator=interpolator)
 
 ! interpolate values
 interpolation = 0.
@@ -51,7 +51,7 @@ enddo
 ! print results
 print "(A)", '# x, sin(x), weno_interpolation(x)'
 do i = 1, Nv
-  print "(3("//FR_P//", 1X))", xi(i), fx_ref(i), interpolation(1, i)
+  print "(A)", str(n=xi(i))//' '//str(n=fx_ref(i))//' '//str(n=interpolation(1, i))//' '//str(n=x(i))//' '//str(n=fx(i))
 enddo
 stop
 !-----------------------------------------------------------------------------------------------------------------------------------

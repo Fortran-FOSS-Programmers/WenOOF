@@ -7,7 +7,7 @@ module type_weno_interpolator_upwind
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-use IR_Precision, only : I_P, R_P
+use IR_Precision, only : I_P, R_P, str
 use type_weno_interpolator
 !-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -24,7 +24,8 @@ type, extends(weno_constructor) :: weno_constructor_upwind
   !<
   !< @note The constructed WENO interpolator implements the *Efficient Implementation of Weighted ENO Schemes*,
   !< Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
-  integer(I_P) :: S = 0 !< Stencils dimension.
+  integer(I_P) :: S = 0               !< Stencils dimension.
+  real(R_P)    :: eps = 10._R_P**(-6) !< Parameter for avoiding divided by zero when computing smoothness indicators.
 endtype weno_constructor_upwind
 interface weno_constructor_upwind
   procedure weno_constructor_upwind_init
@@ -56,7 +57,7 @@ endtype weno_interpolator_upwind
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
   ! weno_constructor_upwind
-  elemental function  weno_constructor_upwind_init(S) result(constructor)
+  elemental function  weno_constructor_upwind_init(S, eps) result(constructor)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create (initialize) the WENO interpolator.
   !<
@@ -65,12 +66,14 @@ contains
   !< intepolation a different number of stencil bounded by this maximum value. This is useful for coupling the interpolator with
   !< algorithm like the Recursive Order Reduction (ROR) strategy.
   !---------------------------------------------------------------------------------------------------------------------------------
-  integer(I_P), intent(IN)      :: S           !< Maximum stencils dimension.
-  type(weno_constructor_upwind) :: constructor !<WENO constructor.
+  integer(I_P), intent(IN)           :: S           !< Maximum stencils dimension.
+  real(R_P),    intent(IN), optional :: eps         !< Parameter for avoiding divided by zero when computing smoothness indicators.
+  type(weno_constructor_upwind)      :: constructor !<WENO constructor.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
   constructor%S = S
+  if (present(eps)) constructor%eps = eps
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endfunction  weno_constructor_upwind_init
@@ -107,7 +110,7 @@ contains
   type is(weno_constructor_upwind)
     call self%destroy
     self%S = constructor%S
-    self%eps = 10._R_P**(-16_I_P)
+    self%eps = constructor%eps
     allocate(self%weights_opt(1:2, 0:self%S - 1))
     allocate(self%poly_coef(1:2, 0:self%S - 1, 0:self%S - 1))
     allocate(self%smooth_coef(0:self%S - 1, 0:self%S - 1, 0:self%S - 1))
@@ -303,10 +306,9 @@ contains
   string = 'WENO upwind-biased interpolator'//nl
   string = string//'  Based on the scheme proposed by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
            'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130'//nl
-  write(dummy, '(I1)') 2*self%S - 1
-  string = string//'  Provide a formal order of accuracy equals to: '//dummy//nl
-  write(dummy, '(I1)') self%S
-  string = string//'  Use '//dummy//' stencils composed by '//dummy//' values'//nl
+  string = string//'  Provide a formal order of accuracy equals to: '//trim(str(.true.,2*self%S - 1))//nl
+  string = string//'  Use '//trim(str(.true.,self%S))//' stencils composed by '//trim(str(.true.,self%S))//' values'//nl
+  string = string//'  The eps value used for avoiding division by zero is '//trim(str(.true.,self%eps))//nl
   string = string//'  The "interpolate" method has the following public API'//nl
   string = string//'    interpolate(S, stencil, location, interpolation)'//nl
   string = string//'  where:'//nl
