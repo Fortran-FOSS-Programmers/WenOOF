@@ -10,6 +10,8 @@
 [![License](https://img.shields.io/badge/license-MIT-red.svg)]()
 
 [![Status](https://img.shields.io/badge/status-alpha-orange.svg)]()
+[![Build Status](https://travis-ci.org/Fortran-FOSS-Programmers/WenOOF.svg?branch=master)](https://travis-ci.org/Fortran-FOSS-Programmers/WenOOF)
+[![Coverage Status](https://img.shields.io/codecov/c/github/Fortran-FOSS-Programmers/WenOOF.svg)](http://codecov.io/github/Fortran-FOSS-Programmers/WenOOF?branch=master)
 [![GitHub issues](https://img.shields.io/github/issues/Fortran-FOSS-Programmers/WenOOF.svg)]()
 
 ### WenOOF, WENO interpolation Object Oriented Fortran library
@@ -60,13 +62,13 @@ Go to [Top](#top)
 
 WenOOF is aimed to be a KISS-pure-Fortran library for computing WENO interpolation, it being:
 
-+ [ ] Pure Fortran implementation;
-+ [ ] KISS and user-friendly:
-  + [ ] simple API;
++ [x] Pure Fortran implementation;
++ [x] KISS and user-friendly:
+  + [x] simple API;
   + [ ] easy building and porting on heterogeneous architectures;
 + [ ] comprehensive:
   + [ ] central schemes;
-  + [ ] upwind biased schemes;
+  + [x] upwind biased schemes;
   + [ ] hybrid schemes;
 + [ ] efficient:
   + [ ] high scalability on parallel architectures:
@@ -74,19 +76,15 @@ WenOOF is aimed to be a KISS-pure-Fortran library for computing WENO interpolati
     + [ ] support for distributed memory cluster;
     + [ ] support for GPGPU/accelerators device;
 + [ ] well documented:
-  + [ ] clear documentation of schemes implementations;
-  + [ ] complete API reference;
+  + [x] clear documentation of schemes implementations;
+  + [x] complete API reference;
   + [ ] comprehensive wiki:
 + [ ] collaborative developed;
-+ [ ] FOSS licensed;
++ [x] FOSS licensed;
 
 Any feature request is welcome.
 
 Go to [Top](#top)
-
-## Status
-
-WenOOF project is just started. Nothing has been done. We are searching for Fortraners enthusiast joining our team.
 
 ## Copyrights
 
@@ -102,6 +100,10 @@ WenOOF is an open source project, it is distributed under a multi-licensing syst
 Anyone is interest to use, to develop or to contribute to WenOOF is welcome, feel free to select the license that best matches your soul!
 
 More details can be found on [wiki](https://github.com/Fortran-FOSS-Programmers/WenOOF/wiki/Copyrights).
+
+### Externals libraries
+
+WenOOF uses some external libraries (placed into the *external* subdirectory of the root project) for the testing suite. These library maybe distributed under different licensing system with respect the WenOOF one, please refer to their own licenses.
 
 Go to [Top](#top)
 
