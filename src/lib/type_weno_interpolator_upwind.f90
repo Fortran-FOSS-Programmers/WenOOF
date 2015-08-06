@@ -28,7 +28,7 @@ type, extends(weno_constructor) :: weno_constructor_upwind
   real(R_P)    :: eps = 10._R_P**(-6) !< Parameter for avoiding divided by zero when computing smoothness indicators.
 endtype weno_constructor_upwind
 interface weno_constructor_upwind
-  procedure weno_constructor_upwind_init
+  module procedure weno_constructor_upwind_init
 endinterface
 
 type, extends(weno_interpolator) :: weno_interpolator_upwind
