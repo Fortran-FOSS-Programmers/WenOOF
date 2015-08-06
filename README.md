@@ -1,6 +1,8 @@
 <a name="top"></a>
 
-# WenOOF [![GitHub tag](https://img.shields.io/github/tag/Fortran-FOSS-Programmers/WenOOF.svg)]() [![Join the chat at https://gitter.im/Fortran-FOSS-Programmers/WenOOF](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Fortran-FOSS-Programmers/WenOOF?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# WenOOF
+
+[![GitHub tag](https://img.shields.io/github/tag/Fortran-FOSS-Programmers/WenOOF.svg)]() [![Join the chat at https://gitter.im/Fortran-FOSS-Programmers/WenOOF](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Fortran-FOSS-Programmers/WenOOF?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![License](https://img.shields.io/badge/license-GNU%20GeneraL%20Public%20License%20v3,%20GPLv3-blue.svg)]()
 [![License](https://img.shields.io/badge/license-BSD2-red.svg)]()
@@ -8,6 +10,7 @@
 [![License](https://img.shields.io/badge/license-MIT-red.svg)]()
 
 [![Status](https://img.shields.io/badge/status-alpha-orange.svg)]()
+[![GitHub issues](https://img.shields.io/github/issues/Fortran-FOSS-Programmers/WenOOF.svg)]()
 
 ### WenOOF, WENO interpolation Object Oriented Fortran library
 
@@ -24,13 +27,6 @@
 + [Status](#status)
 + [Copyrights](#copyrights)
 + [Documentation](#documentation)
-
-#### Issues
-
-[![GitHub issues](https://img.shields.io/github/issues/Fortran-FOSS-Programmers/WenOOF.svg)]()
-[![Ready in backlog](https://badge.waffle.io/Fortran-FOSS-Programmers/WenOOF.png?label=ready&title=Ready)](https://waffle.io/Fotran-FOSS-Programmers/WenOOF)
-[![In Progress](https://badge.waffle.io/Fortran-FOSS-Programmers/WenOOF.png?label=in%20progress&title=In%20Progress)](https://waffle.io/Fortran-FOSS-Programmers/WenOOF)
-[![Open bugs](https://badge.waffle.io/Fortran-FOSS-Programmers/WenOOF.png?label=bug&title=Open%20Bugs)](https://waffle.io/Fortran-FOSS-Programmers/WenOOF)
 
 ## What is WenOOF?
 
@@ -105,12 +101,12 @@ WenOOF is an open source project, it is distributed under a multi-licensing syst
 
 Anyone is interest to use, to develop or to contribute to WenOOF is welcome, feel free to select the license that best matches your soul!
 
-More details can be found on [wiki](https://github.com/Fotran-FOSS-Programmers/WenOOF/wiki/Copyrights).
+More details can be found on [wiki](https://github.com/Fortran-FOSS-Programmers/WenOOF/wiki/Copyrights).
 
 Go to [Top](#top)
 
 ## Documentation
 
-Besides this README file the WenOOF documentation is contained into its own [wiki](https://github.com/Fotran-FOSS-Programmers/WenOOF/wiki). Detailed documentation of the API is contained into the [GitHub Pages](http://Fotran-FOSS-Programmers.github.io/WenOOF/index.html) that can also be created locally by means of [ford tool](https://github.com/cmacmackin/ford).
+Besides this README file the WenOOF documentation is contained into its own [wiki](https://github.com/Fortran-FOSS-Programmers/WenOOF/wiki). Detailed documentation of the API is contained into the [GitHub Pages](http://Fortran-FOSS-Programmers.github.io/WenOOF/index.html) that can also be created locally by means of [ford tool](https://github.com/cmacmackin/ford).
 
 Go to [Top](#top)
