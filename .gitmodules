@@ -1,6 +1,6 @@
-[submodule "external/IR_Precision"]
-	path = external/IR_Precision
-	url = https://github.com/szaghi/IR_Precision
 [submodule "external/pyplot-fortran"]
-	path = external/pyplot-fortran
+	path = src/third_party/pyplot-fortran
 	url = https://github.com/jacobwilliams/pyplot-fortran
+[submodule "src/third_party/PENF"]
+	path = src/third_party/PENF
+	url = https://github.com/szaghi/PENF
