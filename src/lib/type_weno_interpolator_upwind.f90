@@ -7,7 +7,7 @@ module type_weno_interpolator_upwind
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-use IR_Precision, only : I_P, R_P, str
+use penf, only : I_P, R_P, str
 use type_weno_interpolator
 !-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -308,9 +308,9 @@ contains
   string = 'WENO upwind-biased interpolator'//nl
   string = string//'  Based on the scheme proposed by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
            'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130'//nl
-  string = string//'  Provide a formal order of accuracy equals to: '//trim(str(.true.,2*self%S - 1))//nl
-  string = string//'  Use '//trim(str(.true.,self%S))//' stencils composed by '//trim(str(.true.,self%S))//' values'//nl
-  string = string//'  The eps value used for avoiding division by zero is '//trim(str(.true.,self%eps))//nl
+  string = string//'  Provide a formal order of accuracy equals to: '//trim(str(2*self%S - 1, .true.))//nl
+  string = string//'  Use '//trim(str(self%S, .true.))//' stencils composed by '//trim(str(self%S, .true.))//' values'//nl
+  string = string//'  The eps value used for avoiding division by zero is '//trim(str(self%eps, .true.))//nl
   string = string//'  The "interpolate" method has the following public API'//nl
   string = string//'    interpolate(S, stencil, location, interpolation)'//nl
   string = string//'  where:'//nl
