@@ -1,45 +1,51 @@
-module wenoof
+module type_weno_weights
 !-----------------------------------------------------------------------------------------------------------------------------------
-!< WenOOF, WENO interpolation Object Oriented Fortran library
+!< Abstract WENO weights object.
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-use type_weno_interpolator, only : weno_constructor, weno_interpolator
-use type_weno_interpolator_upwind, only : weno_constructor_upwind, weno_interpolator_upwind
+use penf, only : I_P, R_P
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
 private
 save
-public :: weno_factory, weno_constructor, weno_interpolator
-public :: weno_constructor_upwind, weno_interpolator_upwind
+public :: weno_weights
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type :: weno_factory
-  !< WENO factory aimed to create and return a concrete WENO interpolator to the client code without exposing the concrete
-  !< interpolators classes.
+type, abstract :: weno_weights
+  !< WENO weights.
+  !<
+  !< @note Do not implement any real weight: provide the interface for the different weights implemented.
+  private
   contains
-    procedure, nopass :: create
-endtype
-!-----------------------------------------------------------------------------------------------------------------------------------
-contains
-  subroutine create(constructor, interpolator)
-  !---------------------------------------------------------------------------------------------------------------------------------
-  !< Create and return a concrete WENO interpolator object being an extension of the abstract *weno_interpolator* type.
-  !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_constructor),               intent(IN)  :: constructor  !< The concrete WENO constructor selected by client code.
-  class(weno_interpolator), allocatable, intent(OUT) :: interpolator !< The concrete WENO interpolator.
-  !---------------------------------------------------------------------------------------------------------------------------------
+    procedure(weights_abstract_description), pass(self), deferred, public :: weights_description
+    procedure(weights_abstract_compute),     pass(self), deferred, public :: weights_compute
+endtype weno_weights
 
+abstract interface
+
+  pure subroutine weights_abstract_description(self, string)
   !---------------------------------------------------------------------------------------------------------------------------------
-  select type(constructor)
-  type is(weno_constructor_upwind)
-    allocate(weno_interpolator_upwind :: interpolator)
-    call interpolator%create(constructor=constructor)
-  endselect
-  return
+  !< Return a string describing WENO weights.
   !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine create
-endmodule wenoof
+  import :: weno_weights
+  class(weno_weights),           intent(IN)  :: self   !< WENO smoothness indicator.
+  character(len=:), allocatable, intent(OUT) :: string !< String returned.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endsubroutine weights_abstract_description
+
+  pure subroutine weights_abstract_compute(self, weights)
+  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Compute the weights of the WENO interpolating polynomial.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  import :: weno_weights, I_P, R_P
+  class(weno_weights), intent(IN)  :: self        !< WENO smoothness_indicator.
+  real(R_P),           intent(OUT) :: weights(:)  !< Weights of the stencil.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endsubroutine weights_abstract_compute
+endinterface
+!-----------------------------------------------------------------------------------------------------------------------------------
+endmodule type_weno_weights
