@@ -1,4 +1,4 @@
-module type_weno_weights
+module type_weno_alpha_coefficient
 !-----------------------------------------------------------------------------------------------------------------------------------
 !< Abstract WENO weights object.
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -11,41 +11,48 @@ use penf, only : I_P, R_P
 implicit none
 private
 save
-public :: weno_weights
+public :: weno_alpha_coefficient
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, abstract :: weno_weights
+type, abstract :: weno_alpha_coefficient_constructor
+  !< Abstract type used for create new concrete WENO alpha coefficient.
+  !<
+  !< @note Every concrete WENO alpha coefficient implementation must define its own constructor type.
+  private
+endtype weno_alpha_coefficient_constructor
+
+type, abstract :: weno_alpha_coefficient
   !< WENO weights.
   !<
-  !< @note Do not implement any real weight: provide the interface for the different weights implemented.
+  !< @note Do not implement any real alpha coefficient provide the interface for the different alpha coefficient implemented.
   private
   contains
-    procedure(weights_abstract_description), pass(self), deferred, public :: weights_description
-    procedure(weights_abstract_compute),     pass(self), deferred, public :: weights_compute
-endtype weno_weights
+    procedure(alpha_coefficient_abstract_description), pass(self), deferred, public :: alpha_coefficient_description
+    procedure(alpha_coefficient_abstract_compute),     pass(self), deferred, public :: alpha_coefficient_compute
+endtype weno_alpha_coefficient
 
 abstract interface
 
-  pure subroutine weights_abstract_description(self, string)
+  pure subroutine alpha_coefficient_abstract_description(self, string)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Return a string describing WENO weights.
+  !< Return a string describing WENO alpha coefficient.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_weights
-  class(weno_weights),           intent(IN)  :: self   !< WENO smoothness indicator.
+  import :: weno_alpha_coefficient
+  class(weno_alpha_coefficient),           intent(IN)  :: self   !< WENO alpha coefficient.
   character(len=:), allocatable, intent(OUT) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine weights_abstract_description
+  endsubroutine alpha_coefficient_abstract_description
 
-  pure subroutine weights_abstract_compute(self, weights)
+  pure function alpha_coefficient_abstract_compute(self, weights)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Compute the weights of the WENO interpolating polynomial.
+  !< Compute the alpha coefficient of the WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_weights, I_P, R_P
-  class(weno_weights), intent(IN)  :: self        !< WENO smoothness_indicator.
-  real(R_P),           intent(OUT) :: weights(:)  !< Weights of the stencil.
+  import :: weno_alpha_coefficient, I_P, R_P
+  class(weno_alpha_coefficient), intent(IN)  :: self        !< WENO alpha coefficient.
+  real(R_P),           intent(OUT) :: weights(:)  !< Alpha coefficient of the stencil.
   !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine weights_abstract_compute
+  endfunction alpha_coefficient_abstract_compute
 endinterface
 !-----------------------------------------------------------------------------------------------------------------------------------
-endmodule type_weno_weights
+endmodule type_weno_alpha_coefficient

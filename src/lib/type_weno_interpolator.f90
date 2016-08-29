@@ -5,7 +5,7 @@ module type_weno_interpolator
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 use penf, only : I_P, R_P
-use type_weno_weights
+use type_weno_alpha_coefficient
 use type_weno_optimal_weights
 use type_weno_IS
 use type_weno_poly_coefficients
@@ -54,41 +54,40 @@ abstract interface
   !<
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_constructor, weno_interpolator, weno_weights, weno_optimal_weights, weno_IS, weno_poly_coefficients
+  import :: weno_constructor, weno_interpolator, weno_optimal_weights, weno_IS, weno_poly_coefficients
   class(weno_interpolator),      intent(INOUT) :: self              !< WENO interpolator.
   class(weno_constructor),       intent(IN)    :: constructor       !< WENO constructor.
-  class(weno_weights),           intent(IN)    :: weights           !< WENO weights.
   class(weno_optimal_weights),   intent(IN)    :: optimal_weights   !< WENO optimal weights.
-  class(weno_IS),                intent(IN)    :: IS_coefficients   !< WENO smoothness indicators coefficients.
+  class(weno_IS),                intent(IN)    :: IS                !< WENO smoothness indicators coefficients.
   class(weno_poly_coefficients), intent(IN)    :: poly_coefficients !< WENO polynomial coefficients.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine abstract_constructor
 
-  pure subroutine abstract_description(self, weights, weno_IS, poly_coefficients, string)
+  pure subroutine abstract_description(self, alfa, weno_IS, poly_coefficients, string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing a WENO interpolator.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_interpolator, weno_weights, weno_optimal_weights, weno_IS, weno_poly_coefficients
-  class(weno_interpolator),      intent(IN)  :: self                      !< WENO interpolator.
-  class(weno_weights),           intent(IN)  :: weights_string            !< WENO weights.
-  class(weno_IS),                intent(IN)  :: IS_string                 !< WENO smoothness indicators.
-  class(weno_poly_coefficients), intent(IN)  :: poly_coefficients_string  !< WENO smoothness indicators.
-  character(len=:), allocatable, intent(OUT) :: string                    !< String returned.
+  import :: weno_interpolator, weno_alpha_coefficient, weno_optimal_weights, weno_IS, weno_poly_coefficients
+  class(weno_interpolator),      intent(IN)  :: self              !< WENO interpolator.
+  class(weno_alpha_coefficient), intent(IN)  :: alpha             !< WENO weights.
+  class(weno_IS),                intent(IN)  :: IS                !< WENO smoothness indicators.
+  class(weno_poly_coefficients), intent(IN)  :: poly_coefficients !< WENO smoothness indicators.
+  character(len=:), allocatable, intent(OUT) :: string            !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine abstract_description
 
-  pure subroutine abstract_interpolate(self, weights, S, stencil, location, interpolation)
+  pure subroutine abstract_interpolate(self, alpha_coefficient, S, stencil, location, interpolation)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Interpolate the stencil input values computing the actual interpolation.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: I_P, R_P, weno_interpolator, weno_weights, weno_optimal_weights, weno_IS, weno_poly_coefficients
-  class(weno_interpolator),      intent(IN)  :: self                !< WENO interpolator.
-  class(weno_weights),           intent(IN)  :: weights             !< WENO weights.
-  class(weno_optimal_weights),   intent(IN)  :: optimal_weights     !< WENO optimal weights.
-  class(weno_IS),                intent(IN)  :: IS_coefficients, IS !< WENO IS coefficients and values.
-  class(weno_poly_coefficients), intent(IN)  :: poly_coefficients   !< WENO polynomial coefficients.
-  real(R_P),                     intent(IN)  :: location            !< Location of the interpolation.
-  real(R_P),                     intent(OUT) :: interpolation(1:)   !< Result of the interpolation, [1:2].
+  import :: I_P, R_P, weno_interpolator, weno_alpha_coefficient, weno_optimal_weights, weno_IS, weno_poly_coefficients
+  class(weno_interpolator),      intent(IN)  :: self               !< WENO interpolator.
+  class(weno_alpha_coefficient), intent(IN)  :: alpha              !< WENO weights.
+  class(weno_optimal_weights),   intent(IN)  :: optimal_weights    !< WENO optimal weights.
+  class(weno_IS),                intent(IN)  :: IS                 !< WENO IS coefficients and values.
+  class(weno_poly_coefficients), intent(IN)  :: poly_coefficients  !< WENO polynomial coefficients.
+  real(R_P),                     intent(IN)  :: location           !< Location of the interpolation.
+  real(R_P),                     intent(OUT) :: interpolation(1:)  !< Result of the interpolation, [1:2].
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine abstract_interpolate
 endinterface

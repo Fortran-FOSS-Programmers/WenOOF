@@ -15,18 +15,47 @@ public :: weno_IS
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
+type, abstract :: weno_IS_constructor
+  !< Abstract type used for create new concrete WENO smoothness indicators.
+  !<
+  !< @note Every concrete WENO smoothness indicators implementation must define its own constructor type.
+  private
+endtype weno_IS_constructor
+
 type, abstract :: weno_IS
   !< WENO smoothness indicators.
   !<
-  !< @note Do not implement any real smoothness indicator: provide the interface for the different smoothness_indicators implemented.
+  !< @note Do not implement any real smoothness indicators: provide the interface for the different smoothness_indicators implemented.
   private
   contains
-    procedure(IS_abstract_description),      pass(self), deferred, public :: IS_description
-    procedure(IS_abstract_set_coefficients), pass(self), deferred, public :: IS_set_coefficients
-    procedure(IS_abstract_compute),          pass(self), deferred, public :: IS_compute
+    procedure(IS_abstract_destructor),  pass(self), deferred, public :: IS_destructor
+    procedure(IS_abstract_constructor), pass(self), deferred, public :: IS_constructor
+    procedure(IS_abstract_description), pass(self), deferred, public :: IS_description
 endtype weno_IS
 
 abstract interface
+
+  pure subroutine IS_abstract_destructor(self)
+  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Destroy WENO polynomial coefficients.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  import :: weno_IS
+  class(weno_IS), intent(INOUT) :: self   !< WENO smoothenss indicators.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endsubroutine IS_abstract_destructor
+
+  pure subroutine IS_abstract_constructor(self,constructor)
+  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Create WENO polynomial coefficients.
+  !
+  !< @note Before call this method a concrete constructor must be instantiated.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  import :: weno_IS_constructor
+  import :: weno_IS
+  class(weno_IS),             intent(INOUT)  :: self          !< WENO smoothness indicators.
+  class(weno_IS_constructor), intent(INOUT)  :: constructor   !< WENO smoothness indicators constructor.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endsubroutine IS_abstract_constructor
 
   pure subroutine IS_abstract_description(self, string)
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -38,25 +67,6 @@ abstract interface
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine IS_abstract_description
 
-  pure subroutine IS_abstract_set_coefficients(self, IS_coefficients)
-  !---------------------------------------------------------------------------------------------------------------------------------
-  !< Compute the smoothness_indicators of the WENO interpolating polynomial.
-  !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_IS, I_P, R_P
-  class(weno_IS), intent(IN)  :: self                !< WENO smoothness_indicator.
-  real(R_P),      intent(OUT) :: IS_coefficients(:)  !< smoothness indicators coefficients,
-  !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine IS_abstract_set_coefficients
-
-  pure subroutine IS_abstract_compute(self, IS)
-  !---------------------------------------------------------------------------------------------------------------------------------
-  !< Compute the smoothness_indicators of the WENO interpolating polynomial.
-  !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_IS, I_P, R_P
-  class(weno_IS), intent(IN)  :: self   !< WENO smoothness_indicator.
-  real(R_P),      intent(OUT) :: IS(:)  !< smoothness indicators of the stencil.
-  !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine IS_abstract_compute
 endinterface
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule type_weno_smoothness_indicators
