@@ -28,44 +28,49 @@ type, abstract :: weno_optimal_weights
   !< @note Do not implement any real optimal weight: provide the interface for the different optimal weights implemented.
   private
   contains
-    procedure(optimal_weights_abstract_destructor),  pass(self), deferred, public :: optimal_weights_destructor
-    procedure(optimal_weights_abstract_constructor), pass(self), deferred, public :: optimal_weights_constructor
-    procedure(optimal_weights_abstract_description), pass(self), deferred, public :: optimal_weights_description
+    procedure(destructor_interface),  pass(self), deferred, public :: destructor
+    procedure(constructor_interface), pass(self), deferred, public :: constructor
+    procedure(description_interface), pass(self), deferred, public :: description
 endtype weno_optimal_weights
 
 abstract interface
-
-  pure subroutine optimal_weights_abstract_destructor(self)
+  !< Destroy WENO optimal weights.
+  pure subroutine destructor_interface(self)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Destroy WENO optimal weights.
   !---------------------------------------------------------------------------------------------------------------------------------
   import :: weno_optimal_weights
-  class(weno_optimal_weights),   intent(INOUT)  :: self   !< WENO optimal weights.
+  class(weno_optimal_weights), intent(inout)  :: self   !< WENO optimal weights.
   !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine optimal_weights_abstract_destructor
+  endsubroutine destructor_interface
+endinterface
 
-  pure subroutine optimal_weights_abstract_constructor(self, constructor)
+abstract interface
+  !< Create WENO optimal weights.
+  pure subroutine constructor_interface(self, constructor)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create WENO optimal weights.
   !
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
   import :: weno_optimal_weights
-  class(weno_optimal_weights),             intent(INOUT)  :: self          !< WENO optimal weights.
-  class(weno_optimal_weights_constructor), intent(INOUT)  :: constructor   !< WENO optimal weights constructor.
+  class(weno_optimal_weights),             intent(inout)  :: self          !< WENO optimal weights.
+  class(weno_optimal_weights_constructor), intent(inout)  :: constructor   !< WENO optimal weights constructor.
   !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine optimal_weights_abstract_constructor
+  endsubroutine constructor_interface
+endinterface
 
-  pure subroutine optimal_weights_abstract_description(self, string)
+abstract interface
+  !< Return a string describing WENO optimal weights.
+  pure subroutine description_interface(self, string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO optimal weights.
   !---------------------------------------------------------------------------------------------------------------------------------
   import :: weno_optimal_weights
-  class(weno_optimal_weights),   intent(IN)  :: self   !< WENO optimal weights.
-  character(len=:), allocatable, intent(OUT) :: string !< String returned.
+  class(weno_optimal_weights),   intent(in)  :: self   !< WENO optimal weights.
+  character(len=:), allocatable, intent(out) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine optimal_weights_abstract_description
-
+  endsubroutine description_interface
 endinterface
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule type_weno_optimal_weights

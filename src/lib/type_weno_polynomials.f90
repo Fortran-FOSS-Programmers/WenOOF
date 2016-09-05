@@ -1,6 +1,6 @@
-module type_weno_poly_coefficients
+module type_weno_polynomials
 !-----------------------------------------------------------------------------------------------------------------------------------
-!< Abstract WENO polynomial coefficients object.
+!< Abstract WENO polynomials object.
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -11,62 +11,67 @@ use penf, only : I_P, R_P
 implicit none
 private
 save
-public :: weno_poly_coefficients
+public :: weno_polynomials
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, abstract :: weno_poly_coefficients_constructor
-  !< Abstract type used for create new concrete WENO polynomial coefficients.
+type, abstract :: weno_polynomials_constructor
+  !< Abstract type used for create new concrete WENO polynomials.
   !<
-  !< @note Every concrete WENO polynomial coefficients implementation must define its own constructor type.
+  !< @note Every concrete WENO polynomials implementation must define its own constructor type.
   private
-endtype weno_poly_coefficients_constructor
+endtype weno_polynomials_constructor
 
-type, abstract :: weno_poly_coefficients
-  !< WENO polynomial coefficients.
+type, abstract :: weno_polynomials
+  !< WENO polynomials.
   !<
-  !< @note Do not implement any real polynomial coefficient: provide the interface for the different polynomial coefficients implemented.
+  !< @note Do not implement any real polynomial: provide the interface for the different polynomials implemented.
   private
   contains
-    procedure(poly_coefficients_abstract_destructor),  pass(self), deferred, public :: poly_coefficients_destructor
-    procedure(poly_coefficients_abstract_constructor), pass(self), deferred, public :: poly_coefficients_constructor
-    procedure(poly_coefficients_abstract_description), pass(self), deferred, public :: poly_coefficients_description
-endtype weno_poly_coefficients
+    procedure(destructor_interface),  pass(self), deferred, public :: destructor
+    procedure(constructor_interface), pass(self), deferred, public :: constructor
+    procedure(description_interface), pass(self), deferred, public :: description
+endtype weno_polynomials
 
 abstract interface
+  !< Destroy WENO polynomials.
+  pure subroutine destructor_interface(self)
+  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Destroy WENO polynomials.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  import :: weno_polynomials
+  class(weno_polynomials), intent(inout) :: self   !< WENO polynomials.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endsubroutine destructor_interface
+endinterface
 
-  pure subroutine poly_coefficients_abstract_destructor(self)
+abstract interface
+  !< Create WENO polynomials.
+  pure subroutine constructor_interface(self,constructor)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Destroy WENO polynomial coefficients.
-  !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_poly_coefficients
-  class(weno_poly_coefficients), intent(INOUT)  :: self   !< WENO polynomial coefficients.
-  !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine poly_coefficients_abstract_destructor
-
-  pure subroutine poly_coefficients_abstract_constructor(self,constructor)
-  !---------------------------------------------------------------------------------------------------------------------------------
-  !< Create WENO polynomial coefficients.
+  !< Create WENO polynomials.
   !
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_poly_coefficients_constructor
-  import :: weno_poly_coefficients
-  class(weno_poly_coefficients),             intent(INOUT)  :: self          !< WENO polynomial coefficients.
-  class(weno_poly_coefficients_constructor), intent(INOUT)  :: constructor   !< WENO polynomial coefficients constructor.
+  import :: weno_polynomials_constructor
+  import :: weno_polynomials
+  class(weno_polynomials),             intent(inout) :: self          !< WENO polynomials.
+  class(weno_polynomials_constructor), intent(inout) :: constructor   !< WENO polynomials constructor.
   !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine poly_coefficients_abstract_constructor
+  endsubroutine constructor_interface
+endinterface
 
-  pure subroutine poly_coefficients_abstract_description(self, string)
+abstract interface
+  !< Return a string describing WENO polynomials.
+  pure subroutine description_interface(self, string)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Return a string describing WENO polynomial coefficients.
+  !< Return a string describing WENO polynomials.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_poly_coefficients
-  class(weno_poly_coefficients), intent(IN)  :: self   !< WENO polynomial coefficients.
-  character(len=:), allocatable, intent(OUT) :: string !< String returned.
+  import :: weno_polynomials
+  class(weno_polynomials),       intent(in)  :: self   !< WENO polynomials.
+  character(len=:), allocatable, intent(out) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine poly_coefficients_abstract_description
-
+  endsubroutine description_interface
 endinterface
 !-----------------------------------------------------------------------------------------------------------------------------------
-endmodule type_weno_poly_coefficients
+endmodule type_weno_polynomials
