@@ -62,23 +62,23 @@ contains
       case(2) ! 3rd order
         ! 1 => left interface (i-1/2)
         !  cell  0           ;    cell  1
-        c(1, 0, 0) =  0.5_R_P; c(1, 1, 0) =  0.5_R_P ! stencil 0
-        c(1, 0, 1) = -0.5_R_P; c(1, 1, 1) =  1.5_R_P ! stencil 1
+        c(1,0,0) =  0.5_R_P; c(1,1,0) =  0.5_R_P ! stencil 0
+        c(1,0,1) = -0.5_R_P; c(1,1,1) =  1.5_R_P ! stencil 1
         ! 2 => right interface (i+1/2)
         !  cell  0           ;    cell  1
-        c(2, 0, 0) =  1.5_R_P; c(2, 1, 0) = -0.5_R_P ! stencil 0
-        c(2, 0, 1) =  0.5_R_P; c(2, 1, 1) =  0.5_R_P ! stencil 1
+        c(2,0,0) =  1.5_R_P; c(2,1,0) = -0.5_R_P ! stencil 0
+        c(2,0,1) =  0.5_R_P; c(2,1,1) =  0.5_R_P ! stencil 1
       case(3) ! 5th order
         ! 1 => left interface (i-1/2)
         !  cell  0                 ;    cell  1                 ;    cell  2
-        c(1, 0, 0) =  1._R_P/3._R_P; c(1, 1, 0) =  5._R_P/6._R_P; c(1, 2, 0) = -1._R_P/6._R_P ! stencil 0
-        c(1, 0, 1) = -1._R_P/6._R_P; c(1, 1, 1) =  5._R_P/6._R_P; c(1, 2, 1) =  1._R_P/3._R_P ! stencil 1
-        c(1, 0, 2) =  1._R_P/3._R_P; c(1, 1, 2) = -7._R_P/6._R_P; c(1, 2, 2) = 11._R_P/6._R_P ! stencil 2
+        c(1,0,0) =  1._R_P/3._R_P; c(1,1,0) =  5._R_P/6._R_P; c(1,2,0) = -1._R_P/6._R_P ! stencil 0
+        c(1,0,1) = -1._R_P/6._R_P; c(1,1,1) =  5._R_P/6._R_P; c(1,2,1) =  1._R_P/3._R_P ! stencil 1
+        c(1,0,2) =  1._R_P/3._R_P; c(1,1,2) = -7._R_P/6._R_P; c(1,2,2) = 11._R_P/6._R_P ! stencil 2
         ! 2 => right interface (i+1/2)
         !  cell  0                 ;    cell  1                 ;    cell  2
-        c(2, 0, 0) = 11._R_P/6._R_P; c(2, 1, 0) = -7._R_P/6._R_P; c(2, 2, 0) =  1._R_P/3._R_P ! stencil 0
-        c(2, 0, 1) =  1._R_P/3._R_P; c(2, 1, 1) =  5._R_P/6._R_P; c(2, 2, 1) = -1._R_P/6._R_P ! stencil 1
-        c(2, 0, 2) = -1._R_P/6._R_P; c(2, 1, 2) =  5._R_P/6._R_P; c(2, 2, 2) =  1._R_P/3._R_P ! stencil 2
+        c(2,0,0) = 11._R_P/6._R_P; c(2,1,0) = -7._R_P/6._R_P; c(2,2,0) =  1._R_P/3._R_P ! stencil 0
+        c(2,0,1) =  1._R_P/3._R_P; c(2,1,1) =  5._R_P/6._R_P; c(2,2,1) = -1._R_P/6._R_P ! stencil 1
+        c(2,0,2) = -1._R_P/6._R_P; c(2,1,2) =  5._R_P/6._R_P; c(2,2,2) =  1._R_P/3._R_P ! stencil 2
       case(4) ! 7th order
         ! 1 => left interface (i-1/2)
         !  cell  0               ;    cell  1               ;    cell  2               ;    cell  3
@@ -127,7 +127,7 @@ contains
         c(1,0,2)=   1._R_P/60._R_P; c(1,1,2)=  -2._R_P/15._R_P; c(1,2,2)=  37._R_P/60._R_P; c(1,3,2)=  37._R_P/60._R_P  ! stencil 2
         c(1,0,3)=  -1._R_P/60._R_P; c(1,1,3)=   7._R_P/60._R_P; c(1,2,3)= -23._R_P/60._R_P; c(1,3,3)=  19._R_P/20._R_P  ! stencil 3
         c(1,0,4)=   1._R_P/30._R_P; c(1,1,4)= -13._R_P/60._R_P; c(1,2,4)=  37._R_P/60._R_P; c(1,3,4)= -21._R_P/20._R_P  ! stencil 4
-        c(1,0,5)=  -1._R_P/6._R_P ; c(1,1,5)= -31._R_P/30._R_P; c(1,2,5)=-163._R_P/60._R_P; c(1,3,5)=  79._R_P/20._R_P  ! stencil 5
+        c(1,0,5)=  -1._R_P/6._R_P ; c(1,1,5)=  31._R_P/30._R_P; c(1,2,5)=-163._R_P/60._R_P; c(1,3,5)=  79._R_P/20._R_P  ! stencil 5
         !  cell  4                ;    cell  5
         c(1,4,0)= -13._R_P/60._R_P; c(1,5,0)=   1._R_P/6._R_P   ! stencil 0
         c(1,4,1)=   7._R_P/60._R_P; c(1,5,1)=  -1._R_P/60._R_P  ! stencil 1
