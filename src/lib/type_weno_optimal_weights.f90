@@ -15,21 +15,14 @@ public :: weno_optimal_weights
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, abstract :: weno_optimal_weights_constructor
-  !< Abstract type used for create new concrete WENO optimal weights.
-  !<
-  !< @note Every concrete WENO optimale weights implementation must define its own constructor type.
-  private
-endtype weno_optimal_weights_constructor
-
 type, abstract :: weno_optimal_weights
   !< WENO optimal weights.
   !<
   !< @note Do not implement any real optimal weight: provide the interface for the different optimal weights implemented.
   private
   contains
-    procedure(destructor_interface),  pass(self), deferred, public :: destructor
-    procedure(constructor_interface), pass(self), deferred, public :: constructor
+    procedure(destructor_interface),  pass(self), deferred, public :: destroy
+    procedure(constructor_interface), pass(self), deferred, public :: create
     procedure(description_interface), pass(self), deferred, public :: description
 endtype weno_optimal_weights
 
@@ -47,15 +40,15 @@ endinterface
 
 abstract interface
   !< Create WENO optimal weights.
-  pure subroutine constructor_interface(self, constructor)
+  pure subroutine constructor_interface(self, S)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create WENO optimal weights.
   !
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_optimal_weights
-  class(weno_optimal_weights),             intent(inout)  :: self          !< WENO optimal weights.
-  class(weno_optimal_weights_constructor), intent(inout)  :: constructor   !< WENO optimal weights constructor.
+  import :: weno_optimal_weights, I_P
+  class(weno_optimal_weights), intent(inout) :: self       !< WENO optimal weights.
+  integer(I_P),                intent(in)    :: S          !< Number of stencils used.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine constructor_interface
 endinterface

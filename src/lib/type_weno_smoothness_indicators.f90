@@ -1,4 +1,4 @@
-module type_weno_IS
+module type_weno_smoothness_indicators
 !-----------------------------------------------------------------------------------------------------------------------------------
 !< Abstract WENO smoothness indicators object.
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -15,13 +15,6 @@ public :: weno_IS
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, abstract :: weno_IS_constructor
-  !< Abstract type used for create new concrete WENO smoothness indicators.
-  !<
-  !< @note Every concrete WENO smoothness indicators implementation must define its own constructor type.
-  private
-endtype weno_IS_constructor
-
 type, abstract :: weno_IS
   !< WENO smoothness indicators.
   !<
@@ -31,6 +24,7 @@ type, abstract :: weno_IS
     procedure(destructor_interface),  pass(self), deferred, public :: destructor
     procedure(constructor_interface), pass(self), deferred, public :: constructor
     procedure(description_interface), pass(self), deferred, public :: description
+    procedure(compute_interface),     pass(self), deferred, public :: compute
 endtype weno_IS
 
 abstract interface
@@ -47,16 +41,15 @@ endinterface
 
 abstract interface
   !< Create WENO polynomial coefficients.
-  pure subroutine constructor_interface(self,constructor)
+  pure subroutine constructor_interface(self, S)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Create WENO polynomial coefficients.
+  !< Create WENO smoothness indicators coefficients.
   !
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_IS_constructor
-  import :: weno_IS
-  class(weno_IS),             intent(inout)  :: self          !< WENO smoothness indicators.
-  class(weno_IS_constructor), intent(inout)  :: constructor   !< WENO smoothness indicators constructor.
+  import :: weno_IS, I_P
+  class(weno_IS), intent(inout) :: self        !< WENO smoothness indicators.
+  integer(I_P),   intent(in)    :: S           !< Number of stencils used.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine constructor_interface
 endinterface
@@ -72,6 +65,23 @@ abstract interface
   character(len=:), allocatable, intent(out) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description_interface
+endinterface
+
+abstract interface
+  !< Compute the smoothness indicators of the WENO interpolating polynomial.
+  pure function compute_interface(self, S, weight_opt, IS, eps) result(IS)
+  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Compute the smoothness indicators of the WENO interpolating polynomial.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  import :: weno_IS, I_P, R_P
+  class(weno_IS), intent(in) :: self        !< WENO alpha coefficient.
+  integer(I_P),   intent(in) :: S           !< Number of stencils used.
+  real(R_P),      intent(in) :: weight_opt  !< Optimal weight of the stencil.
+  real(R_P),      intent(in) :: IS          !< Smoothness indicator of the stencil.
+  real(R_P),      intent(in) :: eps         !< Parameter for avoiding divided by zero.
+  real(R_P),                 :: alpha       !< Alpha coefficient of the stencil.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endfunction compute_interface
 endinterface
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule type_weno_smoothness_indicators
