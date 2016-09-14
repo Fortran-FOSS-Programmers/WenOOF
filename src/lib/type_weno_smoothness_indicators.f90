@@ -69,17 +69,16 @@ endinterface
 
 abstract interface
   !< Compute the smoothness indicators of the WENO interpolating polynomial.
-  pure function compute_interface(self, S, weight_opt, IS, eps) result(IS)
+  pure function compute_interface(self, smooth_coef, v1, v2) result(IS)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Compute the smoothness indicators of the WENO interpolating polynomial.
+  !< Compute the partial value of the smoothness indicator of a single WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
   import :: weno_IS, I_P, R_P
-  class(weno_IS), intent(in) :: self        !< WENO alpha coefficient.
-  integer(I_P),   intent(in) :: S           !< Number of stencils used.
-  real(R_P),      intent(in) :: weight_opt  !< Optimal weight of the stencil.
-  real(R_P),      intent(in) :: IS          !< Smoothness indicator of the stencil.
-  real(R_P),      intent(in) :: eps         !< Parameter for avoiding divided by zero.
-  real(R_P),                 :: alpha       !< Alpha coefficient of the stencil.
+  class(weno_IS), intent(in) :: self        !< WENO smoothness indicator.
+  real(R_P),      intent(in) :: smooth_coef !< Coefficient of the smoothness indicator.
+  real(R_P),                 :: v1          !< First (pivotal) value from the stencil used for the interpolation.
+  real(R_P),                 :: v2          !< Second value from the stencil used for the interpolation.
+  real(R_P),                 :: IS          !< Partial value of the smoothness indicator of polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
   endfunction compute_interface
 endinterface

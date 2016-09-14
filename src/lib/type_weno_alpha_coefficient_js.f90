@@ -45,7 +45,7 @@ contains
   string = 'WENO alpha coefficient'//nl
   string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
            'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130'//nl
-  string = string//'  The "alpha_js" method has the following public API'//nl
+  string = string//'  The "compute" method has the following public API'//nl
   string = string//'    alpha(S,weigt_opt,IS,eps)'//nl
   string = string//'  where:'//nl
   string = string//'    S: integer(I_P), intent(IN), the number of the stencils used'//nl

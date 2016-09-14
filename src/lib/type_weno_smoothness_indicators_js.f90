@@ -28,11 +28,12 @@ type, extends(weno_IS) :: weno_IS_js
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Sénéchal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
   private
-  real(R_P), allocatable :: coef(:,:)   !< Optimal weights                    [1:2,0:S-1].
+  real(R_P), allocatable :: coef(:,:)   !< Optimal weights [1:2,0:S-1].
   contains
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
     procedure(constructor_interface), pass(self), deferred, public :: create
     procedure(description_interface), pass(self), deferred, public :: description
+    procedure(compute_interface),     pass(self), deferred, public :: compute
 endtype weno_IS_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
@@ -49,7 +50,6 @@ contains
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine destroy
-endinterface
 
   pure subroutine create(self, S)
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ endinterface
   !---------------------------------------------------------------------------------------------------------------------------------
   call self%destroy
   associate(c => self%coef)
-    allocate(coef(1:2, 0:S - 1))
+    allocate(c(1:2, 0:S - 1))
     select case(S)
     case(2) ! 3rd order
       ! stencil 0
@@ -819,40 +819,47 @@ endinterface
       !                  (i-4)*(i-5)
       c(6,6,6) =     897207163._R_P/7484400._R_P
     endselect
-    endassociate
+  endassociate
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine create
-endinterface
 
-abstract interface
-  !< Return a string describing WENO smoothness_indicators.
-  pure subroutine description_interface(self, string)
+  pure subroutine description(self, string)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Return a string describing WENO smoothness_indicators.
+  !< Return a string describing WENO smoothness indicator.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_IS
-  class(weno_IS),                intent(in)  :: self   !< WENO smoothness indicator.
-  character(len=:), allocatable, intent(out) :: string !< String returned.
+  class(weno_IS_js),                intent(in)  :: self   !< WENO alpha coefficient.
+  character(len=:), allocatable,    intent(out) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine description_interface
-endinterface
 
-abstract interface
-  !< Compute the smoothness indicators of the WENO interpolating polynomial.
-  pure function compute_interface(self, S, weight_opt, IS, eps) result(IS)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Compute the smoothness indicators of the WENO interpolating polynomial.
+  string = 'WENO smoothness indicators'//nl
+  string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
+           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130'//nl
+  string = string//'  The "compute" method has the following public API'//nl
+  string = string//'    IS(smooth_coef,v1,v2)'//nl
+  string = string//'  where:'//nl
+  string = string//'    smooth_coef: real(R_P), intent(IN), the smoothness indicator coefficient of the value'//nl
+  string = string//'    v1: real(R_P), intent(IN), the pivotal value from the stencil'//nl
+  string = string//'    v2: real(R_P), intent(IN), the second value from the stencil'
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_IS, I_P, R_P
-  class(weno_IS), intent(in) :: self        !< WENO alpha coefficient.
-  integer(I_P),   intent(in) :: S           !< Number of stencils used.
-  real(R_P),      intent(in) :: weight_opt  !< Optimal weight of the stencil.
-  real(R_P),      intent(in) :: IS          !< Smoothness indicator of the stencil.
-  real(R_P),      intent(in) :: eps         !< Parameter for avoiding divided by zero.
-  real(R_P),                 :: alpha       !< Alpha coefficient of the stencil.
+  endsubroutine description
+
+  pure function compute(self, smooth_coef, v1, v2) result(IS)
   !---------------------------------------------------------------------------------------------------------------------------------
-  endfunction compute_interface
-endinterface
+  !< Compute the partial value of the smoothness indicator of a single WENO interpolating polynomial.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  class(weno_IS_js), intent(in) :: self        !< WENO alpha coefficient.
+  real(R_P),         intent(in) :: smooth_coef !< Coefficient of the smoothness indicator.
+  real(R_P),         intent(IN) :: v1          !< First (pivotal) value from the stencil used for the interpolation.
+  real(R_P),         intent(IN) :: v2          !< Second value from the stencil used for the interpolation.
+  real(R_P),                    :: IS          !< Partial value of the smoothness indicator of polynomial.
+  !---------------------------------------------------------------------------------------------------------------------------------
+
+  !---------------------------------------------------------------------------------------------------------------------------------
+  IS = smooth_coef * v1 * v2
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endfunction compute
+
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule type_weno_smoothness_indicators_js

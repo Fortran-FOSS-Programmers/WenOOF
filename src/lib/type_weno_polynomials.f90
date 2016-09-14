@@ -15,22 +15,16 @@ public :: weno_polynomials
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, abstract :: weno_polynomials_constructor
-  !< Abstract type used for create new concrete WENO polynomials.
-  !<
-  !< @note Every concrete WENO polynomials implementation must define its own constructor type.
-  private
-endtype weno_polynomials_constructor
-
 type, abstract :: weno_polynomials
   !< WENO polynomials.
   !<
   !< @note Do not implement any real polynomial: provide the interface for the different polynomials implemented.
   private
   contains
-    procedure(destructor_interface),  pass(self), deferred, public :: destructor
-    procedure(constructor_interface), pass(self), deferred, public :: constructor
+    procedure(destructor_interface),  pass(self), deferred, public :: destroy
+    procedure(constructor_interface), pass(self), deferred, public :: create
     procedure(description_interface), pass(self), deferred, public :: description
+    procedure(compute_interface),     pass(self), deferred, public :: compute
 endtype weno_polynomials
 
 abstract interface
@@ -72,6 +66,21 @@ abstract interface
   character(len=:), allocatable, intent(out) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description_interface
+endinterface
+
+abstract interface
+  !< Compute the partial value of the WENO interpolating polynomial.
+  pure function compute_interface(self, poly_coef, v) result(poly)
+  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Compute the partial value of the interpolating polynomial.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  import :: weno_alpha_coefficient, I_P, R_P
+  class(weno_alpha_coefficient), intent(in) :: self        !< WENO polynomial.
+  real(R_P),                     intent(in) :: poly_coef   !< Polynomila coefficient for the value v.
+  real(R_P),                     intent(in) :: v           !< Single value of the interpolation stencil.
+  real(R_P),                                :: poly        !< Partial value of the interpolating polynomial.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endfunction compute_interface
 endinterface
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule type_weno_polynomials
