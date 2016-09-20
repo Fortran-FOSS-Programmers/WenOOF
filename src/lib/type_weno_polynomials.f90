@@ -41,16 +41,14 @@ endinterface
 
 abstract interface
   !< Create WENO polynomials.
-  pure subroutine constructor_interface(self,constructor)
+  pure subroutine constructor_interface(self)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create WENO polynomials.
   !
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_polynomials_constructor
   import :: weno_polynomials
   class(weno_polynomials),             intent(inout) :: self          !< WENO polynomials.
-  class(weno_polynomials_constructor), intent(inout) :: constructor   !< WENO polynomials constructor.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine constructor_interface
 endinterface
@@ -74,11 +72,11 @@ abstract interface
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the partial value of the interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_alpha_coefficient, I_P, R_P
-  class(weno_alpha_coefficient), intent(in) :: self        !< WENO polynomial.
-  real(R_P),                     intent(in) :: poly_coef   !< Polynomila coefficient for the value v.
-  real(R_P),                     intent(in) :: v           !< Single value of the interpolation stencil.
-  real(R_P),                                :: poly        !< Partial value of the interpolating polynomial.
+  import :: weno_polynomials, I_P, R_P
+  class(weno_polynomials), intent(in) :: self        !< WENO polynomial.
+  real(R_P),               intent(in) :: poly_coef   !< Polynomila coefficient for the value v.
+  real(R_P),               intent(in) :: v           !< Single value of the interpolation stencil.
+  real(R_P)                           :: poly        !< Partial value of the interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
   endfunction compute_interface
 endinterface

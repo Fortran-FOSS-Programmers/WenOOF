@@ -50,7 +50,7 @@ abstract interface
   real(R_P),                     intent(in) :: weight_opt  !< Optimal weight of the stencil.
   real(R_P),                     intent(in) :: IS          !< Smoothness indicator of the stencil.
   real(R_P),                     intent(in) :: eps         !< Parameter for avoiding divided by zero.
-  real(R_P),                                :: alpha       !< Alpha coefficient of the stencil.
+  real(R_P)                                 :: alpha       !< Alpha coefficient of the stencil.
   !---------------------------------------------------------------------------------------------------------------------------------
   endfunction compute_interface
 endinterface

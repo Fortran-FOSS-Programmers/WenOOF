@@ -21,8 +21,8 @@ type, abstract :: weno_IS
   !< @note Do not implement any real smoothness indicators: provide the interface for the different smoothness_indicators implemented.
   private
   contains
-    procedure(destructor_interface),  pass(self), deferred, public :: destructor
-    procedure(constructor_interface), pass(self), deferred, public :: constructor
+    procedure(destructor_interface),  pass(self), deferred, public :: destroy
+    procedure(constructor_interface), pass(self), deferred, public :: create
     procedure(description_interface), pass(self), deferred, public :: description
     procedure(compute_interface),     pass(self), deferred, public :: compute
 endtype weno_IS
@@ -76,9 +76,9 @@ abstract interface
   import :: weno_IS, I_P, R_P
   class(weno_IS), intent(in) :: self        !< WENO smoothness indicator.
   real(R_P),      intent(in) :: smooth_coef !< Coefficient of the smoothness indicator.
-  real(R_P),                 :: v1          !< First (pivotal) value from the stencil used for the interpolation.
-  real(R_P),                 :: v2          !< Second value from the stencil used for the interpolation.
-  real(R_P),                 :: IS          !< Partial value of the smoothness indicator of polynomial.
+  real(R_P),      intent(in) :: v1          !< First (pivotal) value from the stencil used for the interpolation.
+  real(R_P),      intent(in) :: v2          !< Second value from the stencil used for the interpolation.
+  real(R_P)                  :: IS          !< Partial value of the smoothness indicator of polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
   endfunction compute_interface
 endinterface
