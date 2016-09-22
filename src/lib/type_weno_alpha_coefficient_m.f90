@@ -28,8 +28,8 @@ type, extends(weno_alpha_coefficient_z) :: weno_alpha_coefficient_m
   !< @note The provided WENO alpha coefficient implements the alpha coefficients defined in *Mapped weighted essentially
   !< non-oscillatory schemes: Achieving optimal order near critical points*, Andrew K. Henrick, Tariq D. Aslam, Joseph M. Powers,
   !< JCP, 2005, vol. 207, pp. 542-567, doi:10.1016/j.jcp.2005.01.023.
-  class(weno_alpha_coefficient), allocatable :: alpha_base !< To be set into [[initialize]] method.
   private
+  class(weno_alpha_coefficient), allocatable :: alpha_base !< To be set into [[initialize]] method.
   contains
     ! deferred public methods
     procedure, pass(self), public :: description
@@ -65,24 +65,24 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description
 
-  pure function compute(self, S, weight_opt, IS, eps) result(alpha)
+  pure function compute(self, S, weight_opt, IS, IS_i, eps) result(alpha)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the alpha coefficient of the WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_m), intent(in) :: self       !< WENO alpha coefficient.
-  integer(I_P),                    intent(in) :: S          !< Number of stencils used.
-  real(R_P),                       intent(in) :: weight_opt !< Optimal weight of the stencil.
-  real(R_P),                       intent(in) :: IS         !< Smoothness indicator of the stencil.
-  real(R_P),                       intent(in) :: eps        !< Parameter for avoiding divided by zero.
-  real(R_P),                                  :: alpha      !< Alpha coefficient of the stencil.
+  class(weno_alpha_coefficient_m), intent(in)           :: self        !< WENO alpha coefficient.
+  integer(I_P),                    intent(in)           :: S           !< Number of stencils used.
+  real(R_P),                       intent(in)           :: weight_opt  !< Optimal weight of the stencil.
+  real(R_P),                       intent(in), optional :: IS(0:S - 1) !< Smoothness indicators of the stencils.
+  real(R_P),                       intent(in)           :: IS_i        !< Smoothness indicator of the stencil.
+  real(R_P),                       intent(in)           :: eps         !< Parameter for avoiding divided by zero.
+  real(R_P)                                             :: alpha       !< Alpha coefficient of the stencil.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  associate(alpha_base => self%alpha_base%compute)
-    m_alpha = (alpha_base(S,weight_opt,IS,eps) * (weight_opt + weight_opt * weight_opt - 3._R_P * weight_opt *          &
-               alpha_base(S,weight_opt,IS,eps) + alpha_base(S,weight_opt,IS,eps) * alpha_base(S,weight_opt,IS,eps) ) )/ &
-              (weight_opt * weight_opt + alpha_base(S,weight_opt,IS,eps) * (1._R_P - 2._R_P * weight_opt))
-  endassociate
+  alpha = (self%alpha_base%compute(S,weight_opt,IS,IS_i,eps) * (weight_opt + weight_opt * weight_opt - 3._R_P * weight_opt * &
+           self%alpha_base%compute(S,weight_opt,IS,IS_i,eps) + self%alpha_base%compute(S,weight_opt,IS,IS_i,eps) * &
+           self%alpha_base%compute(S,weight_opt,IS,IS_i,eps) ) )/ &
+          (weight_opt * weight_opt + self%alpha_base%compute(S,weight_opt,IS,IS_i,eps) * (1._R_P - 2._R_P * weight_opt))
   !---------------------------------------------------------------------------------------------------------------------------------
   endfunction compute
 
@@ -92,7 +92,7 @@ contains
   !< Create the alias for the base alpha coefficient function.
   !---------------------------------------------------------------------------------------------------------------------------------
   class(weno_alpha_coefficient_m), intent(inout) :: self
-  character(*)                     intent(in)    :: alpha_base
+  character(*),                    intent(in)    :: alpha_base
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------

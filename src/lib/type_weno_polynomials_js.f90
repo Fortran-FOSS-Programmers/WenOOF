@@ -8,6 +8,7 @@ module type_weno_polynomials_js
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 use penf, only : I_P, R_P
+use type_weno_polynomials
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -24,7 +25,7 @@ type, extends(weno_polynomials) :: weno_polynomials_js
 !< @note The provided polynomials implement the Lagrange polynomials defined in *Efficient Implementation
 !< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130
   private
-  real(R_P), allocatable :: coef(:,:)   !< Polynomial coefficients [1:2,0:S-1,0:S-1].
+  real(R_P), allocatable :: coef(:,:,:)   !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
     procedure, pass(self), public :: destroy
     procedure, pass(self), public :: create
@@ -57,8 +58,9 @@ contains
 
   !---------------------------------------------------------------------------------------------------------------------------------
   call self%destroy
+  allocate(self%coef(1:2, 0:S - 1, 0:S - 1))
   associate(c => self%coef)
-    allocate(c(1:2, 0:S - 1, 0:S - 1))
+    select case(S)
       case(2) ! 3rd order
         ! 1 => left interface (i-1/2)
         !  cell  0           ;    cell  1
@@ -219,7 +221,7 @@ contains
   class(weno_polynomials_js), intent(in) :: self       !< WENO alpha coefficient.
   real(R_P),                  intent(in) :: poly_coef  !< Coefficient of the smoothness indicator.
   real(R_P),                  intent(IN) :: v          !< Selected value from the stencil used for the interpolation.
-  real(R_P),                             :: poly       !< Partial value of the interpolating polynomial.
+  real(R_P)                              :: poly       !< Partial value of the interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------

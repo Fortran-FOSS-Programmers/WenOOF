@@ -10,6 +10,7 @@ module type_weno_smoothness_indicators_js
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 use penf, only : I_P, R_P
+use type_weno_smoothness_indicators
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -28,12 +29,12 @@ type, extends(weno_IS) :: weno_IS_js
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Sénéchal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
   private
-  real(R_P), allocatable :: coef(:,:)   !< Optimal weights [1:2,0:S-1].
+  real(R_P), allocatable :: coef(:,:,:)   !< Smoothness indicators coefficients [1:2,0:S-1,0:S-1]
   contains
-    procedure(destructor_interface),  pass(self), deferred, public :: destroy
-    procedure(constructor_interface), pass(self), deferred, public :: create
-    procedure(description_interface), pass(self), deferred, public :: description
-    procedure(compute_interface),     pass(self), deferred, public :: compute
+    procedure, pass(self), public :: destroy
+    procedure, pass(self), public :: create
+    procedure, pass(self), public :: description
+    procedure, pass(self), public :: compute
 endtype weno_IS_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
@@ -61,8 +62,8 @@ contains
 
   !---------------------------------------------------------------------------------------------------------------------------------
   call self%destroy
+  allocate(self%coef(1:2, 0:S - 1, 0:S - 1))
   associate(c => self%coef)
-    allocate(c(1:2, 0:S - 1))
     select case(S)
     case(2) ! 3rd order
       ! stencil 0
@@ -78,7 +79,7 @@ contains
     case(3) ! 5th order
       ! stencil 0
       !      i*i                ;       (i-1)*i             ;       (i-2)*i
-      c(0,0,0) =  10._R_P/3._R_P; c(1,0,0) = -31._R_P/3._R_P; c(2,0 0) =  11._R_P/3._R_P
+      c(0,0,0) =  10._R_P/3._R_P; c(1,0,0) = -31._R_P/3._R_P; c(2,0,0) =  11._R_P/3._R_P
       !      /                  ;       (i-1)*(i-1)         ;       (i-2)*(i-1)
       c(0,1,0) =   0._R_P       ; c(1,1,0) =  25._R_P/3._R_P; c(2,1,0) = -19._R_P/3._R_P
       !      /                  ;        /                  ;       (i-2)*(i-2)
@@ -854,7 +855,7 @@ contains
   real(R_P),         intent(in) :: smooth_coef !< Coefficient of the smoothness indicator.
   real(R_P),         intent(IN) :: v1          !< First (pivotal) value from the stencil used for the interpolation.
   real(R_P),         intent(IN) :: v2          !< Second value from the stencil used for the interpolation.
-  real(R_P),                    :: IS          !< Partial value of the smoothness indicator of polynomial.
+  real(R_P)                     :: IS          !< Partial value of the smoothness indicator of polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------

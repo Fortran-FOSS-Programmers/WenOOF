@@ -66,20 +66,21 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description
 
-  pure function compute(self, S, weight_opt, IS, eps) result(alpha)
+  pure function compute(self, S, weight_opt, IS, IS_i, eps) result(alpha)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the alpha coefficient of the WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_z), intent(in) :: self       !< WENO alpha coefficient.
-  integer(I_P),                    intent(in) :: S          !< Number of stencils used.
-  real(R_P),                       intent(in) :: weight_opt !< Optimal weight of the stencil.
-  real(R_P),                       intent(in) :: IS         !< Smoothness indicator of the stencil.
-  real(R_P),                       intent(in) :: eps        !< Parameter for avoiding divided by zero.
-  real(R_P),                                  :: alpha      !< Alpha coefficient of the stencil.
+  class(weno_alpha_coefficient_z), intent(in)           :: self         !< WENO alpha coefficient.
+  integer(I_P),                    intent(in)           :: S            !< Number of stencils used.
+  real(R_P),                       intent(in)           :: weight_opt   !< Optimal weight of the stencil.
+  real(R_P),                       intent(in), optional :: IS(0:S - 1)  !< Smoothness indicators of the stencils.
+  real(R_P),                       intent(in)           :: IS_i         !< Smoothness indicator of the i-th stencil.
+  real(R_P),                       intent(in)           :: eps          !< Parameter for avoiding divided by zero.
+  real(R_P)                                             :: alpha        !< Alpha coefficient of the stencil.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  alpha = weight_opt * (1._R_P + (tau(S,IS)/(eps+IS))) ** (weno_exp(S)))
+  alpha = weight_opt * ((1._R_P + (tau(S,IS)/(eps+IS_i))) ** (weno_exp(S)))
   !---------------------------------------------------------------------------------------------------------------------------------
   endfunction compute
 
@@ -105,7 +106,7 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  w_odd = int(mod(S, 2_I1P), I_P)
+  w_odd = int(mod(S, 2_I_P), I_P)
   !---------------------------------------------------------------------------------------------------------------------------------
   endfunction weno_odd
 
@@ -113,13 +114,13 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the tau coefficient used in the WENO-Z alpha coefficient.
   !---------------------------------------------------------------------------------------------------------------------------------
-  integer(I_P), intent(in) :: S     !< Number of stencils used.
-  real(R_P),    intent(in) :: IS(:) !< Smoothness indicators.
-  real(R_P),               :: w_tau !< Tau coefficient.
+  integer(I_P), intent(in) :: S           !< Number of stencils used.
+  real(R_P),    intent(in) :: IS(0:S - 1) !< Smoothness indicators.
+  real(R_P)                :: w_tau       !< Tau coefficient.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  w_tau = abs(IS(0) - (1-weno_odd(S)*IS(1) - (1-weno_odd(S))*IS(S-2_I1P) + (1-2*weno_odd(S))*IS(S-1_I1P))
+  w_tau = abs(IS(0) - (1-weno_odd(S))*IS(1) - (1-weno_odd(S))*IS(S-2_I_P) + (1-2*weno_odd(S))*IS(S-1_I_P))
   !---------------------------------------------------------------------------------------------------------------------------------
   endfunction tau
 endmodule type_weno_alpha_coefficient_z

@@ -6,10 +6,10 @@ module type_weno_interpolator_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 use penf, only : I_P, R_P
 use type_weno_interpolator
-use type_weno_alpha_coefficient
-use type_weno_optimal_weights
-use type_weno_smoothness_indicators
-use type_weno_polynomials
+use type_weno_alpha_coefficient_m
+use type_weno_optimal_weights_js
+use type_weno_smoothness_indicators_js
+use type_weno_polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -44,10 +44,6 @@ type, extends(weno_interpolator) :: weno_interpolator_upwind
   private
   integer(I_P)                               :: S = 0_I_P    !< Stencil dimension.
   real(R_P)                                  :: eps = 0._R_P !< Parameter for avoiding divided by zero when computing IS.
-  class(weno_IS),                allocatable :: IS           !< WENO smoothness indicators.
-  class(weno_alpha_coefficient), allocatable :: alpha        !< WENO alpha coefficients.
-  class(weno_optimal_weights),   allocatable :: weights      !< WENO weights.
-  class(weno_polynomials),       allocatable :: polynom      !< WENO polynomials.
   contains
     ! public methods
     procedure, pass(self), public :: destroy
@@ -65,8 +61,8 @@ end interface
 
 interface associate_WENO_alpha
   module procedure associate_WENO_alpha_js, &
-  module procedure associate_WENO_alpha_z,  &
-  module procedure associate_WENO_alpha_m
+                   associate_WENO_alpha_z,  &
+                   associate_WENO_alpha_m
 end interface
 
 interface associate_WENO_weights
@@ -216,13 +212,17 @@ contains
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine destroy
-
-  subroutine create(self, constructor)
+  subroutine create(self, constructor, IS_type, alpha_type, alpha_base_type, weights_opt_type, polynomial_type)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
   class(weno_interpolator_upwind), intent(inout) :: self        !< WENO interpolator.
   class(weno_constructor),         intent(in)    :: constructor !< WENO constructor.
+  character(*),             intent(IN)               :: IS_type           !< The concrete WENO smoothness indicator.
+  character(*),             intent(IN)               :: alpha_type        !< The concrete WENO alpha coefficient.
+  character(*),             intent(IN), optional     :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
+  character(*),             intent(IN)               :: weights_opt_type  !< The concrete WENO optimal weights.
+  character(*),             intent(IN)               :: polynomial_type   !< The concrete WENO polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -232,16 +232,27 @@ contains
     self%S = constructor%S
     self%eps = constructor%eps
     !< Create WENO smoothness indicators object.
-    call self%IS%create(S=self%S)
+    select case(IS_type)
+    case('JS')
+      self%IS => associate_WENO_IS(IS_input=weno_IS_js)
+    endselect
     !< Create WENO alpha object.
-    select type(self%alpha)
-    type is(weno_alpha_coefficient_m)
-      call self%alpha%initialize(alpha_base=self%alpha%alpha_base)
+    select case(alpha_type)
+    case('JS')
+      self%alpha => associate_WENO_alpha(alpha_input=weno_alpha_coefficient_js)
+    case('Z')
+      self%alpha => associate_WENO_alpha(alpha_input=weno_alpha_coefficient_z)
+    case('M')
+      self%alpha => associate_WENO_alpha(alpha_input=weno_alpha_coefficient_m)
     endselect
     !< Create WENO optimal weights object.
-    call self%weights%create(S=self%S)
+    case('JS')
+      self%weights => associate_WENO_weights(weights_input=weno_optimal_weights_js)
+    endselect
     !< Create WENO polynomials object.
-    call self%polynom%create(S=self%S)
+    case('JS')
+      self%polynom => associate_WENO_polynom(polyn_input=weno_polynomials_js)
+    endselect
   endselect
   return
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -253,7 +264,7 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   class(weno_interpolator_upwind), intent(in)  :: self              !< WENO interpolator.
   character(len=:), allocatable,   intent(out) :: string            !< String returned.
-  character(len=:), allocatable,               :: dummy_string      !< Dummy string.
+  character(len=:), allocatable                :: dummy_string      !< Dummy string.
   character(len=1), parameter                  :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
 
@@ -293,7 +304,7 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   class(weno_interpolator_upwind), intent(in)  :: self              !< WENO interpolator.
   integer(I_P),                    intent(in)  :: error_code        !< Error code.
-  character(len=:), allocatable,               :: string            !< Printed string.
+  character(len=:), allocatable                :: string            !< Printed string.
   character(len=1), parameter                  :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
 
@@ -331,7 +342,7 @@ contains
       string = string//'  The available polynomials are:'//nl
       string = string//'  "JS" for Jiang and Shu polynomials'
   endselect
-  print(*,*) string
+  print *, string
   call self%destroy
   stop
   !---------------------------------------------------------------------------------------------------------------------------------

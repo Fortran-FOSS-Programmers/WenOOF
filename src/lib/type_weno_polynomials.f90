@@ -41,14 +41,15 @@ endinterface
 
 abstract interface
   !< Create WENO polynomials.
-  pure subroutine constructor_interface(self)
+  pure subroutine constructor_interface(self, S)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create WENO polynomials.
   !
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_polynomials
+  import :: weno_polynomials, I_P
   class(weno_polynomials),             intent(inout) :: self          !< WENO polynomials.
+  integer(I_P),                        intent(in)    :: S             !< Stencil dimension.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine constructor_interface
 endinterface

@@ -47,7 +47,7 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  if (allocated(self%w)) deallocate(self%weights)
+  if (allocated(self%opt)) deallocate(self%opt)
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine destroy
@@ -62,8 +62,8 @@ contains
 
   !---------------------------------------------------------------------------------------------------------------------------------
   call self%destroy
+  allocate(self%opt(1:2, 0:S - 1))
   associate(opt => self%opt)
-    allocate(opt(1:2, 0:S - 1))
     select case(S)
       case(2) ! 3rd order
         ! 1 => left interface (i-1/2)
@@ -187,10 +187,9 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing Jiang-Shu and Gerolymos-Sénéchal-Vallet WENO optimal weights.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_optimal_weights
-  class(weno_optimal_weights),   intent(in)  :: self   !< WENO optimal weights.
-  character(len=:), allocatable, intent(out) :: string !< String returned.
-  character(len=1), parameter                :: nl=new_line('a')  !< New line character.
+  class(weno_optimal_weights_js), intent(in)  :: self   !< WENO optimal weights.
+  character(len=:), allocatable,  intent(out) :: string !< String returned.
+  character(len=1), parameter                 :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -200,10 +199,9 @@ contains
   string = string//'  on the work by Gerolymos, Sénéchal and Vallet "Very-high-order weno schemes", see '// &
            'JCP, 2009, vol. 228, pp. 8481--8524, doi:10.1016/j.jcp.2009.07.039'//nl
   string = string//'    The optimal weights are allocated in a two-dimensional array, in which the first index'//nl
-  string = string//'    is the face selected (1 => i-1/2, 2 => i+1/2) and the second index is the number of the stencil '//&
+  string = string//'    is the face selected (1 => i-1/2, 2 => i+1/2) and the second index is the number of the stencil '//nl
   string = string//'    (from 0 to S-1)'
   !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine description_interface
-endinterface
+  endsubroutine description
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule type_weno_optimal_weights_js

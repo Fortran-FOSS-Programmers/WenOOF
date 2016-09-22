@@ -83,7 +83,7 @@ contains
     case default
       call interpolator%init_error(error_code = 5_I_P)
     endselect
-    call interpolator%create(constructor=constructor)
+    call interpolator%create(constructor=constructor,IS_type,alpha_type,alpha_base_type,weights_opt_type,polynomial_type)
   endselect
   return
   !---------------------------------------------------------------------------------------------------------------------------------

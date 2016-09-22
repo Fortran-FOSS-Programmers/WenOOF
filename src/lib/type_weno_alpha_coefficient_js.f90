@@ -57,20 +57,21 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description
 
-  pure function compute(self, S, weight_opt, IS, eps) result(alpha)
+  pure function compute(self, S, weight_opt, IS, IS_i, eps) result(alpha)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the alpha coefficient of the WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_js), intent(in) :: self       !< WENO alpha coefficient.
-  integer(I_P),                     intent(in) :: S          !< Number of stencils used.
-  real(R_P),                        intent(in) :: weight_opt !< Optimal weight of the stencil.
-  real(R_P),                        intent(in) :: IS         !< Smoothness indicator of the stencil.
-  real(R_P),                        intent(in) :: eps        !< Parameter for avoiding divided by zero.
-  real(R_P),                                   :: alpha      !< Alpha coefficient of the stencil.
+  class(weno_alpha_coefficient_js), intent(in)           :: self         !< WENO alpha coefficient.
+  integer(I_P),                     intent(in)           :: S            !< Number of stencils used.
+  real(R_P),                        intent(in)           :: weight_opt   !< Optimal weight of the stencil.
+  real(R_P),                        intent(in), optional :: IS(0: S - 1) !< Smoothness indicators of the stencils.
+  real(R_P),                        intent(in)           :: IS_i         !< Smoothness indicator of the stencil.
+  real(R_P),                        intent(in)           :: eps          !< Parameter for avoiding divided by zero.
+  real(R_P)                                              :: alpha        !< Alpha coefficient of the stencil.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  alpha = weight_opt * (1._R_P/(eps + IS)**S)
+  alpha = weight_opt * (1._R_P/(eps + IS_i)**S)
   !---------------------------------------------------------------------------------------------------------------------------------
   endfunction compute
 
