@@ -30,7 +30,6 @@ type, abstract :: weno_interpolator
   !< WENO interpolator object.
   !<
   !< @note Do not implement any real interpolator: provide the interface for the different interpolators implemented.
-  private
   class(weno_IS), pointer                :: IS      => null() !< Pointer to the WENO smoothness indicators.
   class(weno_alpha_coefficient), pointer :: alpha   => null() !< Pointer to the WENO alpha coefficients.
   class(weno_optimal_weights), pointer   :: weights => null() !< Pointer to the WENO optimal weights.

@@ -4,9 +4,18 @@ module type_weno_interpolator_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-use penf, only : I_P, R_P
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
+use penf, only : I_P, R_P, str
+
 use type_weno_interpolator
+use type_weno_smoothness_indicators
+use type_weno_alpha_coefficient
+use type_weno_optimal_weights
+use type_weno_polynomials
+
 use type_weno_alpha_coefficient_m
+use type_weno_alpha_coefficient_z
+use type_weno_alpha_coefficient_js
 use type_weno_optimal_weights_js
 use type_weno_smoothness_indicators_js
 use type_weno_polynomials_js
@@ -246,10 +255,12 @@ contains
       self%alpha => associate_WENO_alpha(alpha_input=weno_alpha_coefficient_m)
     endselect
     !< Create WENO optimal weights object.
+    select case(weights_opt_type)
     case('JS')
       self%weights => associate_WENO_weights(weights_input=weno_optimal_weights_js)
     endselect
     !< Create WENO polynomials object.
+    select case(polynomial_type)
     case('JS')
       self%polynom => associate_WENO_polynom(polyn_input=weno_polynomials_js)
     endselect
@@ -298,7 +309,7 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description
 
-  pure subroutine init_error(self, error_code)
+  subroutine init_error(self, error_code)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -312,12 +323,12 @@ contains
   select case(error_code)
     case(0_I_P)
       string = 'The alpha base type is not present'//nl
-      string = string//'  Please choose a valid alpha base type for the base calculus of alpha coefficients before the WENO M alpha procedure'//nl
+      string = string//'  Please choose a valid alpha type for the base calculus of alphas before the WENO M procedure'//nl
       string = string//'  The available alpha base types are:'//nl
       string = string//'  "JS" for Jiang and Shu alpha evaluation and "Z" for WENO Z alpha evaluation'
     case(1_I_P)
       string = 'The alpha base type selected is invalid'//nl
-      string = string//'  Please choose a valid alpha base type for the base calculus of alpha coefficients before the WENO M alpha procedure'//nl
+      string = string//'  Please choose a valid alpha type for the base calculus of alphs before the WENO M procedure'//nl
       string = string//'  The available alpha base types are:'//nl
       string = string//'  "JS" for Jiang and Shu alpha evaluation and "Z" for WENO Z alpha evaluation'
     case(2_I_P)
@@ -342,11 +353,12 @@ contains
       string = string//'  The available polynomials are:'//nl
       string = string//'  "JS" for Jiang and Shu polynomials'
   endselect
-  print *, string
+  !print *, string
+  write(stderr, '(A)') string
   call self%destroy
   stop
   !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine description
+  endsubroutine init_error
 
   pure subroutine interpolate(self, S, stencil, location, interpolation)
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -355,10 +367,14 @@ contains
   class(weno_interpolator_upwind), intent(in)  :: self                      !< WENO interpolator.
   integer,                         intent(in)  :: S                         !< Number of stencils actually used.
   real(R_P),                       intent(in)  :: stencil(1:, 1 - S:)       !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  real(R_P),                       intent(in)  :: location                  !< Location of interpolated value(s): left, right, both.
+  character(*),                    intent(in)  :: location                  !< Location of interpolated value(s): left, right, both.
   real(R_P),                       intent(out) :: interpolation(1:)         !< Result of the interpolation, [1:2].
   real(R_P)                                    :: polynomials(1:2, 0:S - 1) !< Polynomial reconstructions.
   real(R_P)                                    :: weights(1:2, 0:S - 1)     !< Weights of the stencils.
+  real(R_P)                                    :: a(1:2, 0:S - 1)           !< Alpha coefficients for the weights.
+  real(R_P)                                    :: a_tot(1:2)                !< Sum of the alpha coefficients.
+  integer(I_P)                                 :: f1, f2, ff                !< Faces to be computed.
+  integer(I_P)                                 :: s1, s2, s3, f, k          !< Counters.
   !---------------------------------------------------------------------------------------------------------------------------------
   select case(location)
   case('both', 'b')
