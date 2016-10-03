@@ -2,4 +2,5 @@ references/
 doc/html/
 tests/
 shared/
+static/
 *.log

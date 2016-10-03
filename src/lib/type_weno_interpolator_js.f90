@@ -227,11 +227,11 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   class(weno_interpolator_upwind), intent(inout) :: self        !< WENO interpolator.
   class(weno_constructor),         intent(in)    :: constructor !< WENO constructor.
-  character(*),             intent(IN)               :: IS_type           !< The concrete WENO smoothness indicator.
-  character(*),             intent(IN)               :: alpha_type        !< The concrete WENO alpha coefficient.
-  character(*),             intent(IN), optional     :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
-  character(*),             intent(IN)               :: weights_opt_type  !< The concrete WENO optimal weights.
-  character(*),             intent(IN)               :: polynomial_type   !< The concrete WENO polynomial.
+  character(*),             intent(in)               :: IS_type           !< The concrete WENO smoothness indicator.
+  character(*),             intent(in)               :: alpha_type        !< The concrete WENO alpha coefficient.
+  character(*),             intent(in), optional     :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
+  character(*),             intent(in)               :: weights_opt_type  !< The concrete WENO optimal weights.
+  character(*),             intent(in)               :: polynomial_type   !< The concrete WENO polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------

@@ -54,15 +54,20 @@ abstract interface
 endinterface
 
 abstract interface
-  subroutine constructor_interface(self, constructor)
+  subroutine constructor_interface(self, constructor, IS_type, alpha_type, alpha_base_type, weights_opt_type, polynomial_type)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create a WENO interpolator.
   !<
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
   import :: weno_constructor, weno_interpolator
-  class(weno_interpolator), intent(inout) :: self              !< WENO interpolator.
-  class(weno_constructor),  intent(in)    :: constructor       !< WENO constructor.
+  class(weno_interpolator), intent(inout)            :: self              !< WENO interpolator.
+  class(weno_constructor),  intent(in)               :: constructor       !< WENO constructor.
+  character(*),             intent(in)               :: IS_type           !< The concrete WENO smoothness indicator.
+  character(*),             intent(in)               :: alpha_type        !< The concrete WENO alpha coefficient.
+  character(*),             intent(in), optional     :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
+  character(*),             intent(in)               :: weights_opt_type  !< The concrete WENO optimal weights.
+  character(*),             intent(in)               :: polynomial_type   !< The concrete WENO polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine constructor_interface
 endinterface
@@ -80,7 +85,7 @@ abstract interface
 endinterface
 
 abstract interface
-  pure subroutine init_error_interface(self, error_code, string)
+  subroutine init_error_interface(self, error_code)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing the error in the choose of smoothness indicators, alpha coefficients, optimal weights, polynomials
   !<  for the selected WENO interpolator.
@@ -88,7 +93,6 @@ abstract interface
   import :: I_P, weno_interpolator
   class(weno_interpolator),      intent(in)  :: self              !< WENO interpolator.
   integer(I_P),                  intent(in)  :: error_code        !< Error code.
-  character(len=:), allocatable, intent(out) :: string            !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine init_error_interface
 endinterface
@@ -102,7 +106,7 @@ abstract interface
   class(weno_interpolator), intent(in)  :: self                 !< WENO interpolator.
   integer,                  intent(IN)  :: S                    !< Number of stencils actually used.
   real(R_P),                intent(IN)  :: stencil(1:, 1 - S:)  !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  real(R_P),                intent(in)  :: location             !< Location of the interpolation.
+  character(*),             intent(in)  :: location             !< Location of interpolated value(s): left, right, both.
   real(R_P),                intent(out) :: interpolation(1:)    !< Result of the interpolation, [1:2].
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine interpolate_interface
