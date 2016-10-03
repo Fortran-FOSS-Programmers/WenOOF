@@ -370,9 +370,10 @@ contains
   character(*),                    intent(in)  :: location                  !< Location of interpolated value(s): left, right, both.
   real(R_P),                       intent(out) :: interpolation(1:)         !< Result of the interpolation, [1:2].
   real(R_P)                                    :: polynomials(1:2, 0:S - 1) !< Polynomial reconstructions.
-  real(R_P)                                    :: weights(1:2, 0:S - 1)     !< Weights of the stencils.
+  real(R_P)                                    :: weights(1:2, 0:S - 1)     !< Weights of the stencils, [1:2, 0:S-1 ].
   real(R_P)                                    :: a(1:2, 0:S - 1)           !< Alpha coefficients for the weights.
   real(R_P)                                    :: a_tot(1:2)                !< Sum of the alpha coefficients.
+  real(R_P)                                    :: IS(1:2, 0:S - 1)          !< Smoothness indicators of the stencils, [1:2, 0:S-1].
   integer(I_P)                                 :: f1, f2, ff                !< Faces to be computed.
   integer(I_P)                                 :: s1, s2, s3, f, k          !< Counters.
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -390,7 +391,8 @@ contains
   do s1 = 0, S - 1 ! stencils loop
     do s2 = 0, S - 1 ! values loop
       do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-        polynomials(f, s1) = polynomials(f, s1) + self%polynom%compute(poly_coef=self%polynom%coef(f, s2, s1), v=stencil(f + ff, -s2 + s1))
+        polynomials(f, s1) = polynomials(f, s1) + &
+                             self%polynom%compute(poly_coef=self%polynom%coef(f, s2, s1), v=stencil(f + ff, -s2 + s1))
       enddo
     enddo
   enddo
@@ -401,7 +403,8 @@ contains
       IS(f, s1) = 0.
       do s2 = 0, S - 1
         do s3 = 0, S - 1
-          IS(f, s1) = IS(f, s1) + self%IS%compute(smooth_coef=self%IS%coef(s3, s2, s1), v1=stencil(f + ff, s1 - s3), v2=stencil(f + ff, s1 - s2))
+          IS(f, s1)=IS(f, s1) + &
+                    self%IS%compute(smooth_coef=self%IS%coef(s3, s2, s1), v1=stencil(f + ff, s1 - s3), v2=stencil(f + ff, s1 - s2))
         enddo
       enddo
     enddo
