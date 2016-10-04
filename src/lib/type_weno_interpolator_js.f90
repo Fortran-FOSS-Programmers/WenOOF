@@ -202,21 +202,21 @@ contains
   self%S = 0_I_P
   self%eps = 0._R_P
   !< Destroy WENO smoothness indicators object.
-  if (allocated(self%IS)) then
-    call self%IS%destroy(self%IS)
-    deallocate (self%IS)
+  if (associated(self%IS)) then
+    call self%IS%destroy
+    nullify (self%IS)
   endif
   !< Destroy WENO alpha object.
-  if (allocated(self%alpha)) deallocate(self%alpha)
+  if (associated(self%alpha)) deallocate(self%alpha)
   !< Destroy WENO optimal weights object.
-  if (allocated(self%weights)) then
-    call self%weights%destroy(self%weights)
-    deallocate(self%weights)
+  if (associated(self%weights)) then
+    call self%weights%destroy
+    nullify(self%weights)
   endif
   !< Destroy WENO polynomials object.
-  if (allocated(self%polynom)) then
-    call self%polynom%destroy(self%polynom)
-    deallocate(self%polynom)
+  if (associated(self%polynom)) then
+    call self%polynom%destroy
+    nullify(self%polynom)
   endif
   return
   !---------------------------------------------------------------------------------------------------------------------------------
