@@ -224,6 +224,7 @@ contains
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine destroy
+
   subroutine create(self, constructor, IS_type, alpha_type, alpha_base_type, weights_opt_type, polynomial_type)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create the WENO interpolator upwind.
@@ -316,10 +317,10 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(in)  :: self              !< WENO interpolator.
-  integer(I_P),                    intent(in)  :: error_code        !< Error code.
-  character(len=:), allocatable                :: string            !< Printed string.
-  character(len=1), parameter                  :: nl=new_line('a')  !< New line character.
+  class(weno_interpolator_upwind), intent(inout) :: self              !< WENO interpolator.
+  integer(I_P),                    intent(in)    :: error_code        !< Error code.
+  character(len=:), allocatable                  :: string            !< Printed string.
+  character(len=1), parameter                    :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------

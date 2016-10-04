@@ -91,8 +91,8 @@ abstract interface
   !<  for the selected WENO interpolator.
   !---------------------------------------------------------------------------------------------------------------------------------
   import :: I_P, weno_interpolator
-  class(weno_interpolator),      intent(in)  :: self              !< WENO interpolator.
-  integer(I_P),                  intent(in)  :: error_code        !< Error code.
+  class(weno_interpolator),      intent(inout) :: self              !< WENO interpolator.
+  integer(I_P),                  intent(in)    :: error_code        !< Error code.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine init_error_interface
 endinterface
