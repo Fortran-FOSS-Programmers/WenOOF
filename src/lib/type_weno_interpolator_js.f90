@@ -204,6 +204,7 @@ contains
   !< Destroy WENO smoothness indicators object.
   if (associated(self%IS)) then
     call self%IS%destroy
+    deallocate (self%IS)
     nullify (self%IS)
   endif
   !< Destroy WENO alpha object.
@@ -211,11 +212,13 @@ contains
   !< Destroy WENO optimal weights object.
   if (associated(self%weights)) then
     call self%weights%destroy
+    deallocate(self%weights)
     nullify(self%weights)
   endif
   !< Destroy WENO polynomials object.
   if (associated(self%polynom)) then
     call self%polynom%destroy
+    deallocate(self%polynom)
     nullify(self%polynom)
   endif
   return
