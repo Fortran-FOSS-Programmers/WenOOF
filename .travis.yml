@@ -23,8 +23,6 @@ addons:
       - graphviz      
 
 env:
-  global:
-    - SCRIPT="FoBiS.py rule -ex makecoverage"
 
 before_install:
   - git submodule update --init --recursive
@@ -50,5 +48,4 @@ script:
 
 after_success:
   - cd $TRAVIS_BUILD_DIR
-  - bash <(curl -s https://codecov.io/bash)
-  - ./makedoc.sh Fortran-FOSS-Programmers/WenOOF
+  - cd build/lib/obj/ ; bash <(curl -s https://codecov.io/bash) ; cd -

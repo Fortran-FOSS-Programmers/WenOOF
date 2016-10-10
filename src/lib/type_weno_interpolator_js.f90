@@ -266,7 +266,7 @@ contains
     !< Create WENO polynomials object.
     select case(polynomial_type)
     case('JS')
-      self%polynom => associate_WENO_polynom(polyn_input=weno_polynomials_js)
+      self%polynom => associate_WENO_polynomials(polyn_input=weno_polynomials_js)
     endselect
   endselect
   return
