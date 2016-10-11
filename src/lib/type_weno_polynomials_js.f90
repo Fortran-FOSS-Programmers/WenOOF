@@ -25,7 +25,6 @@ type, extends(weno_polynomials) :: weno_polynomials_js
 !< @note The provided polynomials implement the Lagrange polynomials defined in *Efficient Implementation
 !< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130
   private
-  real(R_P), allocatable :: coef(:,:,:)   !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
     procedure, pass(self), public :: destroy
     procedure, pass(self), public :: create
@@ -198,7 +197,7 @@ contains
         c(1,0,5)=   -1._R_P/168._R_P; c(1,1,5)=   43._R_P/840._R_P; c(1,2,5)= -167._R_P/840._R_P; c(1,3,5)=  393._R_P/840._R_P  ! stencil 5
         c(1,0,6)=    1._R_P/56._R_P ; c(1,1,6)=  -25._R_P/168._R_P; c(1,2,6)=  463._R_P/840._R_P; c(1,3,6)=-1007._R_P/840._R_P  ! stencil 6
         c(1,0,7)=   -7._R_P/56._R_P ; c(1,1,7)=   57._R_P/56._R_P ; c(1,2,7)=  613._R_P/168._R_P; c(1,3,7)= 6343._R_P/840._R_P  ! stencil 7
-        !  cell  4                  ;    cell  5                  ;    cell  6                  ;    cell  7                   
+        !  cell  4                  ;    cell  5                  ;    cell  6                  ;    cell  7
         c(1,4,0)=-1007._R_P/840._R_P; c(1,5,0)=  463._R_P/840._R_P; c(1,6,0)=  -25._R_P/168._R_P; c(1,7,0)=    1._R_P/56._R_P   ! stencil 0
         c(1,4,1)=  393._R_P/840._R_P; c(1,5,1)= -167._R_P/840._R_P; c(1,6,1)=   43._R_P/840._R_P; c(1,7,1)=   -1._R_P/168._R_P  ! stencil 1
         c(1,4,2)= -307._R_P/840._R_P; c(1,5,2)=  113._R_P/840._R_P; c(1,6,2)=  -27._R_P/840._R_P; c(1,7,2)=    3._R_P/840._R_P  ! stencil 2
@@ -217,7 +216,7 @@ contains
         c(1,0,5)=    3._R_P/840._R_P; c(1,1,5)=  -27._R_P/840._R_P; c(1,2,5)=  113._R_P/840._R_P; c(1,3,5)= -307._R_P/840._R_P  ! stencil 5
         c(1,0,6)=   -1._R_P/168._R_P; c(1,1,6)=   43._R_P/840._R_P; c(1,2,6)= -167._R_P/840._R_P; c(1,3,6)=  393._R_P/840._R_P  ! stencil 6
         c(1,0,7)=    1._R_P/56._R_P ; c(1,1,7)=  -25._R_P/168._R_P; c(1,2,7)=  463._R_P/840._R_P; c(1,3,7)=-1007._R_P/840._R_P  ! stencil 7
-        !  cell  4                  ;    cell  5                  ;    cell  6                  ;    cell  7                                
+        !  cell  4                  ;    cell  5                  ;    cell  6                  ;    cell  7
         c(1,4,0)= 6343._R_P/840._R_P; c(1,5,0)=  613._R_P/168._R_P; c(1,6,0)=   57._R_P/56._R_P ; c(1,7,0)=   -7._R_P/56._R_P   ! stencil 0
         c(1,4,1)=-1007._R_P/840._R_P; c(1,5,1)=  463._R_P/840._R_P; c(1,6,1)=  -25._R_P/168._R_P; c(1,7,1)=    1._R_P/56._R_P   ! stencil 1
         c(1,4,2)=  393._R_P/840._R_P; c(1,5,2)= -167._R_P/840._R_P; c(1,6,2)=   43._R_P/840._R_P; c(1,7,2)=   -1._R_P/168._R_P  ! stencil 2
@@ -238,7 +237,7 @@ contains
         c(1,0,6)=     1._R_P/252._R_P ;c(1,1,6)=   -19._R_P/508._R_P ;c(1,2,6)=   409._R_P/2520._R_P;c(1,3,6)= -1061._R_P/2520._R_P  ! stencil 6
         c(1,0,7)=    -7._R_P/504._R_P ;c(1,1,7)=    65._R_P/508._R_P ;c(1,2,7)=   271._R_P/504._R_P ;c(1,3,7)=  3349._R_P/2520._R_P  ! stencil 7
         c(1,0,8)=     1._R_P/9._R_P   ;c(1,1,8)=  -511._R_P/508._R_P ;c(1,2,8)=  2081._R_P/504._R_P ;c(1,3,8)= -4975._R_P/504._R_P   ! stencil 8
-        !  cell  4                  ;    cell  5                  ;    cell  6                  ;    cell  7                   
+        !  cell  4                  ;    cell  5                  ;    cell  6                  ;    cell  7
         c(1,4,0)= -5471._R_P/2520._R_P;c(1,5,0)=  3349._R_P/2520._R_P;c(1,6,0)=    -7._R_P/504._R_P ;c(1,7,0)=    65._R_P/504._R_P  ! stencil 0
         c(1,4,1)=  1879._R_P/2520._R_P;c(1,5,1)= -1061._R_P/2520._R_P;c(1,6,1)=   409._R_P/2520._R_P;c(1,7,1)=    19._R_P/504._R_P  ! stencil 1
         c(1,4,2)= -1271._R_P/2520._R_P;c(1,5,2)=   619._R_P/2520._R_P;c(1,6,2)=  -221._R_P/2520._R_P;c(1,7,2)=    49._R_P/2520._R_P ! stencil 2
@@ -248,7 +247,7 @@ contains
         c(1,4,6)=  1879._R_P/2520._R_P;c(1,5,6)= -2531._R_P/2520._R_P;c(1,6,6)=  3349._R_P/2520._R_P;c(1,7,6)=   119._R_P/504._R_P  ! stencil 6
         c(1,4,7)= -5471._R_P/2520._R_P;c(1,5,7)=  6289._R_P/2520._R_P;c(1,6,7)= -5471._R_P/2520._R_P;c(1,7,7)=  4609._R_P/2520._R_P ! stencil 7
         c(1,4,8)= 38629._R_P/2520._R_P;c(1,5,8)=-40751._R_P/2520._R_P;c(1,6,8)= 29809._R_P/2520._R_P;c(1,7,8)=-15551._R_P/2520._R_P ! stencil 8
-        !  cell  8                  
+        !  cell  8
         c(1,8,0)=   -1._R_P/72._R_P   ! stencil 0
         c(1,8,1)=    1._R_P/252._R_P  ! stencil 1
         c(1,8,2)=   -1._R_P/504._R_P  ! stencil 2
@@ -269,7 +268,7 @@ contains
         c(1,0,6)=   -1._R_P/504._R_P  ;c(1,1,6)=    49._R_P/2520._R_P;c(1,2,6)=  -221._R_P/2520._R_P;c(1,3,6)=   619._R_P/2520._R_P  ! stencil 6
         c(1,0,7)=    1._R_P/252._R_P  ;c(1,1,7)=    19._R_P/504._R_P ;c(1,2,7)=   409._R_P/2520._R_P;c(1,3,7)= -1061._R_P/2520._R_P  ! stencil 7
         c(1,0,8)=   -1._R_P/72._R_P   ;c(1,1,8)=    65._R_P/504._R_P ;c(1,2,8)=    -7._R_P/504._R_P ;c(1,3,8)=  3349._R_P/2520._R_P  ! stencil 8
-        !  cell  4                  ;    cell  5                  ;    cell  6                  ;    cell  7                   
+        !  cell  4                  ;    cell  5                  ;    cell  6                  ;    cell  7
         c(1,4,0)= 38629._R_P/2520._R_P;c(1,5,0)= -4975._R_P/504._R_P ;c(1,6,0)=  2081._R_P/504._R_P ;c(1,7,0)=  -511._R_P/508._R_P   ! stencil 0
         c(1,4,1)= -5471._R_P/2520._R_P;c(1,5,1)=  3349._R_P/2520._R_P;c(1,6,1)=   271._R_P/504._R_P ;c(1,7,1)=    65._R_P/508._R_P   ! stencil 1
         c(1,4,2)=  1879._R_P/2520._R_P;c(1,5,2)= -1061._R_P/2520._R_P;c(1,6,2)=   409._R_P/2520._R_P;c(1,7,2)=   -19._R_P/508._R_P   ! stencil 2
@@ -279,7 +278,7 @@ contains
         c(1,4,6)= -1271._R_P/2520._R_P;c(1,5,6)=  2509._R_P/2520._R_P;c(1,6,6)=   191._R_P/504._R_P ;c(1,7,6)=   -25._R_P/508._R_P   ! stencil 6
         c(1,4,7)=  1879._R_P/2520._R_P;c(1,5,7)= -2531._R_P/2520._R_P;c(1,6,7)=  3349._R_P/2520._R_P;c(1,7,7)=   119._R_P/508._R_P   ! stencil 7
         c(1,4,8)= -5471._R_P/2520._R_P;c(1,5,8)=  6289._R_P/2520._R_P;c(1,6,8)= -5471._R_P/2520._R_P;c(1,7,8)=  4609._R_P/2520._R_P  ! stencil 8
-        !  cell  8                  
+        !  cell  8
         c(1,8,0)=     1._R_P/9._R_P    ! stencil 0
         c(1,8,1)=    -7._R_P/504._R_P  ! stencil 1
         c(1,8,2)=     1._R_P/252._R_P  ! stencil 2

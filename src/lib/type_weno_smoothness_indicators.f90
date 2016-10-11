@@ -19,7 +19,7 @@ type, abstract :: weno_IS
   !< WENO smoothness indicators.
   !<
   !< @note Do not implement any real smoothness indicators: provide the interface for the different smoothness_indicators implemented.
-  private
+  real(R_P), allocatable :: coef(:,:,:)   !< Smoothness indicators coefficients [1:2,0:S-1,0:S-1]
   contains
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
     procedure(constructor_interface), pass(self), deferred, public :: create

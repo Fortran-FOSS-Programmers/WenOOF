@@ -19,7 +19,7 @@ type, abstract :: weno_polynomials
   !< WENO polynomials.
   !<
   !< @note Do not implement any real polynomial: provide the interface for the different polynomials implemented.
-  private
+  real(R_P), allocatable :: coef(:,:,:)   !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
     procedure(constructor_interface), pass(self), deferred, public :: create

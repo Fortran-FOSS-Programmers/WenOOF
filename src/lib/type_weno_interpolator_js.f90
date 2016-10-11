@@ -25,7 +25,7 @@ use type_weno_polynomials_js
 implicit none
 private
 save
-public :: weno_interpolator, weno_constructor
+public :: weno_interpolator, weno_constructor, associate_WENO_IS
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -229,8 +229,8 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(inout) :: self        !< WENO interpolator.
-  class(weno_constructor),         intent(in)    :: constructor !< WENO constructor.
+  class(weno_interpolator_upwind), intent(inout)     :: self        !< WENO interpolator.
+  class(weno_constructor),         intent(in)        :: constructor !< WENO constructor.
   character(*),             intent(in)               :: IS_type           !< The concrete WENO smoothness indicator.
   character(*),             intent(in)               :: alpha_type        !< The concrete WENO alpha coefficient.
   character(*),             intent(in), optional     :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
@@ -418,7 +418,7 @@ contains
   a_tot = 0.
   do s1 = 0, S - 1 ! stencil loops
     do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      a(f, s1) = self%alpha%compute(S=S, weight_opt=self%weight%w(f, s1), IS = IS(f, s1))
+      a(f, s1) = self%alpha%compute(S=S, weight_opt=self%weights%opt(f, s1), IS_i = IS(f, s1), eps = self%eps)
       a_tot(f) = a_tot(f) + a(f, s1)
     enddo
   enddo

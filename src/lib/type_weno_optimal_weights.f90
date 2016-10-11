@@ -19,7 +19,7 @@ type, abstract :: weno_optimal_weights
   !< WENO optimal weights.
   !<
   !< @note Do not implement any real optimal weight: provide the interface for the different optimal weights implemented.
-  private
+  real(R_P), allocatable :: opt(:,:)   !< Optimal weights                    [1:2,0:S-1].
   contains
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
     procedure(constructor_interface), pass(self), deferred, public :: create

@@ -4,7 +4,7 @@ module wenoof
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-use type_weno_interpolator, only : weno_constructor, weno_interpolator
+use type_weno_interpolator,    only : weno_constructor, weno_interpolator
 use type_weno_interpolator_js, only : weno_constructor_js, weno_interpolator_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 

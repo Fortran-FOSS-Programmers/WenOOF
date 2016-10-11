@@ -29,7 +29,6 @@ type, extends(weno_IS) :: weno_IS_js
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Sénéchal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
   private
-  real(R_P), allocatable :: coef(:,:,:)   !< Smoothness indicators coefficients [1:2,0:S-1,0:S-1]
   contains
     procedure, pass(self), public :: destroy
     procedure, pass(self), public :: create
