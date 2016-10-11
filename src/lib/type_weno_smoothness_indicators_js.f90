@@ -9,6 +9,7 @@ module type_weno_smoothness_indicators_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P
 use type_weno_smoothness_indicators
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -37,6 +38,21 @@ type, extends(weno_IS) :: weno_IS_js
 endtype weno_IS_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
+  ! public, non TBP
+  function associate_WENO_IS_js(IS_input) result(IS_pointer)
+    !< Check the type of the smoothness indicator passed as input and return a Jiang-Shu smoothness indicator associated to the smoothness indicator.
+    class(weno_IS), intent(in), target  :: IS_input   !< Input smoothness indicator.
+    class(weno_IS_js),          pointer :: IS_pointer !< Jiang Shu smoothness indicator.
+
+    select type(IS_input)
+      type is(weno_IS_js)
+        IS_pointer => IS_input
+      class default
+        write(stderr, '(A)')'error: wrong smoothness indicator type chosen'
+        stop
+    end select
+  end function associate_WENO_IS_js
+
   ! deferred public methods
   pure subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------

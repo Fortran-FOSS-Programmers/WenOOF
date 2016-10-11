@@ -8,6 +8,7 @@ module type_weno_alpha_coefficient_z
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P
 use type_weno_alpha_coefficient
 use type_weno_alpha_coefficient_js
@@ -39,6 +40,21 @@ type, extends(weno_alpha_coefficient_js) :: weno_alpha_coefficient_z
 endtype weno_alpha_coefficient_z
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
+  ! public, non TBP
+  function associate_WENO_alpha_z(alpha_input) result(alpha_pointer)
+    !< Check the type of the alpha coefficient passed as input and return a WENO Z alpha coefficient associated to the alpha coefficient.
+    class(weno_alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
+    class(weno_alpha_coefficient_z),           pointer :: alpha_pointer !< WENO Z alpha coefficients.
+
+    select type(alpha_input)
+      type is(weno_alpha_coefficient_z)
+        alpha_pointer => alpha_input
+      class default
+        write(stderr, '(A)')'error: wrong alpha coefficient type chosen'
+        stop
+    end select
+  end function associate_WENO_alpha_z
+
   ! deferred public methods
   pure subroutine description(self, string)
   !---------------------------------------------------------------------------------------------------------------------------------

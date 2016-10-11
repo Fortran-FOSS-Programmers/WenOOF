@@ -25,7 +25,7 @@ use type_weno_polynomials_js
 implicit none
 private
 save
-public :: weno_interpolator, weno_constructor, associate_WENO_IS
+public :: weno_interpolator, weno_constructor
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -63,24 +63,6 @@ type, extends(weno_interpolator) :: weno_interpolator_upwind
     ! private methods
     final :: finalize
 endtype weno_interpolator_upwind
-
-interface associate_WENO_IS
-  module procedure associate_WENO_IS_js
-end interface
-
-interface associate_WENO_alpha
-  module procedure associate_WENO_alpha_js, &
-                   associate_WENO_alpha_z,  &
-                   associate_WENO_alpha_m
-end interface
-
-interface associate_WENO_weights
-  module procedure associate_WENO_weights_js
-end interface
-
-interface associate_WENO_polynomials
-  module procedure associate_WENO_polynomials_js
-end interface
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
   ! weno_constructor_upwind
@@ -107,90 +89,6 @@ contains
 
   ! weno_interpolator_upwind
   ! public methods
-  function associate_WENO_IS_js(IS_input) result(IS_pointer)
-    !< Check the type of the smoothness indicator passed as input and return a Jiang-Shu smoothness indicator associated to the smoothness indicator.
-    class(weno_IS), intent(in), target  :: IS_input   !< Input smoothness indicator.
-    class(weno_IS_js),          pointer :: IS_pointer !< Jiang Shu smoothness indicator.
-
-    select type(IS_input)
-      type is(weno_IS_js)
-        IS_pointer => IS_input
-      class default
-        write(stderr, '(A)')'error: wrong smoothness indicator type chosen'
-        stop
-    end select
-  end function associate_WENO_IS_js
-
-  function associate_WENO_alpha_js(alpha_input) result(alpha_pointer)
-    !< Check the type of the alpha coefficient passed as input and return a Jiang-Shu alpha coefficient associated to the alpha coefficient.
-    class(weno_alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
-    class(weno_alpha_coefficient_js),          pointer :: alpha_pointer !< Jiang Shu alpha coefficients.
-
-    select type(alpha_input)
-      type is(weno_alpha_coefficient_js)
-        alpha_pointer => alpha_input
-      class default
-        write(stderr, '(A)')'error: wrong alpha coefficient type chosen'
-        stop
-    end select
-  end function associate_WENO_alpha_js
-
-  function associate_WENO_alpha_z(alpha_input) result(alpha_pointer)
-    !< Check the type of the alpha coefficient passed as input and return a WENO Z alpha coefficient associated to the alpha coefficient.
-    class(weno_alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
-    class(weno_alpha_coefficient_z),           pointer :: alpha_pointer !< WENO Z alpha coefficients.
-
-    select type(alpha_input)
-      type is(weno_alpha_coefficient_z)
-        alpha_pointer => alpha_input
-      class default
-        write(stderr, '(A)')'error: wrong alpha coefficient type chosen'
-        stop
-    end select
-  end function associate_WENO_alpha_z
-
-  function associate_WENO_alpha_m(alpha_input) result(alpha_pointer)
-    !< Check the type of the alpha coefficient passed as input and return a WENO M alpha coefficient associated to the alpha coefficient.
-    class(weno_alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
-    class(weno_alpha_coefficient_m),           pointer :: alpha_pointer !< WENO M alpha coefficients.
-
-    select type(alpha_input)
-      type is(weno_alpha_coefficient_m)
-        alpha_pointer => alpha_input
-      class default
-        write(stderr, '(A)')'error: wrong alpha coefficient type chosen'
-        stop
-    end select
-  end function associate_WENO_alpha_m
-
-  function associate_WENO_weights_js(weights_input) result(weights_pointer)
-    !< Check the type of the optimal weights passed as input and return Jiang-Shu optimal weights associated to the optimal weights.
-    class(weno_optimal_weights), intent(in), target  :: weights_input   !< Input optimal weights.
-    class(weno_optimal_weights_js),          pointer :: weights_pointer !< Jiang Shu optimal weights.
-
-    select type(weights_input)
-      type is(weno_optimal_weights_js)
-        weights_pointer => weights_input
-      class default
-        write(stderr, '(A)')'error: wrong optimal weights type chosen'
-        stop
-    end select
-  end function associate_WENO_weights_js
-
-  function associate_WENO_polynomials_js(polyn_input) result(polyn_pointer)
-    !< Check the type of the polynomials passed as input and return Jiang-Shu polynomials associated to the polynomials.
-    class(weno_polynomials), intent(in), target  :: polyn_input   !< Input optimal weights.
-    class(weno_polynomials_js),          pointer :: polyn_pointer !< Jiang Shu optimal weights.
-
-    select type(polyn_input)
-      type is(weno_polynomials_js)
-        polyn_pointer => polyn_input
-      class default
-        write(stderr, '(A)')'error: wrong polynomials type chosen'
-        stop
-    end select
-  end function associate_WENO_polynomials_js
-
   elemental subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Destoy the WENO interpolator upwind.
@@ -247,26 +145,26 @@ contains
     !< Create WENO smoothness indicators object.
     select case(IS_type)
     case('JS')
-      self%IS => associate_WENO_IS(IS_input=weno_IS_js)
+      self%IS => associate_WENO_IS_js(IS_input=weno_IS_js)
     endselect
     !< Create WENO alpha object.
     select case(alpha_type)
     case('JS')
-      self%alpha => associate_WENO_alpha(alpha_input=weno_alpha_coefficient_js)
+      self%alpha => associate_WENO_alpha_js(alpha_input=weno_alpha_coefficient_js)
     case('Z')
-      self%alpha => associate_WENO_alpha(alpha_input=weno_alpha_coefficient_z)
+      self%alpha => associate_WENO_alpha_z(alpha_input=weno_alpha_coefficient_z)
     case('M')
-      self%alpha => associate_WENO_alpha(alpha_input=weno_alpha_coefficient_m)
+      self%alpha => associate_WENO_alpha_m(alpha_input=weno_alpha_coefficient_m)
     endselect
     !< Create WENO optimal weights object.
     select case(weights_opt_type)
     case('JS')
-      self%weights => associate_WENO_weights(weights_input=weno_optimal_weights_js)
+      self%weights => associate_WENO_weights_js(weights_input=weno_optimal_weights_js)
     endselect
     !< Create WENO polynomials object.
     select case(polynomial_type)
     case('JS')
-      self%polynom => associate_WENO_polynomials(polyn_input=weno_polynomials_js)
+      self%polynom => associate_WENO_polynomials_js(polyn_input=weno_polynomials_js)
     endselect
   endselect
   return

@@ -7,6 +7,7 @@ module type_weno_polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P
 use type_weno_polynomials
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -33,6 +34,21 @@ type, extends(weno_polynomials) :: weno_polynomials_js
 endtype weno_polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
+  ! public, non TBP
+  function associate_WENO_polynomials_js(polyn_input) result(polyn_pointer)
+    !< Check the type of the polynomials passed as input and return Jiang-Shu polynomials associated to the polynomials.
+    class(weno_polynomials), intent(in), target  :: polyn_input   !< Input optimal weights.
+    class(weno_polynomials_js),          pointer :: polyn_pointer !< Jiang Shu optimal weights.
+
+    select type(polyn_input)
+      type is(weno_polynomials_js)
+        polyn_pointer => polyn_input
+      class default
+        write(stderr, '(A)')'error: wrong polynomials type chosen'
+        stop
+    end select
+  end function associate_WENO_polynomials_js
+
   ! deferred public methods
   pure subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------
