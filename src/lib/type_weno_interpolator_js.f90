@@ -129,11 +129,11 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   class(weno_interpolator_upwind), intent(inout)     :: self        !< WENO interpolator.
   class(weno_constructor),         intent(in)        :: constructor !< WENO constructor.
-  character(*),             intent(in)               :: IS_type           !< The concrete WENO smoothness indicator.
-  character(*),             intent(in)               :: alpha_type        !< The concrete WENO alpha coefficient.
-  character(*),             intent(in), optional     :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
-  character(*),             intent(in)               :: weights_opt_type  !< The concrete WENO optimal weights.
-  character(*),             intent(in)               :: polynomial_type   !< The concrete WENO polynomial.
+  class(weno_IS),             intent(in), target     :: IS_type           !< The concrete WENO smoothness indicator.
+  class(weno_alpha_coefficient), intent(in)           :: alpha_type        !< The concrete WENO alpha coefficient.
+  class(weno_alpha_coefficient), intent(in), optional :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
+  class(weno_optimal_weights),   intent(in)           :: weights_opt_type  !< The concrete WENO optimal weights.
+  class(weno_polynomials),       intent(in)           :: polynomial_type   !< The concrete WENO polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -143,29 +143,20 @@ contains
     self%S = constructor%S
     self%eps = constructor%eps
     !< Create WENO smoothness indicators object.
-    select case(IS_type)
-    case('JS')
-      self%IS => associate_WENO_IS_js(IS_input=weno_IS_js)
-    endselect
+    self%IS => associate_WENO_IS_js(IS_type)
     !< Create WENO alpha object.
-    select case(alpha_type)
-    case('JS')
-      self%alpha => associate_WENO_alpha_js(alpha_input=weno_alpha_coefficient_js)
-    case('Z')
-      self%alpha => associate_WENO_alpha_z(alpha_input=weno_alpha_coefficient_z)
-    case('M')
-      self%alpha => associate_WENO_alpha_m(alpha_input=weno_alpha_coefficient_m)
+    select type(alpha_type)
+    type is(weno_alpha_coefficient_js)
+      self%alpha => associate_WENO_alpha_js(alpha_type)
+    type is(weno_alpha_coefficient_z)
+      self%alpha => associate_WENO_alpha_z(alpha_type)
+    type is(weno_alpha_coefficient_m)
+      self%alpha => associate_WENO_alpha_m(alpha_type)
     endselect
     !< Create WENO optimal weights object.
-    select case(weights_opt_type)
-    case('JS')
-      self%weights => associate_WENO_weights_js(weights_input=weno_optimal_weights_js)
-    endselect
+    self%weights => associate_WENO_weights_js(weights_opt_type)
     !< Create WENO polynomials object.
-    select case(polynomial_type)
-    case('JS')
-      self%polynom => associate_WENO_polynomials_js(polyn_input=weno_polynomials_js)
-    endselect
+    self%polynom => associate_WENO_polynomials_js(polynomial_type)
   endselect
   return
   !---------------------------------------------------------------------------------------------------------------------------------

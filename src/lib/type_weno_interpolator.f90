@@ -60,14 +60,14 @@ abstract interface
   !<
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_constructor, weno_interpolator
-  class(weno_interpolator), intent(inout)            :: self              !< WENO interpolator.
-  class(weno_constructor),  intent(in)               :: constructor       !< WENO constructor.
-  character(*),             intent(in)               :: IS_type           !< The concrete WENO smoothness indicator.
-  character(*),             intent(in)               :: alpha_type        !< The concrete WENO alpha coefficient.
-  character(*),             intent(in), optional     :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
-  character(*),             intent(in)               :: weights_opt_type  !< The concrete WENO optimal weights.
-  character(*),             intent(in)               :: polynomial_type   !< The concrete WENO polynomial.
+  import :: weno_constructor, weno_interpolator, weno_IS, weno_alpha_coefficient, weno_optimal_weights, weno_polynomials
+  class(weno_interpolator),      intent(inout)        :: self              !< WENO interpolator.
+  class(weno_constructor),       intent(in)           :: constructor       !< WENO constructor.
+  class(weno_IS),                intent(in), target   :: IS_type           !< The concrete WENO smoothness indicator.
+  class(weno_alpha_coefficient), intent(in)           :: alpha_type        !< The concrete WENO alpha coefficient.
+  class(weno_alpha_coefficient), intent(in), optional :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
+  class(weno_optimal_weights),   intent(in)           :: weights_opt_type  !< The concrete WENO optimal weights.
+  class(weno_polynomials),       intent(in)           :: polynomial_type   !< The concrete WENO polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine constructor_interface
 endinterface
