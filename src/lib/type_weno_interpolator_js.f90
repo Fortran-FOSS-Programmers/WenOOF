@@ -25,7 +25,7 @@ use type_weno_polynomials_js
 implicit none
 private
 save
-public :: weno_interpolator, weno_constructor
+public :: weno_interpolator_upwind, weno_constructor_upwind
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -143,20 +143,20 @@ contains
     self%S = constructor%S
     self%eps = constructor%eps
     !< Create WENO smoothness indicators object.
-    self%IS => associate_WENO_IS_js(IS_type)
+    self%IS => associate_WENO_IS_js(IS_input=IS_type)
     !< Create WENO alpha object.
     select type(alpha_type)
     type is(weno_alpha_coefficient_js)
-      self%alpha => associate_WENO_alpha_js(alpha_type)
+      self%alpha => associate_WENO_alpha_js(alpha_input=alpha_type)
     type is(weno_alpha_coefficient_z)
-      self%alpha => associate_WENO_alpha_z(alpha_type)
+      self%alpha => associate_WENO_alpha_z(alpha_input=alpha_type)
     type is(weno_alpha_coefficient_m)
-      self%alpha => associate_WENO_alpha_m(alpha_type)
+      self%alpha => associate_WENO_alpha_m(alpha_input=alpha_type)
     endselect
     !< Create WENO optimal weights object.
-    self%weights => associate_WENO_weights_js(weights_opt_type)
+    self%weights => associate_WENO_weights_js(weights_input=weights_opt_type)
     !< Create WENO polynomials object.
-    self%polynom => associate_WENO_polynomials_js(polynomial_type)
+    self%polynom => associate_WENO_polynomials_js(polyn_input=polynomial_type)
   endselect
   return
   !---------------------------------------------------------------------------------------------------------------------------------

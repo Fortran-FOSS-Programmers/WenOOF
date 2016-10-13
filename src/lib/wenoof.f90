@@ -4,8 +4,15 @@ module wenoof
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
+use penf, only : R_P, I_P
 use type_weno_interpolator,    only : weno_constructor, weno_interpolator
-use type_weno_interpolator_js, only : weno_constructor_js, weno_interpolator_js
+use type_weno_interpolator_js, only : weno_constructor_upwind, weno_interpolator_upwind
+use type_weno_smoothness_indicators_js
+use type_weno_alpha_coefficient_js
+use type_weno_alpha_coefficient_z
+use type_weno_alpha_coefficient_m
+use type_weno_optimal_weights_js
+use type_weno_polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -58,14 +65,7 @@ contains
     case('M')
       allocate(weno_alpha_coefficient_m :: interpolator%alpha)
       if (.not.present(alpha_base_type)) call interpolator%init_error(error_code = 0_I_P)
-      select case(alpha_base_type)
-      case('JS')
-        allocate(weno_alpha_coefficient_js :: interpolator%alpha%alpha_base)
-      case('Z')
-        allocate(weno_alpha_coefficient_z :: interpolator%alpha%alpha_base)
-      case default
-        call interpolator%init_error(error_code = 1_I_P)
-      endselect
+      call interpolator%alpha%initialize(alpha_base = alpha_base_type)
     case default
       call interpolator%init_error(error_code = 2_I_P)
     endselect
@@ -83,7 +83,9 @@ contains
     case default
       call interpolator%init_error(error_code = 5_I_P)
     endselect
-    call interpolator%create(constructor=constructor,IS_type,alpha_type,alpha_base_type,weights_opt_type,polynomial_type)
+    call interpolator%create(constructor=constructor, IS_type=interpolator%IS, alpha_type=interpolator%alpha,&
+                             alpha_base_type=interpolator%alpha%alpha_base, weights_opt_type = interpolator%weights,&
+                             polynomial_type = interpolator%polynom)
   endselect
   return
   !---------------------------------------------------------------------------------------------------------------------------------

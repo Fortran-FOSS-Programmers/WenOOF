@@ -19,7 +19,7 @@ use type_weno_alpha_coefficient_z
 implicit none
 private
 save
-public :: weno_alpha_coefficient_m, associate_WENO_alpha_m
+public :: weno_alpha_coefficient_m, associate_WENO_alpha_m, initialize
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
