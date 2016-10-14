@@ -29,7 +29,6 @@ type, extends(weno_alpha_coefficient_z) :: weno_alpha_coefficient_m
   !< @note The provided WENO alpha coefficient implements the alpha coefficients defined in *Mapped weighted essentially
   !< non-oscillatory schemes: Achieving optimal order near critical points*, Andrew K. Henrick, Tariq D. Aslam, Joseph M. Powers,
   !< JCP, 2005, vol. 207, pp. 542-567, doi:10.1016/j.jcp.2005.01.023.
-  private
   class(weno_alpha_coefficient), allocatable :: alpha_base !< To be set into [[initialize]] method.
   contains
     ! deferred public methods
