@@ -77,7 +77,7 @@ contains
 
   !---------------------------------------------------------------------------------------------------------------------------------
   call self%destroy
-  allocate(self%coef(1:2, 0:S - 1, 0:S - 1))
+  allocate(self%coef(0:S - 1, 0:S - 1, 0:S - 1))
   associate(c => self%coef)
     select case(S)
     case(2) ! 3rd order

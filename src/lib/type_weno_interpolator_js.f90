@@ -144,6 +144,10 @@ contains
     self%eps = constructor%eps
     !< Create WENO smoothness indicators object.
     self%IS => associate_WENO_IS_js(IS_input=IS_type)
+    if (associated(self%IS)) then
+      print *, 'cazzovuoi'
+    endif
+    call self%IS%create(S=self%S)
     !< Create WENO alpha object.
     select type(alpha_type)
     type is(weno_alpha_coefficient_js)
@@ -155,8 +159,10 @@ contains
     endselect
     !< Create WENO optimal weights object.
     self%weights => associate_WENO_weights_js(weights_input=weights_opt_type)
+    call self%weights%create(S=self%S)
     !< Create WENO polynomials object.
     self%polynom => associate_WENO_polynomials_js(polyn_input=polynomial_type)
+    call self%polynom%create(S=self%S)
   endselect
   return
   !---------------------------------------------------------------------------------------------------------------------------------
