@@ -7,6 +7,7 @@ module wenoof
 use penf, only : R_P, I_P
 use type_weno_interpolator,    only : weno_constructor, weno_interpolator
 use type_weno_interpolator_js, only : weno_constructor_upwind, weno_interpolator_upwind
+use type_weno_alpha_coefficient
 use type_weno_smoothness_indicators_js
 use type_weno_alpha_coefficient_js
 use type_weno_alpha_coefficient_z
@@ -43,6 +44,7 @@ contains
   character(*),             intent(IN)               :: weights_opt_type  !< The concrete WENO optimal weights.
   character(*),             intent(IN)               :: polynomial_type   !< The concrete WENO polynomial.
   class(weno_interpolator), allocatable, intent(OUT) :: interpolator      !< The concrete WENO interpolator.
+  class(weno_alpha_coefficient), pointer             :: alpha             !< ppppppppp
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -65,7 +67,12 @@ contains
     case('M')
       allocate(weno_alpha_coefficient_m :: interpolator%alpha)
       if (.not.present(alpha_base_type)) call interpolator%init_error(error_code = 0_I_P)
-      call interpolator%alpha%initialize(alpha_base = alpha_base_type)
+      associate(alpha => interpolator%alpha)
+        select type(alpha)
+        type is(weno_alpha_coefficient_m)
+          call interpolator%alpha%initialize(alpha_base = alpha_base_type)
+        endselect
+      endassociate
     case default
       call interpolator%init_error(error_code = 2_I_P)
     endselect
