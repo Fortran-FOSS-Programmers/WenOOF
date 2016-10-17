@@ -127,9 +127,9 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(inout)     :: self        !< WENO interpolator.
-  class(weno_constructor),         intent(in)        :: constructor !< WENO constructor.
-  class(weno_IS),             intent(in), target     :: IS_type           !< The concrete WENO smoothness indicator.
+  class(weno_interpolator_upwind), intent(inout)      :: self              !< WENO interpolator.
+  class(weno_constructor),         intent(in)         :: constructor       !< WENO constructor.
+  class(weno_IS),             intent(in), target      :: IS_type           !< The concrete WENO smoothness indicator.
   class(weno_alpha_coefficient), intent(in)           :: alpha_type        !< The concrete WENO alpha coefficient.
   class(weno_alpha_coefficient), intent(in), optional :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
   class(weno_optimal_weights),   intent(in)           :: weights_opt_type  !< The concrete WENO optimal weights.
@@ -144,9 +144,6 @@ contains
     self%eps = constructor%eps
     !< Create WENO smoothness indicators object.
     self%IS => associate_WENO_IS_js(IS_input=IS_type)
-    if (associated(self%IS)) then
-      print *, 'cazzovuoi'
-    endif
     call self%IS%create(S=self%S)
     !< Create WENO alpha object.
     select type(alpha_type)

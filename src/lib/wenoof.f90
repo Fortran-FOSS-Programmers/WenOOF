@@ -44,7 +44,6 @@ contains
   character(*),             intent(IN)               :: weights_opt_type  !< The concrete WENO optimal weights.
   character(*),             intent(IN)               :: polynomial_type   !< The concrete WENO polynomial.
   class(weno_interpolator), allocatable, intent(OUT) :: interpolator      !< The concrete WENO interpolator.
-  class(weno_alpha_coefficient), pointer             :: alpha             !< ppppppppp
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -93,11 +92,11 @@ contains
     associate(alpha => interpolator%alpha)
       select type(alpha)
       type is(weno_alpha_coefficient_m)
-        call interpolator%create(constructor=constructor, IS_type=interpolator%IS, alpha_type=interpolator%alpha,&
+        call interpolator%create(constructor=constructor, IS_type=interpolator%IS, alpha_type=alpha,&
                                  alpha_base_type=alpha%alpha_base, weights_opt_type = interpolator%weights,&
                                  polynomial_type = interpolator%polynom)
       class default
-        call interpolator%create(constructor=constructor, IS_type=interpolator%IS, alpha_type=interpolator%alpha,&
+        call interpolator%create(constructor=constructor, IS_type=interpolator%IS, alpha_type=alpha,&
                                  weights_opt_type = interpolator%weights, polynomial_type = interpolator%polynom)
       endselect
     endassociate
