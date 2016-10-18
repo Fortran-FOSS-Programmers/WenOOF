@@ -22,8 +22,7 @@ type, abstract :: weno_alpha_coefficient
   private
   contains
     procedure(description_interface), nopass, deferred, public :: description
-    procedure(compute_bas_interface), nopass, deferred, public :: compute_bas
-    procedure(compute_imp_interface), pass,   deferred, public :: compute_imp
+    procedure(compute_interface),     pass,   deferred, public :: compute
 endtype weno_alpha_coefficient
 
 abstract interface
