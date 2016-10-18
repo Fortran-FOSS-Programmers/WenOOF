@@ -32,7 +32,7 @@ type, extends(weno_alpha_coefficient_z) :: weno_alpha_coefficient_m
   class(weno_alpha_coefficient), allocatable :: alpha_base !< To be set into [[initialize]] method.
   contains
     ! deferred public methods
-    procedure, pass(self), public :: description
+    procedure, nopass, public :: description
     procedure, pass(self), public :: compute
     ! public methods
     procedure, pass(self), public :: initialize
@@ -41,7 +41,7 @@ endtype weno_alpha_coefficient_m
 contains
   ! public, non TBP
   function associate_WENO_alpha_m(alpha_input) result(alpha_pointer)
-    !< Check the type of the alpha coefficient passed as input and return a WENO M alpha coefficient associated to the alpha coefficient.
+    !< Check the type of alpha coefficient passed as input and return a WENO M alpha coefficient associated to alpha coefficient.
     class(weno_alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
     class(weno_alpha_coefficient_m),           pointer :: alpha_pointer !< WENO M alpha coefficients.
 
@@ -55,11 +55,10 @@ contains
   end function associate_WENO_alpha_m
 
   ! deferred public methods
-  pure subroutine description(self, string)
+  pure subroutine description(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO alpha coefficient.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_m), intent(in)  :: self   !< WENO alpha coefficient.
   character(len=:), allocatable,   intent(out) :: string !< String returned.
   character(len=1), parameter                  :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------

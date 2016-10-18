@@ -31,18 +31,18 @@ type, extends(weno_alpha_coefficient_js) :: weno_alpha_coefficient_z
   private
   contains
     ! deferred public methods
-    procedure, pass(self), public :: description
+    procedure, nopass,     public :: description
     procedure, pass(self), public :: compute
     ! public methods
-    procedure, nopass,     public :: tau
-    procedure, nopass,     public :: weno_exp
-    procedure, nopass,     public :: weno_odd
+    procedure, nopass, public :: tau
+    procedure, nopass, public :: weno_exp
+    procedure, nopass, public :: weno_odd
 endtype weno_alpha_coefficient_z
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
   ! public, non TBP
   function associate_WENO_alpha_z(alpha_input) result(alpha_pointer)
-    !< Check the type of the alpha coefficient passed as input and return a WENO Z alpha coefficient associated to the alpha coefficient.
+    !< Check the type of alpha coefficient passed as input and return a WENO Z alpha coefficient associated to alpha coefficient.
     class(weno_alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
     class(weno_alpha_coefficient_z),           pointer :: alpha_pointer !< WENO Z alpha coefficients.
 
@@ -56,11 +56,10 @@ contains
   end function associate_WENO_alpha_z
 
   ! deferred public methods
-  pure subroutine description(self, string)
+  pure subroutine description(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO alpha coefficient.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_z), intent(in)  :: self   !< WENO alpha coefficient.
   character(len=:), allocatable,   intent(out) :: string !< String returned.
   character(len=1), parameter                  :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -86,7 +85,7 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the alpha coefficient of the WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_z), intent(in)           :: self         !< WENO alpha coefficient.
+  class(weno_alpha_coefficient_z), intent(in)           :: self         !< Actual WENO alpha coefficient. 
   integer(I_P),                    intent(in)           :: S            !< Number of stencils used.
   real(R_P),                       intent(in)           :: weight_opt   !< Optimal weight of the stencil.
   real(R_P),                       intent(in), optional :: IS(0:S - 1)  !< Smoothness indicators of the stencils.

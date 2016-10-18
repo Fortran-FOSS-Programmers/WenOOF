@@ -21,18 +21,17 @@ type, abstract :: weno_alpha_coefficient
   !< @note Do not implement any real alpha coefficient provide the interface for the different alpha coefficient implemented.
   private
   contains
-    procedure(description_interface), pass(self), deferred, public :: description
-    procedure(compute_interface),     pass(self), deferred, public :: compute
+    procedure(description_interface), nopass, deferred, public :: description
+    procedure(compute_bas_interface), nopass, deferred, public :: compute_bas
+    procedure(compute_imp_interface), pass,   deferred, public :: compute_imp
 endtype weno_alpha_coefficient
 
 abstract interface
   !< Return a string describing WENO alpha coefficient.
-  pure subroutine description_interface(self, string)
+  pure subroutine description_interface(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO alpha coefficient.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_alpha_coefficient
-  class(weno_alpha_coefficient), intent(in)  :: self   !< WENO alpha coefficient.
   character(len=:), allocatable, intent(out) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description_interface
@@ -45,7 +44,7 @@ abstract interface
   !< Compute the alpha coefficient of the WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
   import :: weno_alpha_coefficient, I_P, R_P
-  class(weno_alpha_coefficient), intent(in)           :: self        !< WENO alpha coefficient.
+  class(weno_alpha_coefficient), intent(in)           :: self        !< Actual WENO alpha coefficient.
   integer(I_P),                  intent(in)           :: S           !< Number of stencils used.
   real(R_P),                     intent(in)           :: weight_opt  !< Optimal weight of the stencil.
   real(R_P),                     intent(in), optional :: IS(0:S - 1) !< Smoothness indicators of the stencils.

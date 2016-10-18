@@ -28,14 +28,14 @@ type, extends(weno_alpha_coefficient) :: weno_alpha_coefficient_js
   private
   contains
     ! deferred public methods
-    procedure, pass(self), public :: description
+    procedure, nopass, public     :: description
     procedure, pass(self), public :: compute
 endtype weno_alpha_coefficient_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
   ! public, non TBP
   function associate_WENO_alpha_js(alpha_input) result(alpha_pointer)
-    !< Check the type of the alpha coefficient passed as input and return a Jiang-Shu alpha coefficient associated to the alpha coefficient.
+    !< Check the type of alpha coefficient passed as input and return a Jiang-Shu alpha coefficient associated to alpha coefficient.
     class(weno_alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
     class(weno_alpha_coefficient_js),          pointer :: alpha_pointer !< Jiang Shu alpha coefficients.
 
@@ -49,11 +49,10 @@ contains
   end function associate_WENO_alpha_js
 
   ! deferred public methods
-  pure subroutine description(self, string)
+  pure subroutine description(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO alpha coefficient.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_js), intent(in)  :: self   !< WENO alpha coefficient.
   character(len=:), allocatable,    intent(out) :: string !< String returned.
   character(len=1), parameter                   :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -77,7 +76,7 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the alpha coefficient of the WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_js), intent(in)           :: self         !< WENO alpha coefficient.
+  class(weno_alpha_coefficient_js), intent(in)           :: self         !< Actual WENO alpa coefficient.
   integer(I_P),                     intent(in)           :: S            !< Number of stencils used.
   real(R_P),                        intent(in)           :: weight_opt   !< Optimal weight of the stencil.
   real(R_P),                        intent(in), optional :: IS(0: S - 1) !< Smoothness indicators of the stencils.
