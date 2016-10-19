@@ -44,7 +44,6 @@ contains
   character(*),             intent(IN)               :: weights_opt_type  !< The concrete WENO optimal weights.
   character(*),             intent(IN)               :: polynomial_type   !< The concrete WENO polynomial.
   class(weno_interpolator), allocatable, intent(OUT) :: interpolator      !< The concrete WENO interpolator.
-  class(weno_alpha_coefficient), pointer             :: alpha             !< ppppppppp
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------

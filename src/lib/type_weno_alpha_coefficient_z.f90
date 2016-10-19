@@ -31,7 +31,7 @@ type, extends(weno_alpha_coefficient_js) :: weno_alpha_coefficient_z
   private
   contains
     ! deferred public methods
-    procedure, pass(self), public :: description
+    procedure, nopass,     public :: description
     procedure, pass(self), public :: compute
     ! public methods
     procedure, nopass,     public :: tau
@@ -42,7 +42,7 @@ endtype weno_alpha_coefficient_z
 contains
   ! public, non TBP
   function associate_WENO_alpha_z(alpha_input) result(alpha_pointer)
-    !< Check the type of the alpha coefficient passed as input and return a WENO Z alpha coefficient associated to the alpha coefficient.
+    !< Check the type of alpha coefficient passed as input and return a WENO Z alpha coefficient associated to alpha coefficient.
     class(weno_alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
     class(weno_alpha_coefficient_z),           pointer :: alpha_pointer !< WENO Z alpha coefficients.
 
@@ -56,11 +56,42 @@ contains
   end function associate_WENO_alpha_z
 
   ! deferred public methods
-  pure subroutine description(self, string)
+  pure subroutine destroy(self)
+  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Destroy Borges et al. WENO alpha coefficients.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  class(weno_alpha_coefficient_z), intent(inout) :: self   !< WENO alpha coefficients.
+  !---------------------------------------------------------------------------------------------------------------------------------
+
+  !---------------------------------------------------------------------------------------------------------------------------------
+  if (allocated(self%alpha)) deallocate(self%alpha)
+  if (allocated(self%alpha_tot)) deallocate(self%alpha_tot)
+  return
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endsubroutine destroy
+
+  pure subroutine create(self, S)
+  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Create WENO alpha coefficients.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  class(weno_alpha_coefficient_z), intent(inout) :: self       !< WENO alpha coefficients.
+  integer(I_P),                    intent(in)    :: S          !< Number of stencils used.
+  !---------------------------------------------------------------------------------------------------------------------------------
+
+  !---------------------------------------------------------------------------------------------------------------------------------
+  call self%destroy
+  allocate(self%alpha(1:2, 0:S - 1))
+  allocate(self%alpha_tot(1:2))
+  self%alpha(:,:) = 100000._R_P
+  self%alpha_tot(:) = 0._R_P
+  return
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endsubroutine create
+
+  pure subroutine description(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO alpha coefficient.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_z), intent(in)  :: self   !< WENO alpha coefficient.
   character(len=:), allocatable,   intent(out) :: string !< String returned.
   character(len=1), parameter                  :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -82,23 +113,29 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description
 
-  pure function compute(self, S, weight_opt, IS, IS_i, eps) result(alpha)
+  pure subroutine compute(self, S, weight_opt, IS, eps, f1, f2)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the alpha coefficient of the WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_z), intent(in)           :: self         !< WENO alpha coefficient.
-  integer(I_P),                    intent(in)           :: S            !< Number of stencils used.
-  real(R_P),                       intent(in)           :: weight_opt   !< Optimal weight of the stencil.
-  real(R_P),                       intent(in), optional :: IS(0:S - 1)  !< Smoothness indicators of the stencils.
-  real(R_P),                       intent(in)           :: IS_i         !< Smoothness indicator of the i-th stencil.
-  real(R_P),                       intent(in)           :: eps          !< Parameter for avoiding divided by zero.
-  real(R_P)                                             :: alpha        !< Alpha coefficient of the stencil.
+  class(weno_alpha_coefficient_z), intent(inout) :: self                          !< WENO alpha coefficient.
+  integer(I_P),                    intent(in)    :: S                             !< Number of stencils used.
+  real(R_P),                       intent(in)    :: weight_opt(1: 2, 0 : S - 1)   !< Optimal weight of the stencil.
+  real(R_P),                       intent(in)    :: IS(1: 2, 0 : S - 1)           !< Smoothness indicators of the stencils.
+  real(R_P),                       intent(in)    :: eps                           !< Parameter for avoiding divided by zero.
+  integer(I_P),                    intent(in)    :: f1, f2                        !< Faces to be computed.
+  integer(I_P)                                   :: f, s1                         !< Counters.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  alpha = weight_opt * ((1._R_P + (tau(S,IS)/(eps+IS_i))) ** (weno_exp(S)))
+  self%alpha_tot = 0._R_P
+  do s1 = 0, S - 1 ! stencil loops
+    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      self%alpha(f, s1) = weight_opt(f, s1) * ((1._R_P + (tau(S,IS)/(eps+IS(f, s1)))) ** (weno_exp(S)))
+      self%alpha_tot(f) = self%alpha_tot(f) + self%alpha(f, s1)
+    enddo
+  enddo
   !---------------------------------------------------------------------------------------------------------------------------------
-  endfunction compute
+  endsubroutine compute
 
   pure function weno_exp(S) result(w_exp)
   !---------------------------------------------------------------------------------------------------------------------------------
