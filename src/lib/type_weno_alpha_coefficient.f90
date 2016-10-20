@@ -19,8 +19,8 @@ type, abstract :: weno_alpha_coefficient
   !< WENO weights.
   !<
   !< @note Do not implement any real alpha coefficient provide the interface for the different alpha coefficient implemented.
-  real(R_P), allocatable :: alpha(:,:)   !< Alpha coefficients [1:2,0:S-1]
-  real(R_P), allocatable :: alpha_tot(:) !< Sum of alpha coefficients
+  real(R_P), allocatable :: alpha_coef(:,:)   !< Alpha coefficients [1:2,0:S-1]
+  real(R_P), allocatable :: alpha_tot(:)      !< Sum of alpha coefficients
   contains
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
     procedure(constructor_interface), pass(self), deferred, public :: create

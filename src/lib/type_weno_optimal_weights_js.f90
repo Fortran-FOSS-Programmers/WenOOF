@@ -34,7 +34,7 @@ type, extends(weno_optimal_weights):: weno_optimal_weights_js
     ! deferred public methods
     procedure, pass(self), public :: destroy
     procedure, pass(self), public :: create
-    procedure, pass(self), public :: description
+    procedure, nopass,     public :: description
 endtype weno_optimal_weights_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
@@ -198,11 +198,10 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine create
 
-  pure subroutine description(self, string)
+  pure subroutine description(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing Jiang-Shu and Gerolymos-Sénéchal-Vallet WENO optimal weights.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_optimal_weights_js), intent(in)  :: self   !< WENO optimal weights.
   character(len=:), allocatable,  intent(out) :: string !< String returned.
   character(len=1), parameter                 :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------

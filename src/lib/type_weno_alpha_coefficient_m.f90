@@ -63,7 +63,7 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  if (allocated(self%alpha)) deallocate(self%alpha)
+  if (allocated(self%alpha_coef)) deallocate(self%alpha_coef)
   if (allocated(self%alpha_tot)) deallocate(self%alpha_tot)
   return
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -79,9 +79,9 @@ contains
 
   !---------------------------------------------------------------------------------------------------------------------------------
   call self%destroy
-  allocate(self%alpha(1:2, 0:S - 1))
+  allocate(self%alpha_coef(1:2, 0:S - 1))
   allocate(self%alpha_tot(1:2))
-  self%alpha(:,:) = 100000._R_P
+  self%alpha_coef(:,:) = 100000._R_P
   self%alpha_tot(:) = 0._R_P
   return
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -129,11 +129,12 @@ contains
   call self%alpha_base%compute(S=S, weight_opt=weight_opt, IS=IS, eps=eps, f1=f1, f2=f2)
   do s1 = 0, S - 1 ! stencil loops
     do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      self%alpha(f, s1) = (self%alpha_base%alpha(f, s1) * (weight_opt(f, s1) + weight_opt(f, s1) * weight_opt(f, s1) - &
-                          3._R_P * weight_opt(f, s1) * self%alpha_base%alpha(f, s1) + self%alpha_base%alpha(f, s1) * &
-                          self%alpha_base%alpha(f, s1))) / &
-                          (weight_opt(f, s1)*weight_opt(f, s1) + self%alpha_base%alpha(f, s1) * (1._R_P - 2._R_P*weight_opt(f, s1)))
-      self%alpha_tot(f) = self%alpha_tot(f) + self%alpha(f, s1)
+      self%alpha_coef(f, s1) = (self%alpha_base%alpha_coef(f, s1) * (weight_opt(f, s1) + weight_opt(f, s1) * weight_opt(f, s1) - &
+                          3._R_P * weight_opt(f, s1) * self%alpha_base%alpha_coef(f, s1) + self%alpha_base%alpha_coef(f, s1) * &
+                          self%alpha_base%alpha_coef(f, s1))) / &
+                          (weight_opt(f, s1) * weight_opt(f, s1) + self%alpha_base%alpha_coef(f, s1) * &
+                          (1._R_P - 2._R_P * weight_opt(f, s1)))
+      self%alpha_tot(f) = self%alpha_tot(f) + self%alpha_coef(f, s1)
     enddo
   enddo
   !---------------------------------------------------------------------------------------------------------------------------------

@@ -308,7 +308,7 @@ contains
   ! computing the weights
   do s1 = 0, S - 1 ! stencils loop
     do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      weights(f, s1) = self%alpha%alpha(f, s1) / self%alpha%alpha_tot(f)
+      weights(f, s1) = self%alpha%alpha_coef(f, s1) / self%alpha%alpha_tot(f)
     enddo
   enddo
 
