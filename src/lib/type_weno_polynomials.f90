@@ -19,6 +19,7 @@ type, abstract :: weno_polynomials
   !< WENO polynomials.
   !<
   !< @note Do not implement any real polynomial: provide the interface for the different polynomials implemented.
+  real(R_P), allocatable :: poly(:,:)     !< Polynomial reconstructions [1:2,0:S-1].
   real(R_P), allocatable :: coef(:,:,:)   !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
@@ -67,17 +68,18 @@ endinterface
 
 abstract interface
   !< Compute the partial value of the WENO interpolating polynomial.
-  pure function compute_interface(self, poly_coef, v) result(poly)
+  pure subroutine compute_interface(self, S, stencil, f1, f2, ff)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the partial value of the interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
   import :: weno_polynomials, I_P, R_P
-  class(weno_polynomials), intent(in) :: self        !< WENO polynomial.
-  real(R_P),               intent(in) :: poly_coef   !< Polynomila coefficient for the value v.
-  real(R_P),               intent(in) :: v           !< Single value of the interpolation stencil.
-  real(R_P)                           :: poly        !< Partial value of the interpolating polynomial.
+  class(weno_polynomials), intent(inout) :: self                    !< WENO polynomial.
+  integer(I_P),            intent(in)    :: S                       !< Number of stencils actually used.
+  real(R_P),               intent(in)    :: stencil(1:, 1 - S:)     !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P),            intent(in)    :: f1, f2, ff              !< Faces to be computed.
+  integer(I_P)                           :: s1, s2, f               !< Counters
   !---------------------------------------------------------------------------------------------------------------------------------
-  endfunction compute_interface
+  endsubroutine compute_interface
 endinterface
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule type_weno_polynomials

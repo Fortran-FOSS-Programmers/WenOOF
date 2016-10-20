@@ -73,7 +73,9 @@ contains
 
   !---------------------------------------------------------------------------------------------------------------------------------
   call self%destroy
+  allocate(self%poly(1:2, 0:S - 1))
   allocate(self%coef(1:2, 0:S - 1, 0:S - 1))
+  self%poly = 0._R_P
   associate(c => self%coef)
     select case(S)
       case(2) ! 3rd order
@@ -169,7 +171,7 @@ contains
         c(1,4,5)=  29._R_P/20._R_P; c(1,5,5)=   1._R_P/6._R_P   ! stencil 5
       case(7) ! 13th order
         ! 1 => left interface (i-1/2)
-        !  cell  0                  ;    cell  1                  ;    cell  2                  
+        !  cell  0                  ;    cell  1                  ;    cell  2
         c(1,0,0)=    1._R_P/7._R_P  ; c(1,1,0)=  223._R_P/140._R_P; c(1,2,0)= -197._R_P/140._R_P  ! stencil 0
         c(1,0,1)=   -1._R_P/42._R_P ; c(1,1,1)=   13._R_P/42._R_P ; c(1,2,1)=  153._R_P/140._R_P  ! stencil 1
         c(1,0,2)=    1._R_P/105._R_P; c(1,1,2)=  -19._R_P/210._R_P; c(1,2,2)=  107._R_P/210._R_P  ! stencil 2
@@ -177,7 +179,7 @@ contains
         c(1,0,4)=    1._R_P/105._R_P; c(1,1,4)=  -31._R_P/420._R_P; c(1,2,4)=  109._R_P/420._R_P  ! stencil 4
         c(1,0,5)=   -1._R_P/42._R_P ; c(1,1,5)=  -37._R_P/210._R_P; c(1,2,5)= -241._R_P/420._R_P  ! stencil 5
         c(1,0,6)=   -1._R_P/7._R_P  ; c(1,1,6)=  -43._R_P/42._R_P ; c(1,2,6)=  667._R_P/210._R_P  ! stencil 6
-        !  cell  3                       cell  4                  ;    cell  5                  
+        !  cell  3                       cell  4                  ;    cell  5
         c(1,3,0)=  153._R_P/140._R_P; c(1,4,0)= -241._R_P/420._R_P; c(1,5,0)=   37._R_P/210._R_P  ! stencil 0
         c(1,3,1)= -241._R_P/420._R_P; c(1,4,1)=  109._R_P/420._R_P; c(1,5,1)=  -31._R_P/420._R_P  ! stencil 1
         c(1,3,2)=  319._R_P/420._R_P; c(1,4,2)= -101._R_P/420._R_P; c(1,5,2)=    5._R_P/84._R_P   ! stencil 2
@@ -194,7 +196,7 @@ contains
         c(1,6,5)=    1._R_P/7._R_P    ! stencil 5
         c(1,6,6)=  363._R_P/140._R_P  ! stencil 6
         ! 2 => right interface (i+1/2)
-        !  cell  0                  ;    cell  1                  ;    cell  2                  
+        !  cell  0                  ;    cell  1                  ;    cell  2
         c(1,0,0)=  363._R_P/140._R_P; c(1,1,0)= -617._R_P/140._R_P; c(1,2,0)=  853._R_P/140._R_P  ! stencil 0
         c(1,0,1)=    1._R_P/7._R_P  ; c(1,1,1)=  223._R_P/140._R_P; c(1,2,1)= -197._R_P/140._R_P  ! stencil 1
         c(1,0,2)=   -1._R_P/42._R_P ; c(1,1,2)=   13._R_P/42._R_P ; c(1,2,2)=  153._R_P/140._R_P  ! stencil 2
@@ -202,7 +204,7 @@ contains
         c(1,0,4)=   -1._R_P/140._R_P; c(1,1,4)=    5._R_P/84._R_P ; c(1,2,4)= -101._R_P/420._R_P  ! stencil 4
         c(1,0,5)=    1._R_P/105._R_P; c(1,1,5)=  -31._R_P/420._R_P; c(1,2,5)=  109._R_P/420._R_P  ! stencil 5
         c(1,0,6)=   -1._R_P/42._R_P ; c(1,1,6)=  -37._R_P/210._R_P; c(1,2,6)= -241._R_P/420._R_P  ! stencil 6
-        !  cell  3                  ;    cell  4                  ;    cell  5                  
+        !  cell  3                  ;    cell  4                  ;    cell  5
         c(1,3,0)=-2341._R_P/420._R_P; c(1,4,0)=  667._R_P/210._R_P; c(1,5,0)=  -43._R_P/42._R_P   ! stencil 0
         c(1,3,1)=  153._R_P/140._R_P; c(1,4,1)= -241._R_P/420._R_P; c(1,5,1)=   37._R_P/210._R_P  ! stencil 1
         c(1,3,2)= -241._R_P/420._R_P; c(1,4,2)=  109._R_P/420._R_P; c(1,5,2)=  -31._R_P/420._R_P  ! stencil 2
@@ -220,7 +222,7 @@ contains
         c(1,6,6)=    1._R_P/7._R_P    ! stencil 6
       case(8) ! 15th order
         ! 1 => left interface (i-1/2)
-        !  cell  0                  ;    cell  1                  ;    cell  2                  
+        !  cell  0                  ;    cell  1                  ;    cell  2
         c(1,0,0)=    7._R_P/56._R_P ; c(1,1,0)= 1443._R_P/840._R_P; c(1,2,0)=-1497._R_P/840._R_P  ! stencil 0
         c(1,0,1)=   -1._R_P/56._R_P ; c(1,1,1)=   15._R_P/56._R_P ; c(1,2,1)= 1023._R_P/840._R_P  ! stencil 1
         c(1,0,2)=    1._R_P/168._R_P; c(1,1,2)=  -11._R_P/168._R_P; c(1,2,2)=   73._R_P/168._R_P  ! stencil 2
@@ -229,7 +231,7 @@ contains
         c(1,0,5)=   -1._R_P/168._R_P; c(1,1,5)=   43._R_P/840._R_P; c(1,2,5)= -167._R_P/840._R_P  ! stencil 5
         c(1,0,6)=    1._R_P/56._R_P ; c(1,1,6)=  -25._R_P/168._R_P; c(1,2,6)=  463._R_P/840._R_P  ! stencil 6
         c(1,0,7)=   -7._R_P/56._R_P ; c(1,1,7)=   57._R_P/56._R_P ; c(1,2,7)=  613._R_P/168._R_P  ! stencil 7
-        !  cell  3                  ;    cell  4                  ;    cell  5                  
+        !  cell  3                  ;    cell  4                  ;    cell  5
         c(1,3,0)= 1443._R_P/840._R_P; c(1,4,0)=-1007._R_P/840._R_P; c(1,5,0)=  463._R_P/840._R_P  ! stencil 0
         c(1,3,1)= -657._R_P/840._R_P; c(1,4,1)=  393._R_P/840._R_P; c(1,5,1)= -167._R_P/840._R_P  ! stencil 1
         c(1,3,2)=  743._R_P/840._R_P; c(1,4,2)= -307._R_P/840._R_P; c(1,5,2)=  113._R_P/840._R_P  ! stencil 2
@@ -248,7 +250,7 @@ contains
         c(1,6,6)= 1443._R_P/840._R_P; c(1,7,6)=    7._R_P/56._R_P   ! stencil 6
         c(1,6,7)=-4437._R_P/840._R_P; c(1,7,7)= 2283._R_P/840._R_P  ! stencil 7
         ! 2 => right interface (i+1/2)
-        !  cell  0                  ;    cell  1                  ;    cell  2                  
+        !  cell  0                  ;    cell  1                  ;    cell  2
         c(1,0,0)= 2283._R_P/840._R_P; c(1,1,0)=-4437._R_P/840._R_P; c(1,2,0)= 7323._R_P/840._R_P  ! stencil 0
         c(1,0,1)=    7._R_P/56._R_P ; c(1,1,1)= 1443._R_P/840._R_P; c(1,2,1)=-1497._R_P/840._R_P  ! stencil 1
         c(1,0,2)=   -1._R_P/56._R_P ; c(1,1,2)=   15._R_P/56._R_P ; c(1,2,2)= 1023._R_P/840._R_P  ! stencil 2
@@ -257,7 +259,7 @@ contains
         c(1,0,5)=    3._R_P/840._R_P; c(1,1,5)=  -27._R_P/840._R_P; c(1,2,5)=  113._R_P/840._R_P  ! stencil 5
         c(1,0,6)=   -1._R_P/168._R_P; c(1,1,6)=   43._R_P/840._R_P; c(1,2,6)= -167._R_P/840._R_P  ! stencil 6
         c(1,0,7)=    1._R_P/56._R_P ; c(1,1,7)=  -25._R_P/168._R_P; c(1,2,7)=  463._R_P/840._R_P  ! stencil 7
-        !  cell  3                  ;    cell  4                  ;    cell  5                  
+        !  cell  3                  ;    cell  4                  ;    cell  5
         c(1,3,0)=-8357._R_P/840._R_P; c(1,4,0)= 6343._R_P/840._R_P; c(1,5,0)=  613._R_P/168._R_P  ! stencil 0
         c(1,3,1)= 1443._R_P/840._R_P; c(1,4,1)=-1007._R_P/840._R_P; c(1,5,1)=  463._R_P/840._R_P  ! stencil 1
         c(1,3,2)= -657._R_P/840._R_P; c(1,4,2)=  393._R_P/840._R_P; c(1,5,2)= -167._R_P/840._R_P  ! stencil 2
@@ -277,7 +279,7 @@ contains
         c(1,6,7)= 1443._R_P/840._R_P; c(1,7,7)=    7._R_P/56._R_P   ! stencil 7
       case(9) ! 17th order
         ! 1 => left interface (i-1/2)
-        !  cell  0                    ;     cell  1                   ;     cell  2                   
+        !  cell  0                    ;     cell  1                   ;     cell  2
         c(1,0,0)=     1._R_P/9._R_P   ; c(1,1,0)=  4609._R_P/2520._R_P; c(1,2,0)= -5471._R_P/2520._R_P  ! stencil 0
         c(1,0,1)=    -7._R_P/504._R_P ; c(1,1,1)=   119._R_P/508._R_P ; c(1,2,1)=  3349._R_P/2520._R_P  ! stencil 1
         c(1,0,2)=     1._R_P/252._R_P ; c(1,1,2)=   -25._R_P/508._R_P ; c(1,2,2)=   191._R_P/504._R_P   ! stencil 2
@@ -287,7 +289,7 @@ contains
         c(1,0,6)=     1._R_P/252._R_P ; c(1,1,6)=   -19._R_P/508._R_P ; c(1,2,6)=   409._R_P/2520._R_P  ! stencil 6
         c(1,0,7)=    -7._R_P/504._R_P ; c(1,1,7)=    65._R_P/508._R_P ; c(1,2,7)=   271._R_P/504._R_P   ! stencil 7
         c(1,0,8)=     1._R_P/9._R_P   ; c(1,1,8)=  -511._R_P/508._R_P ; c(1,2,8)=  2081._R_P/504._R_P   ! stencil 8
-        !  cell  3                    ;    cell  4                    ;     cell  5                   
+        !  cell  3                    ;    cell  4                    ;     cell  5
         c(1,3,0)=  6289._R_P/2520._R_P; c(1,4,0)= -5471._R_P/2520._R_P; c(1,5,0)=  3349._R_P/2520._R_P  ! stencil 0
         c(1,3,1)= -2531._R_P/2520._R_P; c(1,4,1)=  1879._R_P/2520._R_P; c(1,5,1)= -1061._R_P/2520._R_P  ! stencil 1
         c(1,3,2)=  2509._R_P/2520._R_P; c(1,4,2)= -1271._R_P/2520._R_P; c(1,5,2)=   619._R_P/2520._R_P  ! stencil 2
@@ -308,7 +310,7 @@ contains
         c(1,6,7)= -5471._R_P/2520._R_P; c(1,7,7)=  4609._R_P/2520._R_P; c(1,8,7)=      7._R_P/63._R_P   ! stencil 7
         c(1,6,8)= 29809._R_P/2520._R_P; c(1,7,8)=-15551._R_P/2520._R_P; c(1,8,8)=   7129._R_P/2520._R_P ! stencil 8
         ! 2 => right interface (i+1/2)
-        !  cell  0                    ;     cell  1                   ;     cell  2                   
+        !  cell  0                    ;     cell  1                   ;     cell  2
         c(1,0,0)=  7129._R_P/2520._R_P; c(1,1,0)=-15551._R_P/2520._R_P; c(1,2,0)= 29809._R_P/2520._R_P  ! stencil 0
         c(1,0,1)=     7._R_P/63._R_P  ; c(1,1,1)=  4609._R_P/2520._R_P; c(1,2,1)= -5471._R_P/2520._R_P  ! stencil 1
         c(1,0,2)=    -1._R_P/72._R_P  ; c(1,1,2)=   119._R_P/504._R_P ; c(1,2,2)=  3349._R_P/2520._R_P  ! stencil 2
@@ -318,7 +320,7 @@ contains
         c(1,0,6)=   -1._R_P/504._R_P  ; c(1,1,6)=    49._R_P/2520._R_P; c(1,2,6)=  -221._R_P/2520._R_P  ! stencil 6
         c(1,0,7)=    1._R_P/252._R_P  ; c(1,1,7)=    19._R_P/504._R_P ; c(1,2,7)=   409._R_P/2520._R_P  ! stencil 7
         c(1,0,8)=   -1._R_P/72._R_P   ; c(1,1,8)=    65._R_P/504._R_P ; c(1,2,8)=    -7._R_P/504._R_P   ! stencil 8
-        !   cell  3                   ; !  cell  4                    ;     cell  5                   
+        !   cell  3                   ; !  cell  4                    ;     cell  5
         c(1,3,0)=-40751._R_P/2520._R_P; c(1,4,0)= 38629._R_P/2520._R_P; c(1,5,0)= -4975._R_P/504._R_P   ! stencil 0
         c(1,3,1)=  6289._R_P/2520._R_P; c(1,4,1)= -5471._R_P/2520._R_P; c(1,5,1)=  3349._R_P/2520._R_P  ! stencil 1
         c(1,3,2)= -2531._R_P/2520._R_P; c(1,4,2)=  1879._R_P/2520._R_P; c(1,5,2)= -1061._R_P/2520._R_P  ! stencil 2
@@ -364,20 +366,28 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description
 
-  pure function compute(self, poly_coef, v) result(poly)
+  pure subroutine compute(self, S, stencil, f1, f2, ff)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the partial value of the interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_polynomials_js), intent(in) :: self       !< WENO alpha coefficient.
-  real(R_P),                  intent(in) :: poly_coef  !< Coefficient of the smoothness indicator.
-  real(R_P),                  intent(IN) :: v          !< Selected value from the stencil used for the interpolation.
-  real(R_P)                              :: poly       !< Partial value of the interpolating polynomial.
+  class(weno_polynomials_js), intent(inout) :: self                    !< WENO polynomial.
+  integer(I_P),               intent(in)    :: S                       !< Number of stencils actually used.
+  real(R_P),                  intent(in)    :: stencil(1:, 1 - S:)     !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P),               intent(in)    :: f1, f2, ff              !< Faces to be computed.
+  integer(I_P)                              :: s1, s2, f               !< Counters
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  poly = poly_coef * v
+  self%poly = 0._R_P
+  do s1 = 0, S - 1 ! stencils loop
+    do s2 = 0, S - 1 ! values loop
+      do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+        self%poly(f, s1) = self%poly(f, s1) + self%coef(f, s2, s1) * stencil(f + ff, -s2 + s1)
+      enddo
+    enddo
+  enddo
   !---------------------------------------------------------------------------------------------------------------------------------
-  endfunction compute
+  endsubroutine compute
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule type_weno_polynomials_js

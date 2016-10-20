@@ -77,6 +77,8 @@ contains
 
   !---------------------------------------------------------------------------------------------------------------------------------
   call self%destroy
+  allocate(self%IS(1:2, 0:S - 1))
+  self%IS = 0._R_P
   allocate(self%coef(1:2, 0:S - 1, 0:S - 1))
   associate(c => self%coef)
     select case(S)
@@ -2343,21 +2345,30 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description
 
-  pure function compute(self, smooth_coef, v1, v2) result(IS)
+  pure subroutine compute(self, S, stencil, f1, f2, ff)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the partial value of the smoothness indicator of a single WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_IS_js), intent(in) :: self        !< WENO alpha coefficient.
-  real(R_P),         intent(in) :: smooth_coef !< Coefficient of the smoothness indicator.
-  real(R_P),         intent(IN) :: v1          !< First (pivotal) value from the stencil used for the interpolation.
-  real(R_P),         intent(IN) :: v2          !< Second value from the stencil used for the interpolation.
-  real(R_P)                     :: IS          !< Partial value of the smoothness indicator of polynomial.
+  class(weno_IS_js), intent(inout) :: self                    !< WENO smoothness indicator.
+  integer(I_P),      intent(in)    :: S                       !< Number of stencils actually used.
+  real(R_P),         intent(in)    :: stencil(1:, 1 - S:)     !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P),      intent(in)    :: f1, f2, ff              !< Faces to be computed.
+  integer(I_P)                     :: s1, s2, s3, f           !< Counters
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  IS = smooth_coef * v1 * v2
+  do s1 = 0, S - 1 ! stencils loop
+    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      self%IS(f, s1) = 0._R_P
+      do s2 = 0, S - 1
+        do s3 = 0, S - 1
+          self%IS(f, s1) = self%IS(f, s1) + self%coef(s3, s2, s1) * stencil(f + ff, s1 - s3) * stencil(f + ff, s1 - s2)
+        enddo
+      enddo
+    enddo
+  enddo
   !---------------------------------------------------------------------------------------------------------------------------------
-  endfunction compute
+  endsubroutine compute
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule type_weno_smoothness_indicators_js

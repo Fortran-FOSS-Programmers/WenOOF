@@ -144,6 +144,7 @@ contains
     self%eps = constructor%eps
     !< Create WENO smoothness indicators object.
     self%IS => associate_WENO_IS_js(IS_input=IS_type)
+    call self%IS%create(S = self%S)
     !< Create WENO alpha object.
     select type(alpha_type)
     type is(weno_alpha_coefficient_js)
@@ -156,8 +157,10 @@ contains
     call self%alpha%create(S = self%S)
     !< Create WENO optimal weights object.
     self%weights => associate_WENO_weights_js(weights_input=weights_opt_type)
+    call self%weights%create(S = self%S)
     !< Create WENO polynomials object.
     self%polynom => associate_WENO_polynomials_js(polyn_input=polynomial_type)
+    call self%polynom%create(S = self%S)
   endselect
   return
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -259,13 +262,11 @@ contains
   !< Interpolate the stencil input values computing the actual interpolation.
   !---------------------------------------------------------------------------------------------------------------------------------
   class(weno_interpolator_upwind), intent(in)  :: self                      !< WENO interpolator.
-  integer,                         intent(in)  :: S                         !< Number of stencils actually used.
+  integer(I_P),                    intent(in)  :: S                         !< Number of stencils actually used.
   real(R_P),                       intent(in)  :: stencil(1:, 1 - S:)       !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
   character(*),                    intent(in)  :: location                  !< Location of interpolated value(s): left, right, both.
   real(R_P),                       intent(out) :: interpolation(1:)         !< Result of the interpolation, [1:2].
-  real(R_P)                                    :: polynomials(1:2, 0:S - 1) !< Polynomial reconstructions.
   real(R_P)                                    :: weights(1:2, 0:S - 1)     !< Weights of the stencils, [1:2, 0:S-1 ].
-  real(R_P)                                    :: IS(1:2, 0:S - 1)          !< Smoothness indicators of the stencils, [1:2, 0:S-1].
   integer(I_P)                                 :: f1, f2, ff                !< Faces to be computed.
   integer(I_P)                                 :: s1, s2, s3, f, k          !< Counters.
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -279,31 +280,13 @@ contains
   endselect
 
   ! computing polynomials reconstructions.
-  polynomials = 0.
-  do s1 = 0, S - 1 ! stencils loop
-    do s2 = 0, S - 1 ! values loop
-      do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-        polynomials(f, s1) = polynomials(f, s1) + &
-                             self%polynom%compute(poly_coef=self%polynom%coef(f, s2, s1), v=stencil(f + ff, -s2 + s1))
-      enddo
-    enddo
-  enddo
+  call self%polynom%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
 
   ! computing smoothness indicators
-  do s1 = 0, S - 1 ! stencils loop
-    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      IS(f, s1) = 0.
-      do s2 = 0, S - 1
-        do s3 = 0, S - 1
-          IS(f, s1)=IS(f, s1) + &
-                    self%IS%compute(smooth_coef=self%IS%coef(s3, s2, s1), v1=stencil(f + ff, s1 - s3), v2=stencil(f + ff, s1 - s2))
-        enddo
-      enddo
-    enddo
-  enddo
+  call self%polynom%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
 
   ! computing alpha coefficients
-  call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS = IS, eps = self%eps, f1=f1, f2=f2)
+  call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS = self%IS%IS, eps = self%eps, f1=f1, f2=f2)
 
   ! computing the weights
   do s1 = 0, S - 1 ! stencils loop
@@ -316,7 +299,7 @@ contains
   interpolation = 0.
   do k = 0, S - 1 ! stencils loop
     do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      interpolation(f + ff) = interpolation(f + ff) + weights(f, k) * polynomials(f, k)
+      interpolation(f + ff) = interpolation(f + ff) + weights(f, k) * self%polynom%poly(f, k)
     enddo
   enddo
   return
