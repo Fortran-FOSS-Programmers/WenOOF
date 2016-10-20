@@ -23,7 +23,7 @@ type, abstract :: weno_polynomials
   contains
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
     procedure(constructor_interface), pass(self), deferred, public :: create
-    procedure(description_interface), pass(self), deferred, public :: description
+    procedure(description_interface), nopass,     deferred, public :: description
     procedure(compute_interface),     pass(self), deferred, public :: compute
 endtype weno_polynomials
 
@@ -56,12 +56,10 @@ endinterface
 
 abstract interface
   !< Return a string describing WENO polynomials.
-  pure subroutine description_interface(self, string)
+  pure subroutine description_interface(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO polynomials.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_polynomials
-  class(weno_polynomials),       intent(in)  :: self   !< WENO polynomials.
   character(len=:), allocatable, intent(out) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description_interface

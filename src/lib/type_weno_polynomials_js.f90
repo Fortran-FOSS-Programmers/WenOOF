@@ -29,7 +29,7 @@ type, extends(weno_polynomials) :: weno_polynomials_js
   contains
     procedure, pass(self), public :: destroy
     procedure, pass(self), public :: create
-    procedure, pass(self), public :: description
+    procedure, nopass,     public :: description
     procedure, pass(self), public :: compute
 endtype weno_polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -344,11 +344,10 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine create
 
-  pure subroutine description(self, string)
+  pure subroutine description(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_polynomials_js),    intent(in)  :: self   !< WENO polynomial.
   character(len=:), allocatable, intent(out) :: string !< String returned.
   character(len=1), parameter                :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
