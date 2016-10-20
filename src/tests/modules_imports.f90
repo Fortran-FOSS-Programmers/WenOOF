@@ -15,8 +15,7 @@ character(len=:),         allocatable :: description
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-call factory%create(constructor=weno_constructor_upwind(S=3, eps=1.E-9), IS_type='JS', alpha_type='JS',&
-                                                        weights_opt_type='JS', polynomial_type='JS', interpolator=interpolator)
+call factory%create(constructor=weno_constructor_upwind(S=3, eps=1.E-9), interpolator=interpolator)
 call interpolator%description(string=description)
 print "(A)", description
 stop

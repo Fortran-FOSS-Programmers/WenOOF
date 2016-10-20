@@ -33,14 +33,14 @@ type, extends(weno_IS) :: weno_IS_js
   contains
     procedure, pass(self), public :: destroy
     procedure, pass(self), public :: create
-    procedure, pass(self), public :: description
+    procedure, nopass,     public :: description
     procedure, pass(self), public :: compute
 endtype weno_IS_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
   ! public, non TBP
   function associate_WENO_IS_js(IS_input) result(IS_pointer)
-    !< Check the type of the smoothness indicator passed as input and return a Jiang-Shu smoothness indicator associated to the smoothness indicator.
+    !< Check the type of smoothness indicator passed as input and return a Jiang-Shu IS associated to smoothness indicator.
     class(weno_IS), intent(in), target  :: IS_input   !< Input smoothness indicator.
     class(weno_IS_js),          pointer :: IS_pointer !< Jiang Shu smoothness indicator.
 
@@ -77,7 +77,7 @@ contains
 
   !---------------------------------------------------------------------------------------------------------------------------------
   call self%destroy
-  allocate(self%coef(0:S - 1, 0:S - 1, 0:S - 1))
+  allocate(self%coef(1:2, 0:S - 1, 0:S - 1))
   associate(c => self%coef)
     select case(S)
     case(2) ! 3rd order
@@ -2322,11 +2322,10 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine create
 
-  pure subroutine description(self, string)
+  pure subroutine description(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO smoothness indicator.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_IS_js),                intent(in)  :: self   !< WENO alpha coefficient.
   character(len=:), allocatable,    intent(out) :: string !< String returned.
   character(len=1), parameter                   :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------

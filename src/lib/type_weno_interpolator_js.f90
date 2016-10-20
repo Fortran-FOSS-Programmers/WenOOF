@@ -127,13 +127,13 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(inout)      :: self              !< WENO interpolator.
-  class(weno_constructor),         intent(in)         :: constructor       !< WENO constructor.
-  class(weno_IS),             intent(in), target      :: IS_type           !< The concrete WENO smoothness indicator.
-  class(weno_alpha_coefficient), intent(in)           :: alpha_type        !< The concrete WENO alpha coefficient.
-  class(weno_alpha_coefficient), intent(in), optional :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
-  class(weno_optimal_weights),   intent(in)           :: weights_opt_type  !< The concrete WENO optimal weights.
-  class(weno_polynomials),       intent(in)           :: polynomial_type   !< The concrete WENO polynomial.
+  class(weno_interpolator_upwind), intent(inout)        :: self        !< WENO interpolator.
+  class(weno_constructor),         intent(in)           :: constructor !< WENO constructor.
+  class(weno_IS),                  intent(in), target   :: IS_type           !< The concrete WENO smoothness indicator.
+  class(weno_alpha_coefficient),   intent(in)           :: alpha_type        !< The concrete WENO alpha coefficient.
+  class(weno_alpha_coefficient),   intent(in), optional :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
+  class(weno_optimal_weights),     intent(in)           :: weights_opt_type  !< The concrete WENO optimal weights.
+  class(weno_polynomials),         intent(in)           :: polynomial_type   !< The concrete WENO polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -144,7 +144,6 @@ contains
     self%eps = constructor%eps
     !< Create WENO smoothness indicators object.
     self%IS => associate_WENO_IS_js(IS_input=IS_type)
-    call self%IS%create(S=self%S)
     !< Create WENO alpha object.
     select type(alpha_type)
     type is(weno_alpha_coefficient_js)
@@ -154,12 +153,11 @@ contains
     type is(weno_alpha_coefficient_m)
       self%alpha => associate_WENO_alpha_m(alpha_input=alpha_type)
     endselect
+    call self%alpha%create(S = self%S)
     !< Create WENO optimal weights object.
     self%weights => associate_WENO_weights_js(weights_input=weights_opt_type)
-    call self%weights%create(S=self%S)
     !< Create WENO polynomials object.
     self%polynom => associate_WENO_polynomials_js(polyn_input=polynomial_type)
-    call self%polynom%create(S=self%S)
   endselect
   return
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -267,8 +265,6 @@ contains
   real(R_P),                       intent(out) :: interpolation(1:)         !< Result of the interpolation, [1:2].
   real(R_P)                                    :: polynomials(1:2, 0:S - 1) !< Polynomial reconstructions.
   real(R_P)                                    :: weights(1:2, 0:S - 1)     !< Weights of the stencils, [1:2, 0:S-1 ].
-  real(R_P)                                    :: a(1:2, 0:S - 1)           !< Alpha coefficients for the weights.
-  real(R_P)                                    :: a_tot(1:2)                !< Sum of the alpha coefficients.
   real(R_P)                                    :: IS(1:2, 0:S - 1)          !< Smoothness indicators of the stencils, [1:2, 0:S-1].
   integer(I_P)                                 :: f1, f2, ff                !< Faces to be computed.
   integer(I_P)                                 :: s1, s2, s3, f, k          !< Counters.
@@ -307,18 +303,12 @@ contains
   enddo
 
   ! computing alpha coefficients
-  a_tot = 0.
-  do s1 = 0, S - 1 ! stencil loops
-    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      a(f, s1) = self%alpha%compute(S=S, weight_opt=self%weights%opt(f, s1), IS_i = IS(f, s1), eps = self%eps)
-      a_tot(f) = a_tot(f) + a(f, s1)
-    enddo
-  enddo
+  call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS = IS, eps = self%eps, f1=f1, f2=f2)
 
   ! computing the weights
   do s1 = 0, S - 1 ! stencils loop
     do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      weights(f, s1) = a(f, s1) / a_tot(f)
+      weights(f, s1) = self%alpha%alpha_coef(f, s1) / self%alpha%alpha_tot(f)
     enddo
   enddo
 

@@ -23,7 +23,7 @@ type, abstract :: weno_optimal_weights
   contains
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
     procedure(constructor_interface), pass(self), deferred, public :: create
-    procedure(description_interface), pass(self), deferred, public :: description
+    procedure(description_interface), nopass,     deferred, public :: description
 endtype weno_optimal_weights
 
 abstract interface
@@ -55,12 +55,10 @@ endinterface
 
 abstract interface
   !< Return a string describing WENO optimal weights.
-  pure subroutine description_interface(self, string)
+  pure subroutine description_interface(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO optimal weights.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_optimal_weights
-  class(weno_optimal_weights),   intent(in)  :: self   !< WENO optimal weights.
   character(len=:), allocatable, intent(out) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description_interface

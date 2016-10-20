@@ -23,7 +23,7 @@ type, abstract :: weno_IS
   contains
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
     procedure(constructor_interface), pass(self), deferred, public :: create
-    procedure(description_interface), pass(self), deferred, public :: description
+    procedure(description_interface), nopass,     deferred, public :: description
     procedure(compute_interface),     pass(self), deferred, public :: compute
 endtype weno_IS
 
@@ -56,12 +56,10 @@ endinterface
 
 abstract interface
   !< Return a string describing WENO smoothness_indicators.
-  pure subroutine description_interface(self, string)
+  pure subroutine description_interface(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO smoothness_indicators.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_IS
-  class(weno_IS),                intent(in)  :: self   !< WENO smoothness indicator.
   character(len=:), allocatable, intent(out) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description_interface

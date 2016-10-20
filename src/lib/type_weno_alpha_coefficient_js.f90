@@ -28,7 +28,9 @@ type, extends(weno_alpha_coefficient) :: weno_alpha_coefficient_js
   private
   contains
     ! deferred public methods
-    procedure, nopass, public     :: description
+    procedure, pass(self), public :: destroy
+    procedure, pass(self), public :: create
+    procedure, nopass,     public :: description
     procedure, pass(self), public :: compute
 endtype weno_alpha_coefficient_js
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -49,6 +51,38 @@ contains
   end function associate_WENO_alpha_js
 
   ! deferred public methods
+  pure subroutine destroy(self)
+  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Destroy Jiang-Shu WENO alpha coefficients.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  class(weno_alpha_coefficient_js), intent(inout) :: self   !< WENO alpha coefficients.
+  !---------------------------------------------------------------------------------------------------------------------------------
+
+  !---------------------------------------------------------------------------------------------------------------------------------
+  if (allocated(self%alpha_coef)) deallocate(self%alpha_coef)
+  if (allocated(self%alpha_tot)) deallocate(self%alpha_tot)
+  return
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endsubroutine destroy
+
+  pure subroutine create(self, S)
+  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Create WENO alpha coefficients.
+  !---------------------------------------------------------------------------------------------------------------------------------
+  class(weno_alpha_coefficient_js), intent(inout) :: self       !< WENO alpha coefficients.
+  integer(I_P),                     intent(in)    :: S          !< Number of stencils used.
+  !---------------------------------------------------------------------------------------------------------------------------------
+
+  !---------------------------------------------------------------------------------------------------------------------------------
+  call self%destroy
+  allocate(self%alpha_coef(1:2, 0:S - 1))
+  allocate(self%alpha_tot(1:2))
+  self%alpha_coef(:,:) = 100000._R_P
+  self%alpha_tot(:) = 0._R_P
+  return
+  !---------------------------------------------------------------------------------------------------------------------------------
+  endsubroutine create
+
   pure subroutine description(string)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO alpha coefficient.
@@ -72,22 +106,28 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description
 
-  pure function compute(self, S, weight_opt, IS, IS_i, eps) result(alpha)
+  pure subroutine compute(self, S, weight_opt, IS, eps, f1, f2)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the alpha coefficient of the WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_js), intent(in)           :: self         !< Actual WENO alpa coefficient.
-  integer(I_P),                     intent(in)           :: S            !< Number of stencils used.
-  real(R_P),                        intent(in)           :: weight_opt   !< Optimal weight of the stencil.
-  real(R_P),                        intent(in), optional :: IS(0: S - 1) !< Smoothness indicators of the stencils.
-  real(R_P),                        intent(in)           :: IS_i         !< Smoothness indicator of the stencil.
-  real(R_P),                        intent(in)           :: eps          !< Parameter for avoiding divided by zero.
-  real(R_P)                                              :: alpha        !< Alpha coefficient of the stencil.
+  class(weno_alpha_coefficient_js), intent(inout) :: self                         !< WENO alpha coefficient.
+  integer(I_P),                     intent(in)    :: S                            !< Number of stencils used.
+  real(R_P),                        intent(in)    :: weight_opt(1: 2, 0: S - 1)   !< Optimal weight of the stencil.
+  real(R_P),                        intent(in)    :: IS(1: 2, 0: S - 1)           !< Smoothness indicators of the stencils.
+  real(R_P),                        intent(in)    :: eps                          !< Parameter for avoiding divided by zero.
+  integer(I_P),                     intent(in)    :: f1, f2                       !< Faces to be computed.
+  integer(I_P)                                    :: f, s1                        !< Counters.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
-  alpha = weight_opt * (1._R_P/(eps + IS_i)**S)
+  self%alpha_tot = 0._R_P
+  do s1 = 0, S - 1 ! stencil loops
+    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      self%alpha_coef(f, s1) = weight_opt(f, s1) * (1._R_P/(eps + IS(f, s1))**S)
+      self%alpha_tot(f) = self%alpha_tot(f) + self%alpha_coef(f, s1)
+    enddo
+  enddo
   !---------------------------------------------------------------------------------------------------------------------------------
-  endfunction compute
+  endsubroutine compute
 
 endmodule type_weno_alpha_coefficient_js

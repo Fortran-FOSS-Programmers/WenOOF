@@ -40,8 +40,7 @@ do i = 1, Nv
 enddo
 
 ! prepare the weno interpolator
-call factory%create(constructor=weno_constructor_upwind(S=S, eps=10._R_P**(-40)), IS_type='JS', alpha_type='JS',&
-                                                        weights_opt_type='JS', polynomial_type='JS', interpolator=interpolator)
+call factory%create(constructor=weno_constructor_upwind(S=S, eps=10._R_P**(-40)), interpolator=interpolator)
 
 ! interpolate values
 interpolation = 0.
