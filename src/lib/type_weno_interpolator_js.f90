@@ -149,12 +149,15 @@ contains
     select type(alpha_type)
     type is(weno_alpha_coefficient_js)
       self%alpha => associate_WENO_alpha_js(alpha_input=alpha_type)
+      call self%alpha%create(S = self%S)
     type is(weno_alpha_coefficient_z)
       self%alpha => associate_WENO_alpha_z(alpha_input=alpha_type)
+      call self%alpha%create(S = self%S)
     type is(weno_alpha_coefficient_m)
       self%alpha => associate_WENO_alpha_m(alpha_input=alpha_type)
+      call self%alpha%create(S = self%S)
+      call self%alpha%alpha_base%create(S = self%S)
     endselect
-    call self%alpha%create(S = self%S)
     !< Create WENO optimal weights object.
     self%weights => associate_WENO_weights_js(weights_input=weights_opt_type)
     call self%weights%create(S = self%S)
@@ -268,7 +271,7 @@ contains
   real(R_P),                       intent(out)   :: interpolation(1:)         !< Result of the interpolation, [1:2].
   real(R_P)                                      :: weights(1:2, 0:S - 1)     !< Weights of the stencils, [1:2, 0:S-1].
   integer(I_P)                                   :: f1, f2, ff                !< Faces to be computed.
-  integer(I_P)                                   :: s1, s2, s3, f, k          !< Counters.
+  integer(I_P)                                   :: s1, f, k                  !< Counters.
   !---------------------------------------------------------------------------------------------------------------------------------
   select case(location)
   case('both', 'b')
