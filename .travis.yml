@@ -23,6 +23,11 @@ addons:
       - graphviz      
 
 env:
+  global:
+    - MAKECOVERAGE="FoBiS.py rule -ex makecoverage"
+    - MAKEDOC="./scripts/makedoc.sh giacombum/WenOOF"
+    - CLEAN="FoBiS.py rule -ex clean"
+    - MAKETAR="FoBiS.py rule -ex maketar"
 
 before_install:
   - git submodule update --init --recursive
