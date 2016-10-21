@@ -103,11 +103,11 @@ abstract interface
   !< Interpolate the stencil input values computing the actual interpolation.
   !---------------------------------------------------------------------------------------------------------------------------------
   import :: I_P, R_P, weno_interpolator, weno_alpha_coefficient, weno_optimal_weights, weno_IS, weno_polynomials
-  class(weno_interpolator), intent(in)  :: self                 !< WENO interpolator.
-  integer,                  intent(IN)  :: S                    !< Number of stencils actually used.
-  real(R_P),                intent(IN)  :: stencil(1:, 1 - S:)  !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  character(*),             intent(in)  :: location             !< Location of interpolated value(s): left, right, both.
-  real(R_P),                intent(out) :: interpolation(1:)    !< Result of the interpolation, [1:2].
+  class(weno_interpolator), intent(inout) :: self                 !< WENO interpolator.
+  integer,                  intent(IN)    :: S                    !< Number of stencils actually used.
+  real(R_P),                intent(IN)    :: stencil(1:, 1 - S:)  !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  character(*),             intent(in)    :: location             !< Location of interpolated values: left, right, both.
+  real(R_P),                intent(out)   :: interpolation(1:)    !< Result of the interpolation, [1:2].
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine interpolate_interface
 endinterface

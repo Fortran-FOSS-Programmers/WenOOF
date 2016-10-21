@@ -261,14 +261,14 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Interpolate the stencil input values computing the actual interpolation.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(in)  :: self                      !< WENO interpolator.
-  integer(I_P),                    intent(in)  :: S                         !< Number of stencils actually used.
-  real(R_P),                       intent(in)  :: stencil(1:, 1 - S:)       !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  character(*),                    intent(in)  :: location                  !< Location of interpolated value(s): left, right, both.
-  real(R_P),                       intent(out) :: interpolation(1:)         !< Result of the interpolation, [1:2].
-  real(R_P)                                    :: weights(1:2, 0:S - 1)     !< Weights of the stencils, [1:2, 0:S-1 ].
-  integer(I_P)                                 :: f1, f2, ff                !< Faces to be computed.
-  integer(I_P)                                 :: s1, s2, s3, f, k          !< Counters.
+  class(weno_interpolator_upwind), intent(inout) :: self                      !< WENO interpolator.
+  integer(I_P),                    intent(in)    :: S                         !< Number of stencils actually used.
+  real(R_P),                       intent(in)    :: stencil(1:, 1 - S:)       !< Stencil used for the interpolation [1:2, 1-S:-1+S].
+  character(*),                    intent(in)    :: location                  !< Location of interpolated values: left, right, both.
+  real(R_P),                       intent(out)   :: interpolation(1:)         !< Result of the interpolation, [1:2].
+  real(R_P)                                      :: weights(1:2, 0:S - 1)     !< Weights of the stencils, [1:2, 0:S-1].
+  integer(I_P)                                   :: f1, f2, ff                !< Faces to be computed.
+  integer(I_P)                                   :: s1, s2, s3, f, k          !< Counters.
   !---------------------------------------------------------------------------------------------------------------------------------
   select case(location)
   case('both', 'b')
