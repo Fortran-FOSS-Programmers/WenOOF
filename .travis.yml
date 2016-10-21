@@ -53,4 +53,5 @@ script:
 
 after_success:
   - cd $TRAVIS_BUILD_DIR
-  - cd build/lib/obj/ ; bash <(curl -s https://codecov.io/bash) ; cd -
+  -  - bash <(curl -s https://codecov.io/bash)
+￼ -  - ./makedoc.sh Fortran-FOSS-Programmers/WenOOF
