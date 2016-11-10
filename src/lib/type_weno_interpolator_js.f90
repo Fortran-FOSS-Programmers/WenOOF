@@ -271,7 +271,7 @@ contains
   real(R_P),                       intent(out)   :: interpolation(1:)         !< Result of the interpolation, [1:2].
   real(R_P)                                      :: weights(1:2, 0:S - 1)     !< Weights of the stencils, [1:2, 0:S-1].
   integer(I_P)                                   :: f1, f2, ff                !< Faces to be computed.
-  integer(I_P)                                   :: s1, f, k                  !< Counters.
+  integer(I_P)                                   :: f, k                      !< Counters.
   !---------------------------------------------------------------------------------------------------------------------------------
   select case(location)
   case('both', 'b')
@@ -292,9 +292,9 @@ contains
   call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS = self%IS%IS, eps = self%eps, f1=f1, f2=f2)
 
   ! computing the weights
-  do s1 = 0, S - 1 ! stencils loop
+  do k = 0, S - 1 ! stencils loop
     do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      weights(f, s1) = self%alpha%alpha_coef(f, s1) / self%alpha%alpha_tot(f)
+      weights(f, k) = self%alpha%alpha_coef(f, k) / self%alpha%alpha_tot(f)
     enddo
   enddo
 
