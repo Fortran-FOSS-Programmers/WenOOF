@@ -3,7 +3,9 @@ module type_weno_polynomials_js
 !< Module providing Lagrange polynomials for Jiang-Shu WENO schemes.
 !<
 !< @note The provided polynomials implement the Lagrange polynomials defined in *Efficient Implementation
-!< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130
+!< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
+!< *Very-high-order weno schemes*, G. A. Gerolymos, D. Sénéchal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
+!< doi:10.1016/j.jcp.2009.07.039
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -24,7 +26,9 @@ type, extends(weno_polynomials) :: weno_polynomials_js
 !< Lagrange polynomials for Jiang-Shu WENO schemes object.
 !<
 !< @note The provided polynomials implement the Lagrange polynomials defined in *Efficient Implementation
-!< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130
+!< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
+!< *Very-high-order weno schemes*, G. A. Gerolymos, D. Sénéchal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
+!< doi:10.1016/j.jcp.2009.07.039
   private
   contains
     procedure, pass(self), public :: destroy
@@ -357,7 +361,9 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   string = 'WENO polynomial'//nl
   string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
-           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130'//nl
+           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and'//nl
+  string = string//'  on the work by Gerolimos, Sénéchal and  Vallet  "Very-High-Order WENO Schemes", see '// &
+           'JCP, 2009, vol. 228, pp. 8481-8524, doi:10.1016/j.jcp.2009.07.039'//nl
   string = string//'  The "compute" method has the following public API'//nl
   string = string//'    poly(poly_coef,v)'//nl
   string = string//'  where:'//nl

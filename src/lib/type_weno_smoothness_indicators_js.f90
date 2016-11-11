@@ -2335,7 +2335,9 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   string = 'WENO smoothness indicators'//nl
   string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
-           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130'//nl
+           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and'//nl
+  string = string//'  on the work by Gerolimos, Sénéchal and  Vallet  "Very-High-Order WENO Schemes", see '// &
+           'JCP, 2009, vol. 228, pp. 8481-8524, doi:10.1016/j.jcp.2009.07.039'//nl
   string = string//'  The "compute" method has the following public API'//nl
   string = string//'    IS(smooth_coef,v1,v2)'//nl
   string = string//'  where:'//nl
