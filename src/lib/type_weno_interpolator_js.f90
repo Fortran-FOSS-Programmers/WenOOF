@@ -51,6 +51,10 @@ type, extends(weno_interpolator) :: weno_interpolator_upwind
   !< @note The supported accuracy formal order are: 3rd, 5th, 7th, 9th, 11th, 13th corresponding to use 2, 3, 4, 5, 6, 7 stencils
   !< composed of 2, 3, 4, 5, 6, 7 values, respectively.
   private
+  class(weno_IS), pointer                :: IS      => null() !< Pointer to the WENO smoothness indicators.
+  class(weno_alpha_coefficient), pointer :: alpha   => null() !< Pointer to the WENO alpha coefficients.
+  class(weno_optimal_weights), pointer   :: weights => null() !< Pointer to the WENO optimal weights.
+  class(weno_polynomials), pointer       :: polynom => null() !< Pointer to the WENO polynomilas.
   integer(I_P)                               :: S = 0_I_P    !< Stencil dimension.
   real(R_P)                                  :: eps = 0._R_P !< Parameter for avoiding divided by zero when computing IS.
   contains
