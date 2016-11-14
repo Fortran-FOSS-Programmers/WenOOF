@@ -48,15 +48,15 @@ type, extends(weno_interpolator) :: weno_interpolator_upwind
   !< @note The WENO interpolator implemented is the *Efficient Implementation of Weighted ENO Schemes*,
   !< Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
   !<
-  !< @note The supported accuracy formal order are: 3rd, 5th, 7th, 9th, 11th, 13th corresponding to use 2, 3, 4, 5, 6, 7 stencils
-  !< composed of 2, 3, 4, 5, 6, 7 values, respectively.
+  !< @note The supported accuracy formal order are: 3rd, 5th, 7th, 9th, 11th, 13th, 15th, 17th  corresponding to use 2, 3, 4, 5, 6,
+  !< 7, 8, 9 stencils composed of 2, 3, 4, 5, 6, 7, 8, 9 values, respectively.
   private
-  class(weno_IS), pointer                :: IS      => null() !< Pointer to the WENO smoothness indicators.
+  class(weno_IS),                pointer :: IS      => null() !< Pointer to the WENO smoothness indicators.
   class(weno_alpha_coefficient), pointer :: alpha   => null() !< Pointer to the WENO alpha coefficients.
-  class(weno_optimal_weights), pointer   :: weights => null() !< Pointer to the WENO optimal weights.
-  class(weno_polynomials), pointer       :: polynom => null() !< Pointer to the WENO polynomilas.
-  integer(I_P)                               :: S = 0_I_P    !< Stencil dimension.
-  real(R_P)                                  :: eps = 0._R_P !< Parameter for avoiding divided by zero when computing IS.
+  class(weno_optimal_weights),   pointer :: weights => null() !< Pointer to the WENO optimal weights.
+  class(weno_polynomials),       pointer :: polynom => null() !< Pointer to the WENO polynomilas.
+  integer(I_P)                           :: S = 0_I_P    !< Stencil dimension.
+  real(R_P)                              :: eps = 0._R_P !< Parameter for avoiding divided by zero when computing IS.
   contains
     ! public methods
     procedure, pass(self), public :: destroy
