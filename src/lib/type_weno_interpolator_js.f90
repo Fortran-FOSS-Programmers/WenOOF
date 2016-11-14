@@ -286,7 +286,7 @@ contains
   call self%polynom%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
 
   ! computing smoothness indicators
-  call self%polynom%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
+  call self%IS%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
 
   ! computing alpha coefficients
   call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS = self%IS%IS, eps = self%eps, f1=f1, f2=f2)
