@@ -69,7 +69,7 @@ contains
       associate(alpha => interpolator%alpha)
         select type(alpha)
         type is(weno_alpha_coefficient_m)
-          if (alpha_base_type=/'JS'.or.alpha_base_type/='Z') call interpolator%init_error(error_code = 1_I_P)
+          if (alpha_base_type.NE.'JS'.or.alpha_base_type.NE.'Z') call interpolator%init_error(error_code = 1_I_P)
           call alpha%initialize(alpha_base = alpha_base_type)
         endselect
       endassociate
