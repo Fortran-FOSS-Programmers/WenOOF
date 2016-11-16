@@ -4,6 +4,7 @@ program module_imports
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
+use penf,   only : I_P, R_P, str
 use wenoof, only : weno_factory, weno_constructor_upwind, weno_interpolator
 !-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -15,7 +16,8 @@ character(len=:),         allocatable :: description
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-call factory%create(constructor=weno_constructor_upwind(S=3, eps=1.E-9), interpolator=interpolator)
+call factory%create(constructor=weno_constructor_upwind(S=5, eps=10._R_P**(-40)), IS_type='JS', alpha_type='JS', &
+                    weights_opt_type='JS',polynomial_type='JS', interpolator=interpolator)
 call interpolator%description(string=description)
 print "(A)", description
 stop
