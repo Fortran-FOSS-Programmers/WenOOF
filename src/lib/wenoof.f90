@@ -90,17 +90,8 @@ contains
     case default
       call interpolator%init_error(error_code = 5_I_P)
     endselect
-    associate(alpha => interpolator%alpha)
-      select type(alpha)
-      type is(weno_alpha_coefficient_m)
-        call interpolator%create(constructor=constructor, IS_type=interpolator%IS, alpha_type=interpolator%alpha,&
-                                 alpha_base_type=alpha%alpha_base, weights_opt_type = interpolator%weights,&
-                                 polynomial_type = interpolator%polynom)
-      class default
-        call interpolator%create(constructor=constructor, IS_type=interpolator%IS, alpha_type=interpolator%alpha,&
-                                 weights_opt_type = interpolator%weights, polynomial_type = interpolator%polynom)
-      endselect
-    endassociate
+      call interpolator%create(constructor=constructor, IS_type=interpolator%IS, alpha_type=interpolator%alpha,&
+                               weights_opt_type = interpolator%weights, polynomial_type = interpolator%polynom)
   endselect
   return
   !---------------------------------------------------------------------------------------------------------------------------------

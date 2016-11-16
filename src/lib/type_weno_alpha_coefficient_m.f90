@@ -83,6 +83,7 @@ contains
   allocate(self%alpha_tot(1:2))
   self%alpha_coef(:,:) = 100000._R_P
   self%alpha_tot(:) = 0._R_P
+  call self%alpha_base%create(S = S)
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine create

@@ -127,7 +127,7 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine destroy
 
-  subroutine create(self, constructor, IS_type, alpha_type, alpha_base_type, weights_opt_type, polynomial_type)
+  subroutine create(self, constructor, IS_type, alpha_type, weights_opt_type, polynomial_type)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -135,7 +135,6 @@ contains
   class(weno_constructor),         intent(in)           :: constructor !< WENO constructor.
   class(weno_IS),                  intent(in), target   :: IS_type           !< The concrete WENO smoothness indicator.
   class(weno_alpha_coefficient),   intent(in)           :: alpha_type        !< The concrete WENO alpha coefficient.
-  class(weno_alpha_coefficient),   intent(in), optional :: alpha_base_type   !< The WENO alpha coefficient base for WENO Mapped.
   class(weno_optimal_weights),     intent(in)           :: weights_opt_type  !< The concrete WENO optimal weights.
   class(weno_polynomials),         intent(in)           :: polynomial_type   !< The concrete WENO polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -160,7 +159,6 @@ contains
     type is(weno_alpha_coefficient_m)
       self%alpha => associate_WENO_alpha_m(alpha_input=alpha_type)
       call self%alpha%create(S = self%S)
-      call self%alpha%alpha_base%create(S = self%S)
     endselect
     !< Create WENO optimal weights object.
     self%weights => associate_WENO_weights_js(weights_input=weights_opt_type)
