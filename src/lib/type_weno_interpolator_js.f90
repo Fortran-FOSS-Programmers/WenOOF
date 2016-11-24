@@ -127,12 +127,12 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(inout)        :: self        !< WENO interpolator.
-  class(weno_constructor),         intent(in)           :: constructor !< WENO constructor.
-  class(weno_IS),                  intent(in), target   :: IS_type           !< The concrete WENO smoothness indicator.
-  class(weno_alpha_coefficient),   intent(in)           :: alpha_type        !< The concrete WENO alpha coefficient.
-  class(weno_optimal_weights),     intent(in)           :: weights_opt_type  !< The concrete WENO optimal weights.
-  class(weno_polynomials),         intent(in)           :: polynomial_type   !< The concrete WENO polynomial.
+  class(weno_interpolator_upwind), intent(inout) :: self              !< WENO interpolator.
+  class(weno_constructor),         intent(in)    :: constructor       !< WENO constructor.
+  class(weno_IS),                  intent(in)    :: IS_type           !< The concrete WENO smoothness indicator.
+  class(weno_alpha_coefficient),   intent(in)    :: alpha_type        !< The concrete WENO alpha coefficient.
+  class(weno_optimal_weights),     intent(in)    :: weights_opt_type  !< The concrete WENO optimal weights.
+  class(weno_polynomials),         intent(in)    :: polynomial_type   !< The concrete WENO polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
