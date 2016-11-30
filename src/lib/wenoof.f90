@@ -5,15 +5,15 @@ module wenoof
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 use penf, only : R_P, I_P
-use type_weno_interpolator,    only : weno_constructor, weno_interpolator
-use type_weno_interpolator_js, only : weno_constructor_upwind, weno_interpolator_upwind
-use type_weno_alpha_coefficient
-use type_weno_smoothness_indicators_js
-use type_weno_alpha_coefficient_js
-use type_weno_alpha_coefficient_z
-use type_weno_alpha_coefficient_m
-use type_weno_optimal_weights_js
-use type_weno_polynomials_js
+use weno_interpolator,    only : weno_constructor, weno_interpolator
+use weno_interpolator_js, only : weno_constructor_upwind, weno_interpolator_upwind
+use weno_alpha_coefficient
+use weno_smoothness_indicators_js
+use weno_alpha_coefficient_js
+use weno_alpha_coefficient_z
+use weno_alpha_coefficient_m
+use weno_optimal_weights_js
+use weno_polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------

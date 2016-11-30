@@ -1,4 +1,4 @@
-module type_weno_smoothness_indicators_js
+module weno_smoothness_indicators_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 !< Module providing Jiang-Shu and Gerolymos-Sénéchal-Vallet smoothness indicators for WENO schemes.
 !<
@@ -11,7 +11,7 @@ module type_weno_smoothness_indicators_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P
-use type_weno_smoothness_indicators
+use weno_smoothness_indicators
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -2374,4 +2374,4 @@ contains
   endsubroutine compute
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-endmodule type_weno_smoothness_indicators_js
+endmodule weno_smoothness_indicators_js

@@ -1,4 +1,4 @@
-module type_weno_interpolator_js
+module weno_interpolator_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 !< Concrete WENO Jiang-Shu upwind interpolator object.
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -7,18 +7,18 @@ module type_weno_interpolator_js
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P, str
 
-use type_weno_interpolator
-use type_weno_smoothness_indicators
-use type_weno_alpha_coefficient
-use type_weno_optimal_weights
-use type_weno_polynomials
+use weno_interpolator
+use weno_smoothness_indicators
+use weno_alpha_coefficient
+use weno_optimal_weights
+use weno_polynomials
 
-use type_weno_alpha_coefficient_m
-use type_weno_alpha_coefficient_z
-use type_weno_alpha_coefficient_js
-use type_weno_optimal_weights_js
-use type_weno_smoothness_indicators_js
-use type_weno_polynomials_js
+use weno_alpha_coefficient_m
+use weno_alpha_coefficient_z
+use weno_alpha_coefficient_js
+use weno_optimal_weights_js
+use weno_smoothness_indicators_js
+use weno_polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -319,4 +319,4 @@ contains
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine finalize
-endmodule type_weno_interpolator_js
+endmodule weno_interpolator_js
