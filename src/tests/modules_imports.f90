@@ -5,18 +5,18 @@ program module_imports
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 use penf,   only : I_P, R_P, str
-use wenoof, only : weno_factory, weno_constructor_upwind, weno_interpolator
+use wenoof, only : wenoof_factory, wenoof_constructor_upwind, wenoof_interpolator
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
-type(weno_factory)                    :: factory
-class(weno_interpolator), allocatable :: interpolator
-character(len=:),         allocatable :: description
+type(wenoof_factory)                    :: factory
+class(wenoof_interpolator), allocatable :: interpolator
+character(len=:),           allocatable :: description
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-call factory%create(constructor=weno_constructor_upwind(S=5, eps=10._R_P**(-40)), IS_type='JS', alpha_type='JS', &
+call factory%create(constructor=wenoof_constructor_upwind(S=5, eps=10._R_P**(-40)), IS_type='JS', alpha_type='JS', &
                     weights_opt_type='JS',polynomial_type='JS', interpolator=interpolator)
 call interpolator%description(string=description)
 print "(A)", description

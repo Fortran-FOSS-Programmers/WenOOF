@@ -1,4 +1,4 @@
-module weno_optimal_weights
+module wenoof_optimal_weights_abstract
 !-----------------------------------------------------------------------------------------------------------------------------------
 !< Abstract WENO optimal weights object.
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -11,11 +11,11 @@ use penf, only : I_P, R_P
 implicit none
 private
 save
-public :: weno_optimal_weights
+public :: optimal_weights
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, abstract :: weno_optimal_weights
+type, abstract :: optimal_weights
   !< WENO optimal weights.
   !<
   !< @note Do not implement any real optimal weight: provide the interface for the different optimal weights implemented.
@@ -24,7 +24,7 @@ type, abstract :: weno_optimal_weights
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
     procedure(constructor_interface), pass(self), deferred, public :: create
     procedure(description_interface), nopass,     deferred, public :: description
-endtype weno_optimal_weights
+endtype optimal_weights
 
 abstract interface
   !< Destroy WENO optimal weights.
@@ -32,8 +32,8 @@ abstract interface
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Destroy WENO optimal weights.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_optimal_weights
-  class(weno_optimal_weights), intent(inout)  :: self   !< WENO optimal weights.
+  import :: optimal_weights
+  class(optimal_weights), intent(inout)  :: self   !< WENO optimal weights.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine destructor_interface
 endinterface
@@ -46,9 +46,9 @@ abstract interface
   !
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_optimal_weights, I_P
-  class(weno_optimal_weights), intent(inout) :: self       !< WENO optimal weights.
-  integer(I_P),                intent(in)    :: S          !< Number of stencils used.
+  import :: optimal_weights, I_P
+  class(optimal_weights), intent(inout) :: self       !< WENO optimal weights.
+  integer(I_P),           intent(in)    :: S          !< Number of stencils used.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine constructor_interface
 endinterface
@@ -64,4 +64,4 @@ abstract interface
   endsubroutine description_interface
 endinterface
 !-----------------------------------------------------------------------------------------------------------------------------------
-endmodule weno_optimal_weights
+endmodule wenoof_optimal_weights_abstract

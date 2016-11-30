@@ -1,4 +1,4 @@
-module weno_polynomials_js
+module wenoof_polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 !< Module providing Lagrange polynomials for Jiang-Shu WENO schemes.
 !<
@@ -11,18 +11,18 @@ module weno_polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P
-use weno_polynomials
+use wenoof_polynomials_abstract
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
 private
 save
-public :: weno_polynomials_js, associate_WENO_polynomials_js
+public :: polynomials_js, associate_polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, extends(weno_polynomials) :: weno_polynomials_js
+type, extends(polynomials) :: polynomials_js
   !< Lagrange polynomials for Jiang-Shu WENO schemes object.
   !<
   !< @note The provided polynomials implement the Lagrange polynomials defined in *Efficient Implementation
@@ -35,30 +35,30 @@ type, extends(weno_polynomials) :: weno_polynomials_js
     procedure, pass(self), public :: create
     procedure, nopass,     public :: description
     procedure, pass(self), public :: compute
-endtype weno_polynomials_js
+endtype polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
   ! public, non TBP
-  function associate_WENO_polynomials_js(polyn_input) result(polyn_pointer)
+  function associate_polynomials_js(polyn_input) result(polyn_pointer)
     !< Check the type of the polynomials passed as input and return Jiang-Shu polynomials associated to the polynomials.
-    class(weno_polynomials), intent(in), target  :: polyn_input   !< Input optimal weights.
-    class(weno_polynomials_js),          pointer :: polyn_pointer !< Jiang Shu optimal weights.
+    class(polynomials), intent(in), target  :: polyn_input   !< Input optimal weights.
+    class(polynomials_js),          pointer :: polyn_pointer !< Jiang Shu optimal weights.
 
     select type(polyn_input)
-      type is(weno_polynomials_js)
+      type is(polynomials_js)
         polyn_pointer => polyn_input
       class default
         write(stderr, '(A)')'error: wrong polynomials type chosen'
         stop
     end select
-  end function associate_WENO_polynomials_js
+  end function associate_polynomials_js
 
   ! deferred public methods
   pure subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Destroy Jiang-Shu polynomial coefficients.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_polynomials_js), intent(inout) :: self   !< WENO polynomials.
+  class(polynomials_js), intent(inout) :: self   !< WENO polynomials.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -72,8 +72,8 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create WENO polynomials coefficients.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_polynomials_js), intent(inout) :: self       !< WENO polynomials.
-  integer(I_P),               intent(in)    :: S          !< Number of stencils used.
+  class(polynomials_js), intent(inout) :: self       !< WENO polynomials.
+  integer(I_P),          intent(in)    :: S          !< Number of stencils used.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -377,11 +377,11 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the partial value of the interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_polynomials_js), intent(inout) :: self                    !< WENO polynomial.
-  integer(I_P),               intent(in)    :: S                       !< Number of stencils actually used.
-  real(R_P),                  intent(in)    :: stencil(1:, 1 - S:)     !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P),               intent(in)    :: f1, f2, ff              !< Faces to be computed.
-  integer(I_P)                              :: s1, s2, f               !< Counters
+  class(polynomials_js), intent(inout) :: self                    !< WENO polynomial.
+  integer(I_P),          intent(in)    :: S                       !< Number of stencils actually used.
+  real(R_P),             intent(in)    :: stencil(1:, 1 - S:)     !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P),          intent(in)    :: f1, f2, ff              !< Faces to be computed.
+  integer(I_P)                         :: s1, s2, f               !< Counters
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -397,4 +397,4 @@ contains
   endsubroutine compute
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-endmodule weno_polynomials_js
+endmodule wenoof_polynomials_js

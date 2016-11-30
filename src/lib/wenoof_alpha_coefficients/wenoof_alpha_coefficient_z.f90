@@ -1,4 +1,4 @@
-module type_weno_alpha_coefficient_z
+module wenoof_alpha_coefficient_z
 !-----------------------------------------------------------------------------------------------------------------------------------
 !< Module providing Borges et al. alpha coefficient for WENO schemes.
 !<
@@ -10,19 +10,19 @@ module type_weno_alpha_coefficient_z
 !-----------------------------------------------------------------------------------------------------------------------------------
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P
-use type_weno_alpha_coefficient
-use type_weno_alpha_coefficient_js
+use wenoof_alpha_coefficient_abstract
+use wenoof_alpha_coefficient_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
 private
 save
-public :: weno_alpha_coefficient_z, associate_WENO_alpha_z
+public :: alpha_coefficient_z, associate_alpha_z
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, extends(weno_alpha_coefficient_js) :: weno_alpha_coefficient_z
+type, extends(alpha_coefficient_js) :: alpha_coefficient_z
   !< Borges et al. WENO alpha coefficient object.
   !<
   !< @note The provided WENO alpha coefficient implements the alpha coefficients defined in *An improved weighted essentially
@@ -37,30 +37,30 @@ type, extends(weno_alpha_coefficient_js) :: weno_alpha_coefficient_z
     procedure, nopass,     public :: tau
     procedure, nopass,     public :: weno_exp
     procedure, nopass,     public :: weno_odd
-endtype weno_alpha_coefficient_z
+endtype alpha_coefficient_z
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
   ! public, non TBP
-  function associate_WENO_alpha_z(alpha_input) result(alpha_pointer)
+  function associate_alpha_z(alpha_input) result(alpha_pointer)
     !< Check the type of alpha coefficient passed as input and return a WENO Z alpha coefficient associated to alpha coefficient.
-    class(weno_alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
-    class(weno_alpha_coefficient_z),           pointer :: alpha_pointer !< WENO Z alpha coefficients.
+    class(alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
+    class(alpha_coefficient_z),           pointer :: alpha_pointer !< WENO Z alpha coefficients.
 
     select type(alpha_input)
-      type is(weno_alpha_coefficient_z)
+      type is(alpha_coefficient_z)
         alpha_pointer => alpha_input
       class default
         write(stderr, '(A)')'error: wrong alpha coefficient type chosen'
         stop
     end select
-  end function associate_WENO_alpha_z
+  end function associate_alpha_z
 
   ! deferred public methods
   pure subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Destroy Borges et al. WENO alpha coefficients.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_z), intent(inout) :: self   !< WENO alpha coefficients.
+  class(alpha_coefficient_z), intent(inout) :: self   !< WENO alpha coefficients.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -74,8 +74,8 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create WENO alpha coefficients.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_z), intent(inout) :: self       !< WENO alpha coefficients.
-  integer(I_P),                    intent(in)    :: S          !< Number of stencils used.
+  class(alpha_coefficient_z), intent(inout) :: self       !< WENO alpha coefficients.
+  integer(I_P),               intent(in)    :: S          !< Number of stencils used.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -117,13 +117,13 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the alpha coefficient of the WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_alpha_coefficient_z), intent(inout) :: self                          !< WENO alpha coefficient.
-  integer(I_P),                    intent(in)    :: S                             !< Number of stencils used.
-  real(R_P),                       intent(in)    :: weight_opt(1: 2, 0 : S - 1)   !< Optimal weight of the stencil.
-  real(R_P),                       intent(in)    :: IS(1: 2, 0 : S - 1)           !< Smoothness indicators of the stencils.
-  real(R_P),                       intent(in)    :: eps                           !< Parameter for avoiding divided by zero.
-  integer(I_P),                    intent(in)    :: f1, f2                        !< Faces to be computed.
-  integer(I_P)                                   :: f, s1                         !< Counters.
+  class(alpha_coefficient_z), intent(inout) :: self                          !< WENO alpha coefficient.
+  integer(I_P),               intent(in)    :: S                             !< Number of stencils used.
+  real(R_P),                  intent(in)    :: weight_opt(1: 2, 0 : S - 1)   !< Optimal weight of the stencil.
+  real(R_P),                  intent(in)    :: IS(1: 2, 0 : S - 1)           !< Smoothness indicators of the stencils.
+  real(R_P),                  intent(in)    :: eps                           !< Parameter for avoiding divided by zero.
+  integer(I_P),               intent(in)    :: f1, f2                        !< Faces to be computed.
+  integer(I_P)                              :: f, s1                         !< Counters.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -176,4 +176,4 @@ contains
   w_tau = abs(IS(0) - (1-weno_odd(S))*IS(1) - (1-weno_odd(S))*IS(S-2_I_P) + (1-2*weno_odd(S))*IS(S-1_I_P))
   !---------------------------------------------------------------------------------------------------------------------------------
   endfunction tau
-endmodule type_weno_alpha_coefficient_z
+endmodule wenoof_alpha_coefficient_z

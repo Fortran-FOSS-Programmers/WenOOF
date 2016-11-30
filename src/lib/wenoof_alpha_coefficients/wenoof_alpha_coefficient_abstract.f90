@@ -1,6 +1,6 @@
-module weno_smoothness_indicators
+module wenoof_alpha_coefficient_abstract
 !-----------------------------------------------------------------------------------------------------------------------------------
-!< Abstract WENO smoothness indicators object.
+!< Abstract WENO alpha coefficient object.
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -11,55 +11,55 @@ use penf, only : I_P, R_P
 implicit none
 private
 save
-public :: weno_IS
+public :: alpha_coefficient
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, abstract :: weno_IS
-  !< WENO smoothness indicators.
+type, abstract :: alpha_coefficient
+  !< WENO weights.
   !<
-  !< @note Do not implement any real smoothness indicators: provide the interface for the different smoothness_indicators implemented.
-  real(R_P), allocatable :: IS(:,:)       !< Smoothness indicators [1:2,0:S-1].
-  real(R_P), allocatable :: coef(:,:,:)   !< Smoothness indicators coefficients [1:2,0:S-1,0:S-1].
+  !< @note Do not implement any real alpha coefficient provide the interface for the different alpha coefficient implemented.
+  real(R_P), allocatable :: alpha_coef(:,:)   !< Alpha coefficients [1:2,0:S-1]
+  real(R_P), allocatable :: alpha_tot(:)      !< Sum of alpha coefficients
   contains
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
     procedure(constructor_interface), pass(self), deferred, public :: create
     procedure(description_interface), nopass,     deferred, public :: description
     procedure(compute_interface),     pass(self), deferred, public :: compute
-endtype weno_IS
+endtype alpha_coefficient
 
 abstract interface
-  !< Destroy WENO polynomial coefficients.
+  !< Destroy WENO alpha coefficients.
   pure subroutine destructor_interface(self)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Destroy WENO polynomial coefficients.
+  !< Destroy WENO alpha coefficients.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_IS
-  class(weno_IS), intent(inout) :: self   !< WENO smoothenss indicators.
+  import :: alpha_coefficient
+  class(alpha_coefficient), intent(inout) :: self   !< WENO alpha coefficients.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine destructor_interface
 endinterface
 
 abstract interface
-  !< Create WENO polynomial coefficients.
+  !< Create WENO alpha coefficients.
   pure subroutine constructor_interface(self, S)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Create WENO smoothness indicators coefficients.
+  !< Create WENO alpha coefficients.
   !
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_IS, I_P
-  class(weno_IS), intent(inout) :: self        !< WENO smoothness indicators.
-  integer(I_P),   intent(in)    :: S           !< Number of stencils used.
+  import :: alpha_coefficient, I_P
+  class(alpha_coefficient), intent(inout) :: self        !< WENO alpha coefficients.
+  integer(I_P),             intent(in)    :: S           !< Number of stencils used.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine constructor_interface
 endinterface
 
 abstract interface
-  !< Return a string describing WENO smoothness_indicators.
+  !< Return a string describing WENO alpha coefficient.
   pure subroutine description_interface(string)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Return a string describing WENO smoothness_indicators.
+  !< Return a string describing WENO alpha coefficient.
   !---------------------------------------------------------------------------------------------------------------------------------
   character(len=:), allocatable, intent(out) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -67,19 +67,21 @@ abstract interface
 endinterface
 
 abstract interface
-  !< Compute the smoothness indicators of the WENO interpolating polynomial.
-  pure subroutine compute_interface(self, S, stencil, f1, f2, ff)
+  !< Compute the alpha coefficient of the WENO interpolating polynomial.
+  pure subroutine compute_interface(self, S, weight_opt, IS, eps, f1, f2)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Compute the partial value of the smoothness indicator of a single WENO interpolating polynomial.
+  !< Compute the alpha coefficient of the WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_IS, I_P, R_P
-  class(weno_IS), intent(inout) :: self                    !< WENO smoothness indicator.
-  integer(I_P),   intent(in)    :: S                       !< Number of stencils actually used.
-  real(R_P),      intent(in)    :: stencil(1:, 1 - S:)     !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P),   intent(in)    :: f1, f2, ff              !< Faces to be computed.
-  integer(I_P)                  :: s1, s2, s3, f           !< Counters
+  import :: alpha_coefficient, I_P, R_P
+  class(alpha_coefficient), intent(inout) :: self                         !< WENO alpha coefficient.
+  integer(I_P),             intent(in)    :: S                            !< Number of stencils used.
+  real(R_P),                intent(in)    :: weight_opt(1: 2, 0: S - 1)   !< Optimal weight of the stencil.
+  real(R_P),                intent(in)    :: IS(1: 2, 0: S - 1)           !< Smoothness indicators of the stencils.
+  real(R_P),                intent(in)    :: eps                          !< Parameter for avoiding divided by zero.
+  integer(I_P),             intent(in)    :: f1, f2                       !< Faces to be computed.
+  integer(I_P)                            :: f, s1                        !< Counters.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine compute_interface
 endinterface
 !-----------------------------------------------------------------------------------------------------------------------------------
-endmodule weno_smoothness_indicators
+endmodule wenoof_alpha_coefficient_abstract

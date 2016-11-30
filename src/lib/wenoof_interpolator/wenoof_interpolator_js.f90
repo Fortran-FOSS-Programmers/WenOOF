@@ -1,4 +1,4 @@
-module weno_interpolator_js
+module wenoof_interpolator_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 !< Concrete WENO Jiang-Shu upwind interpolator object.
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -7,42 +7,42 @@ module weno_interpolator_js
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P, str
 
-use weno_interpolator
-use weno_smoothness_indicators
-use weno_alpha_coefficient
-use weno_optimal_weights
-use weno_polynomials
+use wenoof_interpolator_abstract
+use wenoof_smoothness_indicators_abstract
+use wenoof_alpha_coefficient_abstract
+use wenoof_optimal_weights_abstract
+use wenoof_polynomials_abstract
 
-use weno_alpha_coefficient_m
-use weno_alpha_coefficient_z
-use weno_alpha_coefficient_js
-use weno_optimal_weights_js
-use weno_smoothness_indicators_js
-use weno_polynomials_js
+use wenoof_alpha_coefficient_m
+use wenoof_alpha_coefficient_z
+use wenoof_alpha_coefficient_js
+use wenoof_optimal_weights_js
+use wenoof_smoothness_indicators_js
+use wenoof_polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
 private
 save
-public :: weno_interpolator_upwind, weno_constructor_upwind
+public :: wenoof_interpolator_upwind, wenoof_constructor_upwind
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, extends(weno_constructor) :: weno_constructor_upwind
+type, extends(wenoof_constructor) :: wenoof_constructor_upwind
   !< Upwind biased WENO interpolator constructor,
   !<
   !< @note The constructed WENO interpolator implements the *Efficient Implementation of Weighted ENO Schemes*,
   !< Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
   integer(I_P) :: S = 0               !< Stencils dimension.
   real(R_P)    :: eps = 10._R_P**(-6) !< Parameter for avoiding divided by zero when computing smoothness indicators.
-endtype weno_constructor_upwind
+endtype wenoof_constructor_upwind
 
-interface weno_constructor_upwind
-  procedure weno_constructor_upwind_init
+interface wenoof_constructor_upwind
+  procedure wenoof_constructor_upwind_init
 endinterface
 
-type, extends(weno_interpolator) :: weno_interpolator_upwind
+type, extends(wenoof_interpolator) :: wenoof_interpolator_upwind
   !< Upwind biased WENO interpolator object,
   !<
   !< @note The WENO interpolator implemented is the *Efficient Implementation of Weighted ENO Schemes*,
@@ -62,11 +62,11 @@ type, extends(weno_interpolator) :: weno_interpolator_upwind
     procedure, pass(self), public :: interpolate
     ! private methods
     final :: finalize
-endtype weno_interpolator_upwind
+endtype wenoof_interpolator_upwind
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
-  ! weno_constructor_upwind
-  elemental function  weno_constructor_upwind_init(S, eps) result(constructor)
+  ! constructor_upwind
+  elemental function wenoof_constructor_upwind_init(S, eps) result(constructor)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create (initialize) the WENO interpolator.
   !<
@@ -77,7 +77,7 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   integer(I_P), intent(IN)           :: S           !< Maximum stencils dimension.
   real(R_P),    intent(IN), optional :: eps         !< Parameter for avoiding divided by zero when computing smoothness indicators.
-  type(weno_constructor_upwind)      :: constructor !<WENO constructor.
+  type(wenoof_constructor_upwind)    :: constructor !<WENO constructor.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -85,15 +85,15 @@ contains
   if (present(eps)) constructor%eps = eps
   return
   !---------------------------------------------------------------------------------------------------------------------------------
-  endfunction  weno_constructor_upwind_init
+  endfunction  wenoof_constructor_upwind_init
 
-  ! weno_interpolator_upwind
+  ! interpolator_upwind
   ! public methods
   elemental subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Destoy the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(inout) :: self !< WENO interpolator.
+  class(wenoof_interpolator_upwind), intent(inout) :: self !< WENO interpolator.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -127,40 +127,40 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(inout) :: self              !< WENO interpolator.
-  class(weno_constructor),         intent(in)    :: constructor       !< WENO constructor.
-  class(weno_IS),                  intent(in)    :: IS_type           !< The concrete WENO smoothness indicator.
-  class(weno_alpha_coefficient),   intent(in)    :: alpha_type        !< The concrete WENO alpha coefficient.
-  class(weno_optimal_weights),     intent(in)    :: weights_opt_type  !< The concrete WENO optimal weights.
-  class(weno_polynomials),         intent(in)    :: polynomial_type   !< The concrete WENO polynomial.
+  class(wenoof_interpolator_upwind), intent(inout) :: self              !< WENO interpolator.
+  class(wenoof_constructor),         intent(in)    :: constructor       !< WENO constructor.
+  class(IS),                         intent(in)    :: IS_type           !< The concrete WENO smoothness indicator.
+  class(alpha_coefficient),          intent(in)    :: alpha_type        !< The concrete WENO alpha coefficient.
+  class(optimal_weights),            intent(in)    :: weights_opt_type  !< The concrete WENO optimal weights.
+  class(polynomials),                intent(in)    :: polynomial_type   !< The concrete WENO polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
   select type(constructor)
-  type is(weno_constructor_upwind)
+  type is(wenoof_constructor_upwind)
     call self%destroy
     self%S = constructor%S
     self%eps = constructor%eps
     !< Create WENO smoothness indicators object.
-    self%IS => associate_WENO_IS_js(IS_input=IS_type)
+    self%IS => associate_IS_js(IS_input=IS_type)
     call self%IS%create(S = self%S)
     !< Create WENO alpha object.
     select type(alpha_type)
-    type is(weno_alpha_coefficient_js)
-      self%alpha => associate_WENO_alpha_js(alpha_input=alpha_type)
+    type is(alpha_coefficient_js)
+      self%alpha => associate_alpha_js(alpha_input=alpha_type)
       call self%alpha%create(S = self%S)
-    type is(weno_alpha_coefficient_z)
-      self%alpha => associate_WENO_alpha_z(alpha_input=alpha_type)
+    type is(alpha_coefficient_z)
+      self%alpha => associate_alpha_z(alpha_input=alpha_type)
       call self%alpha%create(S = self%S)
-    type is(weno_alpha_coefficient_m)
-      self%alpha => associate_WENO_alpha_m(alpha_input=alpha_type)
+    type is(alpha_coefficient_m)
+      self%alpha => associate_alpha_m(alpha_input=alpha_type)
       call self%alpha%create(S = self%S)
     endselect
     !< Create WENO optimal weights object.
-    self%weights => associate_WENO_weights_js(weights_input=weights_opt_type)
+    self%weights => associate_weights_js(weights_input=weights_opt_type)
     call self%weights%create(S = self%S)
     !< Create WENO polynomials object.
-    self%polynom => associate_WENO_polynomials_js(polyn_input=polynomial_type)
+    self%polynom => associate_polynomials_js(polyn_input=polynomial_type)
     call self%polynom%create(S = self%S)
   endselect
   return
@@ -171,10 +171,10 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(in)  :: self              !< WENO interpolator.
-  character(len=:), allocatable,   intent(out) :: string            !< String returned.
-  character(len=:), allocatable                :: dummy_string      !< Dummy string.
-  character(len=1), parameter                  :: nl=new_line('a')  !< New line character.
+  class(wenoof_interpolator_upwind), intent(in)  :: self              !< WENO interpolator.
+  character(len=:), allocatable,     intent(out) :: string            !< String returned.
+  character(len=:), allocatable                  :: dummy_string      !< Dummy string.
+  character(len=1), parameter                    :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -211,10 +211,10 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing the WENO interpolator upwind.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(inout) :: self              !< WENO interpolator.
-  integer(I_P),                    intent(in)    :: error_code        !< Error code.
-  character(len=:), allocatable                  :: string            !< Printed string.
-  character(len=1), parameter                    :: nl=new_line('a')  !< New line character.
+  class(wenoof_interpolator_upwind), intent(inout) :: self              !< WENO interpolator.
+  integer(I_P),                      intent(in)    :: error_code        !< Error code.
+  character(len=:), allocatable                    :: string            !< Printed string.
+  character(len=1), parameter                      :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -262,14 +262,14 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Interpolate the stencil input values computing the actual interpolation.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_interpolator_upwind), intent(inout) :: self                      !< WENO interpolator.
-  integer(I_P),                    intent(in)    :: S                         !< Number of stencils actually used.
-  real(R_P),                       intent(in)    :: stencil(1:, 1 - S:)       !< Stencil used for the interpolation [1:2, 1-S:-1+S].
-  character(*),                    intent(in)    :: location                  !< Location of interpolated values: left, right, both.
-  real(R_P),                       intent(out)   :: interpolation(1:)         !< Result of the interpolation, [1:2].
-  real(R_P)                                      :: weights(1:2, 0:S - 1)     !< Weights of the stencils, [1:2, 0:S-1].
-  integer(I_P)                                   :: f1, f2, ff                !< Faces to be computed.
-  integer(I_P)                                   :: f, k                      !< Counters.
+  class(wenoof_interpolator_upwind), intent(inout) :: self                      !< WENO interpolator.
+  integer(I_P),                      intent(in)    :: S                         !< Number of stencils actually used.
+  real(R_P),                         intent(in)    :: stencil(1:, 1 - S:)       !< Stencil of the interpolation [1:2, 1-S:-1+S].
+  character(*),                      intent(in)    :: location                  !< Location of interpolation: left, right, both.
+  real(R_P),                         intent(out)   :: interpolation(1:)         !< Result of the interpolation, [1:2].
+  real(R_P)                                        :: weights(1:2, 0:S - 1)     !< Weights of the stencils, [1:2, 0:S-1].
+  integer(I_P)                                     :: f1, f2, ff                !< Faces to be computed.
+  integer(I_P)                                     :: f, k                      !< Counters.
   !---------------------------------------------------------------------------------------------------------------------------------
   select case(location)
   case('both', 'b')
@@ -287,7 +287,7 @@ contains
   call self%IS%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
 
   ! computing alpha coefficients
-  call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS = self%IS%IS, eps = self%eps, f1=f1, f2=f2)
+  call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS = self%IS%si, eps = self%eps, f1=f1, f2=f2)
 
   ! computing the weights
   do k = 0, S - 1 ! stencils loop
@@ -296,7 +296,7 @@ contains
     enddo
   enddo
 
-  ! computing the convultion
+  ! computing the convolution
   interpolation = 0.
   do k = 0, S - 1 ! stencils loop
     do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
@@ -311,7 +311,7 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Finalize object.
   !---------------------------------------------------------------------------------------------------------------------------------
-  type(weno_interpolator_upwind), intent(INOUT) :: self !< WENO interpolator.
+  type(wenoof_interpolator_upwind), intent(INOUT) :: self !< WENO interpolator.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -319,4 +319,4 @@ contains
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine finalize
-endmodule weno_interpolator_js
+endmodule wenoof_interpolator_js

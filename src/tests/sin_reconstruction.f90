@@ -6,24 +6,24 @@ program sin_reconstruction
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 use penf, only : I_P, R_P, str
-use wenoof, only : weno_factory, weno_constructor_upwind, weno_interpolator
+use wenoof, only : wenoof_factory, wenoof_constructor_upwind, wenoof_interpolator
 use pyplot_module, only :  pyplot
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
-type(weno_factory)                    :: factory                    !< WENO factory.
-class(weno_interpolator), allocatable :: interpolator               !< WENO interpolator.
-integer(I_P), parameter               :: S = 3_I_P                  !< Stencils used.
-integer(I_P), parameter               :: Nv = 30_I_P                !< Number of discretized values to be interpolated.
-real(R_P),    parameter               :: pi = 4._R_P * atan(1._R_P) !< Extent of domain.
-real(R_P)                             :: x(1-S:Nv+S)                !< Whole domain.
-real(R_P)                             :: fx(1-S:Nv+S)               !< Discretized values to be interpolated.
-real(R_P)                             :: xi(1:Nv)                   !< Domain of the interpolation.
-real(R_P)                             :: fx_ref(1:Nv)               !< Reference values.
-real(R_P)                             :: interpolation(1:1, 1:Nv)   !< Interpolated values.
-type(pyplot)                          :: plt                        !< Plotter handler.
-integer                               :: i, j, f                    !< Counters.
+type(wenoof_factory)                    :: factory                    !< WENO factory.
+class(wenoof_interpolator), allocatable :: interpolator               !< WENO interpolator.
+integer(I_P), parameter                 :: S = 3_I_P                  !< Stencils used.
+integer(I_P), parameter                 :: Nv = 30_I_P                !< Number of discretized values to be interpolated.
+real(R_P),    parameter                 :: pi = 4._R_P * atan(1._R_P) !< Extent of domain.
+real(R_P)                               :: x(1-S:Nv+S)                !< Whole domain.
+real(R_P)                               :: fx(1-S:Nv+S)               !< Discretized values to be interpolated.
+real(R_P)                               :: xi(1:Nv)                   !< Domain of the interpolation.
+real(R_P)                               :: fx_ref(1:Nv)               !< Reference values.
+real(R_P)                               :: interpolation(1:1, 1:Nv)   !< Interpolated values.
+type(pyplot)                            :: plt                        !< Plotter handler.
+integer                                 :: i, j, f                    !< Counters.
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ do i = 1, Nv
 enddo
 
 ! prepare the weno interpolator
-call factory%create(constructor=weno_constructor_upwind(S=S, eps=10._R_P**(-40)), IS_type='JS', alpha_type='JS', &
+call factory%create(constructor=wenoof_constructor_upwind(S=S, eps=10._R_P**(-40)), IS_type='JS', alpha_type='JS', &
                     weights_opt_type='JS',polynomial_type='JS', interpolator=interpolator)
 
 ! interpolate values

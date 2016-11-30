@@ -1,6 +1,6 @@
-module type_weno_alpha_coefficient
+module wenoof_polynomials_abstract
 !-----------------------------------------------------------------------------------------------------------------------------------
-!< Abstract WENO alpha coefficient object.
+!< Abstract WENO polynomials object.
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -11,55 +11,55 @@ use penf, only : I_P, R_P
 implicit none
 private
 save
-public :: weno_alpha_coefficient
+public :: polynomials
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, abstract :: weno_alpha_coefficient
-  !< WENO weights.
+type, abstract :: polynomials
+  !< WENO polynomials.
   !<
-  !< @note Do not implement any real alpha coefficient provide the interface for the different alpha coefficient implemented.
-  real(R_P), allocatable :: alpha_coef(:,:)   !< Alpha coefficients [1:2,0:S-1]
-  real(R_P), allocatable :: alpha_tot(:)      !< Sum of alpha coefficients
+  !< @note Do not implement any real polynomial: provide the interface for the different polynomials implemented.
+  real(R_P), allocatable :: poly(:,:)     !< Polynomial reconstructions [1:2,0:S-1].
+  real(R_P), allocatable :: coef(:,:,:)   !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
     procedure(destructor_interface),  pass(self), deferred, public :: destroy
     procedure(constructor_interface), pass(self), deferred, public :: create
     procedure(description_interface), nopass,     deferred, public :: description
     procedure(compute_interface),     pass(self), deferred, public :: compute
-endtype weno_alpha_coefficient
+endtype polynomials
 
 abstract interface
-  !< Destroy WENO alpha coefficients.
+  !< Destroy WENO polynomials.
   pure subroutine destructor_interface(self)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Destroy WENO alpha coefficients.
+  !< Destroy WENO polynomials.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_alpha_coefficient
-  class(weno_alpha_coefficient), intent(inout) :: self   !< WENO alpha coefficients.
+  import :: polynomials
+  class(polynomials), intent(inout) :: self   !< WENO polynomials.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine destructor_interface
 endinterface
 
 abstract interface
-  !< Create WENO alpha coefficients.
+  !< Create WENO polynomials.
   pure subroutine constructor_interface(self, S)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Create WENO alpha coefficients.
+  !< Create WENO polynomials.
   !
   !< @note Before call this method a concrete constructor must be instantiated.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_alpha_coefficient, I_P
-  class(weno_alpha_coefficient), intent(inout) :: self        !< WENO alpha coefficients.
-  integer(I_P),                  intent(in)    :: S           !< Number of stencils used.
+  import :: polynomials, I_P
+  class(polynomials),             intent(inout) :: self          !< WENO polynomials.
+  integer(I_P),                   intent(in)    :: S             !< Stencil dimension.
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine constructor_interface
 endinterface
 
 abstract interface
-  !< Return a string describing WENO alpha coefficient.
+  !< Return a string describing WENO polynomials.
   pure subroutine description_interface(string)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Return a string describing WENO alpha coefficient.
+  !< Return a string describing WENO polynomials.
   !---------------------------------------------------------------------------------------------------------------------------------
   character(len=:), allocatable, intent(out) :: string !< String returned.
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -67,21 +67,19 @@ abstract interface
 endinterface
 
 abstract interface
-  !< Compute the alpha coefficient of the WENO interpolating polynomial.
-  pure subroutine compute_interface(self, S, weight_opt, IS, eps, f1, f2)
+  !< Compute the partial value of the WENO interpolating polynomial.
+  pure subroutine compute_interface(self, S, stencil, f1, f2, ff)
   !---------------------------------------------------------------------------------------------------------------------------------
-  !< Compute the alpha coefficient of the WENO interpolating polynomial.
+  !< Compute the partial value of the interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  import :: weno_alpha_coefficient, I_P, R_P
-  class(weno_alpha_coefficient), intent(inout) :: self                         !< WENO alpha coefficient.
-  integer(I_P),                  intent(in)    :: S                            !< Number of stencils used.
-  real(R_P),                     intent(in)    :: weight_opt(1: 2, 0: S - 1)   !< Optimal weight of the stencil.
-  real(R_P),                     intent(in)    :: IS(1: 2, 0: S - 1)           !< Smoothness indicators of the stencils.
-  real(R_P),                     intent(in)    :: eps                          !< Parameter for avoiding divided by zero.
-  integer(I_P),                  intent(in)    :: f1, f2                       !< Faces to be computed.
-  integer(I_P)                                 :: f, s1                        !< Counters.
+  import :: polynomials, I_P, R_P
+  class(polynomials), intent(inout) :: self                    !< WENO polynomial.
+  integer(I_P),       intent(in)    :: S                       !< Number of stencils actually used.
+  real(R_P),          intent(in)    :: stencil(1:, 1 - S:)     !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P),       intent(in)    :: f1, f2, ff              !< Faces to be computed.
+  integer(I_P)                      :: s1, s2, f               !< Counters
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine compute_interface
 endinterface
 !-----------------------------------------------------------------------------------------------------------------------------------
-endmodule type_weno_alpha_coefficient
+endmodule wenoof_polynomials_abstract

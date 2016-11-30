@@ -1,4 +1,4 @@
-module weno_smoothness_indicators_js
+module wenoof_smoothness_indicators_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 !< Module providing Jiang-Shu and Gerolymos-Sénéchal-Vallet smoothness indicators for WENO schemes.
 !<
@@ -11,18 +11,18 @@ module weno_smoothness_indicators_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P
-use weno_smoothness_indicators
+use wenoof_smoothness_indicators_abstract
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
 private
 save
-public :: weno_IS_js, associate_WENO_IS_js
+public :: IS_js, associate_IS_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-type, extends(weno_IS) :: weno_IS_js
+type, extends(IS) :: IS_js
   !< Jiang-Shu and Gerolymos-Sénéchal-Vallet WENO smoothness indicators object.
   !<
   !< @note The provided WENO optimal weights implements the optimal weights defined in *Efficient Implementation of Weighted ENO
@@ -35,35 +35,35 @@ type, extends(weno_IS) :: weno_IS_js
     procedure, pass(self), public :: create
     procedure, nopass,     public :: description
     procedure, pass(self), public :: compute
-endtype weno_IS_js
+endtype IS_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
   ! public, non TBP
-  function associate_WENO_IS_js(IS_input) result(IS_pointer)
+  function associate_IS_js(IS_input) result(IS_pointer)
     !< Check the type of smoothness indicator passed as input and return a Jiang-Shu IS associated to smoothness indicator.
-    class(weno_IS), intent(in), target  :: IS_input   !< Input smoothness indicator.
-    class(weno_IS_js),          pointer :: IS_pointer !< Jiang Shu smoothness indicator.
+    class(IS), intent(in), target  :: IS_input   !< Input smoothness indicator.
+    class(IS_js),          pointer :: IS_pointer !< Jiang Shu smoothness indicator.
 
     select type(IS_input)
-      type is(weno_IS_js)
+      type is(IS_js)
         IS_pointer => IS_input
       class default
         write(stderr, '(A)')'error: wrong smoothness indicator type chosen'
         stop
     end select
-  end function associate_WENO_IS_js
+  end function associate_IS_js
 
   ! deferred public methods
   pure subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Destroy Jiang-Shu and Gerolymos-Sénéchal-Vallet WENO smoothness indicators coefficients.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_IS_js), intent(inout) :: self   !< WENO smoothenss indicators.
+  class(IS_js), intent(inout) :: self   !< WENO smoothenss indicators.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
   if (allocated(self%coef)) deallocate(self%coef)
-  if (allocated(self%IS)) deallocate(self%IS)
+  if (allocated(self%si)) deallocate(self%si)
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine destroy
@@ -72,14 +72,14 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Create WENO smoothness indicators coefficients.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_IS_js), intent(inout) :: self       !< WENO smoothness indicators.
-  integer(I_P),      intent(in)    :: S          !< Number of stencils used.
+  class(IS_js), intent(inout) :: self       !< WENO smoothness indicators.
+  integer(I_P), intent(in)    :: S          !< Number of stencils used.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
   call self%destroy
-  allocate(self%IS(1:2, 0:S - 1))
-  self%IS = 0._R_P
+  allocate(self%si(1:2, 0:S - 1))
+  self%si = 0._R_P
   allocate(self%coef(1:2, 0:S - 1, 0:S - 1))
   associate(c => self%coef)
     select case(S)
@@ -2329,8 +2329,8 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Return a string describing WENO smoothness indicator.
   !---------------------------------------------------------------------------------------------------------------------------------
-  character(len=:), allocatable,    intent(out) :: string !< String returned.
-  character(len=1), parameter                   :: nl=new_line('a')  !< New line character.
+  character(len=:), allocatable, intent(out) :: string !< String returned.
+  character(len=1), parameter                :: nl=new_line('a')  !< New line character.
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -2352,20 +2352,20 @@ contains
   !---------------------------------------------------------------------------------------------------------------------------------
   !< Compute the partial value of the smoothness indicator of a single WENO interpolating polynomial.
   !---------------------------------------------------------------------------------------------------------------------------------
-  class(weno_IS_js), intent(inout) :: self                    !< WENO smoothness indicator.
-  integer(I_P),      intent(in)    :: S                       !< Number of stencils actually used.
-  real(R_P),         intent(in)    :: stencil(1:, 1 - S:)     !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P),      intent(in)    :: f1, f2, ff              !< Faces to be computed.
-  integer(I_P)                     :: s1, s2, s3, f           !< Counters
+  class(IS_js), intent(inout) :: self                    !< WENO smoothness indicator.
+  integer(I_P), intent(in)    :: S                       !< Number of stencils actually used.
+  real(R_P),    intent(in)    :: stencil(1:, 1 - S:)     !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P), intent(in)    :: f1, f2, ff              !< Faces to be computed.
+  integer(I_P)                :: s1, s2, s3, f           !< Counters
   !---------------------------------------------------------------------------------------------------------------------------------
 
   !---------------------------------------------------------------------------------------------------------------------------------
   do s1 = 0, S - 1 ! stencils loop
     do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      self%IS(f, s1) = 0._R_P
+      self%si(f, s1) = 0._R_P
       do s2 = 0, S - 1
         do s3 = 0, S - 1
-          self%IS(f, s1) = self%IS(f, s1) + self%coef(s3, s2, s1) * stencil(f + ff, s1 - s3) * stencil(f + ff, s1 - s2)
+          self%si(f, s1) = self%si(f, s1) + self%coef(s3, s2, s1) * stencil(f + ff, s1 - s3) * stencil(f + ff, s1 - s2)
         enddo
       enddo
     enddo
@@ -2374,4 +2374,4 @@ contains
   endsubroutine compute
 
 !-----------------------------------------------------------------------------------------------------------------------------------
-endmodule weno_smoothness_indicators_js
+endmodule wenoof_smoothness_indicators_js
