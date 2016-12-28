@@ -107,12 +107,12 @@ contains
         opt(2, 4) =  5._R_P/126._R_P ! stencil 4
       case(6) ! 11th order
         ! 1 => left interface (i-1/2)
-        opt(2, 0) =   1._R_P/77._R_P  ! stencil 0
-        opt(2, 1) =  25._R_P/154._R_P ! stencil 1
-        opt(2, 2) = 100._R_P/231._R_P ! stencil 2
-        opt(2, 3) =  25._R_P/77._R_P  ! stencil 3
-        opt(2, 4) =   5._R_P/77._R_P  ! stencil 4
-        opt(2, 5) =   1._R_P/462._R_P ! stencil 5
+        opt(1, 0) =   1._R_P/77._R_P  ! stencil 0
+        opt(1, 1) =  25._R_P/154._R_P ! stencil 1
+        opt(1, 2) = 100._R_P/231._R_P ! stencil 2
+        opt(1, 3) =  25._R_P/77._R_P  ! stencil 3
+        opt(1, 4) =   5._R_P/77._R_P  ! stencil 4
+        opt(1, 5) =   1._R_P/462._R_P ! stencil 5
         ! 2 => right interface (i+1/2)
         opt(2, 0) =   1._R_P/462._R_P ! stencil 0
         opt(2, 1) =   5._R_P/77._R_P  ! stencil 1
@@ -122,13 +122,13 @@ contains
         opt(2, 5) =   1._R_P/77._R_P  ! stencil 5
       case(7) ! 13th order
         ! 1 => left interface (i-1/2)
-        opt(2, 0) =   7._R_P/1716._R_P ! stencil 0
-        opt(2, 1) =  21._R_P/286._R_P  ! stencil 1
-        opt(2, 2) = 175._R_P/572._R_P  ! stencil 2
-        opt(2, 3) = 175._R_P/429._R_P  ! stencil 3
-        opt(2, 4) = 105._R_P/572._R_P  ! stencil 4
-        opt(2, 5) =   7._R_P/286._R_P  ! stencil 5
-        opt(2, 6) =   1._R_P/1716._R_P ! stencil 6
+        opt(1, 0) =   7._R_P/1716._R_P ! stencil 0
+        opt(1, 1) =  21._R_P/286._R_P  ! stencil 1
+        opt(1, 2) = 175._R_P/572._R_P  ! stencil 2
+        opt(1, 3) = 175._R_P/429._R_P  ! stencil 3
+        opt(1, 4) = 105._R_P/572._R_P  ! stencil 4
+        opt(1, 5) =   7._R_P/286._R_P  ! stencil 5
+        opt(1, 6) =   1._R_P/1716._R_P ! stencil 6
         ! 2 => right interface (i+1/2)
         opt(2, 0) =   1._R_P/1716._R_P ! stencil 0
         opt(2, 1) =   7._R_P/286._R_P  ! stencil 1
@@ -139,14 +139,14 @@ contains
         opt(2, 6) =   7._R_P/1716._R_P ! stencil 6
       case(8) ! 15th order
         ! 1 => left interface (i-1/2)
-        opt(2, 0) =   8._R_P/6435._R_P ! stencil 0
-        opt(2, 1) = 196._R_P/6435._R_P ! stencil 1
-        opt(2, 2) = 392._R_P/2145._R_P ! stencil 2
-        opt(2, 3) = 490._R_P/1287._R_P ! stencil 3
-        opt(2, 4) = 392._R_P/1287._R_P ! stencil 4
-        opt(2, 5) = 196._R_P/2145._R_P ! stencil 5
-        opt(2, 6) =  56._R_P/6435._R_P ! stencil 6
-        opt(2, 7) =   1._R_P/6435._R_P ! stencil 7
+        opt(1, 0) =   8._R_P/6435._R_P ! stencil 0
+        opt(1, 1) = 196._R_P/6435._R_P ! stencil 1
+        opt(1, 2) = 392._R_P/2145._R_P ! stencil 2
+        opt(1, 3) = 490._R_P/1287._R_P ! stencil 3
+        opt(1, 4) = 392._R_P/1287._R_P ! stencil 4
+        opt(1, 5) = 196._R_P/2145._R_P ! stencil 5
+        opt(1, 6) =  56._R_P/6435._R_P ! stencil 6
+        opt(1, 7) =   1._R_P/6435._R_P ! stencil 7
         ! 2 => right interface (i+1/2)
         opt(2, 0) =   1._R_P/6435._R_P ! stencil 0
         opt(2, 1) =  56._R_P/6435._R_P ! stencil 1
@@ -158,15 +158,15 @@ contains
         opt(2, 7) =   8._R_P/6435._R_P ! stencil 7
       case(9) ! 17th order
         ! 1 => left interface (i-1/2)
-        opt(2, 0) =    1._R_P/24310._R_P ! stencil 0
-        opt(2, 1) =    9._R_P/24310._R_P ! stencil 1
-        opt(2, 2) =  144._R_P/12155._R_P ! stencil 2
-        opt(2, 3) = 1176._R_P/12155._R_P ! stencil 3
-        opt(2, 4) = 3528._R_P/12155._R_P ! stencil 4
-        opt(2, 5) =  882._R_P/2431._R_P  ! stencil 5
-        opt(2, 6) = 2352._R_P/12155._R_P ! stencil 6
-        opt(2, 7) =  504._R_P/12155._R_P ! stencil 7
-        opt(2, 8) =   36._R_P/12155._R_P ! stencil 8
+        opt(1, 0) =    9._R_P/24310._R_P ! stencil 0
+        opt(1, 1) =  144._R_P/12155._R_P ! stencil 1
+        opt(1, 2) = 1176._R_P/12155._R_P ! stencil 2
+        opt(1, 3) = 3528._R_P/12155._R_P ! stencil 3
+        opt(1, 4) =  882._R_P/2431._R_P  ! stencil 4
+        opt(1, 5) = 2352._R_P/12155._R_P ! stencil 5
+        opt(1, 6) =  504._R_P/12155._R_P ! stencil 6
+        opt(1, 7) =   36._R_P/12155._R_P ! stencil 7
+        opt(1, 8) =    1._R_P/24310._R_P ! stencil 8
         ! 2 => right interface (i+1/2)
         opt(2, 0) =    1._R_P/24310._R_P ! stencil 0
         opt(2, 1) =   36._R_P/12155._R_P ! stencil 1
