@@ -18,7 +18,7 @@ use wenoof_polynomials_abstract
 implicit none
 private
 save
-public :: polynomials_js, associate_polynomials_js
+public :: polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -38,21 +38,6 @@ type, extends(polynomials) :: polynomials_js
 endtype polynomials_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
-  ! public, non TBP
-  function associate_polynomials_js(polyn_input) result(polyn_pointer)
-    !< Check the type of the polynomials passed as input and return Jiang-Shu polynomials associated to the polynomials.
-    class(polynomials), intent(in), target  :: polyn_input   !< Input optimal weights.
-    class(polynomials_js),          pointer :: polyn_pointer !< Jiang Shu optimal weights.
-
-    select type(polyn_input)
-      type is(polynomials_js)
-        polyn_pointer => polyn_input
-      class default
-        write(stderr, '(A)')'error: wrong polynomials type chosen'
-        stop
-    end select
-  end function associate_polynomials_js
-
   ! deferred public methods
   pure subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -395,6 +380,5 @@ contains
   enddo
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine compute
-
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule wenoof_polynomials_js

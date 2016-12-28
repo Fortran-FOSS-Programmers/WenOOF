@@ -18,7 +18,7 @@ use wenoof_smoothness_indicators_abstract
 implicit none
 private
 save
-public :: IS_js, associate_IS_js
+public :: IS_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -38,21 +38,6 @@ type, extends(IS) :: IS_js
 endtype IS_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
-  ! public, non TBP
-  function associate_IS_js(IS_input) result(IS_pointer)
-    !< Check the type of smoothness indicator passed as input and return a Jiang-Shu IS associated to smoothness indicator.
-    class(IS), intent(in), target  :: IS_input   !< Input smoothness indicator.
-    class(IS_js),          pointer :: IS_pointer !< Jiang Shu smoothness indicator.
-
-    select type(IS_input)
-      type is(IS_js)
-        IS_pointer => IS_input
-      class default
-        write(stderr, '(A)')'error: wrong smoothness indicator type chosen'
-        stop
-    end select
-  end function associate_IS_js
-
   ! deferred public methods
   pure subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -80,7 +65,7 @@ contains
   call self%destroy
   allocate(self%si(1:2, 0:S - 1))
   self%si = 0._R_P
-  allocate(self%coef(1:2, 0:S - 1, 0:S - 1))
+  allocate(self%coef(0:S - 1, 0:S - 1, 0:S - 1))
   associate(c => self%coef)
     select case(S)
     case(2) ! 3rd order
@@ -2372,6 +2357,5 @@ contains
   enddo
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine compute
-
 !-----------------------------------------------------------------------------------------------------------------------------------
 endmodule wenoof_smoothness_indicators_js

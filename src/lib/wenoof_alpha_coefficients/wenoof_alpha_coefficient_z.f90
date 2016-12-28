@@ -18,7 +18,7 @@ use wenoof_alpha_coefficient_js
 implicit none
 private
 save
-public :: alpha_coefficient_z, associate_alpha_z
+public :: alpha_coefficient_z
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -40,21 +40,6 @@ type, extends(alpha_coefficient_js) :: alpha_coefficient_z
 endtype alpha_coefficient_z
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
-  ! public, non TBP
-  function associate_alpha_z(alpha_input) result(alpha_pointer)
-    !< Check the type of alpha coefficient passed as input and return a WENO Z alpha coefficient associated to alpha coefficient.
-    class(alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
-    class(alpha_coefficient_z),           pointer :: alpha_pointer !< WENO Z alpha coefficients.
-
-    select type(alpha_input)
-      type is(alpha_coefficient_z)
-        alpha_pointer => alpha_input
-      class default
-        write(stderr, '(A)')'error: wrong alpha coefficient type chosen'
-        stop
-    end select
-  end function associate_alpha_z
-
   ! deferred public methods
   pure subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------

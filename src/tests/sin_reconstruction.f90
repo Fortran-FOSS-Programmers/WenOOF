@@ -14,7 +14,7 @@ use pyplot_module, only :  pyplot
 implicit none
 type(wenoof_factory)                    :: factory                    !< WENO factory.
 class(wenoof_interpolator), allocatable :: interpolator               !< WENO interpolator.
-integer(I_P), parameter                 :: S = 3_I_P                  !< Stencils used.
+integer(I_P), parameter                 :: S = 6_I_P                  !< Stencils used.
 integer(I_P), parameter                 :: Nv = 30_I_P                !< Number of discretized values to be interpolated.
 real(R_P),    parameter                 :: pi = 4._R_P * atan(1._R_P) !< Extent of domain.
 real(R_P)                               :: x(1-S:Nv+S)                !< Whole domain.
@@ -40,8 +40,12 @@ do i = 1, Nv
 enddo
 
 ! prepare the weno interpolator
-call factory%create(constructor=wenoof_constructor_upwind(S=S, eps=10._R_P**(-40)), IS_type='JS', alpha_type='JS', &
-                    weights_opt_type='JS',polynomial_type='JS', interpolator=interpolator)
+call factory%create(constructor=wenoof_constructor_upwind(S=S, eps=10._R_P**(-40)), &
+                    IS_type='JS',                                                   &
+                    alpha_type='JS',                                                &
+                    weights_opt_type='JS',                                          &
+                    polynomial_type='JS',                                           &
+                    interpolator=interpolator)
 
 ! interpolate values
 interpolation = 0.

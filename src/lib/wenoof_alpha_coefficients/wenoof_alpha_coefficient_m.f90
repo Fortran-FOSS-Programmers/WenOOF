@@ -19,7 +19,7 @@ use wenoof_alpha_coefficient_z
 implicit none
 private
 save
-public :: alpha_coefficient_m, associate_alpha_m, initialize
+public :: alpha_coefficient_m, initialize
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -39,21 +39,6 @@ type, extends(alpha_coefficient_z) :: alpha_coefficient_m
 endtype alpha_coefficient_m
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
-  ! public, non TBP
-  function associate_alpha_m(alpha_input) result(alpha_pointer)
-    !< Check the type of alpha coefficient passed as input and return a WENO M alpha coefficient associated to alpha coefficient.
-    class(alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
-    class(alpha_coefficient_m),           pointer :: alpha_pointer !< WENO M alpha coefficients.
-
-    select type(alpha_input)
-      type is(alpha_coefficient_m)
-        alpha_pointer => alpha_input
-      class default
-        write(stderr, '(A)')'error: wrong alpha coefficient type chosen'
-        stop
-    end select
-  end function associate_alpha_m
-
   ! deferred public methods
   pure subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------

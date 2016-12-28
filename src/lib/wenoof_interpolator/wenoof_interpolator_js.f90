@@ -51,8 +51,8 @@ type, extends(wenoof_interpolator) :: wenoof_interpolator_upwind
   !< @note The supported accuracy formal order are: 3rd, 5th, 7th, 9th, 11th, 13th, 15th, 17th  corresponding to use 2, 3, 4, 5, 6,
   !< 7, 8, 9 stencils composed of 2, 3, 4, 5, 6, 7, 8, 9 values, respectively.
   private
-  integer(I_P)                           :: S = 0_I_P    !< Stencil dimension.
-  real(R_P)                              :: eps = 0._R_P !< Parameter for avoiding divided by zero when computing IS.
+  integer(I_P) :: S = 0_I_P    !< Stencil dimension.
+  real(R_P)    :: eps = 0._R_P !< Parameter for avoiding divided by zero when computing IS.
   contains
     ! public methods
     procedure, pass(self), public :: destroy
@@ -100,24 +100,21 @@ contains
   self%S = 0_I_P
   self%eps = 0._R_P
   !< Destroy WENO smoothness indicators object.
-  if (associated(self%IS)) then
+  if (allocated(self%IS)) then
     call self%IS%destroy
     deallocate (self%IS)
-    nullify (self%IS)
   endif
   !< Destroy WENO alpha object.
-  if (associated(self%alpha)) deallocate(self%alpha)
+  if (allocated(self%alpha)) deallocate(self%alpha)
   !< Destroy WENO optimal weights object.
-  if (associated(self%weights)) then
+  if (allocated(self%weights)) then
     call self%weights%destroy
     deallocate(self%weights)
-    nullify(self%weights)
   endif
   !< Destroy WENO polynomials object.
-  if (associated(self%polynom)) then
+  if (allocated(self%polynom)) then
     call self%polynom%destroy
     deallocate(self%polynom)
-    nullify(self%polynom)
   endif
   return
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -139,29 +136,33 @@ contains
   select type(constructor)
   type is(wenoof_constructor_upwind)
     call self%destroy
+    allocate(self%IS,      source=IS_type)
+    allocate(self%alpha,   source=alpha_type)
+    allocate(self%weights, source=weights_opt_type)
+    allocate(self%polynom, source=polynomial_type)
     self%S = constructor%S
     self%eps = constructor%eps
     !< Create WENO smoothness indicators object.
-    self%IS => associate_IS_js(IS_input=IS_type)
-    call self%IS%create(S = self%S)
+    ! self%IS => associate_IS_js(IS_input=IS_type)
+    call self%IS%create(S=self%S)
     !< Create WENO alpha object.
     select type(alpha_type)
     type is(alpha_coefficient_js)
-      self%alpha => associate_alpha_js(alpha_input=alpha_type)
-      call self%alpha%create(S = self%S)
+      ! self%alpha => associate_alpha_js(alpha_input=alpha_type)
+      call self%alpha%create(S=self%S)
     type is(alpha_coefficient_z)
-      self%alpha => associate_alpha_z(alpha_input=alpha_type)
-      call self%alpha%create(S = self%S)
+      ! self%alpha => associate_alpha_z(alpha_input=alpha_type)
+      call self%alpha%create(S=self%S)
     type is(alpha_coefficient_m)
-      self%alpha => associate_alpha_m(alpha_input=alpha_type)
-      call self%alpha%create(S = self%S)
+      ! self%alpha => associate_alpha_m(alpha_input=alpha_type)
+      call self%alpha%create(S=self%S)
     endselect
     !< Create WENO optimal weights object.
-    self%weights => associate_weights_js(weights_input=weights_opt_type)
-    call self%weights%create(S = self%S)
+    ! self%weights => associate_weights_js(weights_input=weights_opt_type)
+    call self%weights%create(S=self%S)
     !< Create WENO polynomials object.
-    self%polynom => associate_polynomials_js(polyn_input=polynomial_type)
-    call self%polynom%create(S = self%S)
+    ! self%polynom => associate_polynomials_js(polyn_input=polynomial_type)
+    call self%polynom%create(S=self%S)
   endselect
   return
   !---------------------------------------------------------------------------------------------------------------------------------

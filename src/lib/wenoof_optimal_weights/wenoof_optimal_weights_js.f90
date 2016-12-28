@@ -18,7 +18,7 @@ use wenoof_optimal_weights_abstract
 implicit none
 private
 save
-public :: optimal_weights_js, associate_weights_js
+public :: optimal_weights_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -38,21 +38,6 @@ type, extends(optimal_weights):: optimal_weights_js
 endtype optimal_weights_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
-  ! public, non TBP
-  function associate_weights_js(weights_input) result(weights_pointer)
-    !< Check the type of the optimal weights passed as input and return Jiang-Shu optimal weights associated to the optimal weights.
-    class(optimal_weights), intent(in), target  :: weights_input   !< Input optimal weights.
-    class(optimal_weights_js),          pointer :: weights_pointer !< Jiang Shu optimal weights.
-
-    select type(weights_input)
-      type is(optimal_weights_js)
-        weights_pointer => weights_input
-      class default
-        write(stderr, '(A)')'error: wrong optimal weights type chosen'
-        stop
-    end select
-  end function associate_weights_js
-
   ! deferred public methods
   pure subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------

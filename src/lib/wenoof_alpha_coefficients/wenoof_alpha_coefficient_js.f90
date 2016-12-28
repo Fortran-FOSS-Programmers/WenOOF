@@ -16,7 +16,7 @@ use wenoof_alpha_coefficient_abstract
 implicit none
 private
 save
-public :: alpha_coefficient_js, associate_alpha_js
+public :: alpha_coefficient_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -35,21 +35,6 @@ type, extends(alpha_coefficient) :: alpha_coefficient_js
 endtype alpha_coefficient_js
 !-----------------------------------------------------------------------------------------------------------------------------------
 contains
-  ! public, non TBP
-  function associate_alpha_js(alpha_input) result(alpha_pointer)
-    !< Check the type of alpha coefficient passed as input and return a Jiang-Shu alpha coefficient associated to alpha coefficient.
-    class(alpha_coefficient), intent(in), target  :: alpha_input   !< Input alpha coefficient.
-    class(alpha_coefficient_js),          pointer :: alpha_pointer !< Jiang Shu alpha coefficients.
-
-    select type(alpha_input)
-      type is(alpha_coefficient_js)
-        alpha_pointer => alpha_input
-      class default
-        write(stderr, '(A)')'error: wrong alpha coefficient type chosen'
-        stop
-    end select
-  end function associate_alpha_js
-
   ! deferred public methods
   pure subroutine destroy(self)
   !---------------------------------------------------------------------------------------------------------------------------------
@@ -129,5 +114,4 @@ contains
   enddo
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine compute
-
 endmodule wenoof_alpha_coefficient_js
