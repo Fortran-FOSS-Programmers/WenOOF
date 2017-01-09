@@ -1,29 +1,21 @@
+!< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators for WENO schemes.
 module wenoof_smoothness_indicators_js
-!-----------------------------------------------------------------------------------------------------------------------------------
-!< Module providing Jiang-Shu and Gerolymos-Sénéchal-Vallet smoothness indicators for WENO schemes.
+!< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators for WENO schemes.
 !<
 !< @note The provided WENO optimal weights implements the smoothness indicators defined in *Efficient Implementation
 !< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
-!< *Very-high-order weno schemes*, G. A. Gerolymos, D. Sénéchal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
+!< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
 !< doi:10.1016/j.jcp.2009.07.039
-!-----------------------------------------------------------------------------------------------------------------------------------
 
-!-----------------------------------------------------------------------------------------------------------------------------------
-use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P
 use wenoof_smoothness_indicators_abstract
-!-----------------------------------------------------------------------------------------------------------------------------------
 
-!-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
 private
-save
 public :: IS_js
-!-----------------------------------------------------------------------------------------------------------------------------------
 
-!-----------------------------------------------------------------------------------------------------------------------------------
 type, extends(IS) :: IS_js
-  !< Jiang-Shu and Gerolymos-Sénéchal-Vallet WENO smoothness indicators object.
+  !< Jiang-Shu and Gerolymos-Senechal-Vallet WENO smoothness indicators object.
   !<
   !< @note The provided WENO optimal weights implements the optimal weights defined in *Efficient Implementation of Weighted ENO
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
@@ -31,37 +23,38 @@ type, extends(IS) :: IS_js
   !< doi:10.1016/j.jcp.2009.07.039
   private
   contains
-    procedure, pass(self), public :: destroy
-    procedure, pass(self), public :: create
-    procedure, nopass,     public :: description
-    procedure, pass(self), public :: compute
+    procedure, pass(self), public :: compute     !< Compute IS.
+    procedure, pass(self), public :: create      !< Create IS.
+    procedure, nopass,     public :: description !< Return string-description of IS.
+    procedure, pass(self), public :: destroy     !< Destroy IS.
 endtype IS_js
-!-----------------------------------------------------------------------------------------------------------------------------------
 contains
   ! deferred public methods
-  pure subroutine destroy(self)
-  !---------------------------------------------------------------------------------------------------------------------------------
-  !< Destroy Jiang-Shu and Gerolymos-Sénéchal-Vallet WENO smoothness indicators coefficients.
-  !---------------------------------------------------------------------------------------------------------------------------------
-  class(IS_js), intent(inout) :: self   !< WENO smoothenss indicators.
-  !---------------------------------------------------------------------------------------------------------------------------------
+  pure subroutine compute(self, S, stencil, f1, f2, ff)
+  !< Compute IS.
+  class(IS_js), intent(inout) :: self                !< WENO smoothness indicator.
+  integer(I_P), intent(in)    :: S                   !< Number of stencils actually used.
+  real(R_P),    intent(in)    :: stencil(1:, 1 - S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P), intent(in)    :: f1, f2, ff          !< Faces to be computed.
+  integer(I_P)                :: s1, s2, s3, f       !< Counters
 
-  !---------------------------------------------------------------------------------------------------------------------------------
-  if (allocated(self%coef)) deallocate(self%coef)
-  if (allocated(self%si)) deallocate(self%si)
-  return
-  !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine destroy
+  do s1=0, S - 1 ! stencils loop
+    do f=f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      self%si(f, s1) = 0._R_P
+      do s2=0, S - 1
+        do s3=0, S - 1
+          self%si(f, s1) = self%si(f, s1) + self%coef(s3, s2, s1) * stencil(f + ff, s1 - s3) * stencil(f + ff, s1 - s2)
+        enddo
+      enddo
+    enddo
+  enddo
+  endsubroutine compute
 
   pure subroutine create(self, S)
-  !---------------------------------------------------------------------------------------------------------------------------------
-  !< Create WENO smoothness indicators coefficients.
-  !---------------------------------------------------------------------------------------------------------------------------------
-  class(IS_js), intent(inout) :: self       !< WENO smoothness indicators.
-  integer(I_P), intent(in)    :: S          !< Number of stencils used.
-  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Create IS.
+  class(IS_js), intent(inout) :: self !< WENO smoothness indicators.
+  integer(I_P), intent(in)    :: S    !< Number of stencils used.
 
-  !---------------------------------------------------------------------------------------------------------------------------------
   call self%destroy
   allocate(self%si(1:2, 0:S - 1))
   self%si = 0._R_P
@@ -2306,19 +2299,15 @@ contains
       c(8,8,8) =    109471139332699._R_P/ 163459296000._R_P
     endselect
   endassociate
-  return
-  !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine create
 
   pure subroutine description(string)
-  !---------------------------------------------------------------------------------------------------------------------------------
-  !< Return a string describing WENO smoothness indicator.
-  !---------------------------------------------------------------------------------------------------------------------------------
-  character(len=:), allocatable, intent(out) :: string !< String returned.
-  character(len=1), parameter                :: nl=new_line('a')  !< New line character.
-  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Return string-description of polynomials.
+  !<
+  !< @TODO make a function.
+  character(len=:), allocatable, intent(out) :: string           !< String returned.
+  character(len=1), parameter                :: nl=new_line('a') !< New line character.
 
-  !---------------------------------------------------------------------------------------------------------------------------------
   string = 'WENO smoothness indicators'//nl
   string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
            'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and'//nl
@@ -2330,32 +2319,13 @@ contains
   string = string//'    smooth_coef: real(R_P), intent(IN), the smoothness indicator coefficient of the value'//nl
   string = string//'    v1: real(R_P), intent(IN), the pivotal value from the stencil'//nl
   string = string//'    v2: real(R_P), intent(IN), the second value from the stencil'
-  !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description
 
-  pure subroutine compute(self, S, stencil, f1, f2, ff)
-  !---------------------------------------------------------------------------------------------------------------------------------
-  !< Compute the partial value of the smoothness indicator of a single WENO interpolating polynomial.
-  !---------------------------------------------------------------------------------------------------------------------------------
-  class(IS_js), intent(inout) :: self                    !< WENO smoothness indicator.
-  integer(I_P), intent(in)    :: S                       !< Number of stencils actually used.
-  real(R_P),    intent(in)    :: stencil(1:, 1 - S:)     !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P), intent(in)    :: f1, f2, ff              !< Faces to be computed.
-  integer(I_P)                :: s1, s2, s3, f           !< Counters
-  !---------------------------------------------------------------------------------------------------------------------------------
+  pure subroutine destroy(self)
+  !< Destroy IS.
+  class(IS_js), intent(inout) :: self !< WENO smoothenss indicators.
 
-  !---------------------------------------------------------------------------------------------------------------------------------
-  do s1 = 0, S - 1 ! stencils loop
-    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      self%si(f, s1) = 0._R_P
-      do s2 = 0, S - 1
-        do s3 = 0, S - 1
-          self%si(f, s1) = self%si(f, s1) + self%coef(s3, s2, s1) * stencil(f + ff, s1 - s3) * stencil(f + ff, s1 - s2)
-        enddo
-      enddo
-    enddo
-  enddo
-  !---------------------------------------------------------------------------------------------------------------------------------
-  endsubroutine compute
-!-----------------------------------------------------------------------------------------------------------------------------------
+  if (allocated(self%coef)) deallocate(self%coef)
+  if (allocated(self%si)) deallocate(self%si)
+  endsubroutine destroy
 endmodule wenoof_smoothness_indicators_js
