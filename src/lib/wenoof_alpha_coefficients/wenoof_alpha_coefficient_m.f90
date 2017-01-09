@@ -28,7 +28,10 @@ type, extends(alpha_coefficient_z) :: alpha_coefficient_m
     procedure, nopass     :: description !< Compute coefficients.
     ! public methods
     procedure, pass(self) :: initialize !< Initialize the base alpha coefficient function.
+    ! overridden public methods
+    procedure, pass(self) :: destroy !< Destroy coefficients.
 endtype alpha_coefficient_m
+
 contains
   ! deferred public methods
   pure subroutine compute(self, S, weight_opt, IS, eps, f1, f2)
@@ -92,4 +95,13 @@ contains
     allocate(alpha_coefficient_z :: self%alpha_base)
   endselect
   endsubroutine initialize
+
+  ! overridden methods
+  pure subroutine destroy(self)
+  !< Destroy coefficients.
+  class(alpha_coefficient_m), intent(inout) :: self !< WENO alpha coefficients.
+
+  call self%alpha_coefficient%destroy
+  if (allocated(self%alpha_base)) deallocate(self%alpha_base)
+  endsubroutine destroy
 endmodule wenoof_alpha_coefficient_m

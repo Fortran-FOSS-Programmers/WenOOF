@@ -20,32 +20,29 @@ type, extends(alpha_coefficient) :: alpha_coefficient_js
   private
   contains
     ! deferred public methods
-    procedure, pass(self) :: create      !< Create coefficients.
     procedure, pass(self) :: compute     !< Compute coefficients.
     procedure, nopass     :: description !< Return string-description of coefficients.
-    procedure, pass(self) :: destroy     !< Destroy coefficients.
 endtype alpha_coefficient_js
 contains
   ! deferred public methods
-  pure subroutine destroy(self)
-  !< Destroy coefficients.
-  class(alpha_coefficient_js), intent(inout) :: self !< WENO alpha coefficients.
+  pure subroutine compute(self, S, weight_opt, IS, eps, f1, f2)
+  !< Compute coefficients.
+  class(alpha_coefficient_js), intent(inout) :: self                       !< WENO alpha coefficient.
+  integer(I_P),                intent(in)    :: S                          !< Number of stencils used.
+  real(R_P),                   intent(in)    :: weight_opt(1: 2, 0: S - 1) !< Optimal weight of the stencil.
+  real(R_P),                   intent(in)    :: IS(1: 2, 0: S - 1)         !< Smoothness indicators of the stencils.
+  real(R_P),                   intent(in)    :: eps                        !< Parameter for avoiding divided by zero.
+  integer(I_P),                intent(in)    :: f1, f2                     !< Faces to be computed.
+  integer(I_P)                               :: f, s1                      !< Counters.
 
-  if (allocated(self%alpha_coef)) deallocate(self%alpha_coef)
-  if (allocated(self%alpha_tot)) deallocate(self%alpha_tot)
-  endsubroutine destroy
-
-  pure subroutine create(self, S)
-  !< Create coefficients.
-  class(alpha_coefficient_js), intent(inout) :: self !< WENO alpha coefficients.
-  integer(I_P),                intent(in)    :: S    !< Number of stencils used.
-
-  call self%destroy
-  allocate(self%alpha_coef(1:2, 0:S - 1))
-  allocate(self%alpha_tot(1:2))
-  self%alpha_coef(:,:) = 100000._R_P
-  self%alpha_tot(:) = 0._R_P
-  endsubroutine create
+  self%alpha_tot = 0._R_P
+  do s1=0, S - 1 ! stencil loops
+    do f=f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      self%alpha_coef(f, s1) = weight_opt(f, s1) * (1._R_P/(eps + IS(f, s1))**S)
+      self%alpha_tot(f) = self%alpha_tot(f) + self%alpha_coef(f, s1)
+    enddo
+  enddo
+  endsubroutine compute
 
   pure subroutine description(string)
   !< Return string-descripition of coefficients.
@@ -66,23 +63,4 @@ contains
   string = string//'    eps: real(R_P), intent(in), the coefficient to avoid zero division used'//nl
   string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'
   endsubroutine description
-
-  pure subroutine compute(self, S, weight_opt, IS, eps, f1, f2)
-  !< Compute coefficients.
-  class(alpha_coefficient_js), intent(inout) :: self                       !< WENO alpha coefficient.
-  integer(I_P),                intent(in)    :: S                          !< Number of stencils used.
-  real(R_P),                   intent(in)    :: weight_opt(1: 2, 0: S - 1) !< Optimal weight of the stencil.
-  real(R_P),                   intent(in)    :: IS(1: 2, 0: S - 1)         !< Smoothness indicators of the stencils.
-  real(R_P),                   intent(in)    :: eps                        !< Parameter for avoiding divided by zero.
-  integer(I_P),                intent(in)    :: f1, f2                     !< Faces to be computed.
-  integer(I_P)                               :: f, s1                      !< Counters.
-
-  self%alpha_tot = 0._R_P
-  do s1=0, S - 1 ! stencil loops
-    do f=f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      self%alpha_coef(f, s1) = weight_opt(f, s1) * (1._R_P/(eps + IS(f, s1))**S)
-      self%alpha_tot(f) = self%alpha_tot(f) + self%alpha_coef(f, s1)
-    enddo
-  enddo
-  endsubroutine compute
 endmodule wenoof_alpha_coefficient_js

@@ -49,14 +49,14 @@ contains
   select type(constructor)
   type is(wenoof_constructor_upwind)
     allocate(wenoof_interpolator_upwind :: interpolator)
-    ! instantiate WENO smoothness indicators
+
     select case(IS_type)
     case('JS')
       allocate(IS_js :: IS_type_)
     case default
       call interpolator%init_error(error_code = 3_I_P)
     endselect
-    ! instantiate WENO alpha coefficients
+
     select case(alpha_type)
     case('JS')
       allocate(alpha_coefficient_js :: alpha_type_)
@@ -75,14 +75,14 @@ contains
     case default
       call interpolator%init_error(error_code = 2_I_P)
     endselect
-    ! instantiate WENO optimal weights
+
     select case(weights_opt_type)
     case('JS')
       allocate(optimal_weights_js :: weights_opt_type_)
     case default
       call interpolator%init_error(error_code = 4_I_P)
     endselect
-    ! instantiate WENO polynomials
+
     select case(polynomial_type)
     case('JS')
       allocate(polynomials_js :: polynomial_type_)

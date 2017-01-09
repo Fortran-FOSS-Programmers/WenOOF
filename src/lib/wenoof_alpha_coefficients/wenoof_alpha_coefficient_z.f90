@@ -25,10 +25,6 @@ type, extends(alpha_coefficient_js) :: alpha_coefficient_z
     ! deferred public methods
     procedure, pass(self) :: compute     !< Compute coefficients.
     procedure, nopass     :: description !< Return string-description of coefficients.
-    ! public methods
-    procedure, nopass :: tau      !< Compute the tau coefficient used in the WENO-Z alpha coefficient.
-    procedure, nopass :: weno_exp !< Compute the exponent used in the alpha function.
-    procedure, nopass :: weno_odd !< Compute the distinguisher between odd and even number of stencils.
 endtype alpha_coefficient_z
 contains
   ! deferred public methods
@@ -74,6 +70,7 @@ contains
   enddo
   endsubroutine compute
 
+  ! private non TBP
   pure function tau(S, IS) result(w_tau)
   !< Compute the tau coefficient used in the WENO-Z alpha coefficient.
   integer(I_P), intent(in) :: S           !< Number of stencils used.
