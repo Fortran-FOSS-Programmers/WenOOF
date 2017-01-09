@@ -341,10 +341,12 @@ contains
   string = string//'  on the work by Gerolimos, Sénéchal and  Vallet  "Very-High-Order WENO Schemes", see '// &
            'JCP, 2009, vol. 228, pp. 8481-8524, doi:10.1016/j.jcp.2009.07.039'//nl
   string = string//'  The "compute" method has the following public API'//nl
-  string = string//'    poly(poly_coef,v)'//nl
+  string = string//'    compute(S, stencil, f1, f2, ff)'//nl
   string = string//'  where:'//nl
-  string = string//'    poly_coef: real(R_P), intent(IN), the polynomial coefficient of the value'//nl
-  string = string//'    v: real(R_P), intent(IN), the selected value from the stencil'
+  string = string//'    S: integer(I_P), intent(in), the number of the stencils used'//nl
+  string = string//'    stencil: real(R_P), intent(IN), the stencil used for the interpolation [1:2, 1-S:-1+S]'//nl
+  string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'//nl
+  string = string//'    ff: integer(I_P), intent(in), the parameter for the stencil value choice'
   endsubroutine description
 
   pure subroutine destroy(self)

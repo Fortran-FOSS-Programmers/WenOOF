@@ -43,13 +43,14 @@ contains
   string = string//'  Based on the work by Borges, Carmona, Costa and Don "An improved weighted essentially non-oscillatory '// &
            'scheme for hyperbolic conservation laws", see '// &
            'JCP, 2008, vol. 227, pp. 3191--3211, doi:10.1016/j.jcp.2007.11.038'//nl
-  string = string//'  The "alpha" method has the following public API'//nl
-  string = string//'    alpha(S,weigt_opt,IS,eps)'//nl
+  string = string//'  The "compute" method has the following public API'//nl
+  string = string//'    compute(S, weigt_opt, IS, eps, f1, f2)'//nl
   string = string//'  where:'//nl
   string = string//'    S: integer(I_P), intent(in), the number of the stencils used'//nl
   string = string//'    weight_opt: real(R_P), intent(in), the optimal weight of the actual stencil'//nl
   string = string//'    IS: real(R_P), intent(in), the smoothness indicator of the actual stencil'//nl
-  string = string//'    eps: real(R_P), intent(in), the coefficient to avoid zero division used'
+  string = string//'    eps: real(R_P), intent(in), the coefficient to avoid zero division used'//nl
+  string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'
   return
   !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine description
