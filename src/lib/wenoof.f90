@@ -1,12 +1,10 @@
-module wenoof
-!-----------------------------------------------------------------------------------------------------------------------------------
 !< WenOOF, WENO interpolation Object Oriented Fortran library
-!-----------------------------------------------------------------------------------------------------------------------------------
+module wenoof
+!< WenOOF, WENO interpolation Object Oriented Fortran library
 
-!-----------------------------------------------------------------------------------------------------------------------------------
-use penf, only : R_P, I_P
-use wenoof_interpolator_abstract, only : wenoof_constructor, wenoof_interpolator
-use wenoof_interpolator_js,       only : wenoof_constructor_upwind, wenoof_interpolator_upwind
+use penf
+use wenoof_interpolator_abstract
+use wenoof_interpolator_js
 use wenoof_alpha_coefficient_abstract
 use wenoof_smoothness_indicators_abstract
 use wenoof_smoothness_indicators_js
@@ -17,29 +15,23 @@ use wenoof_optimal_weights_abstract
 use wenoof_optimal_weights_js
 use wenoof_polynomials_abstract
 use wenoof_polynomials_js
-!-----------------------------------------------------------------------------------------------------------------------------------
 
-!-----------------------------------------------------------------------------------------------------------------------------------
 implicit none
 private
-save
-public :: wenoof_factory, wenoof_constructor, wenoof_interpolator
-public :: wenoof_constructor_upwind, wenoof_interpolator_upwind
-!-----------------------------------------------------------------------------------------------------------------------------------
+public :: wenoof_factory
+public :: wenoof_constructor
+public :: wenoof_interpolator
+public :: wenoof_constructor_upwind
+public :: wenoof_interpolator_upwind
 
-!-----------------------------------------------------------------------------------------------------------------------------------
 type :: wenoof_factory
-  !< WENO factory aimed to create and return a concrete WENO interpolator to the client code without exposing the concrete
-  !< interpolators classes.
+  !< WENO factory, create and return a concrete WENO interpolator.
   contains
-    procedure, nopass :: create
+    procedure, nopass :: create !< Create and return a concrete WENO interpolator object.
 endtype
-!-----------------------------------------------------------------------------------------------------------------------------------
 contains
   subroutine create(constructor, IS_type, alpha_type, weights_opt_type, polynomial_type, interpolator, alpha_base_type)
-  !---------------------------------------------------------------------------------------------------------------------------------
-  !< Create and return a concrete WENO interpolator object being an extension of the abstract *weno_interpolator* type.
-  !---------------------------------------------------------------------------------------------------------------------------------
+  !< Create and return a concrete WENO interpolator object.
   class(wenoof_constructor),               intent(in)           :: constructor       !< The concrete WENO constructor selected by
                                                                                      !< client code.
   character(*),                            intent(in)           :: IS_type           !< The concrete WENO smoothness indicator.
@@ -53,20 +45,18 @@ contains
   class(alpha_coefficient), allocatable                         :: alpha_type_       !< The concrete WENO alpha coefficient.
   class(optimal_weights),   allocatable                         :: weights_opt_type_ !< The concrete WENO optimal weights.
   class(polynomials),       allocatable                         :: polynomial_type_  !< The concrete WENO polynomial.
-  !---------------------------------------------------------------------------------------------------------------------------------
 
-  !---------------------------------------------------------------------------------------------------------------------------------
   select type(constructor)
   type is(wenoof_constructor_upwind)
     allocate(wenoof_interpolator_upwind :: interpolator)
-    ! Instantiate WENO smoothness indicators
+    ! instantiate WENO smoothness indicators
     select case(IS_type)
     case('JS')
       allocate(IS_js :: IS_type_)
     case default
       call interpolator%init_error(error_code = 3_I_P)
     endselect
-    ! Instantiate WENO alpha coefficients
+    ! instantiate WENO alpha coefficients
     select case(alpha_type)
     case('JS')
       allocate(alpha_coefficient_js :: alpha_type_)
@@ -85,14 +75,14 @@ contains
     case default
       call interpolator%init_error(error_code = 2_I_P)
     endselect
-    ! Instantiate WENO optimal weights
+    ! instantiate WENO optimal weights
     select case(weights_opt_type)
     case('JS')
       allocate(optimal_weights_js :: weights_opt_type_)
     case default
       call interpolator%init_error(error_code = 4_I_P)
     endselect
-    ! Instantiate WENO polynomials
+    ! instantiate WENO polynomials
     select case(polynomial_type)
     case('JS')
       allocate(polynomials_js :: polynomial_type_)
@@ -105,7 +95,5 @@ contains
                                weights_opt_type=weights_opt_type_, &
                                polynomial_type=polynomial_type_)
   endselect
-  return
-  !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine create
 endmodule wenoof
