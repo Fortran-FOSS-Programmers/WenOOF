@@ -2316,6 +2316,7 @@ contains
   string = string//'  The "compute" method has the following public API'//nl
   string = string//'    compute(S, stencil, f1, f2, ff)'//nl
   string = string//'  where:'//nl
+  string = string//'    S: integer(I_P), intent(in), the number of the stencils used'//nl
   string = string//'    stencil: real(R_P), intent(IN), the stencil used for the interpolation [1:2, 1-S:-1+S]'//nl
   string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'//nl
   string = string//'    ff: integer(I_P), intent(in), the parameter for the stencil value choice'
