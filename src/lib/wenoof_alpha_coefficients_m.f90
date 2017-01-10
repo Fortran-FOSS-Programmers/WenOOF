@@ -10,6 +10,7 @@ use penf, only : I_P, R_P
 use wenoof_alpha_coefficients
 use wenoof_alpha_coefficients_js
 use wenoof_alpha_coefficients_z
+use wenoof_base_object
 
 implicit none
 private
@@ -101,8 +102,8 @@ contains
   ! overridden methods
   pure subroutine create(self, constructor)
   !< Create alpha coefficients.
-  class(alpha_coefficients_m),           intent(inout) :: self        !< Alpha coefficients.
-  class(alpha_coefficients_constructor), intent(in)    :: constructor !< Alpha coefficients constructor.
+  class(alpha_coefficients_m),    intent(inout) :: self        !< Alpha coefficients.
+  class(base_object_constructor), intent(in)    :: constructor !< Alpha coefficients constructor.
 
   call self%destroy
   call self%alpha_coefficients%create(constructor=constructor)
@@ -120,10 +121,12 @@ contains
         call self%alpha_base%create(constructor=constructor)
       endselect
     endif
+  class default
+    ! @TODO add error handling
   endselect
   endsubroutine create
 
-  pure subroutine destroy(self)
+  elemental subroutine destroy(self)
   !< Destroy alpha coefficients.
   class(alpha_coefficients_m), intent(inout) :: self !< Alpha coefficients.
 

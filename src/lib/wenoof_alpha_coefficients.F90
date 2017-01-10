@@ -47,7 +47,7 @@ contains
 #endif
   endsubroutine compute
 
-  pure subroutine description(string)
+  pure function description() result(string)
   !< Return alpha coefficients string-description.
   character(len=:), allocatable  :: string !< String-description.
 
@@ -55,26 +55,31 @@ contains
   ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
   error stop 'alpha_coefficients%description to be implemented by your concrete alpha coefficients object'
 #endif
-  endsubroutine description
+  endfunction description
 
   ! public methods
   pure subroutine create(self, constructor)
   !< Create alpha coefficients.
-  class(alpha_coefficients),             intent(inout) :: self        !< Alpha coefficients.
-  class(alpha_coefficients_constructor), intent(in)    :: constructor !< Alpha coefficients constructor.
+  class(alpha_coefficients),      intent(inout) :: self        !< Alpha coefficients.
+  class(base_object_constructor), intent(in)    :: constructor !< Alpha coefficients constructor.
 
   call self%destroy
-  allocate(self%alpha_coef(1:2, 0:constructor%S - 1))
+  select type(constructor)
+  class is(alpha_coefficients_constructor)
+    allocate(self%alpha_coef(1:2, 0:constructor%S - 1))
+  class default
+    ! @TODO add error handling
+  endselect
   allocate(self%alpha_tot(1:2))
-  self%alpha_coef(:,:) = 0._R_P
-  self%alpha_tot(:) = 0._R_P
+  self%alpha_coef = 0._R_P
+  self%alpha_tot = 0._R_P
   endsubroutine create
 
-  pure subroutine destroy(self)
+  elemental subroutine destroy(self)
   !< Destroy alpha coefficients.
   class(alpha_coefficients), intent(inout) :: self !< Alpha coefficients.
 
   if (allocated(self%alpha_coef)) deallocate(self%alpha_coef)
   if (allocated(self%alpha_tot)) deallocate(self%alpha_tot)
   endsubroutine destroy
-endmodule wenoof_alpha_coefficients_abstract
+endmodule wenoof_alpha_coefficients

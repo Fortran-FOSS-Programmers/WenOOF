@@ -56,14 +56,19 @@ contains
   pure subroutine create(self, constructor)
   !< Create polynomials.
   class(polynomials),             intent(inout) :: self        !< Polynomials.
-  class(polynomials_constructor), intent(in)    :: constructor !< Polynomials constructor.
+  class(base_object_constructor), intent(in)    :: constructor !< Polynomials constructor.
 
   call self%destroy
-  allocate(self%poly(1:2, 0:constructor%S - 1))
+  select type(constructor)
+  class is(polynomials_constructor)
+    allocate(self%poly(1:2, 0:constructor%S - 1))
+  class default
+    ! @TODO add error handling
+  endselect
   self%poly = 0._R_P
   endsubroutine create
 
-  pure subroutine destroy(self)
+  elemental subroutine destroy(self)
   !< Destroy polynomials.
   class(polynomials), intent(inout) :: self !< Polynomials.
 

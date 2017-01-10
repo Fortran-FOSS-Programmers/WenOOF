@@ -21,18 +21,13 @@ type, abstract :: base_object
     ! deferred public methods
     procedure(create_interface),      pass(self), deferred :: create      !< Create object.
     procedure(description_interface), nopass,     deferred :: description !< Return object string-description.
-    procedure(destroy_description),   pass(self), deferred :: destroy     !< Destroy object.
+    procedure(destroy_interface),     pass(self), deferred :: destroy     !< Destroy object.
 endtype base_object
 
 abstract interface
   !< Abstract interface of [base_object] methods.
-  elemental subroutine destroy_interface(self)
-  !< Destroy object
-  import :: base_object
-  class(base_object), intent(inout) :: self !< Object.
-  endsubroutine destroy_interface
 
-  subroutine create_inteface(self, constructor)
+  subroutine create_interface(self, constructor)
   !< Create object.
   !<
   !< @note Before call this method a concrete constructor must be instantiated.
@@ -46,5 +41,11 @@ abstract interface
   !< Return object string-description.
   character(len=:), allocatable  :: string !< String-description.
   endfunction description_interface
+
+  elemental subroutine destroy_interface(self)
+  !< Destroy object
+  import :: base_object
+  class(base_object), intent(inout) :: self !< Object.
+  endsubroutine destroy_interface
 endinterface
 endmodule wenoof_base_object

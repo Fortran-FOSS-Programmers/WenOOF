@@ -8,6 +8,7 @@ module wenoof_smoothness_indicators_js
 !< doi:10.1016/j.jcp.2009.07.039
 
 use penf, only : I_P, R_P
+use wenoof_base_object
 use wenoof_smoothness_indicators
 
 implicit none
@@ -73,7 +74,7 @@ contains
   enddo
   endsubroutine compute
 
-  pure function description(string)
+  pure function description() result(string)
   !< Return smoothness indicators string-description.
   character(len=:), allocatable :: string           !< String-description.
   character(len=1), parameter   :: nl=new_line('a') !< New line character.
@@ -95,14 +96,21 @@ contains
   ! overridden public methods
   pure subroutine create(self, constructor)
   !< Create smoothness indicators.
-  class(smoothness_indicators_js),             intent(inout) :: self        !< Smoothness indicators.
-  class(smoothness_indicators_js_constructor), intent(in)    :: constructor !< Polynomials constructor.
+  class(smoothness_indicators_js), intent(inout) :: self        !< Smoothness indicators.
+  class(base_object_constructor),  intent(in)    :: constructor !< Polynomials constructor.
+  integer(I_P)                                   :: S           !< Stencils dimension.
 
   call self%destroy
   call self%smoothness_indicators%create(constructor=constructor)
-  allocate(self%coef(0:constructor%S - 1, 0:constructor%S - 1, 0:constructor%S - 1))
+  select type(constructor)
+  class is(smoothness_indicators_js_constructor)
+    S = constructor%S
+    allocate(self%coef(0:S - 1, 0:S - 1, 0:S - 1))
+  class default
+    ! @TODO add error handling
+  endselect
   associate(c => self%coef)
-    select case(constructor%S)
+    select case(S)
     case(2) ! 3rd order
       ! stencil 0
       !       i*i      ;     (i-1)*i
@@ -2343,7 +2351,7 @@ contains
   endassociate
   endsubroutine create
 
-  pure subroutine destroy(self)
+  elemental subroutine destroy(self)
   !< Destroy smoothness indicators.
   class(smoothness_indicators_js), intent(inout) :: self !< Smoothenss indicators.
 

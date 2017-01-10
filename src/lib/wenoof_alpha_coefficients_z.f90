@@ -7,7 +7,7 @@ module wenoof_alpha_coefficients_z
 !< vol. 227, pp. 3191-3211, doi: 10.1016/j.jcp.2007.11.038.
 
 use penf, only : I_P, R_P
-use wenoof_alpha_coefficient
+use wenoof_alpha_coefficients
 
 implicit none
 private

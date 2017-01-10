@@ -27,18 +27,18 @@ contains
   class(base_object), allocatable, intent(out) :: object      !< Object
 
   select type(constructor)
-  type is(wenoof_alpha_coefficients_js)
-    allocate(wenoof_alpha_coefficients_js :: object)
-  type is(wenoof_alpha_coefficients_m)
-    allocate(wenoof_alpha_coefficients_m :: object)
-  type is(wenoof_alpha_coefficients_z)
-    allocate(wenoof_alpha_coefficients_z :: object)
-  type is(wenoof_optimal_weights_js)
-    allocate(wenoof_optimal_weights_js :: object)
-  type is(wenoof_polynomials_js)
-    allocate(wenoof_polynomials_js :: object)
-  type is(wenoof_smoothness_indicators_js)
-    allocate(wenoof_smoothness_indicators_js :: object)
+  type is(alpha_coefficients_js_constructor)
+    allocate(alpha_coefficients_js :: object)
+  type is(alpha_coefficients_m_constructor)
+    allocate(alpha_coefficients_m :: object)
+  type is(alpha_coefficients_z_constructor)
+    allocate(alpha_coefficients_z :: object)
+  type is(optimal_weights_js_constructor)
+    allocate(optimal_weights_js :: object)
+  type is(polynomials_js_constructor)
+    allocate(polynomials_js :: object)
+  type is(smoothness_indicators_js_constructor)
+    allocate(smoothness_indicators_js :: object)
   class default
     error stop 'error: WenOOF object factory do NOT know the constructor given'
   endselect

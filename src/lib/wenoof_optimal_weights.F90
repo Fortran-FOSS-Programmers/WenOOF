@@ -3,7 +3,7 @@ module wenoof_optimal_weights
 !< Abstract optimal weights object.
 
 use penf, only : I_P, R_P
-use wenoff_base_object
+use wenoof_base_object
 
 implicit none
 private
@@ -53,14 +53,20 @@ contains
   ! public methods
   pure subroutine create(self, constructor)
   !< Create weights.
-  class(optimal_weights),             intent(inout) :: self        !< Optimal weights.
-  class(optimal_weights_constructor), intent(in)    :: constructor !< Optimal weights constructor.
+  class(optimal_weights),         intent(inout) :: self        !< Optimal weights.
+  class(base_object_constructor), intent(in)    :: constructor !< Optimal weights constructor.
 
   call self%destroy
-  allocate(self%opt(1:2, 0:constructor%S - 1))
+  select type(constructor)
+  class is(optimal_weights_constructor)
+    allocate(self%opt(1:2, 0:constructor%S - 1))
+  class default
+    ! @TODO add error handling
+  endselect
+  self%opt = 0._R_P
   endsubroutine create
 
-  pure subroutine destroy(self)
+  elemental subroutine destroy(self)
   !< Destroy weights.
   class(optimal_weights), intent(inout) :: self !< Optimial weights.
 

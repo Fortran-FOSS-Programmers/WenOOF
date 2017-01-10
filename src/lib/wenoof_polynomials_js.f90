@@ -7,8 +7,8 @@ module wenoof_polynomials_js
 !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
 !< doi:10.1016/j.jcp.2009.07.039
 
-use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P
+use wenoof_base_object
 use wenoof_polynomials
 
 implicit none
@@ -20,8 +20,8 @@ type, extends(polynomials_constructor) :: polynomials_js_constructor
   !< Jiang-Shu (Lagrange) polynomials object constructor.
 endtype polynomials_js_constructor
 
-interface  optimal_weights_js_constructor
-  procedure optimal_weights_js_constructor_
+interface  polynomials_js_constructor
+  procedure polynomials_js_constructor_
 endinterface
 
 type, extends(polynomials) :: polynomials_js
@@ -94,14 +94,21 @@ contains
   ! overridden public methods
   pure subroutine create(self, constructor)
   !< Create coefficients.
-  class(polynomials_js),             intent(inout) :: self        !< Polynomials.
-  class(polynomials_js_constructor), intent(in)    :: constructor !< Polynomials constructor.
+  class(polynomials_js),          intent(inout) :: self        !< Polynomials.
+  class(base_object_constructor), intent(in)    :: constructor !< Polynomials constructor.
+  integer(I_P)                                  :: S           !< Stencils dimension.
 
   call self%destroy
   call self%polynomials%create(constructor=constructor)
-  allocate(self%coef(1:2, 0:constructor%S - 1, 0:constructor%S - 1))
+  select type(constructor)
+  class is(polynomials_js_constructor)
+    S = constructor%S
+    allocate(self%coef(1:2, 0:S - 1, 0:S - 1))
+  class default
+    ! @TODO add error handling
+  endselect
   associate(c => self%coef)
-    select case(constructor%S)
+    select case(S)
       case(2) ! 3rd order
         ! 1 => left interface (i-1/2)
         !  cell  0           ;    cell  1
@@ -368,7 +375,7 @@ contains
   endassociate
   endsubroutine create
 
-  pure subroutine destroy(self)
+  elemental subroutine destroy(self)
   !< Destroy polynomials.
   class(polynomials_js), intent(inout) :: self !< WENO polynomials.
 

@@ -47,13 +47,13 @@ contains
   ! deferred public methods
   pure subroutine compute(self, S, weight_opt, IS, eps, f1, f2)
   !< Compute alpha coefficients.
-  class(alpha_coefficient_js), intent(inout) :: self                       !< Alpha coefficient.
-  integer(I_P),                intent(in)    :: S                          !< Number of stencils used.
-  real(R_P),                   intent(in)    :: weight_opt(1: 2, 0: S - 1) !< Optimal weight of the stencil.
-  real(R_P),                   intent(in)    :: IS(1: 2, 0: S - 1)         !< Smoothness indicators of the stencils.
-  real(R_P),                   intent(in)    :: eps                        !< Parameter for avoiding divided by zero.
-  integer(I_P),                intent(in)    :: f1, f2                     !< Faces to be computed.
-  integer(I_P)                               :: f, s1                      !< Counters.
+  class(alpha_coefficients_js), intent(inout) :: self                       !< Alpha coefficient.
+  integer(I_P),                 intent(in)    :: S                          !< Number of stencils used.
+  real(R_P),                    intent(in)    :: weight_opt(1: 2, 0: S - 1) !< Optimal weight of the stencil.
+  real(R_P),                    intent(in)    :: IS(1: 2, 0: S - 1)         !< Smoothness indicators of the stencils.
+  real(R_P),                    intent(in)    :: eps                        !< Parameter for avoiding divided by zero.
+  integer(I_P),                 intent(in)    :: f1, f2                     !< Faces to be computed.
+  integer(I_P)                                :: f, s1                      !< Counters.
 
   self%alpha_tot = 0._R_P
   do s1=0, S - 1 ! stencil loops
@@ -81,4 +81,4 @@ contains
   string = string//'    eps: real(R_P), intent(in), the coefficient to avoid zero division used'//nl
   string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'
   endfunction description
-endmodule wenoof_alpha_coefficient_js
+endmodule wenoof_alpha_coefficients_js

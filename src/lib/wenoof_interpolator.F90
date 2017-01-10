@@ -19,24 +19,24 @@ type, extends(base_object_constructor) :: interpolator_constructor
   !< Abstract interpolator object constructor.
   !<
   !< @note Every concrete WENO interpolator implementations must define their own constructor type.
-  class(smothness_indicators_constructor), allocatable :: is      !< Smoothness indicators constructor.
-  class(alpha_coefficients_constructor),   allocatable :: alpha   !< Alpha coefficients constructor.
-  class(optimal_weights_constructor),      allocatable :: weights !< Optimal weights constructor.
-  class(polynomials_constructor),          allocatable :: polynom !< Polynomilas constructor.
+  class(base_object_constructor), allocatable :: is      !< Smoothness indicators constructor.
+  class(base_object_constructor), allocatable :: alpha   !< Alpha coefficients constructor.
+  class(base_object_constructor), allocatable :: weights !< Optimal weights constructor.
+  class(base_object_constructor), allocatable :: polynom !< Polynomilas constructor.
   contains
     ! public methods
     procedure, pass(self) :: create  => create_interpolator_constructor  !< Create interpolator constructor.
     procedure, pass(self) :: destroy => destroy_interpolator_constructor !< Destroy interpolator constructor.
 endtype interpolator_constructor
 
-type, extends(base_object) :: wenoof_interpolator
+type, extends(base_object) :: interpolator
   !< Abstract interpolator object.
   !<
   !< @note Do not implement any actual interpolator: provide the interface for the different interpolators implemented.
-  class(smothness_indicators), allocatable :: is      !< Smoothness indicators.
-  class(alpha_coefficients),   allocatable :: alpha   !< Alpha coefficients.
-  class(optimal_weights),      allocatable :: weights !< Optimal weights.
-  class(polynomials),          allocatable :: polynom !< Polynomilas.
+  class(base_object), allocatable :: is      !< Smoothness indicators.
+  class(base_object), allocatable :: alpha   !< Alpha coefficients.
+  class(base_object), allocatable :: weights !< Optimal weights.
+  class(base_object), allocatable :: polynom !< Polynomilas.
   contains
     ! public deferred methods
     procedure, nopass     :: description !< Return interpolator string-description.
@@ -44,7 +44,7 @@ type, extends(base_object) :: wenoof_interpolator
     ! public methods
     procedure, pass(self) :: create  !< Create interpolator.
     procedure, pass(self) :: destroy !< Destroy interpolator.
-endtype wenoof_interpolator
+endtype interpolator
 
 contains
   ! constructor methods
@@ -52,17 +52,17 @@ contains
   ! public methods
   subroutine create_interpolator_constructor(self, is, alpha, weights, polynom)
   !< Create interpolator constructor.
-  class(interpolator_constructor),         intent(inout) :: self    !< Interpolator constructor.
-  class(smothness_indicators_constructor), intent(in)    :: is      !< Smoothness indicators constructor.
-  class(alpha_coefficients_constructor),   intent(in)    :: alpha   !< Alpha coefficients constructor.
-  class(optimal_weights_constructor),      intent(in)    :: weights !< Optimal weights constructor.
-  class(polynomials_constructor),          intent(in)    :: polynom !< Polynomilas constructor.
+  class(interpolator_constructor), intent(inout) :: self    !< Interpolator constructor.
+  class(base_object_constructor),  intent(in)    :: is      !< Smoothness indicators constructor.
+  class(base_object_constructor),  intent(in)    :: alpha   !< Alpha coefficients constructor.
+  class(base_object_constructor),  intent(in)    :: weights !< Optimal weights constructor.
+  class(base_object_constructor),  intent(in)    :: polynom !< Polynomilas constructor.
 
   call self%destroy
-  allocate(constructor%is,      source=is     )
-  allocate(constructor%alpha,   source=alpha  )
-  allocate(constructor%weights, source=weights)
-  allocate(constructor%polynom, source=polynom)
+  allocate(self%is,      source=is     )
+  allocate(self%alpha,   source=alpha  )
+  allocate(self%weights, source=weights)
+  allocate(self%polynom, source=polynom)
   endsubroutine create_interpolator_constructor
 
   pure subroutine destroy_interpolator_constructor(self)
@@ -78,7 +78,7 @@ contains
   ! interpolator methods
 
   ! deferred public methods
-  pure subroutine description(string)
+  pure function description() result(string)
   !< Return interpolator string-description.
   character(len=:), allocatable  :: string !< String-description.
 
@@ -86,7 +86,7 @@ contains
   ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
   error stop 'interpolator%description to be implemented by your concrete interpolator object'
 #endif
-  endsubroutine description
+  endfunction description
 
   pure subroutine interpolate(self, S, stencil, location, interpolation)
   !< Interpolate values.
@@ -105,18 +105,23 @@ contains
   ! public methods
   subroutine create(self, constructor)
   !< Create interpolator.
-  class(interpolator),              intent(inout) :: self        !< Interpolator.
-  class(interpolator_constructor),  intent(in)    :: constructor !< Constructor.
-  type(objects_factory)                           :: factory     !< Objects factory.
+  class(interpolator),            intent(inout) :: self        !< Interpolator.
+  class(base_object_constructor), intent(in)    :: constructor !< Constructor.
+  type(objects_factory)                         :: factory     !< Objects factory.
 
   call self%destroy
-  call factory%create(constructor=constructor%is,      object=self%is)
-  call factory%create(constructor=constructor%alpha,   object=self%alpha)
-  call factory%create(constructor=constructor%weights, object=self%weights)
-  call factory%create(constructor=constructor%polynom, object=self%polynom)
+  select type(constructor)
+  class is(interpolator_constructor)
+    call factory%create(constructor=constructor%is,      object=self%is)
+    call factory%create(constructor=constructor%alpha,   object=self%alpha)
+    call factory%create(constructor=constructor%weights, object=self%weights)
+    call factory%create(constructor=constructor%polynom, object=self%polynom)
+  class default
+    ! @TODO add error handling
+  endselect
   endsubroutine create
 
-  pure subroutine destroy(self)
+  elemental subroutine destroy(self)
   !< Destroy interpolator
   class(interpolator), intent(inout) :: self !< Interpolator.
 

@@ -4,9 +4,9 @@ module wenoof
 
 use penf
 use wenoof_alpha_coefficients
-use wenoof_alpha_coefficient_js
-use wenoof_alpha_coefficient_z
-use wenoof_alpha_coefficient_m
+use wenoof_alpha_coefficients_js
+use wenoof_alpha_coefficients_z
+use wenoof_alpha_coefficients_m
 use wenoof_interpolator
 use wenoof_interpolator_js
 use wenoof_optimal_weights

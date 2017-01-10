@@ -1,5 +1,5 @@
 !< Abstract smoothness indicator object.
-module wenoof_smoothness_indicators_abstract
+module wenoof_smoothness_indicators
 !< Abstract smoothness indicator object.
 
 use penf, only : I_P, R_P
@@ -55,18 +55,23 @@ contains
   ! public methods
   pure subroutine create(self, constructor)
   !< Create smoothness indicators.
-  class(smoothness_indicators),             intent(inout) :: self        !< Smoothness indicators.
-  class(smoothness_indicators_constructor), intent(in)    :: constructor !< Smoothness indicators constructor.
+  class(smoothness_indicators),   intent(inout) :: self        !< Smoothness indicators.
+  class(base_object_constructor), intent(in)    :: constructor !< Smoothness indicators constructor.
 
   call self%destroy
-  allocate(self%si(1:2, 0:constructor%S - 1))
+  select type(constructor)
+  class is(smoothness_indicators_constructor)
+    allocate(self%si(1:2, 0:constructor%S - 1))
+  class default
+    ! @TODO add error handling
+  endselect
   self%si = 0._R_P
   endsubroutine create
 
-  pure subroutine destroy(self)
+  elemental subroutine destroy(self)
   !< Destroy smoothness indicators.
   class(smoothness_indicators), intent(inout) :: self !< Smoothness indicators.
 
   if (allocated(self%si)) deallocate(self%si)
   endsubroutine destroy
-endmodule wenoof_smoothness_indicators_abstract
+endmodule wenoof_smoothness_indicators

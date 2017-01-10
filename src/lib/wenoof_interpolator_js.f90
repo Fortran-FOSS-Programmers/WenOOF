@@ -4,11 +4,12 @@ module wenoof_interpolator_js
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P, str
-use wenoof_interpolator
 use wenoof_alpha_coefficients
 use wenoof_alpha_coefficients_m
 use wenoof_alpha_coefficients_z
 use wenoof_alpha_coefficients_js
+use wenoof_base_object
+use wenoof_interpolator
 use wenoof_optimal_weights
 use wenoof_optimal_weights_js
 use wenoof_polynomials
@@ -49,7 +50,7 @@ type, extends(interpolator) :: interpolator_js
   contains
     ! public deferred methods
     procedure, nopass     :: description !< Return interpolator string-description.
-    ! procedure, pass(self) :: interpolate !< Interpolate values.
+    procedure, pass(self) :: interpolate !< Interpolate values.
     ! public methods
     procedure, pass(self) :: create  !< Create interpolator.
     procedure, pass(self) :: destroy !< Destroy interpolator.
@@ -59,18 +60,21 @@ contains
   ! function-constructor
   function interpolator_js_constructor_(is, alpha, weights, polynom, S, eps) result(constructor)
   !< Return an instance of [interpolator_js_constructor].
-  class(smothness_indicators_constructor), intent(in)           :: is          !< Smoothness indicators constructor.
-  class(alpha_coefficients_constructor),   intent(in)           :: alpha       !< Alpha coefficients constructor.
-  class(optimal_weights_constructor),      intent(in)           :: weights     !< Optimal weights constructor.
-  class(polynomials_constructor),          intent(in)           :: polynom     !< Polynomilas constructor.
-  integer(I_P),                            intent(in)           :: S           !< Stencil dimension.
-  real(R_P),                               intent(in), optional :: eps         !< Parameter for avoiding division by zero.
-  class(interpolator_constructor), allocatable                  :: constructor !< Interpolator constructor.
+  class(base_object_constructor), intent(in)           :: is          !< Smoothness indicators constructor.
+  class(base_object_constructor), intent(in)           :: alpha       !< Alpha coefficients constructor.
+  class(base_object_constructor), intent(in)           :: weights     !< Optimal weights constructor.
+  class(base_object_constructor), intent(in)           :: polynom     !< Polynomilas constructor.
+  integer(I_P),                   intent(in)           :: S           !< Stencil dimension.
+  real(R_P),                      intent(in), optional :: eps         !< Parameter for avoiding division by zero.
+  class(interpolator_constructor), allocatable         :: constructor !< Interpolator constructor.
 
   allocate(interpolator_js_constructor :: constructor)
   call constructor%create(is=is, alpha=alpha, weights=weights, polynom=polynom)
-  constructor%S = S
-  if (present(eps)) constructor%eps = eps
+  select type(constructor)
+  class is(interpolator_js_constructor)
+    constructor%S = S
+    if (present(eps)) constructor%eps = eps
+  endselect
   endfunction interpolator_js_constructor_
 
   ! public deferred methods
@@ -83,9 +87,9 @@ contains
   string = 'Jiang-Shu WENO upwind-biased interpolator'//nl
   string = string//'  Based on the scheme proposed by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
            'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130'//nl
-  string = string//'  Provide a formal order of accuracy equals to: '//trim(str(2*self%S - 1, .true.))//nl
-  string = string//'  Use '//trim(str(self%S, .true.))//' stencils composed by '//trim(str(self%S, .true.))//' values'//nl
-  string = string//'  The eps value used for avoiding division by zero is '//trim(str(self%eps, .true.))//nl
+  ! string = string//'  Provide a formal order of accuracy equals to: '//trim(str(2*self%S - 1, .true.))//nl
+  ! string = string//'  Use '//trim(str(self%S, .true.))//' stencils composed by '//trim(str(self%S, .true.))//' values'//nl
+  ! string = string//'  The eps value used for avoiding division by zero is '//trim(str(self%eps, .true.))//nl
   string = string//'  The "interpolate" method has the following public API'//nl
   string = string//'    interpolate(S, stencil, location, interpolation)'//nl
   string = string//'  where:'//nl
@@ -94,17 +98,13 @@ contains
   string = string//'    location: character(*), intent(in), the location of interpolation {left, right, both}'//nl
   string = string//'    interpolation(1:, 1-S:-1+S): realR_P, intent(out), the interpolated values'//nl
   string = string//'  The alpha coefficient are evaluated by the following method'//nl
-  call self%alpha%description(string=dummy_string)
-  string = string//dummy_string//nl
+  ! string = string//self%alpha%description()//nl
   string = string//'  The smoothness indicators are evaluated by the following method'//nl
-  call self%IS%description(string=dummy_string)
-  string = string//dummy_string//nl
+  ! string = string//self%IS%description()//nl
   string = string//'  The polynomials are evaluated by the following method'//nl
-  call self%polynom%description(string=dummy_string)
-  string = string//dummy_string//nl
+  ! string = string//self%polynom%description()//nl
   string = string//'  The optimal weights are evaluated by the following method'//nl
-  call self%weights%description(string=dummy_string)
-  string = string//dummy_string
+  ! string = string//self%weights%description()
   endfunction description
 
   pure subroutine interpolate(self, S, stencil, location, interpolation)
@@ -152,8 +152,8 @@ contains
   ! overridden methods
   subroutine create(self, constructor)
   !< Create interpolator.
-  class(interpolator_js),          intent(inout) :: self        !< Interpolator.
-  class(interpolator_constructor), intent(in)    :: constructor !< Constructor.
+  class(interpolator_js),         intent(inout) :: self        !< Interpolator.
+  class(base_object_constructor), intent(in)    :: constructor !< Constructor.
 
   call self%destroy
   call self%interpolator%create(constructor=constructor)
