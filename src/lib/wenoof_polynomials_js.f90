@@ -1,6 +1,6 @@
-!< Lagrange polynomials for Jiang-Shu WENO schemes.
+!< Jiang-Shu (Lagrange) polynomials object.
 module wenoof_polynomials_js
-!< Lagrange polynomials for Jiang-Shu WENO schemes.
+!< Jiang-Shu (Lagrange) polynomials object.
 !<
 !< @note The provided polynomials implement the Lagrange polynomials defined in *Efficient Implementation
 !< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
@@ -9,27 +9,50 @@ module wenoof_polynomials_js
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P
-use wenoof_polynomials_abstract
+use wenoof_polynomials
 
 implicit none
 private
 public :: polynomials_js
+public :: polynomials_js_constructor
+
+type, extends(polynomials_constructor) :: polynomials_js_constructor
+  !< Jiang-Shu (Lagrange) polynomials object constructor.
+endtype polynomials_js_constructor
+
+interface  optimal_weights_js_constructor
+  procedure optimal_weights_js_constructor_
+endinterface
 
 type, extends(polynomials) :: polynomials_js
-  !< Lagrange polynomials for Jiang-Shu WENO schemes object.
+  !< Jiang-Shu (Lagrange) polynomials object.
   !<
   !< @note The provided polynomials implement the Lagrange polynomials defined in *Efficient Implementation
   !< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
   private
+  real(R_P), allocatable :: coef(:,:,:) !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
-    procedure, pass(self) :: compute     !< Compute polynomials.
-    procedure, pass(self) :: create      !< Create polynomials.
-    procedure, nopass     :: description !< Return string-description of polynomials.
-    procedure, pass(self) :: destroy     !< Destroy polynomials.
+    ! deferred public methods
+    procedure, pass(self) :: compute     !< Compute weights.
+    procedure, nopass     :: description !< Return weights string-description.
+    ! overridden public methods
+    procedure, pass(self) :: create  !< Create weights.
+    procedure, pass(self) :: destroy !< Destroy weights.
 endtype polynomials_js
+
 contains
+  ! function-constructor
+  function polynomials_js_constructor_(S) result(constructor)
+  !< Return an instance of [polynomials_js_constructor].
+  integer(I_P), intent(in)                    :: S           !< Maximum stencils dimension.
+  class(polynomials_constructor), allocatable :: constructor !< Polynomials constructor.
+
+  allocate(polynomials_js_constructor :: constructor)
+  constructor%S = S
+  endfunction polynomials_js_constructor_
+
   ! deferred public methods
   pure subroutine compute(self, S, stencil, f1, f2, ff)
   !< Compute polynomials.
@@ -49,17 +72,36 @@ contains
   enddo
   endsubroutine compute
 
-  pure subroutine create(self, S)
+  pure function description() result(string)
+  !< Return polynomials string-description.
+  character(len=:), allocatable :: string           !< String-description.
+  character(len=1), parameter   :: nl=new_line('a') !< New line character.
+
+  string = 'WENO polynomial'//nl
+  string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
+           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and'//nl
+  string = string//'  on the work by Gerolimos, Sénéchal and  Vallet  "Very-High-Order WENO Schemes", see '// &
+           'JCP, 2009, vol. 228, pp. 8481-8524, doi:10.1016/j.jcp.2009.07.039'//nl
+  string = string//'  The "compute" method has the following public API'//nl
+  string = string//'    compute(S, stencil, f1, f2, ff)'//nl
+  string = string//'  where:'//nl
+  string = string//'    S: integer(I_P), intent(in), the number of the stencils used'//nl
+  string = string//'    stencil: real(R_P), intent(IN), the stencil used for the interpolation [1:2, 1-S:-1+S]'//nl
+  string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'//nl
+  string = string//'    ff: integer(I_P), intent(in), the parameter for the stencil value choice'
+  endfunction description
+
+  ! overridden public methods
+  pure subroutine create(self, constructor)
   !< Create coefficients.
-  class(polynomials_js), intent(inout) :: self !< WENO polynomials.
-  integer(I_P),          intent(in)    :: S    !< Number of stencils used.
+  class(polynomials_js),             intent(inout) :: self        !< Polynomials.
+  class(polynomials_js_constructor), intent(in)    :: constructor !< Polynomials constructor.
 
   call self%destroy
-  allocate(self%poly(1:2, 0:S - 1))
-  allocate(self%coef(1:2, 0:S - 1, 0:S - 1))
-  self%poly = 0._R_P
+  call self%polynomials%create(constructor=constructor)
+  allocate(self%coef(1:2, 0:constructor%S - 1, 0:constructor%S - 1))
   associate(c => self%coef)
-    select case(S)
+    select case(constructor%S)
       case(2) ! 3rd order
         ! 1 => left interface (i-1/2)
         !  cell  0           ;    cell  1
@@ -324,36 +366,13 @@ contains
         c(2,6,8)= -5471._R_P/2520._R_P; c(2,7,8)=  4609._R_P/2520._R_P; c(2,8,8)=     1._R_P/9._R_P     ! stencil 8
       endselect
   endassociate
-  return
-  !---------------------------------------------------------------------------------------------------------------------------------
   endsubroutine create
-
-  pure subroutine description(string)
-  !< Return string-description of polynomials.
-  !<
-  !< @TODO make a function.
-  character(len=:), allocatable, intent(out) :: string           !< String returned.
-  character(len=1), parameter                :: nl=new_line('a') !< New line character.
-
-  string = 'WENO polynomial'//nl
-  string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
-           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and'//nl
-  string = string//'  on the work by Gerolimos, Sénéchal and  Vallet  "Very-High-Order WENO Schemes", see '// &
-           'JCP, 2009, vol. 228, pp. 8481-8524, doi:10.1016/j.jcp.2009.07.039'//nl
-  string = string//'  The "compute" method has the following public API'//nl
-  string = string//'    compute(S, stencil, f1, f2, ff)'//nl
-  string = string//'  where:'//nl
-  string = string//'    S: integer(I_P), intent(in), the number of the stencils used'//nl
-  string = string//'    stencil: real(R_P), intent(IN), the stencil used for the interpolation [1:2, 1-S:-1+S]'//nl
-  string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'//nl
-  string = string//'    ff: integer(I_P), intent(in), the parameter for the stencil value choice'
-  endsubroutine description
 
   pure subroutine destroy(self)
   !< Destroy polynomials.
   class(polynomials_js), intent(inout) :: self !< WENO polynomials.
 
+  call self%polynomials%destroy
   if (allocated(self%coef)) deallocate(self%coef)
-  if (allocated(self%poly)) deallocate(self%poly)
   endsubroutine destroy
 endmodule wenoof_polynomials_js

@@ -1,6 +1,6 @@
-!< Jiang-Shu and Gerolymos-Senechal-Vallet WENO optimal weights.
+!< Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights.
 module wenoof_optimal_weights_js
-!< Jiang-Shu and Gerolymos-Sénéchal-Vallet WENO optimal weights.
+!< Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights.
 !<
 !< @note The provided WENO optimal weights implements the optimal weights defined in *Efficient Implementation of Weighted ENO
 !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
@@ -8,35 +8,51 @@ module wenoof_optimal_weights_js
 !< doi:10.1016/j.jcp.2009.07.039
 
 use penf, only : I_P, R_P
-use wenoof_optimal_weights_abstract
+use wenoof_optimal_weights
 
 implicit none
 private
 public :: optimal_weights_js
+public :: optimal_weights_js_constructor
+
+type, extends(optimal_weights_constructor) :: optimal_weights_js_constructor
+  !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights object constructor.
+endtype optimal_weights_js_constructor
+
+interface  optimal_weights_js_constructor
+  procedure optimal_weights_js_constructor_
+endinterface
 
 type, extends(optimal_weights):: optimal_weights_js
-  !< Jiang-Shu and Gerolymos-Senechal-Vallet WENO optimal weights object.
+  !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights object.
   !<
   !< @note The provided WENO optimal weights implements the optimal weights defined in *Efficient Implementation of Weighted ENO
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
-  private
   contains
     ! deferred public methods
-    procedure, pass(self), public :: create      !< Create weights.
-    procedure, nopass,     public :: description !< Return string-description of weights.
-    procedure, pass(self), public :: destroy     !< Destroy weights.
+    procedure, pass(self) :: compute     !< Compute weights.
+    procedure, nopass     :: description !< Return weights string-description.
 endtype optimal_weights_js
+
 contains
+  ! function-constructor
+  function optimal_weights_js_constructor_(S) result(constructor)
+  !< Return an instance of [optimal_weights_js_constructor].
+  integer(I_P), intent(in)                        :: S           !< Maximum stencils dimension.
+  class(optimal_weights_constructor), allocatable :: constructor !< Optimal weights constructor.
+
+  allocate(optimal_weights_js_constructor :: constructor)
+  constructor%S = S
+  endfunction optimal_weights_js_constructor_
+
   ! deferred public methods
-  pure subroutine create(self,S)
-  !< Create weights.
-  class(optimal_weights_js), intent(inout) :: self !< WENO optimal weights.
+  pure subroutine compute(self, S)
+  !< Compute weights.
+  class(optimal_weights_js), intent(inout) :: self !< Optimal weights.
   integer(I_P),              intent(in)    :: S    !< Number of stencils used.
 
-  call self%destroy
-  allocate(self%opt(1:2, 0:S - 1))
   associate(opt => self%opt)
     select case(S)
       case(2) ! 3rd order
@@ -153,27 +169,20 @@ contains
         opt(2, 8) =    9._R_P/24310._R_P ! stencil 8
     endselect
   endassociate
-  endsubroutine create
+  endsubroutine compute
 
-  pure subroutine description(string)
+  pure function description() result(string)
   !< Return string-description of weights.
-  character(len=:), allocatable,  intent(out) :: string            !< String returned.
-  character(len=1), parameter                 :: nl=new_line('a')  !< New line character.
+  character(len=:), allocatable :: string           !< String-description.
+  character(len=1), parameter   :: nl=new_line('a') !< New line character.
 
   string = 'WENO optimal weights,'//nl
   string = string//'  based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
            'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and'//nl
-  string = string//'  on the work by Gerolymos, Sénéchal and Vallet "Very-high-order weno schemes", see '// &
+  string = string//'  on the work by Gerolymos, Senechal and Vallet "Very-high-order weno schemes", see '// &
            'JCP, 2009, vol. 228, pp. 8481--8524, doi:10.1016/j.jcp.2009.07.039'//nl
   string = string//'    The optimal weights are allocated in a two-dimensional array, in which the first index'//nl
   string = string//'    is the face selected (1 => i-1/2, 2 => i+1/2) and the second index is the number of the stencil '//nl
   string = string//'    (from 0 to S-1)'
-  endsubroutine description
-
-  pure subroutine destroy(self)
-  !< Destroy weights.
-  class(optimal_weights_js), intent(inout) :: self !< WENO optimal weights.
-
-  if (allocated(self%opt)) deallocate(self%opt)
-  endsubroutine destroy
+  endfunction description
 endmodule wenoof_optimal_weights_js

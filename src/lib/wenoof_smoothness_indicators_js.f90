@@ -1,6 +1,6 @@
-!< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators for WENO schemes.
+!< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object.
 module wenoof_smoothness_indicators_js
-!< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators for WENO schemes.
+!< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object.
 !<
 !< @note The provided WENO optimal weights implements the smoothness indicators defined in *Efficient Implementation
 !< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
@@ -8,35 +8,58 @@ module wenoof_smoothness_indicators_js
 !< doi:10.1016/j.jcp.2009.07.039
 
 use penf, only : I_P, R_P
-use wenoof_smoothness_indicators_abstract
+use wenoof_smoothness_indicators
 
 implicit none
 private
-public :: IS_js
+public :: smoothness_indicators_js
+public :: smoothness_indicators_js_constructor
 
-type, extends(IS) :: IS_js
-  !< Jiang-Shu and Gerolymos-Senechal-Vallet WENO smoothness indicators object.
+type, extends(smoothness_indicators_constructor) :: smoothness_indicators_js_constructor
+  !< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object constructor.
+endtype smoothness_indicators_js_constructor
+
+interface  smoothness_indicators_js_constructor
+  procedure smoothness_indicators_js_constructor_
+endinterface
+
+type, extends(smoothness_indicators) :: smoothness_indicators_js
+  !< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object.
   !<
   !< @note The provided WENO optimal weights implements the optimal weights defined in *Efficient Implementation of Weighted ENO
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Sénéchal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
   private
+  real(R_P), allocatable :: coef(:,:,:) !< Smoothness indicators coefficients [1:2,0:S-1,0:S-1].
   contains
-    procedure, pass(self), public :: compute     !< Compute IS.
-    procedure, pass(self), public :: create      !< Create IS.
-    procedure, nopass,     public :: description !< Return string-description of IS.
-    procedure, pass(self), public :: destroy     !< Destroy IS.
-endtype IS_js
+    ! deferred public methods
+    procedure, pass(self) :: compute     !< Compute smoothness indicators.
+    procedure, nopass     :: description !< Return smoothness indicators string-description.
+    ! overridden public methods
+    procedure, pass(self) :: create  !< Create smoothness indicators.
+    procedure, pass(self) :: destroy !< Destroy smoothness indicators.
+endtype smoothness_indicators_js
+
 contains
+  ! function-constructor
+  function smoothness_indicators_js_constructor_(S) result(constructor)
+  !< Return an instance of [smoothness_indicators_js_constructor].
+  integer(I_P), intent(in)                              :: S           !< Maximum stencils dimension.
+  class(smoothness_indicators_constructor), allocatable :: constructor !< Smoothness indicators constructor.
+
+  allocate(smoothness_indicators_js_constructor :: constructor)
+  constructor%S = S
+  endfunction smoothness_indicators_js_constructor_
+
   ! deferred public methods
   pure subroutine compute(self, S, stencil, f1, f2, ff)
-  !< Compute IS.
-  class(IS_js), intent(inout) :: self                !< WENO smoothness indicator.
-  integer(I_P), intent(in)    :: S                   !< Number of stencils actually used.
-  real(R_P),    intent(in)    :: stencil(1:, 1 - S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P), intent(in)    :: f1, f2, ff          !< Faces to be computed.
-  integer(I_P)                :: s1, s2, s3, f       !< Counters
+  !< Compute smoothness indicators.
+  class(smoothness_indicators_js), intent(inout) :: self                !< Smoothness indicator.
+  integer(I_P),                    intent(in)    :: S                   !< Number of stencils actually used.
+  real(R_P),                       intent(in)    :: stencil(1:, 1 - S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P),                    intent(in)    :: f1, f2, ff          !< Faces to be computed.
+  integer(I_P)                                   :: s1, s2, s3, f       !< Counters
 
   do s1=0, S - 1 ! stencils loop
     do f=f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
@@ -50,17 +73,36 @@ contains
   enddo
   endsubroutine compute
 
-  pure subroutine create(self, S)
-  !< Create IS.
-  class(IS_js), intent(inout) :: self !< WENO smoothness indicators.
-  integer(I_P), intent(in)    :: S    !< Number of stencils used.
+  pure function description(string)
+  !< Return smoothness indicators string-description.
+  character(len=:), allocatable :: string           !< String-description.
+  character(len=1), parameter   :: nl=new_line('a') !< New line character.
+
+  string = 'WENO smoothness indicators'//nl
+  string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
+           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and'//nl
+  string = string//'  on the work by Gerolimos, Sénéchal and  Vallet  "Very-High-Order WENO Schemes", see '// &
+           'JCP, 2009, vol. 228, pp. 8481-8524, doi:10.1016/j.jcp.2009.07.039'//nl
+  string = string//'  The "compute" method has the following public API'//nl
+  string = string//'    compute(S, stencil, f1, f2, ff)'//nl
+  string = string//'  where:'//nl
+  string = string//'    S: integer(I_P), intent(in), the number of the stencils used'//nl
+  string = string//'    stencil: real(R_P), intent(IN), the stencil used for the interpolation [1:2, 1-S:-1+S]'//nl
+  string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'//nl
+  string = string//'    ff: integer(I_P), intent(in), the parameter for the stencil value choice'
+  endfunction description
+
+  ! overridden public methods
+  pure subroutine create(self, constructor)
+  !< Create smoothness indicators.
+  class(smoothness_indicators_js),             intent(inout) :: self        !< Smoothness indicators.
+  class(smoothness_indicators_js_constructor), intent(in)    :: constructor !< Polynomials constructor.
 
   call self%destroy
-  allocate(self%si(1:2, 0:S - 1))
-  self%si = 0._R_P
-  allocate(self%coef(0:S - 1, 0:S - 1, 0:S - 1))
+  call self%smoothness_indicators%create(constructor=constructor)
+  allocate(self%coef(0:constructor%S - 1, 0:constructor%S - 1, 0:constructor%S - 1))
   associate(c => self%coef)
-    select case(S)
+    select case(constructor%S)
     case(2) ! 3rd order
       ! stencil 0
       !       i*i      ;     (i-1)*i
@@ -2301,32 +2343,11 @@ contains
   endassociate
   endsubroutine create
 
-  pure subroutine description(string)
-  !< Return string-description of polynomials.
-  !<
-  !< @TODO make a function.
-  character(len=:), allocatable, intent(out) :: string           !< String returned.
-  character(len=1), parameter                :: nl=new_line('a') !< New line character.
-
-  string = 'WENO smoothness indicators'//nl
-  string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
-           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and'//nl
-  string = string//'  on the work by Gerolimos, Sénéchal and  Vallet  "Very-High-Order WENO Schemes", see '// &
-           'JCP, 2009, vol. 228, pp. 8481-8524, doi:10.1016/j.jcp.2009.07.039'//nl
-  string = string//'  The "compute" method has the following public API'//nl
-  string = string//'    compute(S, stencil, f1, f2, ff)'//nl
-  string = string//'  where:'//nl
-  string = string//'    S: integer(I_P), intent(in), the number of the stencils used'//nl
-  string = string//'    stencil: real(R_P), intent(IN), the stencil used for the interpolation [1:2, 1-S:-1+S]'//nl
-  string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'//nl
-  string = string//'    ff: integer(I_P), intent(in), the parameter for the stencil value choice'
-  endsubroutine description
-
   pure subroutine destroy(self)
-  !< Destroy IS.
-  class(IS_js), intent(inout) :: self !< WENO smoothenss indicators.
+  !< Destroy smoothness indicators.
+  class(smoothness_indicators_js), intent(inout) :: self !< Smoothenss indicators.
 
+  call self%smoothness_indicators%destroy
   if (allocated(self%coef)) deallocate(self%coef)
-  if (allocated(self%si)) deallocate(self%si)
   endsubroutine destroy
 endmodule wenoof_smoothness_indicators_js

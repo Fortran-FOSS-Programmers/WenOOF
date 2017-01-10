@@ -1,33 +1,53 @@
-!< Jiang-Shu WENO alpha coefficient object.
-module wenoof_alpha_coefficient_js
-!< Jiang-Shu WENO alpha coefficient object.
+!< Jiang-Shu alpha coefficients object.
+module wenoof_alpha_coefficients_js
+!< Jiang-Shu alpha coefficients object.
 !<
 !< @note The provided WENO alpha coefficient implements the alpha coefficients defined in *Efficient Implementation of Weighted ENO
 !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
 
 use penf, only : I_P, R_P
-use wenoof_alpha_coefficient_abstract
+use wenoof_alpha_coefficients
 
 implicit none
 private
-public :: alpha_coefficient_js
+public :: alpha_coefficients_js
+public :: alpha_coefficients_js_constructor
 
-type, extends(alpha_coefficient) :: alpha_coefficient_js
-  !< Jiang-Shu WENO alpha coefficient object.
+type, extends(alpha_coefficients_constructor) :: alpha_coefficients_js_constructor
+  !< Jiang-Shu alpha coefficient object constructor.
+endtype alpha_coefficients_js_constructor
+
+interface  alpha_coefficients_js_constructor
+  procedure alpha_coefficients_js_constructor_
+endinterface
+
+type, extends(alpha_coefficients) :: alpha_coefficients_js
+  !< Jiang-Shu alpha coefficient object.
   !<
   !< @note The provided WENO alpha coefficient implements the alpha coefficients defined in *Efficient Implementation of Weighted
   !< ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
   private
   contains
     ! deferred public methods
-    procedure, pass(self) :: compute     !< Compute coefficients.
-    procedure, nopass     :: description !< Return string-description of coefficients.
-endtype alpha_coefficient_js
+    procedure, pass(self) :: compute     !< Compute alpha coefficients.
+    procedure, nopass     :: description !< Return alpha coefficients string-description.
+endtype alpha_coefficients_js
+
 contains
+  ! function-constructor
+  function alpha_coefficients_js_constructor_(S) result(constructor)
+  !< Return an instance of [alpha_coefficients_js_constructor].
+  integer(I_P), intent(in)                           :: S           !< Maximum stencils dimension.
+  class(alpha_coefficients_constructor), allocatable :: constructor !< Alpha coefficients constructor.
+
+  allocate(alpha_coefficients_js_constructor :: constructor)
+  constructor%S = S
+  endfunction alpha_coefficients_js_constructor_
+
   ! deferred public methods
   pure subroutine compute(self, S, weight_opt, IS, eps, f1, f2)
-  !< Compute coefficients.
-  class(alpha_coefficient_js), intent(inout) :: self                       !< WENO alpha coefficient.
+  !< Compute alpha coefficients.
+  class(alpha_coefficient_js), intent(inout) :: self                       !< Alpha coefficient.
   integer(I_P),                intent(in)    :: S                          !< Number of stencils used.
   real(R_P),                   intent(in)    :: weight_opt(1: 2, 0: S - 1) !< Optimal weight of the stencil.
   real(R_P),                   intent(in)    :: IS(1: 2, 0: S - 1)         !< Smoothness indicators of the stencils.
@@ -44,12 +64,10 @@ contains
   enddo
   endsubroutine compute
 
-  pure subroutine description(string)
-  !< Return string-descripition of coefficients.
-  !<
-  !< @TODO change to function.
-  character(len=:), allocatable, intent(out) :: string           !< String returned.
-  character(len=1), parameter                :: nl=new_line('a') !< New line character.
+  pure function description() result(string)
+  !< Return alpha coefficients string-descripition.
+  character(len=:), allocatable :: string           !< String-description.
+  character(len=1), parameter   :: nl=new_line('a') !< New line character.
 
   string = 'WENO alpha coefficient'//nl
   string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
@@ -62,5 +80,5 @@ contains
   string = string//'    IS: real(R_P), intent(in), the smoothness indicator of the actual stencil'//nl
   string = string//'    eps: real(R_P), intent(in), the coefficient to avoid zero division used'//nl
   string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'
-  endsubroutine description
+  endfunction description
 endmodule wenoof_alpha_coefficient_js
