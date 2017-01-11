@@ -52,3 +52,15 @@ after_success:
   - find . -name '*.gcno' -print
   - bash <(curl -s https://codecov.io/bash)
   - $MAKEDOC
+
+deploy:
+  provider: releases
+  api_key:
+    secure: gpkufaCbypzFjTtrnFZYz9OyBgViuAyLuPwLYs0awLKUiMhyD+ABsir9wbaOzZ9+Po10qJUcFBkIA8DQCP8va0CasOnOVS2t+vJSuTAHno53eJr93DHvNeS1mCifkuMlKbtefEb7bp7lzr2Yjx2MPkiQdXsLYfckR9MVR5AkFrBmAvGUI4eZdf1xj5OY795DE/zv7RZEDBqH2jCMkebxok77oAq0n5NUWoZaHdTE9TI+m9672zjzYASmnpulbZ19RKvgBiLMVr/W08fdswiJApF5AhkIjI0CkqZASqnfzypDjg8zGK/ZnYKDsKSD3fc9jcOA+eDPYrClql2PVIVqKa/cWTIa0U2Hr4CQoChQ4Y2YI/5mtenGLAuLSmAMkxljWROkx7UMTpSLpuHo/ij8MYdFGOK9EgZzcwcV6bllNztLXtBl0u0rLDwuvuofukQw5SWFkmSrmgVeE3Xob32oG4kxj3cxgE2Lb5B8Ns72KO6DfV9AvsitCjF98wZb88ZXVghS8THwAu9dMFqdUn1vL0pcSQPM8rhHteiieqR1wQG61FAzAUe2WmXT6r1IpWkBlLp5v5ITf+/BAoyLKDyDvCh+KScf6Yu/nBtE3GRR7RUMwENd34bEQXM8ZsWKgUdMeg/fhYED67Gw4N0ZedNFzJykR0jw4i/L9tzjMtGax1A=
+  file: 
+    - WenOOF-$TRAVIS_TAG.tar.gz
+    - ./scripts/install.sh
+  skip_cleanup: true
+  overwrite: true
+  on:
+    tags: true
