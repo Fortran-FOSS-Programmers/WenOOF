@@ -53,6 +53,11 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
   - $MAKEDOC
 
+before_deploy:
+  - $CLEAN
+  - $MAKETAR
+  - mv WenOOF.tar.gz WenOOF-$TRAVIS_TAG.tar.gz
+
 deploy:
   provider: releases
   api_key:
