@@ -1,8 +1,8 @@
 #!/bin/bash
 set -ev # echo what we are doing and fail on errors
 GITREPO=$1
-git config --global user.name "Stefano Zaghi"
-git config --global user.email "stefano.zaghi@gmail.com"
+git config --global user.name "Giacomo Rossi"
+git config --global user.email "giacombum@gmail.com"
 if [[ "${TRAVIS}" = "true" && "${TRAVIS_PULL_REQUEST}" != "false" ]]; then
     # Running under travis during a PR. No access to GH_TOKEN so abort
     # documentation deployment, without throwing an error
