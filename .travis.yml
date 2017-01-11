@@ -22,7 +22,7 @@ addons:
 env:
   global:
     - MAKECOVERAGE="FoBiS.py rule -ex makecoverage"
-    - MAKEDOC="./scripts/makedoc.sh giacombum/WenOOF"
+    - MAKEDOC="./scripts/makedoc.sh Fortran-FOSS-Programmers/WenOOF"
     - CLEAN="FoBiS.py rule -ex clean"
     - MAKETAR="FoBiS.py rule -ex maketar"
 
