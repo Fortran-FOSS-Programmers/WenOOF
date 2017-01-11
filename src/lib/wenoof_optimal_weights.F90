@@ -53,6 +53,8 @@ contains
   ! public methods
   pure subroutine create(self, constructor)
   !< Create weights.
+  !<
+  !< @note During creation the weights are also computed.
   class(optimal_weights),         intent(inout) :: self        !< Optimal weights.
   class(base_object_constructor), intent(in)    :: constructor !< Optimal weights constructor.
 
@@ -60,10 +62,10 @@ contains
   select type(constructor)
   class is(optimal_weights_constructor)
     allocate(self%opt(1:2, 0:constructor%S - 1))
+    call self%compute(S=constructor%S)
   class default
     ! @TODO add error handling
   endselect
-  self%opt = 0._R_P
   endsubroutine create
 
   elemental subroutine destroy(self)
