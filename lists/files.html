@@ -7,7 +7,7 @@
 	 
 	 <meta name="description" content="WENO interpolation Object Oriented Fortran library">
     
-    <meta name="author" content="Chris MacMackin" >
+    <meta name="author" content="Fortran-FOSS-Programmers" >
     <link rel="icon" href="../favicon.png">
 
     <title>
@@ -27,12 +27,8 @@ All Files &ndash; WenOOF
     <![endif]-->
     
     <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
 
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
     
 
   </head>
@@ -40,7 +36,7 @@ All Files &ndash; WenOOF
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -54,13 +50,20 @@ All Files &ndash; WenOOF
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 				
-                
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
             <li><a href="../lists/files.html">Source Files</a></li>
 				
 				
             <li><a href="../lists/modules.html">Modules</a></li>
 				
-				
+            
+                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
 				
 				
@@ -71,16 +74,27 @@ All Files &ndash; WenOOF
 				
             <li><a href="../lists/programs.html">Programs</a></li>
 				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
           </ul>
-        
-        <form action="../search.html" class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
-        </div>
-<!--
-        <button type="submit" class="btn btn-default">Submit</button>
--->
-        </form>
         
         </div><!--/.nav-collapse -->
       </div>
@@ -95,32 +109,748 @@ All Files &ndash; WenOOF
 			 <thead><tr><th>File</th><th>Description</th></tr></thead>
 			 <tbody>
 			 
-			   <tr><td><a href='../sourcefile/ir_precision.f90.html'>IR_Precision.f90</a></td><td><p>Pure Fortran (2003+) library for ensuring codes portability</p></td></tr>
+			   <tr><td><a href='../sourcefile/compact_real.f90.html'>compact_real.f90</a></td><td><p>PENF's testing program.</p></td></tr>
 			 
-			   <tr><td><a href='../sourcefile/modules_imports.f90.html'>modules_imports.f90</a></td><td></td></tr>
+			   <tr><td><a href='../sourcefile/penf.f90.html'>penf.F90</a></td><td><p>Portability Environment for Fortran poor people.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/penf_b_size.f90.html'>penf_b_size.F90</a></td><td></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/penf_global_parameters_variables.f90.html'>penf_global_parameters_variables.F90</a></td><td></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/penf_stringify.f90.html'>penf_stringify.F90</a></td><td></td></tr>
 			 
 			   <tr><td><a href='../sourcefile/pyplot_module.f90.html'>pyplot_module.f90</a></td><td></td></tr>
 			 
-			   <tr><td><a href='../sourcefile/sin_reconstruction.f90.html'>sin_reconstruction.f90</a></td><td></td></tr>
+			   <tr><td><a href='../sourcefile/sin_reconstruction.f90.html'>sin_reconstruction.f90</a></td><td><p>WenOOF test: reconstruction of sin function.</p></td></tr>
 			 
-			   <tr><td><a href='../sourcefile/type_weno_interpolator.f90.html'>type_weno_interpolator.f90</a></td><td></td></tr>
+			   <tr><td><a href='../sourcefile/test.f90.html'>test.f90</a></td><td></td></tr>
 			 
-			   <tr><td><a href='../sourcefile/wenoof.f90.html'>wenoof.f90</a></td><td></td></tr>
+			   <tr><td><a href='../sourcefile/test_all.f90.html'>test_all.F90</a></td><td><p>PENF's testing program.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof.f90.html'>wenoof.f90</a></td><td><p>WenOOF, WENO interpolation Object Oriented Fortran library</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_alpha_coefficients.f90.html'>wenoof_alpha_coefficients.F90</a></td><td><p>Abstract alpha coefficients object.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_alpha_coefficients_js.f90.html'>wenoof_alpha_coefficients_js.f90</a></td><td><p>Jiang-Shu alpha coefficients object.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_alpha_coefficients_m.f90.html'>wenoof_alpha_coefficients_m.f90</a></td><td><p>Henrick alpha coefficients object.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_alpha_coefficients_z.f90.html'>wenoof_alpha_coefficients_z.f90</a></td><td><p>Borges alpha coefficients object.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_base_object.f90.html'>wenoof_base_object.f90</a></td><td><p>Abstract base object, the ancestor of all.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_interpolator.f90.html'>wenoof_interpolator.F90</a></td><td><p>Abstract interpolator object.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_interpolator_js.f90.html'>wenoof_interpolator_js.f90</a></td><td><p>Jiang-Shu (upwind) interpolator object.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_objects_factory.f90.html'>wenoof_objects_factory.f90</a></td><td><p>Wenoof objects factory.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_optimal_weights.f90.html'>wenoof_optimal_weights.F90</a></td><td><p>Abstract optimal weights object.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_optimal_weights_js.f90.html'>wenoof_optimal_weights_js.f90</a></td><td><p>Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_polynomials.f90.html'>wenoof_polynomials.F90</a></td><td><p>Abstract polynomials object.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_polynomials_js.f90.html'>wenoof_polynomials_js.f90</a></td><td><p>Jiang-Shu (Lagrange) polynomials object.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_smoothness_indicators.f90.html'>wenoof_smoothness_indicators.F90</a></td><td><p>Abstract smoothness indicator object.</p></td></tr>
+			 
+			   <tr><td><a href='../sourcefile/wenoof_smoothness_indicators_js.f90.html'>wenoof_smoothness_indicators_js.f90</a></td><td><p>Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object.</p></td></tr>
 			 
 			 </tbody></table>
+			 
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: file~~graph~~FileGraph Pages: 1 -->
+<svg id="filegraphFileGraph" width="641pt" height="282pt"
+ viewBox="0.00 0.00 641.00 281.72" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="file~~graph~~FileGraph" class="graph" transform="scale(0.306845 0.306845) rotate(0) translate(4 914.102)">
+<title>file~~graph~~FileGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-914.102 2085,-914.102 2085,4 -4,4"/>
+<!-- sourcefile~penf_b_size.f90 -->
+<g id="file~~graph~~FileGraph_node1" class="node"><title>sourcefile~penf_b_size.f90</title>
+<g id="a_file~~graph~~FileGraph_node1"><a xlink:href="../sourcefile/penf_b_size.f90.html" xlink:title="penf_b_size.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="327,-379 235,-379 235,-355 327,-355 327,-379"/>
+<text text-anchor="middle" x="281" y="-364.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_b_size.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90 -->
+<g id="file~~graph~~FileGraph_node3" class="node"><title>sourcefile~penf.f90</title>
+<g id="a_file~~graph~~FileGraph_node3"><a xlink:href="../sourcefile/penf.f90.html" xlink:title="penf.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="589,-379 534,-379 534,-355 589,-355 589,-379"/>
+<text text-anchor="middle" x="561.5" y="-364.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="file~~graph~~FileGraph_edge4" class="edge"><title>sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" d="M320.339,-379.066C333.697,-382.7 348.877,-386.199 363,-388 406.206,-393.51 417.68,-392.522 461,-388 482.038,-385.804 505.179,-381.064 523.845,-376.642"/>
+<polygon fill="#000000" stroke="#000000" points="524.827,-380.005 533.713,-374.236 523.169,-373.204 524.827,-380.005"/>
+</g>
+<!-- sourcefile~penf_stringify.f90 -->
+<g id="file~~graph~~FileGraph_node7" class="node"><title>sourcefile~penf_stringify.f90</title>
+<g id="a_file~~graph~~FileGraph_node7"><a xlink:href="../sourcefile/penf_stringify.f90.html" xlink:title="penf_stringify.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="461,-379 363,-379 363,-355 461,-355 461,-379"/>
+<text text-anchor="middle" x="412" y="-364.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_stringify.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf_stringify.f90 -->
+<g id="file~~graph~~FileGraph_edge12" class="edge"><title>sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf_stringify.f90</title>
+<path fill="none" stroke="#000000" d="M327.118,-367C335.279,-367 343.897,-367 352.378,-367"/>
+<polygon fill="#000000" stroke="#000000" points="352.615,-370.5 362.615,-367 352.615,-363.5 352.615,-370.5"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="file~~graph~~FileGraph_node2" class="node"><title>sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<g id="a_file~~graph~~FileGraph_node2"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_js.f90.html" xlink:title="wenoof_alpha_coefficients_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1035,-261 865,-261 865,-237 1035,-237 1035,-261"/>
+<text text-anchor="middle" x="950" y="-246.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="file~~graph~~FileGraph_node12" class="node"><title>sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<g id="a_file~~graph~~FileGraph_node12"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_m.f90.html" xlink:title="wenoof_alpha_coefficients_m.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1261,-181 1089,-181 1089,-157 1261,-157 1261,-181"/>
+<text text-anchor="middle" x="1175" y="-166.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_m.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="file~~graph~~FileGraph_edge24" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" d="M1006.19,-236.896C1018.32,-233.239 1030.86,-228.652 1042,-223 1060.07,-213.826 1059.86,-204.049 1078,-195 1086.54,-190.738 1095.87,-187.104 1105.25,-184.026"/>
+<polygon fill="#000000" stroke="#000000" points="1106.49,-187.307 1115.02,-181.016 1104.43,-180.617 1106.49,-187.307"/>
+</g>
+<!-- sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_node13" class="node"><title>sourcefile~wenoof_interpolator_js.f90</title>
+<g id="a_file~~graph~~FileGraph_node13"><a xlink:href="../sourcefile/wenoof_interpolator_js.f90.html" xlink:title="wenoof_interpolator_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1791,-331 1652,-331 1652,-307 1791,-307 1791,-331"/>
+<text text-anchor="middle" x="1721.5" y="-316.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge34" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M1176,-209C1349.25,-200.094 1377.02,-319 1550.5,-319"/>
+<path fill="none" stroke="#000000" d="M1552.5,-319C1581.59,-319.338 1613.52,-319.413 1641.66,-319.378"/>
+<polygon fill="#000000" stroke="#000000" points="1641.84,-322.878 1651.84,-319.36 1641.83,-315.878 1641.84,-322.878"/>
+</g>
+<!-- sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_node18" class="node"><title>sourcefile~wenoof.f90</title>
+<g id="a_file~~graph~~FileGraph_node18"><a xlink:href="../sourcefile/wenoof.f90.html" xlink:title="wenoof.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1909.5,-274 1844.5,-274 1844.5,-250 1909.5,-250 1909.5,-274"/>
+<text text-anchor="middle" x="1877" y="-259.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge57" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M1000.21,-236.912C1045.14,-226.658 1113.56,-212.994 1174,-209"/>
+<path fill="none" stroke="#000000" d="M1176,-209C1267.72,-202.94 1287.79,-181.853 1378.5,-167"/>
+</g>
+<!-- sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_node23" class="node"><title>sourcefile~wenoof_objects_factory.f90</title>
+<g id="a_file~~graph~~FileGraph_node23"><a xlink:href="../sourcefile/wenoof_objects_factory.f90.html" xlink:title="wenoof_objects_factory.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1451,-447 1308,-447 1308,-423 1451,-423 1451,-447"/>
+<text text-anchor="middle" x="1379.5" y="-432.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_objects_factory.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_edge64" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" d="M971.969,-261.103C990.901,-272.373 1019.2,-290.084 1042,-308 1059.3,-321.598 1060.68,-328.417 1078,-342 1117.96,-373.347 1125.65,-388.435 1174,-404"/>
+<path fill="none" stroke="#000000" d="M1176,-404C1214.99,-416.553 1259.88,-424.086 1297.48,-428.574"/>
+<polygon fill="#000000" stroke="#000000" points="1297.54,-432.104 1307.88,-429.761 1298.34,-425.15 1297.54,-432.104"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="file~~graph~~FileGraph_edge2" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<path fill="none" stroke="#000000" d="M743,-209C756.875,-204.299 834.633,-221.295 890.523,-234.58"/>
+<polygon fill="#000000" stroke="#000000" points="889.795,-238.004 900.335,-236.927 891.424,-231.197 889.795,-238.004"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90 -->
+<g id="file~~graph~~FileGraph_node4" class="node"><title>sourcefile~wenoof_alpha_coefficients.f90</title>
+<g id="a_file~~graph~~FileGraph_node4"><a xlink:href="../sourcefile/wenoof_alpha_coefficients.f90.html" xlink:title="wenoof_alpha_coefficients.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="822,-379 662,-379 662,-355 822,-355 822,-379"/>
+<text text-anchor="middle" x="742" y="-364.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90 -->
+<g id="file~~graph~~FileGraph_edge7" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90</title>
+<path fill="none" stroke="#000000" d="M589.223,-367C606.083,-367 628.924,-367 651.764,-367"/>
+<polygon fill="#000000" stroke="#000000" points="651.884,-370.5 661.884,-367 651.884,-363.5 651.884,-370.5"/>
+</g>
+<!-- sourcefile~sin_reconstruction.f90 -->
+<g id="file~~graph~~FileGraph_node6" class="node"><title>sourcefile~sin_reconstruction.f90</title>
+<g id="a_file~~graph~~FileGraph_node6"><a xlink:href="../sourcefile/sin_reconstruction.f90.html" xlink:title="sin_reconstruction.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="2081,-66 1963,-66 1963,-42 2081,-42 2081,-66"/>
+<text text-anchor="middle" x="2022" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sin_reconstruction.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~sin_reconstruction.f90 -->
+<g id="file~~graph~~FileGraph_edge11" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~sin_reconstruction.f90</title>
+<path fill="none" stroke="#000000" d="M577.369,-354.908C596.011,-340.369 629.482,-316.272 662,-303 729.225,-275.564 768.559,-319.153 822,-270 863.61,-231.729 815.955,-185.793 858,-148 1032.89,9.20168 1143.35,-53 1378.5,-53 1378.5,-53 1378.5,-53 1722.5,-53 1801.49,-53 1892.25,-53.3545 1952.75,-53.6414"/>
+<polygon fill="#000000" stroke="#000000" points="1952.92,-57.1422 1962.94,-53.6904 1952.96,-50.1423 1952.92,-57.1422"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="file~~graph~~FileGraph_node8" class="node"><title>sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<g id="a_file~~graph~~FileGraph_node8"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_z.f90.html" xlink:title="wenoof_alpha_coefficients_z.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1034,-181 866,-181 866,-157 1034,-157 1034,-181"/>
+<text text-anchor="middle" x="950" y="-166.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_z.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="file~~graph~~FileGraph_edge14" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<path fill="none" stroke="#000000" d="M743,-209C765.67,-201.318 819.342,-190.984 866.217,-182.743"/>
+<polygon fill="#000000" stroke="#000000" points="866.854,-186.185 876.103,-181.019 865.651,-179.29 866.854,-186.185"/>
+</g>
+<!-- sourcefile~test_all.f90 -->
+<g id="file~~graph~~FileGraph_node9" class="node"><title>sourcefile~test_all.f90</title>
+<g id="a_file~~graph~~FileGraph_node9"><a xlink:href="../sourcefile/test_all.f90.html" xlink:title="test_all.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="776,-181 708,-181 708,-157 776,-157 776,-181"/>
+<text text-anchor="middle" x="742" y="-166.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">test_all.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~test_all.f90 -->
+<g id="file~~graph~~FileGraph_edge16" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~test_all.f90</title>
+<path fill="none" stroke="#000000" d="M566.238,-354.549C576.324,-323.06 607.105,-239.586 662,-195 672.259,-186.668 685.281,-180.97 697.779,-177.088"/>
+<polygon fill="#000000" stroke="#000000" points="698.93,-180.401 707.626,-174.348 697.054,-173.657 698.93,-180.401"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90 -->
+<g id="file~~graph~~FileGraph_node11" class="node"><title>sourcefile~wenoof_optimal_weights.f90</title>
+<g id="a_file~~graph~~FileGraph_node11"><a xlink:href="../sourcefile/wenoof_optimal_weights.f90.html" xlink:title="wenoof_optimal_weights.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1025.5,-341 874.5,-341 874.5,-317 1025.5,-317 1025.5,-341"/>
+<text text-anchor="middle" x="950" y="-326.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_optimal_weights.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90 -->
+<g id="file~~graph~~FileGraph_edge18" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90</title>
+<path fill="none" stroke="#000000" d="M743,-209C777.202,-197.411 793.912,-205.303 822,-228 850.758,-251.239 829.739,-279.158 858,-303 862.317,-306.642 867.115,-309.775 872.188,-312.469"/>
+<polygon fill="#000000" stroke="#000000" points="871.03,-315.792 881.571,-316.862 873.998,-309.452 871.03,-315.792"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="file~~graph~~FileGraph_edge20" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" d="M743,-209C829.689,-179.548 861.431,-235.723 949,-209"/>
+<path fill="none" stroke="#000000" d="M951,-209C975.909,-201.399 1034.72,-190.958 1085.69,-182.65"/>
+<polygon fill="#000000" stroke="#000000" points="1086.45,-186.072 1095.77,-181.018 1085.34,-179.162 1086.45,-186.072"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge33" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M567.634,-354.716C579.733,-327.346 612.771,-261.16 662,-228 691.951,-207.825 706.807,-220.617 741,-209"/>
+<path fill="none" stroke="#000000" d="M743,-209C777.193,-197.383 791.196,-208.848 822,-190 842.971,-177.168 836.49,-159.906 858,-148 1088.95,-20.1702 1201.32,-29.3343 1451,-115 1470.17,-121.578 1470.56,-131.148 1487,-143 1542.9,-183.29 1561.12,-187.327 1616,-229 1646.3,-252.011 1679.25,-281.132 1699.88,-299.912"/>
+<polygon fill="#000000" stroke="#000000" points="1697.67,-302.635 1707.41,-306.805 1702.4,-297.471 1697.67,-302.635"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="file~~graph~~FileGraph_node14" class="node"><title>sourcefile~wenoof_optimal_weights_js.f90</title>
+<g id="a_file~~graph~~FileGraph_node14"><a xlink:href="../sourcefile/wenoof_optimal_weights_js.f90.html" xlink:title="wenoof_optimal_weights_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1255.5,-300 1094.5,-300 1094.5,-276 1255.5,-276 1255.5,-300"/>
+<text text-anchor="middle" x="1175" y="-285.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_optimal_weights_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="file~~graph~~FileGraph_edge38" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90</title>
+<path fill="none" stroke="#000000" d="M743,-209C777.202,-197.411 791.196,-209.152 822,-228 842.971,-240.832 835.965,-259.096 858,-270 928.618,-304.947 1019.27,-306.392 1085.35,-300.902"/>
+<polygon fill="#000000" stroke="#000000" points="1085.68,-304.386 1095.33,-300.005 1085.05,-297.415 1085.68,-304.386"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90 -->
+<g id="file~~graph~~FileGraph_node15" class="node"><title>sourcefile~wenoof_polynomials_js.f90</title>
+<g id="a_file~~graph~~FileGraph_node15"><a xlink:href="../sourcefile/wenoof_polynomials_js.f90.html" xlink:title="wenoof_polynomials_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1245.5,-595 1104.5,-595 1104.5,-571 1245.5,-571 1245.5,-595"/>
+<text text-anchor="middle" x="1175" y="-580.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_polynomials_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90 -->
+<g id="file~~graph~~FileGraph_edge40" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90</title>
+<path fill="none" stroke="#000000" d="M565.112,-379.333C573.101,-414.009 600.505,-513.2 662,-565 690.066,-588.641 705.69,-579.012 741,-589"/>
+<path fill="none" stroke="#000000" d="M743,-589C864.561,-623.387 1013.22,-609.812 1100.38,-596.578"/>
+<polygon fill="#000000" stroke="#000000" points="1101.1,-600.009 1110.44,-595.011 1100.02,-593.093 1101.1,-600.009"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90 -->
+<g id="file~~graph~~FileGraph_node16" class="node"><title>sourcefile~wenoof_polynomials.f90</title>
+<g id="a_file~~graph~~FileGraph_node16"><a xlink:href="../sourcefile/wenoof_polynomials.f90.html" xlink:title="wenoof_polynomials.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1015.5,-561 884.5,-561 884.5,-537 1015.5,-537 1015.5,-561"/>
+<text text-anchor="middle" x="950" y="-546.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_polynomials.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials.f90 -->
+<g id="file~~graph~~FileGraph_edge43" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials.f90</title>
+<path fill="none" stroke="#000000" d="M567.906,-379.067C585.85,-417.146 647.642,-533.302 741,-551"/>
+<path fill="none" stroke="#000000" d="M743,-551C785.993,-559.151 834.945,-559.053 874.339,-556.731"/>
+<polygon fill="#000000" stroke="#000000" points="874.647,-560.218 884.399,-556.077 874.193,-553.233 874.647,-560.218"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge53" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M564.888,-354.876C572.583,-318.762 599.927,-210.54 662,-148 761.036,-48.2184 808.414,-15 949,-15 949,-15 949,-15 1176,-15 1300.47,-15 1334.96,-22.9681 1451,-68 1499.36,-86.7662 1500.7,-114.5 1550.5,-129"/>
+<path fill="none" stroke="#000000" d="M1552.5,-129C1580.47,-136.253 1589.12,-132.381 1616,-143 1666.23,-162.842 1667.61,-194.107 1720.5,-205"/>
+<path fill="none" stroke="#000000" d="M1722.5,-205C1764.83,-213.718 1811.03,-232.187 1841.56,-245.749"/>
+<polygon fill="#000000" stroke="#000000" points="1840.35,-249.04 1850.9,-249.961 1843.23,-242.659 1840.35,-249.04"/>
+</g>
+<!-- sourcefile~compact_real.f90 -->
+<g id="file~~graph~~FileGraph_node19" class="node"><title>sourcefile~compact_real.f90</title>
+<g id="a_file~~graph~~FileGraph_node19"><a xlink:href="../sourcefile/compact_real.f90.html" xlink:title="compact_real.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="789.5,-261 694.5,-261 694.5,-237 789.5,-237 789.5,-261"/>
+<text text-anchor="middle" x="742" y="-246.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compact_real.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~compact_real.f90 -->
+<g id="file~~graph~~FileGraph_edge58" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~compact_real.f90</title>
+<path fill="none" stroke="#000000" d="M572.56,-354.791C589.233,-335.294 624.493,-297.082 662,-275 669.077,-270.834 676.908,-267.235 684.81,-264.158"/>
+<polygon fill="#000000" stroke="#000000" points="686.234,-267.365 694.437,-260.66 683.843,-260.785 686.234,-267.365"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="file~~graph~~FileGraph_node20" class="node"><title>sourcefile~wenoof_smoothness_indicators.f90</title>
+<g id="a_file~~graph~~FileGraph_node20"><a xlink:href="../sourcefile/wenoof_smoothness_indicators.f90.html" xlink:title="wenoof_smoothness_indicators.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1042,-791 858,-791 858,-767 1042,-767 1042,-791"/>
+<text text-anchor="middle" x="950" y="-776.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_smoothness_indicators.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="file~~graph~~FileGraph_edge59" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90</title>
+<path fill="none" stroke="#000000" d="M566.386,-379.294C584.714,-437.276 661.652,-680.636 662,-681 710.418,-731.656 786.063,-756.129 847.539,-767.952"/>
+<polygon fill="#000000" stroke="#000000" points="847.199,-771.448 857.667,-769.811 848.463,-764.563 847.199,-771.448"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="file~~graph~~FileGraph_node22" class="node"><title>sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<g id="a_file~~graph~~FileGraph_node22"><a xlink:href="../sourcefile/wenoof_smoothness_indicators_js.f90.html" xlink:title="wenoof_smoothness_indicators_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1272,-751 1078,-751 1078,-727 1272,-727 1272,-751"/>
+<text text-anchor="middle" x="1175" y="-736.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_smoothness_indicators_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="file~~graph~~FileGraph_edge61" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" d="M563.893,-379.203C569.009,-418.172 590.362,-540.709 662,-603 725.181,-657.937 957.471,-703.522 1086.37,-725.269"/>
+<polygon fill="#000000" stroke="#000000" points="1086.17,-728.784 1096.61,-726.983 1087.32,-721.88 1086.17,-728.784"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90 -->
+<g id="file~~graph~~FileGraph_node24" class="node"><title>sourcefile~wenoof_interpolator.f90</title>
+<g id="a_file~~graph~~FileGraph_node24"><a xlink:href="../sourcefile/wenoof_interpolator.f90.html" xlink:title="wenoof_interpolator.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1616,-523 1487,-523 1487,-499 1616,-499 1616,-523"/>
+<text text-anchor="middle" x="1551.5" y="-508.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="file~~graph~~FileGraph_edge79" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" d="M589.04,-372.948C609.046,-377.347 637.184,-383.356 662,-388 846.145,-422.464 892.463,-430.052 1078,-456 1218.72,-475.68 1383.71,-493.75 1476.79,-503.485"/>
+<polygon fill="#000000" stroke="#000000" points="1476.64,-506.988 1486.95,-504.544 1477.36,-500.026 1476.64,-506.988"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="file~~graph~~FileGraph_edge3" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<path fill="none" stroke="#000000" d="M790.788,-354.885C801.438,-351.211 812.407,-346.62 822,-341 840.728,-330.028 840.834,-321.283 858,-308 877.528,-292.889 900.929,-277.777 919.11,-266.63"/>
+<polygon fill="#000000" stroke="#000000" points="921.357,-269.361 928.094,-261.184 917.728,-263.375 921.357,-269.361"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="file~~graph~~FileGraph_edge15" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<path fill="none" stroke="#000000" d="M763.956,-354.814C781.736,-343.482 806.722,-325.055 822,-303 850.812,-261.408 821.454,-229.991 858,-195 861.594,-191.559 865.611,-188.568 869.9,-185.97"/>
+<polygon fill="#000000" stroke="#000000" points="871.816,-188.917 879.04,-181.167 868.559,-182.72 871.816,-188.917"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="file~~graph~~FileGraph_edge22" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" d="M801.495,-354.893C809.079,-351.38 816.208,-346.847 822,-341 859.093,-303.552 818.867,-263.311 858,-228 888.675,-200.321 909.482,-221.059 949,-209"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge30" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M791.734,-379.048C833.237,-388.626 894.614,-401.189 949,-406"/>
+<path fill="none" stroke="#000000" d="M951,-406C1007.67,-411.013 1021.5,-396.661 1078,-390 1211.43,-374.269 1244.62,-368.311 1378.5,-357"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge52" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M1176,-442C1238.54,-445.897 1671.44,-627.99 1720.5,-589"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_edge69" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" d="M1176,-442C1215.95,-444.489 1260.4,-443.382 1297.45,-441.384"/>
+<polygon fill="#000000" stroke="#000000" points="1297.91,-444.864 1307.7,-440.799 1297.52,-437.875 1297.91,-444.864"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="file~~graph~~FileGraph_edge78" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" d="M951,-406C1051,-414.846 1073.8,-435.758 1174,-442"/>
+<path fill="none" stroke="#000000" d="M1176,-442C1268.21,-447.745 1290.83,-365.84 1378.5,-395"/>
+</g>
+<!-- sourcefile~pyplot_module.f90 -->
+<g id="file~~graph~~FileGraph_node5" class="node"><title>sourcefile~pyplot_module.f90</title>
+<g id="a_file~~graph~~FileGraph_node5"><a xlink:href="../sourcefile/pyplot_module.f90.html" xlink:title="pyplot_module.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1927,-24 1827,-24 1827,-0 1927,-0 1927,-24"/>
+<text text-anchor="middle" x="1877" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">pyplot_module.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~pyplot_module.f90&#45;&gt;sourcefile~sin_reconstruction.f90 -->
+<g id="file~~graph~~FileGraph_edge9" class="edge"><title>sourcefile~pyplot_module.f90&#45;&gt;sourcefile~sin_reconstruction.f90</title>
+<path fill="none" stroke="#000000" d="M1918.98,-24.0355C1934.98,-28.7366 1953.5,-34.1755 1970.33,-39.1188"/>
+<polygon fill="#000000" stroke="#000000" points="1969.43,-42.5028 1980.02,-41.9627 1971.41,-35.7865 1969.43,-42.5028"/>
+</g>
+<!-- sourcefile~test.f90 -->
+<g id="file~~graph~~FileGraph_node10" class="node"><title>sourcefile~test.f90</title>
+<g id="a_file~~graph~~FileGraph_node10"><a xlink:href="../sourcefile/test.f90.html" xlink:title="test.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="2049,-24 1995,-24 1995,-0 2049,-0 2049,-24"/>
+<text text-anchor="middle" x="2022" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">test.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~pyplot_module.f90&#45;&gt;sourcefile~test.f90 -->
+<g id="file~~graph~~FileGraph_edge17" class="edge"><title>sourcefile~pyplot_module.f90&#45;&gt;sourcefile~test.f90</title>
+<path fill="none" stroke="#000000" d="M1927.21,-12C1945.95,-12 1966.95,-12 1984.32,-12"/>
+<polygon fill="#000000" stroke="#000000" points="1984.62,-15.5001 1994.62,-12 1984.62,-8.5001 1984.62,-15.5001"/>
+</g>
+<!-- sourcefile~penf_stringify.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="file~~graph~~FileGraph_edge6" class="edge"><title>sourcefile~penf_stringify.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" d="M461.297,-367C481.478,-367 504.557,-367 523.373,-367"/>
+<polygon fill="#000000" stroke="#000000" points="523.623,-370.5 533.623,-367 523.623,-363.5 523.623,-370.5"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="file~~graph~~FileGraph_edge23" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" d="M1034.04,-169C1048.53,-169 1063.7,-169 1078.49,-169"/>
+<polygon fill="#000000" stroke="#000000" points="1078.66,-172.5 1088.66,-169 1078.66,-165.5 1078.66,-172.5"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge37" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M1380.5,-129C1470.31,-143.494 1467.5,-205.75 1550.5,-243"/>
+<path fill="none" stroke="#000000" d="M1552.5,-243C1598.09,-263.461 1650.54,-287.225 1684.54,-302.658"/>
+<polygon fill="#000000" stroke="#000000" points="1683.49,-306.026 1694.04,-306.973 1686.38,-299.652 1683.49,-306.026"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge46" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M994.734,-156.883C1049.65,-142.413 1140.71,-121.092 1174,-129"/>
+<path fill="none" stroke="#000000" d="M1176,-129C1263.56,-149.798 1289.65,-114.661 1378.5,-129"/>
+<path fill="none" stroke="#000000" d="M1380.5,-129C1455.09,-141.038 1477.96,-107.879 1550.5,-129"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_edge74" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" d="M1176,-129C1218.32,-139.051 1242.15,-116.361 1272,-148 1352.35,-233.18 1234.62,-317.747 1308,-409 1310.59,-412.225 1313.63,-415.049 1316.95,-417.524"/>
+<polygon fill="#000000" stroke="#000000" points="1315.39,-420.672 1325.73,-422.981 1319.08,-414.728 1315.39,-420.672"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge25" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M1025.57,-324.307C1069.01,-322.66 1124.76,-322.41 1174,-328"/>
+<path fill="none" stroke="#000000" d="M1176,-328C1266.34,-338.256 1287.9,-364.654 1378.5,-357"/>
+<path fill="none" stroke="#000000" d="M1380.5,-357C1457.65,-350.482 1473.08,-319 1550.5,-319"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="file~~graph~~FileGraph_edge39" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90</title>
+<path fill="none" stroke="#000000" d="M1016.4,-316.976C1042.16,-312.241 1071.89,-306.773 1098.55,-301.872"/>
+<polygon fill="#000000" stroke="#000000" points="1099.4,-305.275 1108.6,-300.024 1098.13,-298.39 1099.4,-305.275"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge45" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M970.351,-316.804C994.522,-302.234 1037.62,-278.4 1078,-267 1216.04,-228.025 1579.87,-176.755 1720.5,-205"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_edge65" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" d="M986.054,-341.103C1029.9,-356.168 1107.32,-382.532 1174,-404"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="file~~graph~~FileGraph_edge75" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" d="M1176,-328C1181.89,-328.668 1372.88,-393.13 1378.5,-395"/>
+<path fill="none" stroke="#000000" d="M1380.5,-395C1411.29,-405.242 1422.81,-397.933 1451,-414 1485.79,-433.824 1517.29,-468.714 1535.14,-490.803"/>
+<polygon fill="#000000" stroke="#000000" points="1532.56,-493.181 1541.51,-498.857 1538.06,-488.841 1532.56,-493.181"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge36" class="edge"><title>sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M1259.04,-181.014C1352.94,-195.365 1499.4,-220.289 1550.5,-243"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge54" class="edge"><title>sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M1261.23,-173.888C1297.58,-174.497 1340.33,-173.249 1378.5,-167"/>
+<path fill="none" stroke="#000000" d="M1380.5,-167C1418.7,-160.745 1513.33,-118.179 1550.5,-129"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_edge72" class="edge"><title>sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" d="M1253.51,-181.141C1260.43,-184.708 1266.78,-189.244 1272,-195 1336.78,-266.452 1246.45,-334.743 1308,-409 1310.64,-412.186 1313.71,-414.981 1317.06,-417.434"/>
+<polygon fill="#000000" stroke="#000000" points="1315.53,-420.602 1325.88,-422.854 1319.19,-414.637 1315.53,-420.602"/>
+</g>
+<!-- sourcefile~wenoof_interpolator_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge48" class="edge"><title>sourcefile~wenoof_interpolator_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M1755.05,-306.912C1778.28,-298.286 1809.71,-286.617 1834.7,-277.335"/>
+<polygon fill="#000000" stroke="#000000" points="1836.13,-280.54 1844.28,-273.778 1833.69,-273.978 1836.13,-280.54"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge28" class="edge"><title>sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M1380.5,-319C1456.04,-320.527 1474.94,-319 1550.5,-319"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge55" class="edge"><title>sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M1228.96,-300.015C1269.62,-308.286 1327.3,-317.965 1378.5,-319"/>
+<path fill="none" stroke="#000000" d="M1380.5,-319C1460.17,-320.611 1642.04,-191.072 1720.5,-205"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_edge67" class="edge"><title>sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" d="M1250.02,-300.146C1258.04,-303.675 1265.6,-308.201 1272,-314 1305.45,-344.33 1275.93,-377.215 1308,-409 1311.52,-412.49 1315.55,-415.516 1319.86,-418.14"/>
+<polygon fill="#000000" stroke="#000000" points="1318.55,-421.405 1329.02,-422.98 1321.81,-415.215 1318.55,-421.405"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge35" class="edge"><title>sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M1245.85,-573.585C1286.01,-570.946 1336.63,-572.446 1378.5,-589"/>
+<path fill="none" stroke="#000000" d="M1380.5,-589C1422.8,-605.725 1512.38,-727.813 1550.5,-703"/>
+<path fill="none" stroke="#000000" d="M1552.5,-703C1618.33,-660.151 1692.6,-416.492 1714.27,-341.178"/>
+<polygon fill="#000000" stroke="#000000" points="1717.7,-341.908 1717.07,-331.331 1710.97,-339.989 1717.7,-341.908"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge56" class="edge"><title>sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M1380.5,-589C1485.87,-630.665 1442.65,-813.753 1550.5,-779"/>
+<path fill="none" stroke="#000000" d="M1552.5,-779C1590.04,-766.902 1589.37,-746.101 1616,-717 1665.57,-662.817 1663.01,-634.694 1720.5,-589"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_edge73" class="edge"><title>sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" d="M1241.19,-570.949C1251.95,-567.413 1262.63,-562.859 1272,-557 1313.8,-530.865 1348.3,-483.304 1365.89,-455.924"/>
+<polygon fill="#000000" stroke="#000000" points="1369.04,-457.481 1371.39,-447.149 1363.11,-453.762 1369.04,-457.481"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge29" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M1380.5,-551C1485.43,-546.976 1529.19,-591.083 1616,-532 1682.71,-486.599 1708.51,-385.955 1716.96,-341.201"/>
+<polygon fill="#000000" stroke="#000000" points="1720.45,-341.551 1718.74,-331.094 1713.55,-340.332 1720.45,-341.551"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90 -->
+<g id="file~~graph~~FileGraph_edge42" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90</title>
+<path fill="none" stroke="#000000" d="M1015.5,-558.834C1040.03,-562.574 1068.27,-566.88 1094.06,-570.812"/>
+<polygon fill="#000000" stroke="#000000" points="1093.77,-574.309 1104.19,-572.356 1094.83,-567.389 1093.77,-574.309"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge49" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M971.8,-561.027C1063.45,-613.393 1431.93,-817.208 1550.5,-779"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_edge68" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" d="M1015.7,-550.876C1060.36,-551.288 1121.03,-550.099 1174,-543"/>
+<path fill="none" stroke="#000000" d="M1176,-543C1248.45,-533.291 1321.05,-482.035 1356.38,-453.765"/>
+<polygon fill="#000000" stroke="#000000" points="1359,-456.145 1364.54,-447.112 1354.58,-450.72 1359,-456.145"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="file~~graph~~FileGraph_edge81" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" d="M1176,-543C1265.27,-531.036 1288.5,-554.452 1378.5,-551"/>
+<path fill="none" stroke="#000000" d="M1380.5,-551C1424.35,-549.319 1472.94,-536.756 1506.91,-526.152"/>
+<polygon fill="#000000" stroke="#000000" points="1508.06,-529.458 1516.52,-523.081 1505.93,-522.79 1508.06,-529.458"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90 -->
+<g id="file~~graph~~FileGraph_node17" class="node"><title>sourcefile~penf_global_parameters_variables.f90</title>
+<g id="a_file~~graph~~FileGraph_node17"><a xlink:href="../sourcefile/penf_global_parameters_variables.f90.html" xlink:title="penf_global_parameters_variables.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="199,-359 0,-359 0,-335 199,-335 199,-359"/>
+<text text-anchor="middle" x="99.5" y="-344.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_global_parameters_variables.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_b_size.f90 -->
+<g id="file~~graph~~FileGraph_edge1" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_b_size.f90</title>
+<path fill="none" stroke="#000000" d="M199.177,-357.995C207.883,-358.965 216.477,-359.922 224.625,-360.83"/>
+<polygon fill="#000000" stroke="#000000" points="224.357,-364.322 234.683,-361.951 225.132,-357.365 224.357,-364.322"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="file~~graph~~FileGraph_edge5" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" d="M169.778,-334.977C203.023,-330.311 243.478,-326.237 280,-327"/>
+<path fill="none" stroke="#000000" d="M282,-327C361.985,-328.67 381.98,-333.501 461,-346 481.893,-349.305 505.024,-354.116 523.722,-358.3"/>
+<polygon fill="#000000" stroke="#000000" points="523.084,-361.744 533.611,-360.546 524.634,-354.918 523.084,-361.744"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_stringify.f90 -->
+<g id="file~~graph~~FileGraph_edge13" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_stringify.f90</title>
+<path fill="none" stroke="#000000" d="M282,-327C315.467,-327.699 351.725,-340.058 377.253,-350.855"/>
+<polygon fill="#000000" stroke="#000000" points="375.919,-354.091 386.483,-354.889 378.722,-347.677 375.919,-354.091"/>
+</g>
+<!-- sourcefile~wenoof.f90&#45;&gt;sourcefile~sin_reconstruction.f90 -->
+<g id="file~~graph~~FileGraph_edge10" class="edge"><title>sourcefile~wenoof.f90&#45;&gt;sourcefile~sin_reconstruction.f90</title>
+<path fill="none" stroke="#000000" d="M1886.31,-249.918C1909.9,-215.597 1977.52,-117.239 2006.99,-74.3763"/>
+<polygon fill="#000000" stroke="#000000" points="2009.89,-76.3387 2012.67,-66.1154 2004.12,-72.3729 2009.89,-76.3387"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge31" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M1176,-779C1297.63,-765.06 1334.05,-799.224 1451,-763 1500.33,-747.721 1507.38,-731.422 1550.5,-703"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge51" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M985.599,-791.084C1057.94,-815.028 1230.73,-865.338 1378.5,-855"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="file~~graph~~FileGraph_edge63" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" d="M1017.91,-766.999C1042.71,-762.55 1071.04,-757.468 1096.69,-752.867"/>
+<polygon fill="#000000" stroke="#000000" points="1097.53,-756.273 1106.75,-751.062 1096.29,-749.383 1097.53,-756.273"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_edge70" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" d="M1009.55,-766.895C1020.73,-763.318 1032.05,-758.763 1042,-753 1061.31,-741.819 1060.25,-731.528 1078,-718 1157.54,-657.374 1202.65,-676.054 1272,-604 1295.44,-579.644 1290.36,-565.838 1308,-537 1325.81,-507.886 1348.6,-475.713 1363.37,-455.435"/>
+<polygon fill="#000000" stroke="#000000" points="1366.27,-457.398 1369.36,-447.263 1360.62,-453.26 1366.27,-457.398"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="file~~graph~~FileGraph_edge80" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" d="M1042.25,-784.57C1082.77,-785.613 1130.94,-784.888 1174,-779"/>
+<path fill="none" stroke="#000000" d="M1176,-779C1219.09,-773.107 1237.33,-786.269 1272,-760 1300.2,-738.632 1283.9,-714.904 1308,-689 1358.52,-634.7 1391.68,-647.519 1451,-603 1481.23,-580.309 1512.71,-549.861 1531.96,-530.331"/>
+<polygon fill="#000000" stroke="#000000" points="1534.47,-532.774 1538.95,-523.174 1529.46,-527.884 1534.47,-532.774"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90 -->
+<g id="file~~graph~~FileGraph_node21" class="node"><title>sourcefile~wenoof_base_object.f90</title>
+<g id="a_file~~graph~~FileGraph_node21"><a xlink:href="../sourcefile/wenoof_base_object.f90.html" xlink:title="wenoof_base_object.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="626,-601 497,-601 497,-577 626,-577 626,-601"/>
+<text text-anchor="middle" x="561.5" y="-586.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_base_object.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90 -->
+<g id="file~~graph~~FileGraph_edge8" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90</title>
+<path fill="none" stroke="#000000" d="M572.351,-576.748C601.67,-540.285 688.573,-432.204 724.829,-387.112"/>
+<polygon fill="#000000" stroke="#000000" points="727.641,-389.2 731.179,-379.214 722.185,-384.814 727.641,-389.2"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90 -->
+<g id="file~~graph~~FileGraph_edge19" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90</title>
+<path fill="none" stroke="#000000" d="M580.367,-576.981C642.425,-535.234 848.862,-396.363 922.566,-346.783"/>
+<polygon fill="#000000" stroke="#000000" points="924.533,-349.677 930.877,-341.191 920.626,-343.869 924.533,-349.677"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="file~~graph~~FileGraph_edge21" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" d="M563.746,-576.732C568.454,-536.97 588.808,-410.5 662,-346 717.244,-297.317 765.346,-350.036 822,-303 850.448,-279.381 828.894,-250.802 858,-228 890.524,-202.52 909.482,-221.059 949,-209"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge26" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M578.951,-601.108C630.762,-637.949 796.199,-745.778 949,-739"/>
+<path fill="none" stroke="#000000" d="M951,-739C1008.06,-743.208 1021.06,-723.587 1078,-718 1104.14,-715.435 1528.1,-716.715 1550.5,-703"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90 -->
+<g id="file~~graph~~FileGraph_edge41" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90</title>
+<path fill="none" stroke="#000000" d="M626.022,-580.687C660.642,-578.211 703.875,-578.498 741,-589"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials.f90 -->
+<g id="file~~graph~~FileGraph_edge44" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials.f90</title>
+<path fill="none" stroke="#000000" d="M588.441,-576.893C623.113,-562.222 686.523,-540.672 741,-551"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="file~~graph~~FileGraph_edge60" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90</title>
+<path fill="none" stroke="#000000" d="M564.503,-601.31C573.488,-651.736 615.295,-842.243 741,-893"/>
+<path fill="none" stroke="#000000" d="M743,-893C817.839,-923.218 899.783,-839.001 933.349,-798.901"/>
+<polygon fill="#000000" stroke="#000000" points="936.132,-801.026 939.757,-791.07 930.715,-796.593 936.132,-801.026"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="file~~graph~~FileGraph_edge62" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" d="M951,-739C989.005,-737.314 1030.69,-736.923 1067.63,-737.08"/>
+<polygon fill="#000000" stroke="#000000" points="1067.9,-740.581 1077.91,-737.138 1067.93,-733.582 1067.9,-740.581"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_edge66" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" d="M743,-893C827.896,-927.279 857.765,-900.65 949,-893"/>
+<path fill="none" stroke="#000000" d="M951,-893C1025.45,-886.757 1223.62,-849.94 1272,-793 1346.39,-705.437 1266.21,-644.028 1308,-537 1320.33,-505.418 1344.17,-474.088 1360.7,-454.655"/>
+<polygon fill="#000000" stroke="#000000" points="1363.36,-456.931 1367.27,-447.088 1358.07,-452.339 1363.36,-456.931"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="file~~graph~~FileGraph_edge76" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" d="M951,-893C1094.86,-883.294 1143.77,-911.94 1272,-846 1413.44,-773.263 1510.44,-593.971 1540.56,-532.268"/>
+<polygon fill="#000000" stroke="#000000" points="1543.79,-533.624 1544.97,-523.094 1537.48,-530.593 1543.79,-533.624"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge27" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M1251.55,-751.035C1332.28,-759.775 1460.72,-761.436 1550.5,-703"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge47" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M1236.43,-751.037C1248.58,-754.642 1260.99,-759.225 1272,-765 1326.88,-793.785 1316.68,-859.325 1378.5,-855"/>
+<path fill="none" stroke="#000000" d="M1380.5,-855C1463.06,-849.224 1471.73,-804.384 1550.5,-779"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="file~~graph~~FileGraph_edge71" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" d="M1204.54,-726.899C1226.19,-716.286 1255.03,-698.819 1272,-675 1308.78,-623.374 1281.58,-594.616 1308,-537 1322.15,-506.149 1345.61,-474.609 1361.55,-454.931"/>
+<polygon fill="#000000" stroke="#000000" points="1364.41,-456.957 1368.07,-447.015 1359.01,-452.504 1364.41,-456.957"/>
+</g>
+<!-- sourcefile~wenoof_objects_factory.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="file~~graph~~FileGraph_edge77" class="edge"><title>sourcefile~wenoof_objects_factory.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" d="M1415.59,-447.061C1426.99,-451.213 1439.63,-456.066 1451,-461 1474.32,-471.12 1499.93,-484.035 1519.33,-494.203"/>
+<polygon fill="#000000" stroke="#000000" points="1517.84,-497.374 1528.32,-498.95 1521.11,-491.185 1517.84,-497.374"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="file~~graph~~FileGraph_edge32" class="edge"><title>sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" d="M1563.01,-498.99C1591.18,-466.799 1668.57,-378.348 1703.27,-338.69"/>
+<polygon fill="#000000" stroke="#000000" points="1706.04,-340.836 1709.99,-331.006 1700.78,-336.227 1706.04,-340.836"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="file~~graph~~FileGraph_edge50" class="edge"><title>sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" d="M1562.88,-523.031C1590.71,-553.856 1668.39,-630.416 1720.5,-589"/>
+<path fill="none" stroke="#000000" d="M1722.5,-589C1824.2,-508.169 1861.82,-344.042 1872.47,-284.347"/>
+<polygon fill="#000000" stroke="#000000" points="1875.98,-284.602 1874.21,-274.157 1869.08,-283.428 1875.98,-284.602"/>
+</g>
+</g>
+</svg>
+</div>
+                <script>var panfilegraphFileGraph = svgPanZoom('#filegraphFileGraph', {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,});
+                    </script>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="190pt" height="32pt"
+ viewBox="0.00 0.00 190.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 186,-28 186,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node"><title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="67,-24 0,-24 0,-0 67,-0 67,-24"/>
+<text text-anchor="middle" x="33.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="182,-24 85,-24 85,-0 182,-0 182,-24"/>
+<text text-anchor="middle" x="133.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a file to a file which depends upon it. A file 
+    is dependent upon another if the latter must be compiled before the former
+    can be.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
         </div>
       </div>
 
-    <hr>
-    <footer>
-        <div class="row">
-        <div class="col-md-6">&copy; 2015 WenOOF was written by Fortran-FOSS-Programmers Group. </div>
-        <div class="col-md-6"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a>.</span></div>
-        </div>
-        <br>
-    </footer>
+    <hr>    
     </div> <!-- /container -->
-
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> WenOOF was developed by Fortran-FOSS-Programmers</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -145,6 +875,6 @@ All Files &ndash; WenOOF
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	 
+	 <meta name="description" content="WENO interpolation Object Oriented Fortran library">
+    
+    <meta name="author" content="Fortran-FOSS-Programmers" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>wenoof_smoothness_indicators.F90 &ndash; WenOOF</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">WenOOF </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+				
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+				
+				
+            <li><a href="../lists/modules.html">Modules</a></li>
+				
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+				
+				
+            <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
+								
+            <li><a href="../lists/types.html">Derived Types</a></li>
+				
+				
+            <li><a href="../lists/programs.html">Programs</a></li>
+				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>wenoof_smoothness_indicators.F90
+    <small>Source File</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title=" 0.9% of total for source files.">46 statements</a>
+     </li> 
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/wenoof_smoothness_indicators.F90"> Source File</a></li>
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+     <li class="active">wenoof_smoothness_indicators.F90</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#mods-0">Modules</a></h3></div>
+  <div id="mods-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/wenoof_smoothness_indicators.html">wenoof_smoothness_indicators</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators.f90.html#src">wenoof_smoothness_indicators.F90</a>
+  </div>
+</div>
+
+
+  <hr>
+  
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allfiles-0">All Source Files</a></h3></div>
+  <div id="allfiles-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../sourcefile/compact_real.f90.html">compact_real.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf.f90.html">penf.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_b_size.f90.html">penf_b_size.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_global_parameters_variables.f90.html">penf_global_parameters_variables.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_stringify.f90.html">penf_stringify.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/pyplot_module.f90.html">pyplot_module.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/sin_reconstruction.f90.html">sin_reconstruction.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test.f90.html">test.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test_all.f90.html">test_all.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof.f90.html">wenoof.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients.f90.html">wenoof_alpha_coefficients.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_js.f90.html">wenoof_alpha_coefficients_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_m.f90.html">wenoof_alpha_coefficients_m.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_z.f90.html">wenoof_alpha_coefficients_z.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_base_object.f90.html">wenoof_base_object.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator.f90.html">wenoof_interpolator.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator_js.f90.html">wenoof_interpolator_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_objects_factory.f90.html">wenoof_objects_factory.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights.f90.html">wenoof_optimal_weights.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights_js.f90.html">wenoof_optimal_weights_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials.f90.html">wenoof_polynomials.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials_js.f90.html">wenoof_polynomials_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators.f90.html">wenoof_smoothness_indicators.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators_js.f90.html">wenoof_smoothness_indicators_js.f90</a>
+      
+    </div>
+  </div>
+</div>
+
+
+</div>  
+
+    </div>
+    <div class="col-md-9" id='text'>
+    <p>Abstract smoothness indicator object.</p>
+    
+    <h3>This File Depends On</h3>
+    
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph Pages: 1 -->
+<svg id="sourcefilewenoof_smoothness_indicatorsf90EfferentGraph" width="641pt" height="62pt"
+ viewBox="0.00 0.00 641.00 61.68" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph" class="graph" transform="scale(0.750585 0.750585) rotate(0) translate(4 78.1765)">
+<title>sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-78.1765 850,-78.1765 850,4 -4,4"/>
+<!-- sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_node1" class="node"><title>sourcefile~wenoof_smoothness_indicators.f90</title>
+<polygon fill="none" stroke="black" points="846,-45 662,-45 662,-21 846,-21 846,-45"/>
+<text text-anchor="middle" x="754" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">wenoof_smoothness_indicators.F90</text>
+</g>
+<!-- sourcefile~penf.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_node2" class="node"><title>sourcefile~penf.f90</title>
+<g id="a_sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_node2"><a xlink:href="../sourcefile/penf.f90.html" xlink:title="penf.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="589,-66 534,-66 534,-42 589,-42 589,-66"/>
+<text text-anchor="middle" x="561.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_edge7" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M589.39,-51.0358C606.007,-49.2039 628.492,-46.7253 651.466,-44.1928"/>
+<polygon fill="#000000" stroke="#000000" points="652.123,-47.6415 661.68,-43.0668 651.356,-40.6837 652.123,-47.6415"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_node3" class="node"><title>sourcefile~wenoof_base_object.f90</title>
+<g id="a_sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_node3"><a xlink:href="../sourcefile/wenoof_base_object.f90.html" xlink:title="wenoof_base_object.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="626,-24 497,-24 497,-0 626,-0 626,-24"/>
+<text text-anchor="middle" x="561.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_base_object.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_edge8" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M626.199,-19.0219C634.439,-19.9303 643.035,-20.8779 651.698,-21.8329"/>
+<polygon fill="#000000" stroke="#000000" points="651.558,-25.3385 661.881,-22.9554 652.325,-18.3807 651.558,-25.3385"/>
+</g>
+<!-- sourcefile~penf_b_size.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_node4" class="node"><title>sourcefile~penf_b_size.f90</title>
+<g id="a_sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_node4"><a xlink:href="../sourcefile/penf_b_size.f90.html" xlink:title="penf_b_size.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="327,-46 235,-46 235,-22 327,-22 327,-46"/>
+<text text-anchor="middle" x="281" y="-31.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_b_size.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_edge4" class="edge"><title>sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M306.042,-46.0765C331.447,-57.7237 373.016,-73.6484 411,-74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M413,-74C451.141,-74.353 494.332,-67.6507 524.072,-61.9113"/>
+<polygon fill="#000000" stroke="#000000" points="524.876,-65.32 534,-59.9344 523.509,-58.4547 524.876,-65.32"/>
+</g>
+<!-- sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_node6" class="node"><title>sourcefile~penf_stringify.f90</title>
+<g id="a_sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_node6"><a xlink:href="../sourcefile/penf_stringify.f90.html" xlink:title="penf_stringify.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="461,-46 363,-46 363,-22 461,-22 461,-46"/>
+<text text-anchor="middle" x="412" y="-31.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_stringify.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_edge2" class="edge"><title>sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf_stringify.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M327.118,-34C335.279,-34 343.897,-34 352.378,-34"/>
+<polygon fill="#000000" stroke="#000000" points="352.615,-37.5001 362.615,-34 352.615,-30.5001 352.615,-37.5001"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_node5" class="node"><title>sourcefile~penf_global_parameters_variables.f90</title>
+<g id="a_sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_node5"><a xlink:href="../sourcefile/penf_global_parameters_variables.f90.html" xlink:title="penf_global_parameters_variables.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="199,-46 0,-46 0,-22 199,-22 199,-46"/>
+<text text-anchor="middle" x="99.5" y="-31.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_global_parameters_variables.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_edge5" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M160.602,-46.0489C222.935,-57.5294 323.362,-73.1888 411,-74"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_b_size.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_edge1" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_b_size.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M199.177,-34C207.883,-34 216.477,-34 224.625,-34"/>
+<polygon fill="#000000" stroke="#000000" points="224.683,-37.5001 234.683,-34 224.683,-30.5001 224.683,-37.5001"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_edge3" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_stringify.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M157.383,-21.963C203.252,-13.8841 269.382,-5.90694 327,-13 338.194,-14.3781 350.043,-16.7523 361.2,-19.4204"/>
+<polygon fill="#000000" stroke="#000000" points="360.662,-22.8939 371.213,-21.9331 362.366,-16.1044 360.662,-22.8939"/>
+</g>
+<!-- sourcefile~penf_stringify.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~EfferentGraph_edge6" class="edge"><title>sourcefile~penf_stringify.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M461.297,-40.5487C481.572,-43.2978 504.771,-46.4436 523.635,-49.0014"/>
+<polygon fill="#000000" stroke="#000000" points="523.243,-52.4802 533.623,-50.3557 524.184,-45.5437 523.243,-52.4802"/>
+</g>
+</g>
+</svg>
+</div>
+                <script>var pansourcefilewenoof_smoothness_indicatorsf90EfferentGraph = svgPanZoom('#sourcefilewenoof_smoothness_indicatorsf90EfferentGraph', {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,});
+                    </script>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="190pt" height="32pt"
+ viewBox="0.00 0.00 190.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 186,-28 186,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node"><title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="67,-24 0,-24 0,-0 67,-0 67,-24"/>
+<text text-anchor="middle" x="33.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="182,-24 85,-24 85,-0 182,-0 182,-24"/>
+<text text-anchor="middle" x="133.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a file to a file which depends upon it. A file 
+    is dependent upon another if the latter must be compiled before the former
+    can be.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+    
+      
+      <h3>Files Dependent On This One</h3>
+      
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph Pages: 1 -->
+<svg id="sourcefilewenoof_smoothness_indicatorsf90AfferentGraph" width="641pt" height="72pt"
+ viewBox="0.00 0.00 641.00 71.70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph" class="graph" transform="scale(0.535953 0.535953) rotate(0) translate(4 129.776)">
+<title>sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-129.776 1192,-129.776 1192,4 -4,4"/>
+<!-- sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node1" class="node"><title>sourcefile~wenoof_smoothness_indicators.f90</title>
+<polygon fill="none" stroke="black" points="184,-75.6282 0,-75.6282 0,-51.6282 184,-51.6282 184,-75.6282"/>
+<text text-anchor="middle" x="92" y="-61.2282" font-family="Helvetica,sans-Serif" font-size="10.50">wenoof_smoothness_indicators.F90</text>
+</g>
+<!-- sourcefile~wenoof.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node2" class="node"><title>sourcefile~wenoof.f90</title>
+<g id="a_sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/wenoof.f90.html" xlink:title="wenoof.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1034,-95.6282 969,-95.6282 969,-71.6282 1034,-71.6282 1034,-95.6282"/>
+<text text-anchor="middle" x="1001.5" y="-81.2282" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge9" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M694.5,-123.628C800.688,-118.023 828.589,-124.769 933,-104.628 941.575,-102.974 950.598,-100.617 959.157,-98.0758"/>
+<polygon fill="#000000" stroke="#000000" points="960.425,-101.347 968.938,-95.0388 958.35,-94.6617 960.425,-101.347"/>
+</g>
+<!-- sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node3" class="node"><title>sourcefile~wenoof_objects_factory.f90</title>
+<g id="a_sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node3"><a xlink:href="../sourcefile/wenoof_objects_factory.f90.html" xlink:title="wenoof_objects_factory.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="593,-55.6282 450,-55.6282 450,-31.6282 593,-31.6282 593,-55.6282"/>
+<text text-anchor="middle" x="521.5" y="-41.2282" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_objects_factory.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge10" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M318,-3.62816C374.258,0.970233 437.948,-15.233 478.627,-28.3809"/>
+<polygon fill="#000000" stroke="#000000" points="477.609,-31.7308 488.202,-31.5574 479.813,-25.0868 477.609,-31.7308"/>
+</g>
+<!-- sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node4" class="node"><title>sourcefile~wenoof_interpolator_js.f90</title>
+<g id="a_sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node4"><a xlink:href="../sourcefile/wenoof_interpolator_js.f90.html" xlink:title="wenoof_interpolator_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="933,-95.6282 794,-95.6282 794,-71.6282 933,-71.6282 933,-95.6282"/>
+<text text-anchor="middle" x="863.5" y="-81.2282" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge11" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M151.588,-75.6919C258.738,-96.3706 493.579,-135.289 692.5,-123.628"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M694.5,-123.628C737.235,-121.372 784.542,-109.197 818.037,-98.8652"/>
+<polygon fill="#000000" stroke="#000000" points="819.485,-102.078 827.968,-95.7309 817.379,-95.4029 819.485,-102.078"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node5" class="node"><title>sourcefile~wenoof_interpolator.f90</title>
+<g id="a_sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node5"><a xlink:href="../sourcefile/wenoof_interpolator.f90.html" xlink:title="wenoof_interpolator.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="758,-55.6282 629,-55.6282 629,-31.6282 758,-31.6282 758,-55.6282"/>
+<text text-anchor="middle" x="693.5" y="-41.2282" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge12" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M123.756,-51.5308C166.194,-35.7294 245.473,-9.39292 316,-3.62816"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M318,-3.62816C440.106,6.35254 471.659,-5.7152 593,-22.6282 605.694,-24.3975 619.189,-26.852 632.011,-29.4608"/>
+<polygon fill="#000000" stroke="#000000" points="631.617,-32.954 642.121,-31.576 633.05,-26.1023 631.617,-32.954"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node6" class="node"><title>sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<g id="a_sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node6"><a xlink:href="../sourcefile/wenoof_smoothness_indicators_js.f90.html" xlink:title="wenoof_smoothness_indicators_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="414,-75.6282 220,-75.6282 220,-51.6282 414,-51.6282 414,-75.6282"/>
+<text text-anchor="middle" x="317" y="-61.2282" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_smoothness_indicators_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge13" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M184.024,-63.6282C192.507,-63.6282 201.154,-63.6282 209.759,-63.6282"/>
+<polygon fill="#000000" stroke="#000000" points="209.829,-67.1283 219.829,-63.6282 209.829,-60.1283 209.829,-67.1283"/>
+</g>
+<!-- sourcefile~sin_reconstruction.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node7" class="node"><title>sourcefile~sin_reconstruction.f90</title>
+<g id="a_sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_node7"><a xlink:href="../sourcefile/sin_reconstruction.f90.html" xlink:title="sin_reconstruction.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1188,-95.6282 1070,-95.6282 1070,-71.6282 1188,-71.6282 1188,-95.6282"/>
+<text text-anchor="middle" x="1129" y="-81.2282" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sin_reconstruction.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof.f90&#45;&gt;sourcefile~sin_reconstruction.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge1" class="edge"><title>sourcefile~wenoof.f90&#45;&gt;sourcefile~sin_reconstruction.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1034.17,-83.6282C1042.08,-83.6282 1050.88,-83.6282 1059.82,-83.6282"/>
+<polygon fill="#000000" stroke="#000000" points="1059.95,-87.1283 1069.95,-83.6282 1059.95,-80.1283 1059.95,-87.1283"/>
+</g>
+<!-- sourcefile~wenoof_objects_factory.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge2" class="edge"><title>sourcefile~wenoof_objects_factory.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M593.118,-43.6282C601.55,-43.6282 610.175,-43.6282 618.65,-43.6282"/>
+<polygon fill="#000000" stroke="#000000" points="618.89,-47.1283 628.89,-43.6282 618.89,-40.1283 618.89,-47.1283"/>
+</g>
+<!-- sourcefile~wenoof_interpolator_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge3" class="edge"><title>sourcefile~wenoof_interpolator_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M933.297,-83.6282C941.909,-83.6282 950.504,-83.6282 958.53,-83.6282"/>
+<polygon fill="#000000" stroke="#000000" points="958.705,-87.1283 968.705,-83.6282 958.705,-80.1283 958.705,-87.1283"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge5" class="edge"><title>sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M758.024,-41.163C789.502,-40.5683 828.055,-40.7797 862.5,-43.6282"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M864.5,-43.6282C898.578,-46.4462 935.725,-57.9874 962.572,-67.9532"/>
+<polygon fill="#000000" stroke="#000000" points="961.381,-71.2449 971.972,-71.5344 963.873,-64.7035 961.381,-71.2449"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge4" class="edge"><title>sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M744.906,-55.6295C762.848,-59.9014 783.238,-64.7562 801.942,-69.2097"/>
+<polygon fill="#000000" stroke="#000000" points="801.301,-72.6548 811.84,-71.5662 802.923,-65.8451 801.301,-72.6548"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge7" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M414.228,-74.6889C489.882,-81.9535 597.927,-89.1721 692.5,-83.6282"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M694.5,-83.6282C771.147,-79.582 786.007,-37.3026 862.5,-43.6282"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge6" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M414.209,-54.126C422.77,-53.2805 431.379,-52.4302 439.79,-51.5995"/>
+<polygon fill="#000000" stroke="#000000" points="440.329,-55.0634 449.936,-50.5974 439.641,-48.0973 440.329,-55.0634"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~wenoof_smoothness_indicators.f90~~AfferentGraph_edge8" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M694.5,-83.6282C723.544,-81.9256 755.461,-81.5498 783.602,-81.7254"/>
+<polygon fill="#000000" stroke="#000000" points="783.757,-85.2267 793.787,-81.8136 783.817,-78.227 783.757,-85.2267"/>
+</g>
+</g>
+</svg>
+</div>
+                <script>var pansourcefilewenoof_smoothness_indicatorsf90AfferentGraph = svgPanZoom('#sourcefilewenoof_smoothness_indicatorsf90AfferentGraph', {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,});
+                    </script>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="190pt" height="32pt"
+ viewBox="0.00 0.00 190.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 186,-28 186,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node"><title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="67,-24 0,-24 0,-0 67,-0 67,-24"/>
+<text text-anchor="middle" x="33.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="182,-24 85,-24 85,-0 182,-0 182,-24"/>
+<text text-anchor="middle" x="133.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a file to a file which depends upon it. A file 
+    is dependent upon another if the latter must be compiled before the former
+    can be.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+      
+      <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#mods-1">Modules</a></h3></div>
+  <div id="mods-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/wenoof_smoothness_indicators.html">wenoof_smoothness_indicators</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators.f90.html#src">wenoof_smoothness_indicators.F90</a>
+  </div>
+</div>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    <section>
+      <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl"><pre><span></span><a name="ln-1"></a><span class="c">!&lt; Abstract smoothness indicator object.</span>
+<a name="ln-2"></a><span class="k">module </span><span class="n">wenoof_smoothness_indicators</span>
+<a name="ln-3"></a><span class="c">!&lt; Abstract smoothness indicator object.</span>
+<a name="ln-4"></a>
+<a name="ln-5"></a><span class="k">use </span><span class="n">penf</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span> <span class="n">I_P</span><span class="p">,</span> <span class="n">R_P</span>
+<a name="ln-6"></a><span class="k">use </span><span class="n">wenoof_base_object</span>
+<a name="ln-7"></a>
+<a name="ln-8"></a><span class="k">implicit none</span>
+<a name="ln-9"></a><span class="k">private</span>
+<a name="ln-10"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">smoothness_indicators</span>
+<a name="ln-11"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">smoothness_indicators_constructor</span>
+<a name="ln-12"></a>
+<a name="ln-13"></a><span class="k">type</span><span class="p">,</span> <span class="k">extends</span><span class="p">(</span><span class="n">base_object_constructor</span><span class="p">)</span> <span class="kd">::</span> <span class="n">smoothness_indicators_constructor</span>
+<a name="ln-14"></a>  <span class="c">!&lt; Abstract smoothness indicators object constructor.</span>
+<a name="ln-15"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I_P</span><span class="p">)</span> <span class="kd">::</span> <span class="n">S</span> <span class="o">=</span> <span class="mi">0</span> <span class="c">!&lt; Stencils dimension.</span>
+<a name="ln-16"></a><span class="n">endtype</span> <span class="n">smoothness_indicators_constructor</span>
+<a name="ln-17"></a>
+<a name="ln-18"></a><span class="k">type</span><span class="p">,</span> <span class="k">extends</span><span class="p">(</span><span class="n">base_object</span><span class="p">)</span> <span class="kd">::</span> <span class="n">smoothness_indicators</span>
+<a name="ln-19"></a>  <span class="c">!&lt; Abstract smoothness indicator object.</span>
+<a name="ln-20"></a>  <span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">si</span><span class="p">(:,:)</span> <span class="c">!&lt; Smoothness indicators [1:2,0:S-1].</span>
+<a name="ln-21"></a>  <span class="k">contains</span>
+<a name="ln-22"></a>    <span class="c">! deferred public methods</span>
+<a name="ln-23"></a>    <span class="k">procedure</span><span class="p">,</span> <span class="k">pass</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="kd">::</span> <span class="n">compute</span>     <span class="c">!&lt; Compute smoothness indicators.</span>
+<a name="ln-24"></a>    <span class="k">procedure</span><span class="p">,</span> <span class="k">nopass</span>     <span class="kd">::</span> <span class="n">description</span> <span class="c">!&lt; Return smoothness indicators string-description.</span>
+<a name="ln-25"></a>    <span class="c">! public methods</span>
+<a name="ln-26"></a>    <span class="k">procedure</span><span class="p">,</span> <span class="k">pass</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="kd">::</span> <span class="n">create</span>  <span class="c">!&lt; Createte smoothness indicators.</span>
+<a name="ln-27"></a>    <span class="k">procedure</span><span class="p">,</span> <span class="k">pass</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="kd">::</span> <span class="n">destroy</span> <span class="c">!&lt; Destroy smoothness indicators.</span>
+<a name="ln-28"></a><span class="n">endtype</span> <span class="n">smoothness_indicators</span>
+<a name="ln-29"></a>
+<a name="ln-30"></a><span class="k">contains</span>
+<a name="ln-31"></a>  <span class="c">! deferred public methods</span>
+<a name="ln-32"></a>  <span class="k">pure subroutine </span><span class="n">compute</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">stencil</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">ff</span><span class="p">)</span>
+<a name="ln-33"></a>  <span class="c">!&lt; Compute smoothness indicators.</span>
+<a name="ln-34"></a>  <span class="k">class</span><span class="p">(</span><span class="n">smoothness_indicators</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">self</span>                <span class="c">!&lt; Smoothness indicators.</span>
+<a name="ln-35"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I_P</span><span class="p">),</span>                 <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">S</span>                   <span class="c">!&lt; Number of stencils used.</span>
+<a name="ln-36"></a>  <span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">),</span>                    <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">stencil</span><span class="p">(</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">S</span><span class="p">:)</span> <span class="c">!&lt; Stencil used for the interpolation, [1:2, 1-S:-1+S].</span>
+<a name="ln-37"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I_P</span><span class="p">),</span>                 <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">ff</span>          <span class="c">!&lt; Faces to be computed.</span>
+<a name="ln-38"></a>
+<a name="ln-39"></a><span class="cp">#ifndef DEBUG</span>
+<a name="ln-40"></a>  <span class="c">! error stop in pure procedure is a F2015 feature not yet supported in debug mode</span>
+<a name="ln-41"></a>  <span class="n">error</span> <span class="k">stop</span> <span class="s1">&#39;smoothness_indicators%compute to be implemented by your concrete smoothness indicators object&#39;</span>
+<a name="ln-42"></a><span class="cp">#endif</span>
+<a name="ln-43"></a>  <span class="n">endsubroutine</span> <span class="n">compute</span>
+<a name="ln-44"></a>
+<a name="ln-45"></a>  <span class="k">pure function </span><span class="n">description</span><span class="p">()</span> <span class="k">result</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<a name="ln-46"></a>  <span class="c">!&lt; Return smoothness indicators string-description.</span>
+<a name="ln-47"></a>  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">string</span> <span class="c">!&lt; String-description.</span>
+<a name="ln-48"></a>
+<a name="ln-49"></a><span class="cp">#ifndef DEBUG</span>
+<a name="ln-50"></a>  <span class="c">! error stop in pure procedure is a F2015 feature not yet supported in debug mode</span>
+<a name="ln-51"></a>  <span class="n">error</span> <span class="k">stop</span> <span class="s1">&#39;smoothness_indicators%description to be implemented by your concrete smoothness indicators object&#39;</span>
+<a name="ln-52"></a><span class="cp">#endif</span>
+<a name="ln-53"></a>  <span class="n">endfunction</span> <span class="n">description</span>
+<a name="ln-54"></a>
+<a name="ln-55"></a>  <span class="c">! public methods</span>
+<a name="ln-56"></a>  <span class="k">pure subroutine </span><span class="n">create</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">constructor</span><span class="p">)</span>
+<a name="ln-57"></a>  <span class="c">!&lt; Create smoothness indicators.</span>
+<a name="ln-58"></a>  <span class="k">class</span><span class="p">(</span><span class="n">smoothness_indicators</span><span class="p">),</span>   <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">self</span>        <span class="c">!&lt; Smoothness indicators.</span>
+<a name="ln-59"></a>  <span class="k">class</span><span class="p">(</span><span class="n">base_object_constructor</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">constructor</span> <span class="c">!&lt; Smoothness indicators constructor.</span>
+<a name="ln-60"></a>
+<a name="ln-61"></a>  <span class="k">call </span><span class="n">self</span><span class="p">%</span><span class="n">destroy</span>
+<a name="ln-62"></a>  <span class="k">select type</span><span class="p">(</span><span class="n">constructor</span><span class="p">)</span>
+<a name="ln-63"></a>  <span class="k">class is</span><span class="p">(</span><span class="n">smoothness_indicators_constructor</span><span class="p">)</span>
+<a name="ln-64"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">si</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">constructor</span><span class="p">%</span><span class="n">S</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+<a name="ln-65"></a>  <span class="k">class </span><span class="n">default</span>
+<a name="ln-66"></a>    <span class="c">! @TODO add error handling</span>
+<a name="ln-67"></a>  <span class="n">endselect</span>
+<a name="ln-68"></a>  <span class="n">self</span><span class="p">%</span><span class="n">si</span> <span class="o">=</span> <span class="mf">0._R_P</span>
+<a name="ln-69"></a>  <span class="n">endsubroutine</span> <span class="n">create</span>
+<a name="ln-70"></a>
+<a name="ln-71"></a>  <span class="k">elemental subroutine </span><span class="n">destroy</span><span class="p">(</span><span class="n">self</span><span class="p">)</span>
+<a name="ln-72"></a>  <span class="c">!&lt; Destroy smoothness indicators.</span>
+<a name="ln-73"></a>  <span class="k">class</span><span class="p">(</span><span class="n">smoothness_indicators</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">self</span> <span class="c">!&lt; Smoothness indicators.</span>
+<a name="ln-74"></a>
+<a name="ln-75"></a>  <span class="k">if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">si</span><span class="p">))</span> <span class="k">deallocate</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">si</span><span class="p">)</span>
+<a name="ln-76"></a>  <span class="n">endsubroutine</span> <span class="n">destroy</span>
+<a name="ln-77"></a><span class="n">endmodule</span> <span class="n">wenoof_smoothness_indicators</span>
+</pre></div>
+
+    </section>
+    </div>
+  </div>
+
+  <section class="visible-xs visible-sm hidden-md">
+    <hr>
+    
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allfiles-1">All Source Files</a></h3></div>
+  <div id="allfiles-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../sourcefile/compact_real.f90.html">compact_real.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf.f90.html">penf.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_b_size.f90.html">penf_b_size.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_global_parameters_variables.f90.html">penf_global_parameters_variables.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_stringify.f90.html">penf_stringify.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/pyplot_module.f90.html">pyplot_module.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/sin_reconstruction.f90.html">sin_reconstruction.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test.f90.html">test.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test_all.f90.html">test_all.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof.f90.html">wenoof.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients.f90.html">wenoof_alpha_coefficients.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_js.f90.html">wenoof_alpha_coefficients_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_m.f90.html">wenoof_alpha_coefficients_m.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_z.f90.html">wenoof_alpha_coefficients_z.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_base_object.f90.html">wenoof_base_object.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator.f90.html">wenoof_interpolator.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator_js.f90.html">wenoof_interpolator_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_objects_factory.f90.html">wenoof_objects_factory.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights.f90.html">wenoof_optimal_weights.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights_js.f90.html">wenoof_optimal_weights_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials.f90.html">wenoof_polynomials.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials_js.f90.html">wenoof_polynomials_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators.f90.html">wenoof_smoothness_indicators.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators_js.f90.html">wenoof_smoothness_indicators_js.f90</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+  
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> WenOOF was developed by Fortran-FOSS-Programmers</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
+        'HTML-CSS': { 
+           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
+        }
+      });
+    </script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </body>
+</html>

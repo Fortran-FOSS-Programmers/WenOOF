@@ -7,7 +7,7 @@
 	 
 	 <meta name="description" content="WENO interpolation Object Oriented Fortran library">
     
-    <meta name="author" content="Chris MacMackin" >
+    <meta name="author" content="Fortran-FOSS-Programmers" >
     <link rel="icon" href="../favicon.png">
 
     <title>
@@ -27,12 +27,8 @@ All Procedures &ndash; WenOOF
     <![endif]-->
     
     <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
 
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
     
 
   </head>
@@ -40,7 +36,7 @@ All Procedures &ndash; WenOOF
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -54,13 +50,20 @@ All Procedures &ndash; WenOOF
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 				
-                
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
             <li><a href="../lists/files.html">Source Files</a></li>
 				
 				
             <li><a href="../lists/modules.html">Modules</a></li>
 				
-				
+            
+                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
 				
 				
@@ -71,16 +74,27 @@ All Procedures &ndash; WenOOF
 				
             <li><a href="../lists/programs.html">Programs</a></li>
 				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
           </ul>
-        
-        <form action="../search.html" class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
-        </div>
-<!--
-        <button type="submit" class="btn btn-default">Submit</button>
--->
-        </form>
         
         </div><!--/.nav-collapse -->
       </div>
@@ -95,101 +109,217 @@ All Procedures &ndash; WenOOF
 			 <thead><tr><th>Procedure</th><th>Location</th><th>Procedure Type</th><th>Description</th></tr></thead>
 			 <tbody>
 			 
+			   <tr><td><a href='../proc/add_3d_plot.html'>add_3d_plot</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
+			 
 			   <tr><td><a href='../proc/add_bar.html'>add_bar</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/add_contour.html'>add_contour</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/add_plot.html'>add_plot</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/add_str.html'>add_str</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/bctoi_i1p.html'>bctoi_I1P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting bit-string to integer. This function achieves casting of bit-string to integer.</p></td></tr>
+			   <tr><td><a href='../proc/bctoi_i1p.html'>bctoi_I1P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert bit-string to integer.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bctoi_i2p.html'>bctoi_I2P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting bit-string to integer. This function achieves casting of bit-string to integer.</p></td></tr>
+			   <tr><td><a href='../proc/bctoi_i2p.html'>bctoi_I2P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert bit-string to integer.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bctoi_i4p.html'>bctoi_I4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting bit-string to integer. This function achieves casting of bit-string to integer.</p></td></tr>
+			   <tr><td><a href='../proc/bctoi_i4p.html'>bctoi_I4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert bit-string to integer.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bctoi_i8p.html'>bctoi_I8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting bit-string to integer. This function achieves casting of bit-string to integer.</p></td></tr>
+			   <tr><td><a href='../proc/bctoi_i8p.html'>bctoi_I8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert bit-string to integer.</p></td></tr>
 			 
-			   <tr><td><a href='../interface/bcton.html'>bcton</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Interface</td><td><p>Procedure for converting bit-string to number, real or initeger, (bit-string to number type casting).</p></td></tr>
+			   <tr><td><a href='../interface/bcton.html'>bcton</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Interface</td><td><p>Convert bit-string to number (real and integer, bit-string to number type casting).</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bctor_r4p.html'>bctor_R4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting bit-string to real. This function achieves casting of bit-string to real.</p></td></tr>
+			   <tr><td><a href='../proc/bctor_r16p.html'>bctor_R16P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert bit-string to real.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bctor_r8p.html'>bctor_R8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting bit-string to real. This function achieves casting of bit-string to real.</p></td></tr>
+			   <tr><td><a href='../proc/bctor_r4p.html'>bctor_R4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert bit-string to real.</p></td></tr>
 			 
-			   <tr><td><a href='../interface/bit_size.html'>bit_size</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Interface</td><td><p>Overloading of the intrinsic <em>bit_size</em> function for computing the number of bits of (also) real and character variables.</p></td></tr>
+			   <tr><td><a href='../proc/bctor_r8p.html'>bctor_R8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert bit-string to real.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bit_size_chr.html'>bit_size_chr</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bits of a character variable.</p></td></tr>
+			   <tr><td><a href='../interface/bit_size.html'>bit_size</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Interface</td><td><p>Overloading of the intrinsic <em>bit_size</em> function for computing the number of bits of (also) real and character variables.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bit_size_r16p.html'>bit_size_R16P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bits of a real variable.</p></td></tr>
+			   <tr><td><a href='../interface/bit_size%7E2.html'>bit_size</a></td><td><a href='../module/penf.html'>penf</a></td><td>Interface</td><td><p>Overloading of the intrinsic <em>bit_size</em> function for computing the number of bits of (also) real and character variables.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bit_size_r4p.html'>bit_size_R4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bits of a real variable.</p></td></tr>
+			   <tr><td><a href='../proc/bit_size_chr.html'>bit_size_chr</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bits of a character variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bit_size_r8p.html'>bit_size_R8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bits of a real variable.</p></td></tr>
+			   <tr><td><a href='../proc/bit_size_r16p.html'>bit_size_R16P</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bits of a real variable.</p></td></tr>
 			 
-			   <tr><td><a href='../interface/bstr.html'>bstr</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Interface</td><td><p>Procedure for converting number, real and integer, to bit-string (number to bit-string type casting).</p></td></tr>
+			   <tr><td><a href='../proc/bit_size_r4p.html'>bit_size_R4P</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bits of a real variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bstr_i1p.html'>bstr_I1P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string of bits. This function achieves casting of integer to bit-string.</p></td></tr>
+			   <tr><td><a href='../proc/bit_size_r8p.html'>bit_size_R8P</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bits of a real variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bstr_i2p.html'>bstr_I2P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string of bits. This function achieves casting of integer to bit-string.</p></td></tr>
+			   <tr><td><a href='../interface/bstr.html'>bstr</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Interface</td><td><p>Convert number (real and integer) to bit-string (number to bit-string type casting).</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bstr_i4p.html'>bstr_I4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string of bits. This function achieves casting of integer to bit-string.</p></td></tr>
+			   <tr><td><a href='../proc/bstr_i1p.html'>bstr_I1P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string of bits.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bstr_i8p.html'>bstr_I8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string of bits. This function achieves casting of integer to bit-string.</p></td></tr>
+			   <tr><td><a href='../proc/bstr_i2p.html'>bstr_I2P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string of bits.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bstr_r16p.html'>bstr_R16P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real to string of bits. This function achieves casting of real to bit-string.</p></td></tr>
+			   <tr><td><a href='../proc/bstr_i4p.html'>bstr_I4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string of bits.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bstr_r4p.html'>bstr_R4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real to string of bits. This function achieves casting of real to bit-string.</p></td></tr>
+			   <tr><td><a href='../proc/bstr_i8p.html'>bstr_I8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string of bits.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/bstr_r8p.html'>bstr_R8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real to string of bits. This function achieves casting of real to bit-string.</p></td></tr>
+			   <tr><td><a href='../proc/bstr_r16p.html'>bstr_R16P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert real to string of bits.</p></td></tr>
 			 
-			   <tr><td><a href='../interface/byte_size.html'>byte_size</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Interface</td><td><p>Overloading of the <em>byte_size</em> function for computing the number of bytes.</p></td></tr>
+			   <tr><td><a href='../proc/bstr_r4p.html'>bstr_R4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert real to string of bits.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/byte_size_chr.html'>byte_size_chr</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bytes of a character variable.</p></td></tr>
+			   <tr><td><a href='../proc/bstr_r8p.html'>bstr_R8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert real to string of bits.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/byte_size_i1p.html'>byte_size_I1P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bytes of an integer variable.</p></td></tr>
+			   <tr><td><a href='../interface/byte_size.html'>byte_size</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Interface</td><td><p>Compute the number of bytes of a variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/byte_size_i2p.html'>byte_size_I2P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bytes of an integer variable.</p></td></tr>
+			   <tr><td><a href='../proc/byte_size_chr.html'>byte_size_chr</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bytes of a character variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/byte_size_i4p.html'>byte_size_I4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bytes of an integer variable.</p></td></tr>
+			   <tr><td><a href='../proc/byte_size_i1p.html'>byte_size_I1P</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bytes of an integer variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/byte_size_i8p.html'>byte_size_I8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bytes of an integer variable.</p></td></tr>
+			   <tr><td><a href='../proc/byte_size_i2p.html'>byte_size_I2P</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bytes of an integer variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/byte_size_r16p.html'>byte_size_R16P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bytes of a real variable.</p></td></tr>
+			   <tr><td><a href='../proc/byte_size_i4p.html'>byte_size_I4P</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bytes of an integer variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/byte_size_r4p.html'>byte_size_R4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bytes of a real variable.</p></td></tr>
+			   <tr><td><a href='../proc/byte_size_i8p.html'>byte_size_I8P</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bytes of an integer variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/byte_size_r8p.html'>byte_size_R8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of bytes of a real variable.</p></td></tr>
+			   <tr><td><a href='../proc/byte_size_r16p.html'>byte_size_R16P</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bytes of a real variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/check_endian.html'>check_endian</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Subroutine</td><td><p>Subroutine for checking the type of bit ordering (big or little endian) of the running architecture.</p></td></tr>
+			   <tr><td><a href='../proc/byte_size_r4p.html'>byte_size_R4P</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bytes of a real variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/create.html'>create</a></td><td><a href='../module/wenoof.html'>wenoof</a></td><td>Subroutine</td><td><p>Create and return a concrete WENO interpolator object being an extension of the abstract <em>weno_interpolator</em> type.</p></td></tr>
+			   <tr><td><a href='../proc/byte_size_r8p.html'>byte_size_R8P</a></td><td><a href='../module/penf_b_size.html'>penf_b_size</a></td><td>Function</td><td><p>Compute the number of bytes of a real variable.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/ctoi_i1p.html'>ctoi_I1P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting string to integer. This function achieves casting of string to integer.</p></td></tr>
+			   <tr><td><a href='../proc/check_endian.html'>check_endian</a></td><td><a href='../module/penf.html'>penf</a></td><td>Subroutine</td><td><p>Check the type of bit ordering (big or little endian) of the running architecture.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/ctoi_i2p.html'>ctoi_I2P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting string to integer. This function achieves casting of string to integer.</p></td></tr>
+			   <tr><td><a href='../proc/compact_real_string.html'>compact_real_string</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Subroutine</td><td><p>Compact a string representing a real number, so that the same value is displayed with fewer characters.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/ctoi_i4p.html'>ctoi_I4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting string to integer. This function achieves casting of string to integer.</p></td></tr>
+			   <tr><td><a href='../proc/compute.html'>compute</a></td><td><a href='../module/wenoof_alpha_coefficients_js.html'>wenoof_alpha_coefficients_js</a></td><td>Subroutine</td><td><p>Compute alpha coefficients.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/ctoi_i8p.html'>ctoi_I8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting string to integer. This function achieves casting of string to integer.</p></td></tr>
+			   <tr><td><a href='../proc/compute%7E2.html'>compute</a></td><td><a href='../module/wenoof_polynomials.html'>wenoof_polynomials</a></td><td>Subroutine</td><td><p>Compute polynomials.</p></td></tr>
 			 
-			   <tr><td><a href='../interface/cton.html'>cton</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Interface</td><td><p>Procedure for converting string to number, real or initeger, (string to number type casting).</p></td></tr>
+			   <tr><td><a href='../proc/compute%7E3.html'>compute</a></td><td><a href='../module/wenoof_alpha_coefficients_m.html'>wenoof_alpha_coefficients_m</a></td><td>Subroutine</td><td><p>Compute alpha coefficients.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/ctor_r16p.html'>ctor_R16P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting string to real. This function achieves casting of string to real.</p></td></tr>
+			   <tr><td><a href='../proc/compute%7E4.html'>compute</a></td><td><a href='../module/wenoof_optimal_weights_js.html'>wenoof_optimal_weights_js</a></td><td>Subroutine</td><td><p>Compute weights.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/ctor_r4p.html'>ctor_R4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting string to real. This function achieves casting of string to real.</p></td></tr>
+			   <tr><td><a href='../proc/compute%7E5.html'>compute</a></td><td><a href='../module/wenoof_smoothness_indicators_js.html'>wenoof_smoothness_indicators_js</a></td><td>Subroutine</td><td><p>Compute smoothness indicators.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/ctor_r8p.html'>ctor_R8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting string to real. This function achieves casting of string to real.</p></td></tr>
+			   <tr><td><a href='../proc/compute%7E6.html'>compute</a></td><td><a href='../module/wenoof_alpha_coefficients.html'>wenoof_alpha_coefficients</a></td><td>Subroutine</td><td><p>Compute alpha coefficients.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/destroy.html'>destroy</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/compute%7E7.html'>compute</a></td><td><a href='../module/wenoof_alpha_coefficients_z.html'>wenoof_alpha_coefficients_z</a></td><td>Subroutine</td><td><p>Compute alpha coefficients.</p></td></tr>
 			 
-			   <tr><td><a href='../interface/digit.html'>digit</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Interface</td><td><p>Procedure for computing the number of digits in decimal base of the input integer.</p></td></tr>
+			   <tr><td><a href='../proc/compute%7E8.html'>compute</a></td><td><a href='../module/wenoof_polynomials_js.html'>wenoof_polynomials_js</a></td><td>Subroutine</td><td><p>Compute polynomials.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/digit_i1.html'>digit_I1</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of digits in decimal base of the input integer.</p></td></tr>
+			   <tr><td><a href='../proc/compute%7E9.html'>compute</a></td><td><a href='../module/wenoof_optimal_weights.html'>wenoof_optimal_weights</a></td><td>Subroutine</td><td><p>Compute weights.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/digit_i2.html'>digit_I2</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of digits in decimal base of the input integer.</p></td></tr>
+			   <tr><td><a href='../proc/compute%7E10.html'>compute</a></td><td><a href='../module/wenoof_smoothness_indicators.html'>wenoof_smoothness_indicators</a></td><td>Subroutine</td><td><p>Compute smoothness indicators.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/digit_i4.html'>digit_I4</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of digits in decimal base of the input integer.</p></td></tr>
+			   <tr><td><a href='../proc/create.html'>create</a></td><td><a href='../module/wenoof_polynomials.html'>wenoof_polynomials</a></td><td>Subroutine</td><td><p>Create polynomials.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/digit_i8.html'>digit_I8</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for computing the number of digits in decimal base of the input integer.</p></td></tr>
+			   <tr><td><a href='../proc/create%7E2.html'>create</a></td><td><a href='../module/wenoof_interpolator.html'>wenoof_interpolator</a></td><td>Subroutine</td><td><p>Create interpolator.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create%7E3.html'>create</a></td><td><a href='../module/wenoof_alpha_coefficients_m.html'>wenoof_alpha_coefficients_m</a></td><td>Subroutine</td><td><p>Create alpha coefficients.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create%7E4.html'>create</a></td><td><a href='../module/wenoof_smoothness_indicators_js.html'>wenoof_smoothness_indicators_js</a></td><td>Subroutine</td><td><p>Create smoothness indicators.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create%7E5.html'>create</a></td><td><a href='../module/wenoof_alpha_coefficients.html'>wenoof_alpha_coefficients</a></td><td>Subroutine</td><td><p>Create alpha coefficients.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create%7E6.html'>create</a></td><td><a href='../module/wenoof_interpolator_js.html'>wenoof_interpolator_js</a></td><td>Subroutine</td><td><p>Create interpolator.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create%7E7.html'>create</a></td><td><a href='../module/wenoof_polynomials_js.html'>wenoof_polynomials_js</a></td><td>Subroutine</td><td><p>Create coefficients.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create%7E8.html'>create</a></td><td><a href='../module/wenoof_optimal_weights.html'>wenoof_optimal_weights</a></td><td>Subroutine</td><td><p>Create weights.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create%7E9.html'>create</a></td><td><a href='../module/wenoof_smoothness_indicators.html'>wenoof_smoothness_indicators</a></td><td>Subroutine</td><td><p>Create smoothness indicators.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_alpha_coefficients.html'>create_alpha_coefficients</a></td><td><a href='../module/wenoof_objects_factory.html'>wenoof_objects_factory</a></td><td>Subroutine</td><td><p>Create an instance of concrete extension of <a href="../type/alpha_coefficients.html">alpha_coefficients</a> given its constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_alpha_coefficients_js_constructor.html'>create_alpha_coefficients_js_constructor</a></td><td><a href='../module/wenoof_alpha_coefficients_js.html'>wenoof_alpha_coefficients_js</a></td><td>Subroutine</td><td><p>Create alpha coefficients constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_alpha_coefficients_m_constructor.html'>create_alpha_coefficients_m_constructor</a></td><td><a href='../module/wenoof_alpha_coefficients_m.html'>wenoof_alpha_coefficients_m</a></td><td>Subroutine</td><td><p>Create alpha coefficients constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_alpha_coefficients_z_constructor.html'>create_alpha_coefficients_z_constructor</a></td><td><a href='../module/wenoof_alpha_coefficients_z.html'>wenoof_alpha_coefficients_z</a></td><td>Subroutine</td><td><p>Create alpha coefficients constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_base_object.html'>create_base_object</a></td><td><a href='../module/wenoof_objects_factory.html'>wenoof_objects_factory</a></td><td>Subroutine</td><td><p>Create an instance of concrete extension of <a href="../type/base_object.html">base_object</a> given its constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_interpolator_constructor.html'>create_interpolator_constructor</a></td><td><a href='../module/wenoof_interpolator.html'>wenoof_interpolator</a></td><td>Subroutine</td><td><p>Create interpolator constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_interpolator_js_constructor.html'>create_interpolator_js_constructor</a></td><td><a href='../module/wenoof_interpolator_js.html'>wenoof_interpolator_js</a></td><td>Subroutine</td><td><p>Return an instance of [interpolator_js_constructor].</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_optimal_weights.html'>create_optimal_weights</a></td><td><a href='../module/wenoof_objects_factory.html'>wenoof_objects_factory</a></td><td>Subroutine</td><td><p>Create an instance of concrete extension of <a href="../type/optimal_weights.html">optimal_weights</a> given its constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_optimal_weights_js_constructor.html'>create_optimal_weights_js_constructor</a></td><td><a href='../module/wenoof_optimal_weights_js.html'>wenoof_optimal_weights_js</a></td><td>Subroutine</td><td><p>Create optimal weights constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_polynomials.html'>create_polynomials</a></td><td><a href='../module/wenoof_objects_factory.html'>wenoof_objects_factory</a></td><td>Subroutine</td><td><p>Create an instance of concrete extension of <a href="../type/polynomials.html">polynomials</a> given its constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_polynomials_js_constructor.html'>create_polynomials_js_constructor</a></td><td><a href='../module/wenoof_polynomials_js.html'>wenoof_polynomials_js</a></td><td>Subroutine</td><td><p>Create polynomials constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_smoothness_indicators.html'>create_smoothness_indicators</a></td><td><a href='../module/wenoof_objects_factory.html'>wenoof_objects_factory</a></td><td>Subroutine</td><td><p>Create an instance of concrete extension of <a href="../type/smoothness_indicators.html">smoothness_indicators</a> given its constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_smoothness_indicators_js_constructor.html'>create_smoothness_indicators_js_constructor</a></td><td><a href='../module/wenoof_smoothness_indicators_js.html'>wenoof_smoothness_indicators_js</a></td><td>Subroutine</td><td><p>Create smoothness indicators constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/ctoi_i1p.html'>ctoi_I1P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert string to integer.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/ctoi_i2p.html'>ctoi_I2P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert string to integer.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/ctoi_i4p.html'>ctoi_I4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert string to integer.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/ctoi_i8p.html'>ctoi_I8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert string to integer.</p></td></tr>
+			 
+			   <tr><td><a href='../interface/cton.html'>cton</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Interface</td><td><p>Convert string to number (real and integer, string to number type casting).</p></td></tr>
+			 
+			   <tr><td><a href='../proc/ctor_r16p.html'>ctor_R16P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert string to real.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/ctor_r4p.html'>ctor_R4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert string to real.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/ctor_r8p.html'>ctor_R8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert string to real.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description.html'>description</a></td><td><a href='../module/wenoof_alpha_coefficients_js.html'>wenoof_alpha_coefficients_js</a></td><td>Function</td><td><p>Return alpha coefficients string-descripition.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description%7E2.html'>description</a></td><td><a href='../module/wenoof_polynomials.html'>wenoof_polynomials</a></td><td>Function</td><td><p>Return polynomials string-description.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description%7E3.html'>description</a></td><td><a href='../module/wenoof_interpolator.html'>wenoof_interpolator</a></td><td>Function</td><td><p>Return interpolator string-description.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description%7E4.html'>description</a></td><td><a href='../module/wenoof_alpha_coefficients_m.html'>wenoof_alpha_coefficients_m</a></td><td>Function</td><td><p>Return alpha coefficients string-descripition.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description%7E5.html'>description</a></td><td><a href='../module/wenoof_optimal_weights_js.html'>wenoof_optimal_weights_js</a></td><td>Function</td><td><p>Return string-description of weights.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description%7E6.html'>description</a></td><td><a href='../module/wenoof_smoothness_indicators_js.html'>wenoof_smoothness_indicators_js</a></td><td>Function</td><td><p>Return smoothness indicators string-description.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description%7E7.html'>description</a></td><td><a href='../module/wenoof_alpha_coefficients.html'>wenoof_alpha_coefficients</a></td><td>Function</td><td><p>Return alpha coefficients string-description.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description%7E8.html'>description</a></td><td><a href='../module/wenoof_alpha_coefficients_z.html'>wenoof_alpha_coefficients_z</a></td><td>Function</td><td><p>Return alpha coefficients string-descripition.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description%7E9.html'>description</a></td><td><a href='../module/wenoof_interpolator_js.html'>wenoof_interpolator_js</a></td><td>Function</td><td><p>Return interpolator string-descripition.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description%7E10.html'>description</a></td><td><a href='../module/wenoof_polynomials_js.html'>wenoof_polynomials_js</a></td><td>Function</td><td><p>Return polynomials string-description.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description%7E11.html'>description</a></td><td><a href='../module/wenoof_optimal_weights.html'>wenoof_optimal_weights</a></td><td>Function</td><td><p>Return weights string-description.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/description%7E12.html'>description</a></td><td><a href='../module/wenoof_smoothness_indicators.html'>wenoof_smoothness_indicators</a></td><td>Function</td><td><p>Return smoothness indicators string-description.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/destroy.html'>destroy</a></td><td><a href='../module/wenoof_polynomials.html'>wenoof_polynomials</a></td><td>Subroutine</td><td><p>Destroy polynomials.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/destroy%7E2.html'>destroy</a></td><td><a href='../module/wenoof_interpolator.html'>wenoof_interpolator</a></td><td>Subroutine</td><td><p>Destroy interpolator</p></td></tr>
+			 
+			   <tr><td><a href='../proc/destroy%7E3.html'>destroy</a></td><td><a href='../module/wenoof_alpha_coefficients_m.html'>wenoof_alpha_coefficients_m</a></td><td>Subroutine</td><td><p>Destroy alpha coefficients.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/destroy%7E4.html'>destroy</a></td><td><a href='../module/wenoof_smoothness_indicators_js.html'>wenoof_smoothness_indicators_js</a></td><td>Subroutine</td><td><p>Destroy smoothness indicators.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/destroy%7E5.html'>destroy</a></td><td><a href='../module/wenoof_alpha_coefficients.html'>wenoof_alpha_coefficients</a></td><td>Subroutine</td><td><p>Destroy alpha coefficients.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/destroy%7E6.html'>destroy</a></td><td><a href='../module/wenoof_interpolator_js.html'>wenoof_interpolator_js</a></td><td>Subroutine</td><td><p>Destoy interpolator.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/destroy%7E7.html'>destroy</a></td><td><a href='../module/wenoof_polynomials_js.html'>wenoof_polynomials_js</a></td><td>Subroutine</td><td><p>Destroy polynomials.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/destroy%7E8.html'>destroy</a></td><td><a href='../module/wenoof_optimal_weights.html'>wenoof_optimal_weights</a></td><td>Subroutine</td><td><p>Destroy weights.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/destroy%7E9.html'>destroy</a></td><td><a href='../module/wenoof_smoothness_indicators.html'>wenoof_smoothness_indicators</a></td><td>Subroutine</td><td><p>Destroy smoothness indicators.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/destroy%7E10.html'>destroy</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/destroy_interpolator_constructor.html'>destroy_interpolator_constructor</a></td><td><a href='../module/wenoof_interpolator.html'>wenoof_interpolator</a></td><td>Subroutine</td><td><p>Destroy interpolator constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../interface/digit.html'>digit</a></td><td><a href='../module/penf.html'>penf</a></td><td>Interface</td><td><p>Compute the number of digits in decimal base of the input integer.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/digit_i1.html'>digit_I1</a></td><td><a href='../module/penf.html'>penf</a></td><td>Function</td><td><p>Compute the number of digits in decimal base of the input integer.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/digit_i2.html'>digit_I2</a></td><td><a href='../module/penf.html'>penf</a></td><td>Function</td><td><p>Compute the number of digits in decimal base of the input integer.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/digit_i4.html'>digit_I4</a></td><td><a href='../module/penf.html'>penf</a></td><td>Function</td><td><p>Compute the number of digits in decimal base of the input integer.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/digit_i8.html'>digit_I8</a></td><td><a href='../module/penf.html'>penf</a></td><td>Function</td><td><p>Compute the number of digits in decimal base of the input integer.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/execute.html'>execute</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
 			 
@@ -197,93 +327,1962 @@ All Procedures &ndash; WenOOF
 			 
 			   <tr><td><a href='../proc/integer_to_string.html'>integer_to_string</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/ir_init.html'>IR_init</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Subroutine</td><td><p>Procedure for initilizing module's variables that are not initialized into the definition specification.</p></td></tr>
+			   <tr><td><a href='../proc/interpolate.html'>interpolate</a></td><td><a href='../module/wenoof_interpolator.html'>wenoof_interpolator</a></td><td>Subroutine</td><td><p>Interpolate values.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/ir_print.html'>IR_Print</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Subroutine</td><td><p>Procedure for printing to the standard output the kind definition of reals and integers and the utility variables.</p></td></tr>
+			   <tr><td><a href='../proc/interpolate%7E2.html'>interpolate</a></td><td><a href='../module/wenoof_interpolator_js.html'>wenoof_interpolator_js</a></td><td>Subroutine</td><td><p>Interpolate values.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/is_little_endian.html'>is_little_endian</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for checking if the type of the bit ordering of the running architecture is little endian.</p></td></tr>
+			   <tr><td><a href='../proc/matrix_to_string.html'>matrix_to_string</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/optional_int_to_string.html'>optional_int_to_string</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
 			 
+			   <tr><td><a href='../proc/penf_init.html'>penf_init</a></td><td><a href='../module/penf.html'>penf</a></td><td>Subroutine</td><td><p>Initialize PENF's variables that are not initialized into the definition specification.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/penf_print.html'>penf_print</a></td><td><a href='../module/penf.html'>penf</a></td><td>Subroutine</td><td><p>Print to the specified unit the PENF's environment data.</p></td></tr>
+			 
 			   <tr><td><a href='../proc/savefig.html'>savefig</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../interface/str.html'>str</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Interface</td><td><p>Procedure for converting number, real and integer, to string (number to string type casting).</p></td></tr>
+			   <tr><td><a href='../interface/str.html'>str</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Interface</td><td><p>Convert number (real and integer) to string (number to string type casting).</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_a_i1p.html'>str_a_I1P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer (array) to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_a_i1p.html'>str_a_I1P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer array to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_a_i2p.html'>str_a_I2P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer (array) to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_a_i2p.html'>str_a_I2P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer array to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_a_i4p.html'>str_a_I4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer (array) to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_a_i4p.html'>str_a_I4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer array to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_a_i8p.html'>str_a_I8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer (array) to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_a_i8p.html'>str_a_I8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer array to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_a_r16p.html'>str_a_R16P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real (array) to string. This function achieves casting of real to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_a_r16p.html'>str_a_R16P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Converting real array to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_a_r4p.html'>str_a_R4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real (array) to string. This function achieves casting of real to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_a_r4p.html'>str_a_R4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert real array to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_a_r8p.html'>str_a_R8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real (array) to string. This function achieves casting of real to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_a_r8p.html'>str_a_R8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert real array to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_bol.html'>str_bol</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting logical to string. This function achieves casting of logical to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_bol.html'>str_bol</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert logical to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_i1p.html'>str_I1P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_i1p.html'>str_I1P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_i2p.html'>str_I2P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_i2p.html'>str_I2P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_i4p.html'>str_I4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_i4p.html'>str_I4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Converting integer to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_i8p.html'>str_I8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_i8p.html'>str_I8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_r16p.html'>str_R16P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real to string. This function achieves casting of real to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_r16p.html'>str_R16P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert real to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_r4p.html'>str_R4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real to string. This function achieves casting of real to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_r4p.html'>str_R4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert real to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/str_r8p.html'>str_R8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real to string. This function achieves casting of real to string.</p></td></tr>
+			   <tr><td><a href='../proc/str_r8p.html'>str_R8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert real to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/strf_i1p.html'>strf_I1P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/strf_i1p.html'>strf_I1P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/strf_i2p.html'>strf_I2P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/strf_i2p.html'>strf_I2P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/strf_i4p.html'>strf_I4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/strf_i4p.html'>strf_I4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/strf_i8p.html'>strf_I8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string. This function achieves casting of integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/strf_i8p.html'>strf_I8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/strf_r16p.html'>strf_R16P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real to string. This function achieves casting of real to string.</p></td></tr>
+			   <tr><td><a href='../proc/strf_r16p.html'>strf_R16P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert real to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/strf_r4p.html'>strf_R4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real to string. This function achieves casting of real to string.</p></td></tr>
+			   <tr><td><a href='../proc/strf_r4p.html'>strf_R4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert real to string.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/strf_r8p.html'>strf_R8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting real to string. This function achieves casting of real to string.</p></td></tr>
+			   <tr><td><a href='../proc/strf_r8p.html'>strf_R8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert real to string.</p></td></tr>
 			 
-			   <tr><td><a href='../interface/strz.html'>strz</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Interface</td><td><p>Procedure for converting number, integer, to string, prefixing with the right number of zeros (number to string type
- casting with zero padding).</p></td></tr>
+			   <tr><td><a href='../interface/strz.html'>strz</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Interface</td><td><p>Convert integer, to string, prefixing with the right number of zeros (integer to string type casting with zero padding).</p></td></tr>
 			 
-			   <tr><td><a href='../proc/strz_i1p.html'>strz_I1P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string, prefixing with the right number of zeros. This function achieves casting of
- integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/strz_i1p.html'>strz_I1P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string, prefixing with the right number of zeros.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/strz_i2p.html'>strz_I2P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string, prefixing with the right number of zeros. This function achieves casting of
- integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/strz_i2p.html'>strz_I2P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string, prefixing with the right number of zeros.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/strz_i4p.html'>strz_I4P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string, prefixing with the right number of zeros. This function achieves casting of
- integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/strz_i4p.html'>strz_I4P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Convert integer to string, prefixing with the right number of zeros.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/strz_i8p.html'>strz_I8P</a></td><td><a href='../module/ir_precision.html'>IR_Precision</a></td><td>Function</td><td><p>Procedure for converting integer to string, prefixing with the right number of zeros. This function achieves casting of
- integer to string.</p></td></tr>
+			   <tr><td><a href='../proc/strz_i8p.html'>strz_I8P</a></td><td><a href='../module/penf_stringify.html'>penf_stringify</a></td><td>Function</td><td><p>Converting integer to string, prefixing with the right number of zeros.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/tau.html'>tau</a></td><td><a href='../module/wenoof_alpha_coefficients_z.html'>wenoof_alpha_coefficients_z</a></td><td>Function</td><td><p>Compute the tau coefficient used in the WENO-Z alpha coefficients.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/vec_to_string.html'>vec_to_string</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>Subroutine</td><td></td></tr>
 			 
+			   <tr><td><a href='../proc/weno_exp.html'>weno_exp</a></td><td><a href='../module/wenoof_alpha_coefficients_z.html'>wenoof_alpha_coefficients_z</a></td><td>Function</td><td><p>Compute the exponent used in the alpha function.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/weno_odd.html'>weno_odd</a></td><td><a href='../module/wenoof_alpha_coefficients_z.html'>wenoof_alpha_coefficients_z</a></td><td>Function</td><td><p>Compute the distinguisher between odd and even number of stencils.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/wenoof_create.html'>wenoof_create</a></td><td><a href='../module/wenoof.html'>wenoof</a></td><td>Subroutine</td><td><p>WenOOF creator, create a concrete WENO interpolator object.</p></td></tr>
+			 
 			 </tbody></table>
+             
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: call~~graph~~CallGraph Pages: 1 -->
+<svg id="callgraphCallGraph" width="855pt" height="3405pt"
+ viewBox="0.00 0.00 855.00 3404.81" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="call~~graph~~CallGraph" class="graph" transform="scale(0.759325 0.759325) rotate(0) translate(4 4480)">
+<title>call~~graph~~CallGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-4480 1122,-4480 1122,4 -4,4"/>
+<!-- proc~add_contour -->
+<g id="call~~graph~~CallGraph_node1" class="node"><title>proc~add_contour</title>
+<g id="a_call~~graph~~CallGraph_node1"><a xlink:href="../proc/add_contour.html" xlink:title="add_contour">
+<polygon fill="#d9534f" stroke="#d9534f" points="140.5,-64 67.5,-64 67.5,-40 140.5,-40 140.5,-64"/>
+<text text-anchor="middle" x="104" y="-49.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">add_contour</text>
+</a>
+</g>
+</g>
+<!-- proc~optional_int_to_string -->
+<g id="call~~graph~~CallGraph_node26" class="node"><title>proc~optional_int_to_string</title>
+<g id="a_call~~graph~~CallGraph_node26"><a xlink:href="../proc/optional_int_to_string.html" xlink:title="optional_int_to_string">
+<polygon fill="#d9534f" stroke="#d9534f" points="484,-228 369,-228 369,-204 484,-204 484,-228"/>
+<text text-anchor="middle" x="426.5" y="-213.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">optional_int_to_string</text>
+</a>
+</g>
+</g>
+<!-- proc~add_contour&#45;&gt;proc~optional_int_to_string -->
+<g id="call~~graph~~CallGraph_edge2" class="edge"><title>proc~add_contour&#45;&gt;proc~optional_int_to_string</title>
+<path fill="none" stroke="#000000" d="M112.232,-64.0679C130.273,-92.9319 180.425,-165.864 244,-197 279.22,-214.249 322.814,-219.26 358.45,-219.834"/>
+<polygon fill="#000000" stroke="#000000" points="358.739,-223.335 368.755,-219.882 358.771,-216.335 358.739,-223.335"/>
+</g>
+<!-- proc~matrix_to_string -->
+<g id="call~~graph~~CallGraph_node43" class="node"><title>proc~matrix_to_string</title>
+<g id="a_call~~graph~~CallGraph_node43"><a xlink:href="../proc/matrix_to_string.html" xlink:title="matrix_to_string">
+<polygon fill="#d9534f" stroke="#d9534f" points="333,-24 244,-24 244,-0 333,-0 333,-24"/>
+<text text-anchor="middle" x="288.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">matrix_to_string</text>
+</a>
+</g>
+</g>
+<!-- proc~add_contour&#45;&gt;proc~matrix_to_string -->
+<g id="call~~graph~~CallGraph_edge3" class="edge"><title>proc~add_contour&#45;&gt;proc~matrix_to_string</title>
+<path fill="none" stroke="#000000" d="M140.621,-44.1926C167.182,-38.371 203.912,-30.3207 233.996,-23.7268"/>
+<polygon fill="#000000" stroke="#000000" points="234.901,-27.1117 243.92,-21.5518 233.402,-20.274 234.901,-27.1117"/>
+</g>
+<!-- proc~vec_to_string -->
+<g id="call~~graph~~CallGraph_node123" class="node"><title>proc~vec_to_string</title>
+<g id="a_call~~graph~~CallGraph_node123"><a xlink:href="../proc/vec_to_string.html" xlink:title="vec_to_string">
+<polygon fill="#d9534f" stroke="#d9534f" points="464.5,-104 388.5,-104 388.5,-80 464.5,-80 464.5,-104"/>
+<text text-anchor="middle" x="426.5" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">vec_to_string</text>
+</a>
+</g>
+</g>
+<!-- proc~add_contour&#45;&gt;proc~vec_to_string -->
+<g id="call~~graph~~CallGraph_edge1" class="edge"><title>proc~add_contour&#45;&gt;proc~vec_to_string</title>
+<path fill="none" stroke="#000000" d="M140.725,-53.4272C185.768,-55.5816 265.481,-60.5749 333,-71 347.942,-73.3071 364.065,-76.6605 378.598,-80.0129"/>
+<polygon fill="#000000" stroke="#000000" points="377.836,-83.429 388.372,-82.3208 379.444,-76.6163 377.836,-83.429"/>
+</g>
+<!-- proc~ctoi_i4p -->
+<g id="call~~graph~~CallGraph_node2" class="node"><title>proc~ctoi_i4p</title>
+<g id="a_call~~graph~~CallGraph_node2"><a xlink:href="../proc/ctoi_i4p.html" xlink:title="ctoi_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1305 399.5,-1305 399.5,-1281 453.5,-1281 453.5,-1305"/>
+<text text-anchor="middle" x="426.5" y="-1290.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ctoi_I4P</text>
+</a>
+</g>
+</g>
+<!-- proc~compute~7 -->
+<g id="call~~graph~~CallGraph_node3" class="node"><title>proc~compute~7</title>
+<g id="a_call~~graph~~CallGraph_node3"><a xlink:href="../proc/compute%7E7.html" xlink:title="compute">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-1872 77,-1872 77,-1848 131,-1848 131,-1872"/>
+<text text-anchor="middle" x="104" y="-1857.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute</text>
+</a>
+</g>
+</g>
+<!-- proc~tau -->
+<g id="call~~graph~~CallGraph_node14" class="node"><title>proc~tau</title>
+<g id="a_call~~graph~~CallGraph_node14"><a xlink:href="../proc/tau.html" xlink:title="tau">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="315.5,-1893 261.5,-1893 261.5,-1869 315.5,-1869 315.5,-1893"/>
+<text text-anchor="middle" x="288.5" y="-1878.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">tau</text>
+</a>
+</g>
+</g>
+<!-- proc~compute~7&#45;&gt;proc~tau -->
+<g id="call~~graph~~CallGraph_edge5" class="edge"><title>proc~compute~7&#45;&gt;proc~tau</title>
+<path fill="none" stroke="#000000" d="M131.148,-1863.01C162.724,-1866.64 216.002,-1872.77 251.459,-1876.85"/>
+<polygon fill="#000000" stroke="#000000" points="251.066,-1880.33 261.401,-1878 251.866,-1873.38 251.066,-1880.33"/>
+</g>
+<!-- proc~weno_exp -->
+<g id="call~~graph~~CallGraph_node16" class="node"><title>proc~weno_exp</title>
+<g id="a_call~~graph~~CallGraph_node16"><a xlink:href="../proc/weno_exp.html" xlink:title="weno_exp">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="319,-1851 258,-1851 258,-1827 319,-1827 319,-1851"/>
+<text text-anchor="middle" x="288.5" y="-1836.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">weno_exp</text>
+</a>
+</g>
+</g>
+<!-- proc~compute~7&#45;&gt;proc~weno_exp -->
+<g id="call~~graph~~CallGraph_edge4" class="edge"><title>proc~compute~7&#45;&gt;proc~weno_exp</title>
+<path fill="none" stroke="#000000" d="M131.148,-1856.99C161.648,-1853.48 212.395,-1847.64 247.773,-1843.57"/>
+<polygon fill="#000000" stroke="#000000" points="248.231,-1847.04 257.766,-1842.42 247.431,-1840.09 248.231,-1847.04"/>
+</g>
+<!-- proc~compute~3 -->
+<g id="call~~graph~~CallGraph_node4" class="node"><title>proc~compute~3</title>
+<g id="a_call~~graph~~CallGraph_node4"><a xlink:href="../proc/compute%7E3.html" xlink:title="compute">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-1914 77,-1914 77,-1890 131,-1890 131,-1914"/>
+<text text-anchor="middle" x="104" y="-1899.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute</text>
+</a>
+</g>
+</g>
+<!-- proc~str_a_r16p -->
+<g id="call~~graph~~CallGraph_node5" class="node"><title>proc~str_a_r16p</title>
+<g id="a_call~~graph~~CallGraph_node5"><a xlink:href="../proc/str_a_r16p.html" xlink:title="str_a_R16P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="799,-742 730,-742 730,-718 799,-718 799,-742"/>
+<text text-anchor="middle" x="764.5" y="-727.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_R16P</text>
+</a>
+</g>
+</g>
+<!-- proc~str_r16p -->
+<g id="call~~graph~~CallGraph_node75" class="node"><title>proc~str_r16p</title>
+<g id="a_call~~graph~~CallGraph_node75"><a xlink:href="../proc/str_r16p.html" xlink:title="str_R16P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="973,-711 916,-711 916,-687 973,-687 973,-711"/>
+<text text-anchor="middle" x="944.5" y="-696.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_R16P</text>
+</a>
+</g>
+</g>
+<!-- proc~str_a_r16p&#45;&gt;proc~str_r16p -->
+<g id="call~~graph~~CallGraph_edge6" class="edge"><title>proc~str_a_r16p&#45;&gt;proc~str_r16p</title>
+<path fill="none" stroke="#000000" d="M799.399,-724.096C829.759,-718.809 874.221,-711.066 905.714,-705.581"/>
+<polygon fill="#000000" stroke="#000000" points="906.606,-708.978 915.858,-703.814 905.405,-702.082 906.606,-708.978"/>
+</g>
+<!-- proc~create_alpha_coefficients_m_constructor -->
+<g id="call~~graph~~CallGraph_node6" class="node"><title>proc~create_alpha_coefficients_m_constructor</title>
+<g id="a_call~~graph~~CallGraph_node6"><a xlink:href="../proc/create_alpha_coefficients_m_constructor.html" xlink:title="create_alpha_coefficients_m_constructor">
+<polygon fill="#d9534f" stroke="#d9534f" points="208,-1956 0,-1956 0,-1932 208,-1932 208,-1956"/>
+<text text-anchor="middle" x="104" y="-1941.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_alpha_coefficients_m_constructor</text>
+</a>
+</g>
+</g>
+<!-- proc~str_r8p -->
+<g id="call~~graph~~CallGraph_node7" class="node"><title>proc~str_r8p</title>
+<g id="a_call~~graph~~CallGraph_node7"><a xlink:href="../proc/str_r8p.html" xlink:title="str_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="971.5,-496 917.5,-496 917.5,-472 971.5,-472 971.5,-496"/>
+<text text-anchor="middle" x="944.5" y="-481.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_R8P</text>
+</a>
+</g>
+</g>
+<!-- proc~compact_real_string -->
+<g id="call~~graph~~CallGraph_node90" class="node"><title>proc~compact_real_string</title>
+<g id="a_call~~graph~~CallGraph_node90"><a xlink:href="../proc/compact_real_string.html" xlink:title="compact_real_string">
+<polygon fill="#d9534f" stroke="#d9534f" points="1118,-623 1009,-623 1009,-599 1118,-599 1118,-623"/>
+<text text-anchor="middle" x="1063.5" y="-608.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compact_real_string</text>
+</a>
+</g>
+</g>
+<!-- proc~str_r8p&#45;&gt;proc~compact_real_string -->
+<g id="call~~graph~~CallGraph_edge7" class="edge"><title>proc~str_r8p&#45;&gt;proc~compact_real_string</title>
+<path fill="none" stroke="#000000" d="M956.718,-496.177C976.934,-518.12 1019.65,-564.484 1044.16,-591.097"/>
+<polygon fill="#000000" stroke="#000000" points="1041.79,-593.69 1051.14,-598.673 1046.94,-588.947 1041.79,-593.69"/>
+</g>
+<!-- proc~strf_i2p -->
+<g id="call~~graph~~CallGraph_node8" class="node"><title>proc~strf_i2p</title>
+<g id="a_call~~graph~~CallGraph_node8"><a xlink:href="../proc/strf_i2p.html" xlink:title="strf_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="791.5,-952 737.5,-952 737.5,-928 791.5,-928 791.5,-952"/>
+<text text-anchor="middle" x="764.5" y="-937.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_I2P</text>
+</a>
+</g>
+</g>
+<!-- proc~create~5 -->
+<g id="call~~graph~~CallGraph_node9" class="node"><title>proc~create~5</title>
+<g id="a_call~~graph~~CallGraph_node9"><a xlink:href="../proc/create%7E5.html" xlink:title="create">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-1998 77,-1998 77,-1974 131,-1974 131,-1998"/>
+<text text-anchor="middle" x="104" y="-1983.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create</text>
+</a>
+</g>
+</g>
+<!-- proc~bctor_r8p -->
+<g id="call~~graph~~CallGraph_node10" class="node"><title>proc~bctor_r8p</title>
+<g id="a_call~~graph~~CallGraph_node10"><a xlink:href="../proc/bctor_r8p.html" xlink:title="bctor_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="458,-763 395,-763 395,-739 458,-739 458,-763"/>
+<text text-anchor="middle" x="426.5" y="-748.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctor_R8P</text>
+</a>
+</g>
+</g>
+<!-- interface~str -->
+<g id="call~~graph~~CallGraph_node55" class="node"><title>interface~str</title>
+<g id="a_call~~graph~~CallGraph_node55"><a xlink:href="../interface/str.html" xlink:title="str">
+<polygon fill="#a7506f" stroke="#a7506f" points="593.5,-847 539.5,-847 539.5,-823 593.5,-823 593.5,-847"/>
+<text text-anchor="middle" x="566.5" y="-832.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str</text>
+</a>
+</g>
+</g>
+<!-- proc~bctor_r8p&#45;&gt;interface~str -->
+<g id="call~~graph~~CallGraph_edge8" class="edge"><title>proc~bctor_r8p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M458.16,-760.485C466.757,-763.65 475.949,-767.529 484,-772 506.367,-784.422 529.187,-802.635 544.969,-816.287"/>
+<polygon fill="#000000" stroke="#000000" points="542.723,-818.973 552.541,-822.956 547.35,-813.72 542.723,-818.973"/>
+</g>
+<!-- proc~strf_i1p -->
+<g id="call~~graph~~CallGraph_node11" class="node"><title>proc~strf_i1p</title>
+<g id="a_call~~graph~~CallGraph_node11"><a xlink:href="../proc/strf_i1p.html" xlink:title="strf_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="791.5,-910 737.5,-910 737.5,-886 791.5,-886 791.5,-910"/>
+<text text-anchor="middle" x="764.5" y="-895.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_I1P</text>
+</a>
+</g>
+</g>
+<!-- proc~description~7 -->
+<g id="call~~graph~~CallGraph_node12" class="node"><title>proc~description~7</title>
+<g id="a_call~~graph~~CallGraph_node12"><a xlink:href="../proc/description%7E7.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-2040 72,-2040 72,-2016 136,-2016 136,-2040"/>
+<text text-anchor="middle" x="104" y="-2025.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~bit_size_r4p -->
+<g id="call~~graph~~CallGraph_node13" class="node"><title>proc~bit_size_r4p</title>
+<g id="a_call~~graph~~CallGraph_node13"><a xlink:href="../proc/bit_size_r4p.html" xlink:title="bit_size_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="326,-2124 251,-2124 251,-2100 326,-2100 326,-2124"/>
+<text text-anchor="middle" x="288.5" y="-2109.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bit_size_R4P</text>
+</a>
+</g>
+</g>
+<!-- proc~weno_odd -->
+<g id="call~~graph~~CallGraph_node23" class="node"><title>proc~weno_odd</title>
+<g id="a_call~~graph~~CallGraph_node23"><a xlink:href="../proc/weno_odd.html" xlink:title="weno_odd">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="457.5,-1893 395.5,-1893 395.5,-1869 457.5,-1869 457.5,-1893"/>
+<text text-anchor="middle" x="426.5" y="-1878.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">weno_odd</text>
+</a>
+</g>
+</g>
+<!-- proc~tau&#45;&gt;proc~weno_odd -->
+<g id="call~~graph~~CallGraph_edge9" class="edge"><title>proc~tau&#45;&gt;proc~weno_odd</title>
+<path fill="none" stroke="#000000" d="M315.722,-1881C335.313,-1881 362.457,-1881 384.851,-1881"/>
+<polygon fill="#000000" stroke="#000000" points="385.085,-1884.5 395.085,-1881 385.085,-1877.5 385.085,-1884.5"/>
+</g>
+<!-- proc~create_alpha_coefficients_js_constructor -->
+<g id="call~~graph~~CallGraph_node15" class="node"><title>proc~create_alpha_coefficients_js_constructor</title>
+<g id="a_call~~graph~~CallGraph_node15"><a xlink:href="../proc/create_alpha_coefficients_js_constructor.html" xlink:title="create_alpha_coefficients_js_constructor">
+<polygon fill="#d9534f" stroke="#d9534f" points="868,-414 661,-414 661,-390 868,-390 868,-414"/>
+<text text-anchor="middle" x="764.5" y="-399.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_alpha_coefficients_js_constructor</text>
+</a>
+</g>
+</g>
+<!-- proc~digit_i8 -->
+<g id="call~~graph~~CallGraph_node17" class="node"><title>proc~digit_i8</title>
+<g id="a_call~~graph~~CallGraph_node17"><a xlink:href="../proc/digit_i8.html" xlink:title="digit_I8">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1053 399.5,-1053 399.5,-1029 453.5,-1029 453.5,-1053"/>
+<text text-anchor="middle" x="426.5" y="-1038.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">digit_I8</text>
+</a>
+</g>
+</g>
+<!-- proc~description~3 -->
+<g id="call~~graph~~CallGraph_node18" class="node"><title>proc~description~3</title>
+<g id="a_call~~graph~~CallGraph_node18"><a xlink:href="../proc/description%7E3.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-2124 72,-2124 72,-2100 136,-2100 136,-2124"/>
+<text text-anchor="middle" x="104" y="-2109.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~strf_i8p -->
+<g id="call~~graph~~CallGraph_node19" class="node"><title>proc~strf_i8p</title>
+<g id="a_call~~graph~~CallGraph_node19"><a xlink:href="../proc/strf_i8p.html" xlink:title="strf_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="791.5,-868 737.5,-868 737.5,-844 791.5,-844 791.5,-868"/>
+<text text-anchor="middle" x="764.5" y="-853.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_I8P</text>
+</a>
+</g>
+</g>
+<!-- proc~create_smoothness_indicators -->
+<g id="call~~graph~~CallGraph_node20" class="node"><title>proc~create_smoothness_indicators</title>
+<g id="a_call~~graph~~CallGraph_node20"><a xlink:href="../proc/create_smoothness_indicators.html" xlink:title="create_smoothness_indicators">
+<polygon fill="#d9534f" stroke="#d9534f" points="183,-2166 25,-2166 25,-2142 183,-2142 183,-2166"/>
+<text text-anchor="middle" x="104" y="-2151.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_smoothness_indicators</text>
+</a>
+</g>
+</g>
+<!-- interface~bstr -->
+<g id="call~~graph~~CallGraph_node21" class="node"><title>interface~bstr</title>
+<g id="a_call~~graph~~CallGraph_node21"><a xlink:href="../interface/bstr.html" xlink:title="bstr">
+<polygon fill="#a7506f" stroke="#a7506f" points="315.5,-1536 261.5,-1536 261.5,-1512 315.5,-1512 315.5,-1536"/>
+<text text-anchor="middle" x="288.5" y="-1521.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bstr</text>
+</a>
+</g>
+</g>
+<!-- proc~bstr_i4p -->
+<g id="call~~graph~~CallGraph_node85" class="node"><title>proc~bstr_i4p</title>
+<g id="a_call~~graph~~CallGraph_node85"><a xlink:href="../proc/bstr_i4p.html" xlink:title="bstr_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1557 399.5,-1557 399.5,-1533 453.5,-1533 453.5,-1557"/>
+<text text-anchor="middle" x="426.5" y="-1542.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bstr_I4P</text>
+</a>
+</g>
+</g>
+<!-- interface~bstr&#45;&gt;proc~bstr_i4p -->
+<g id="call~~graph~~CallGraph_edge15" class="edge"><title>interface~bstr&#45;&gt;proc~bstr_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-1528.05C336.606,-1531.27 366.074,-1535.82 389.221,-1539.4"/>
+<polygon fill="#000000" stroke="#000000" points="388.941,-1542.9 399.358,-1540.96 390.01,-1535.98 388.941,-1542.9"/>
+</g>
+<!-- proc~bstr_i1p -->
+<g id="call~~graph~~CallGraph_node105" class="node"><title>proc~bstr_i1p</title>
+<g id="a_call~~graph~~CallGraph_node105"><a xlink:href="../proc/bstr_i1p.html" xlink:title="bstr_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1515 399.5,-1515 399.5,-1491 453.5,-1491 453.5,-1515"/>
+<text text-anchor="middle" x="426.5" y="-1500.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bstr_I1P</text>
+</a>
+</g>
+</g>
+<!-- interface~bstr&#45;&gt;proc~bstr_i1p -->
+<g id="call~~graph~~CallGraph_edge10" class="edge"><title>interface~bstr&#45;&gt;proc~bstr_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-1519.95C336.606,-1516.73 366.074,-1512.18 389.221,-1508.6"/>
+<polygon fill="#000000" stroke="#000000" points="390.01,-1512.02 399.358,-1507.04 388.941,-1505.1 390.01,-1512.02"/>
+</g>
+<!-- proc~bstr_i8p -->
+<g id="call~~graph~~CallGraph_node124" class="node"><title>proc~bstr_i8p</title>
+<g id="a_call~~graph~~CallGraph_node124"><a xlink:href="../proc/bstr_i8p.html" xlink:title="bstr_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1473 399.5,-1473 399.5,-1449 453.5,-1449 453.5,-1473"/>
+<text text-anchor="middle" x="426.5" y="-1458.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bstr_I8P</text>
+</a>
+</g>
+</g>
+<!-- interface~bstr&#45;&gt;proc~bstr_i8p -->
+<g id="call~~graph~~CallGraph_edge11" class="edge"><title>interface~bstr&#45;&gt;proc~bstr_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M310.719,-1511.82C326.521,-1502.99 348.769,-1491.06 369,-1482 375.546,-1479.07 382.636,-1476.2 389.509,-1473.58"/>
+<polygon fill="#000000" stroke="#000000" points="391.185,-1476.69 399.337,-1469.92 388.745,-1470.13 391.185,-1476.69"/>
+</g>
+<!-- proc~bstr_r8p -->
+<g id="call~~graph~~CallGraph_node125" class="node"><title>proc~bstr_r8p</title>
+<g id="a_call~~graph~~CallGraph_node125"><a xlink:href="../proc/bstr_r8p.html" xlink:title="bstr_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="455,-1683 398,-1683 398,-1659 455,-1659 455,-1683"/>
+<text text-anchor="middle" x="426.5" y="-1668.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bstr_R8P</text>
+</a>
+</g>
+</g>
+<!-- interface~bstr&#45;&gt;proc~bstr_r8p -->
+<g id="call~~graph~~CallGraph_edge12" class="edge"><title>interface~bstr&#45;&gt;proc~bstr_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.692,-1532.56C322.035,-1535.66 328.325,-1539.73 333,-1545 365.739,-1581.9 334.565,-1614.67 369,-1650 374.273,-1655.41 381.065,-1659.44 388.099,-1662.43"/>
+<polygon fill="#000000" stroke="#000000" points="387.129,-1665.8 397.723,-1665.91 389.508,-1659.22 387.129,-1665.8"/>
+</g>
+<!-- proc~bstr_i2p -->
+<g id="call~~graph~~CallGraph_node134" class="node"><title>proc~bstr_i2p</title>
+<g id="a_call~~graph~~CallGraph_node134"><a xlink:href="../proc/bstr_i2p.html" xlink:title="bstr_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1641 399.5,-1641 399.5,-1617 453.5,-1617 453.5,-1641"/>
+<text text-anchor="middle" x="426.5" y="-1626.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bstr_I2P</text>
+</a>
+</g>
+</g>
+<!-- interface~bstr&#45;&gt;proc~bstr_i2p -->
+<g id="call~~graph~~CallGraph_edge13" class="edge"><title>interface~bstr&#45;&gt;proc~bstr_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.501,-1533.42C321.702,-1536.47 327.972,-1540.31 333,-1545 356.581,-1567 344.413,-1587.13 369,-1608 374.924,-1613.03 382.165,-1616.91 389.46,-1619.88"/>
+<polygon fill="#000000" stroke="#000000" points="388.728,-1623.33 399.323,-1623.39 391.077,-1616.74 388.728,-1623.33"/>
+</g>
+<!-- proc~bstr_r4p -->
+<g id="call~~graph~~CallGraph_node142" class="node"><title>proc~bstr_r4p</title>
+<g id="a_call~~graph~~CallGraph_node142"><a xlink:href="../proc/bstr_r4p.html" xlink:title="bstr_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="455,-1599 398,-1599 398,-1575 455,-1575 455,-1599"/>
+<text text-anchor="middle" x="426.5" y="-1584.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bstr_R4P</text>
+</a>
+</g>
+</g>
+<!-- interface~bstr&#45;&gt;proc~bstr_r4p -->
+<g id="call~~graph~~CallGraph_edge14" class="edge"><title>interface~bstr&#45;&gt;proc~bstr_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.429,-1536.11C321.254,-1538.94 327.373,-1542.01 333,-1545 349.353,-1553.7 352.257,-1558.08 369,-1566 375.165,-1568.92 381.852,-1571.71 388.397,-1574.25"/>
+<polygon fill="#000000" stroke="#000000" points="387.214,-1577.55 397.806,-1577.78 389.674,-1570.99 387.214,-1577.55"/>
+</g>
+<!-- proc~create_polynomials -->
+<g id="call~~graph~~CallGraph_node22" class="node"><title>proc~create_polynomials</title>
+<g id="a_call~~graph~~CallGraph_node22"><a xlink:href="../proc/create_polynomials.html" xlink:title="create_polynomials">
+<polygon fill="#d9534f" stroke="#d9534f" points="156.5,-2208 51.5,-2208 51.5,-2184 156.5,-2184 156.5,-2208"/>
+<text text-anchor="middle" x="104" y="-2193.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_polynomials</text>
+</a>
+</g>
+</g>
+<!-- proc~create_optimal_weights -->
+<g id="call~~graph~~CallGraph_node24" class="node"><title>proc~create_optimal_weights</title>
+<g id="a_call~~graph~~CallGraph_node24"><a xlink:href="../proc/create_optimal_weights.html" xlink:title="create_optimal_weights">
+<polygon fill="#d9534f" stroke="#d9534f" points="166.5,-2250 41.5,-2250 41.5,-2226 166.5,-2226 166.5,-2250"/>
+<text text-anchor="middle" x="104" y="-2235.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_optimal_weights</text>
+</a>
+</g>
+</g>
+<!-- proc~destroy~3 -->
+<g id="call~~graph~~CallGraph_node25" class="node"><title>proc~destroy~3</title>
+<g id="a_call~~graph~~CallGraph_node25"><a xlink:href="../proc/destroy%7E3.html" xlink:title="destroy">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-2292 77,-2292 77,-2268 131,-2268 131,-2292"/>
+<text text-anchor="middle" x="104" y="-2277.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy</text>
+</a>
+</g>
+</g>
+<!-- proc~integer_to_string -->
+<g id="call~~graph~~CallGraph_node118" class="node"><title>proc~integer_to_string</title>
+<g id="a_call~~graph~~CallGraph_node118"><a xlink:href="../proc/integer_to_string.html" xlink:title="integer_to_string">
+<polygon fill="#d9534f" stroke="#d9534f" points="613,-248 520,-248 520,-224 613,-224 613,-248"/>
+<text text-anchor="middle" x="566.5" y="-233.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">integer_to_string</text>
+</a>
+</g>
+</g>
+<!-- proc~optional_int_to_string&#45;&gt;proc~integer_to_string -->
+<g id="call~~graph~~CallGraph_edge16" class="edge"><title>proc~optional_int_to_string&#45;&gt;proc~integer_to_string</title>
+<path fill="none" stroke="#000000" d="M484.028,-224.192C492.495,-225.42 501.221,-226.684 509.673,-227.909"/>
+<polygon fill="#000000" stroke="#000000" points="509.413,-231.408 519.812,-229.378 510.417,-224.48 509.413,-231.408"/>
+</g>
+<!-- proc~strf_r4p -->
+<g id="call~~graph~~CallGraph_node27" class="node"><title>proc~strf_r4p</title>
+<g id="a_call~~graph~~CallGraph_node27"><a xlink:href="../proc/strf_r4p.html" xlink:title="strf_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="791.5,-826 737.5,-826 737.5,-802 791.5,-802 791.5,-826"/>
+<text text-anchor="middle" x="764.5" y="-811.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_R4P</text>
+</a>
+</g>
+</g>
+<!-- interface~bit_size~2 -->
+<g id="call~~graph~~CallGraph_node28" class="node"><title>interface~bit_size~2</title>
+<g id="a_call~~graph~~CallGraph_node28"><a xlink:href="../interface/bit_size%7E2.html" xlink:title="bit_size">
+<polygon fill="#a7506f" stroke="#a7506f" points="131,-2334 77,-2334 77,-2310 131,-2310 131,-2334"/>
+<text text-anchor="middle" x="104" y="-2319.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bit_size</text>
+</a>
+</g>
+</g>
+<!-- proc~create~6 -->
+<g id="call~~graph~~CallGraph_node29" class="node"><title>proc~create~6</title>
+<g id="a_call~~graph~~CallGraph_node29"><a xlink:href="../proc/create%7E6.html" xlink:title="create">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-2376 77,-2376 77,-2352 131,-2352 131,-2376"/>
+<text text-anchor="middle" x="104" y="-2361.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create</text>
+</a>
+</g>
+</g>
+<!-- proc~description -->
+<g id="call~~graph~~CallGraph_node30" class="node"><title>proc~description</title>
+<g id="a_call~~graph~~CallGraph_node30"><a xlink:href="../proc/description.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-2418 72,-2418 72,-2394 136,-2394 136,-2418"/>
+<text text-anchor="middle" x="104" y="-2403.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~bit_size_r16p -->
+<g id="call~~graph~~CallGraph_node31" class="node"><title>proc~bit_size_r16p</title>
+<g id="a_call~~graph~~CallGraph_node31"><a xlink:href="../proc/bit_size_r16p.html" xlink:title="bit_size_R16P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="144.5,-2460 63.5,-2460 63.5,-2436 144.5,-2436 144.5,-2460"/>
+<text text-anchor="middle" x="104" y="-2445.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bit_size_R16P</text>
+</a>
+</g>
+</g>
+<!-- proc~byte_size_i2p -->
+<g id="call~~graph~~CallGraph_node32" class="node"><title>proc~byte_size_i2p</title>
+<g id="a_call~~graph~~CallGraph_node32"><a xlink:href="../proc/byte_size_i2p.html" xlink:title="byte_size_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="328,-2628 249,-2628 249,-2604 328,-2604 328,-2628"/>
+<text text-anchor="middle" x="288.5" y="-2613.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">byte_size_I2P</text>
+</a>
+</g>
+</g>
+<!-- proc~ctor_r8p -->
+<g id="call~~graph~~CallGraph_node33" class="node"><title>proc~ctor_r8p</title>
+<g id="a_call~~graph~~CallGraph_node33"><a xlink:href="../proc/ctor_r8p.html" xlink:title="ctor_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="455,-1263 398,-1263 398,-1239 455,-1239 455,-1263"/>
+<text text-anchor="middle" x="426.5" y="-1248.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ctor_R8P</text>
+</a>
+</g>
+</g>
+<!-- interface~cton -->
+<g id="call~~graph~~CallGraph_node34" class="node"><title>interface~cton</title>
+<g id="a_call~~graph~~CallGraph_node34"><a xlink:href="../interface/cton.html" xlink:title="cton">
+<polygon fill="#a7506f" stroke="#a7506f" points="315.5,-1305 261.5,-1305 261.5,-1281 315.5,-1281 315.5,-1305"/>
+<text text-anchor="middle" x="288.5" y="-1290.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">cton</text>
+</a>
+</g>
+</g>
+<!-- interface~cton&#45;&gt;proc~ctoi_i4p -->
+<g id="call~~graph~~CallGraph_edge18" class="edge"><title>interface~cton&#45;&gt;proc~ctoi_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-1293C336.606,-1293 366.074,-1293 389.221,-1293"/>
+<polygon fill="#000000" stroke="#000000" points="389.358,-1296.5 399.358,-1293 389.358,-1289.5 389.358,-1296.5"/>
+</g>
+<!-- interface~cton&#45;&gt;proc~ctor_r8p -->
+<g id="call~~graph~~CallGraph_edge21" class="edge"><title>interface~cton&#45;&gt;proc~ctor_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-1284.9C336.297,-1278.55 365.203,-1269.62 388.189,-1262.52"/>
+<polygon fill="#000000" stroke="#000000" points="389.436,-1265.8 397.958,-1259.51 387.37,-1259.11 389.436,-1265.8"/>
+</g>
+<!-- proc~ctoi_i2p -->
+<g id="call~~graph~~CallGraph_node106" class="node"><title>proc~ctoi_i2p</title>
+<g id="a_call~~graph~~CallGraph_node106"><a xlink:href="../proc/ctoi_i2p.html" xlink:title="ctoi_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1221 399.5,-1221 399.5,-1197 453.5,-1197 453.5,-1221"/>
+<text text-anchor="middle" x="426.5" y="-1206.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ctoi_I2P</text>
+</a>
+</g>
+</g>
+<!-- interface~cton&#45;&gt;proc~ctoi_i2p -->
+<g id="call~~graph~~CallGraph_edge19" class="edge"><title>interface~cton&#45;&gt;proc~ctoi_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M302.086,-1280.93C317.04,-1267.11 343.223,-1244.52 369,-1230 375.519,-1226.33 382.804,-1223.07 389.919,-1220.28"/>
+<polygon fill="#000000" stroke="#000000" points="391.257,-1223.52 399.427,-1216.77 388.833,-1216.95 391.257,-1223.52"/>
+</g>
+<!-- proc~ctoi_i8p -->
+<g id="call~~graph~~CallGraph_node110" class="node"><title>proc~ctoi_i8p</title>
+<g id="a_call~~graph~~CallGraph_node110"><a xlink:href="../proc/ctoi_i8p.html" xlink:title="ctoi_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1431 399.5,-1431 399.5,-1407 453.5,-1407 453.5,-1431"/>
+<text text-anchor="middle" x="426.5" y="-1416.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ctoi_I8P</text>
+</a>
+</g>
+</g>
+<!-- interface~cton&#45;&gt;proc~ctoi_i8p -->
+<g id="call~~graph~~CallGraph_edge22" class="edge"><title>interface~cton&#45;&gt;proc~ctoi_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M295.676,-1305.17C307.231,-1326.8 334.136,-1372.08 369,-1398 375.178,-1402.59 382.471,-1406.28 389.727,-1409.2"/>
+<polygon fill="#000000" stroke="#000000" points="388.898,-1412.62 399.492,-1412.73 391.275,-1406.04 388.898,-1412.62"/>
+</g>
+<!-- proc~ctoi_i1p -->
+<g id="call~~graph~~CallGraph_node111" class="node"><title>proc~ctoi_i1p</title>
+<g id="a_call~~graph~~CallGraph_node111"><a xlink:href="../proc/ctoi_i1p.html" xlink:title="ctoi_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1389 399.5,-1389 399.5,-1365 453.5,-1365 453.5,-1389"/>
+<text text-anchor="middle" x="426.5" y="-1374.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ctoi_I1P</text>
+</a>
+</g>
+</g>
+<!-- interface~cton&#45;&gt;proc~ctoi_i1p -->
+<g id="call~~graph~~CallGraph_edge20" class="edge"><title>interface~cton&#45;&gt;proc~ctoi_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M302.086,-1305.07C317.04,-1318.89 343.223,-1341.48 369,-1356 375.519,-1359.67 382.804,-1362.93 389.919,-1365.72"/>
+<polygon fill="#000000" stroke="#000000" points="388.833,-1369.05 399.427,-1369.23 391.257,-1362.48 388.833,-1369.05"/>
+</g>
+<!-- proc~ctor_r4p -->
+<g id="call~~graph~~CallGraph_node148" class="node"><title>proc~ctor_r4p</title>
+<g id="a_call~~graph~~CallGraph_node148"><a xlink:href="../proc/ctor_r4p.html" xlink:title="ctor_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="455,-1347 398,-1347 398,-1323 455,-1323 455,-1347"/>
+<text text-anchor="middle" x="426.5" y="-1332.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ctor_R4P</text>
+</a>
+</g>
+</g>
+<!-- interface~cton&#45;&gt;proc~ctor_r4p -->
+<g id="call~~graph~~CallGraph_edge17" class="edge"><title>interface~cton&#45;&gt;proc~ctor_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-1301.1C336.297,-1307.45 365.203,-1316.38 388.189,-1323.48"/>
+<polygon fill="#000000" stroke="#000000" points="387.37,-1326.89 397.958,-1326.49 389.436,-1320.2 387.37,-1326.89"/>
+</g>
+<!-- proc~destroy~4 -->
+<g id="call~~graph~~CallGraph_node35" class="node"><title>proc~destroy~4</title>
+<g id="a_call~~graph~~CallGraph_node35"><a xlink:href="../proc/destroy%7E4.html" xlink:title="destroy">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-2544 77,-2544 77,-2520 131,-2520 131,-2544"/>
+<text text-anchor="middle" x="104" y="-2529.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy</text>
+</a>
+</g>
+</g>
+<!-- proc~destroy_interpolator_constructor -->
+<g id="call~~graph~~CallGraph_node36" class="node"><title>proc~destroy_interpolator_constructor</title>
+<g id="a_call~~graph~~CallGraph_node36"><a xlink:href="../proc/destroy_interpolator_constructor.html" xlink:title="destroy_interpolator_constructor">
+<polygon fill="#d9534f" stroke="#d9534f" points="187.5,-2586 20.5,-2586 20.5,-2562 187.5,-2562 187.5,-2586"/>
+<text text-anchor="middle" x="104" y="-2571.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy_interpolator_constructor</text>
+</a>
+</g>
+</g>
+<!-- proc~check_endian -->
+<g id="call~~graph~~CallGraph_node37" class="node"><title>proc~check_endian</title>
+<g id="a_call~~graph~~CallGraph_node37"><a xlink:href="../proc/check_endian.html" xlink:title="check_endian">
+<polygon fill="#d9534f" stroke="#d9534f" points="466,-679 387,-679 387,-655 466,-655 466,-679"/>
+<text text-anchor="middle" x="426.5" y="-664.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">check_endian</text>
+</a>
+</g>
+</g>
+<!-- interface~digit -->
+<g id="call~~graph~~CallGraph_node38" class="node"><title>interface~digit</title>
+<g id="a_call~~graph~~CallGraph_node38"><a xlink:href="../interface/digit.html" xlink:title="digit">
+<polygon fill="#a7506f" stroke="#a7506f" points="315.5,-1137 261.5,-1137 261.5,-1113 315.5,-1113 315.5,-1137"/>
+<text text-anchor="middle" x="288.5" y="-1122.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">digit</text>
+</a>
+</g>
+</g>
+<!-- interface~digit&#45;&gt;proc~digit_i8 -->
+<g id="call~~graph~~CallGraph_edge23" class="edge"><title>interface~digit&#45;&gt;proc~digit_i8</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M302.086,-1112.93C317.04,-1099.11 343.223,-1076.52 369,-1062 375.519,-1058.33 382.804,-1055.07 389.919,-1052.28"/>
+<polygon fill="#000000" stroke="#000000" points="391.257,-1055.52 399.427,-1048.77 388.833,-1048.95 391.257,-1055.52"/>
+</g>
+<!-- proc~digit_i2 -->
+<g id="call~~graph~~CallGraph_node62" class="node"><title>proc~digit_i2</title>
+<g id="a_call~~graph~~CallGraph_node62"><a xlink:href="../proc/digit_i2.html" xlink:title="digit_I2">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1179 399.5,-1179 399.5,-1155 453.5,-1155 453.5,-1179"/>
+<text text-anchor="middle" x="426.5" y="-1164.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">digit_I2</text>
+</a>
+</g>
+</g>
+<!-- interface~digit&#45;&gt;proc~digit_i2 -->
+<g id="call~~graph~~CallGraph_edge24" class="edge"><title>interface~digit&#45;&gt;proc~digit_i2</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-1133.1C336.7,-1139.58 366.339,-1148.73 389.534,-1155.89"/>
+<polygon fill="#000000" stroke="#000000" points="388.771,-1159.32 399.358,-1158.93 390.836,-1152.63 388.771,-1159.32"/>
+</g>
+<!-- proc~digit_i4 -->
+<g id="call~~graph~~CallGraph_node91" class="node"><title>proc~digit_i4</title>
+<g id="a_call~~graph~~CallGraph_node91"><a xlink:href="../proc/digit_i4.html" xlink:title="digit_I4">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1137 399.5,-1137 399.5,-1113 453.5,-1113 453.5,-1137"/>
+<text text-anchor="middle" x="426.5" y="-1122.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">digit_I4</text>
+</a>
+</g>
+</g>
+<!-- interface~digit&#45;&gt;proc~digit_i4 -->
+<g id="call~~graph~~CallGraph_edge26" class="edge"><title>interface~digit&#45;&gt;proc~digit_i4</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-1125C336.606,-1125 366.074,-1125 389.221,-1125"/>
+<polygon fill="#000000" stroke="#000000" points="389.358,-1128.5 399.358,-1125 389.358,-1121.5 389.358,-1128.5"/>
+</g>
+<!-- proc~digit_i1 -->
+<g id="call~~graph~~CallGraph_node122" class="node"><title>proc~digit_i1</title>
+<g id="a_call~~graph~~CallGraph_node122"><a xlink:href="../proc/digit_i1.html" xlink:title="digit_I1">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1095 399.5,-1095 399.5,-1071 453.5,-1071 453.5,-1095"/>
+<text text-anchor="middle" x="426.5" y="-1080.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">digit_I1</text>
+</a>
+</g>
+</g>
+<!-- interface~digit&#45;&gt;proc~digit_i1 -->
+<g id="call~~graph~~CallGraph_edge25" class="edge"><title>interface~digit&#45;&gt;proc~digit_i1</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-1116.9C336.7,-1110.42 366.339,-1101.27 389.534,-1094.11"/>
+<polygon fill="#000000" stroke="#000000" points="390.836,-1097.37 399.358,-1091.07 388.771,-1090.68 390.836,-1097.37"/>
+</g>
+<!-- interface~bcton -->
+<g id="call~~graph~~CallGraph_node39" class="node"><title>interface~bcton</title>
+<g id="a_call~~graph~~CallGraph_node39"><a xlink:href="../interface/bcton.html" xlink:title="bcton">
+<polygon fill="#a7506f" stroke="#a7506f" points="315.5,-847 261.5,-847 261.5,-823 315.5,-823 315.5,-847"/>
+<text text-anchor="middle" x="288.5" y="-832.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bcton</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctor_r8p -->
+<g id="call~~graph~~CallGraph_edge29" class="edge"><title>interface~bcton&#45;&gt;proc~bctor_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M302.086,-822.932C317.04,-809.114 343.223,-786.52 369,-772 374.14,-769.105 379.756,-766.466 385.39,-764.112"/>
+<polygon fill="#000000" stroke="#000000" points="386.771,-767.329 394.805,-760.422 384.218,-760.812 386.771,-767.329"/>
+</g>
+<!-- proc~bctoi_i4p -->
+<g id="call~~graph~~CallGraph_node52" class="node"><title>proc~bctoi_i4p</title>
+<g id="a_call~~graph~~CallGraph_node52"><a xlink:href="../proc/bctoi_i4p.html" xlink:title="bctoi_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="455,-721 398,-721 398,-697 455,-697 455,-721"/>
+<text text-anchor="middle" x="426.5" y="-706.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I4P</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i4p -->
+<g id="call~~graph~~CallGraph_edge30" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M295.676,-822.83C307.231,-801.203 334.136,-755.92 369,-730 374.699,-725.763 381.346,-722.297 388.039,-719.49"/>
+<polygon fill="#000000" stroke="#000000" points="389.64,-722.628 397.772,-715.838 387.18,-716.075 389.64,-722.628"/>
+</g>
+<!-- proc~bctoi_i8p -->
+<g id="call~~graph~~CallGraph_node92" class="node"><title>proc~bctoi_i8p</title>
+<g id="a_call~~graph~~CallGraph_node92"><a xlink:href="../proc/bctoi_i8p.html" xlink:title="bctoi_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="455,-973 398,-973 398,-949 455,-949 455,-973"/>
+<text text-anchor="middle" x="426.5" y="-958.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I8P</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i8p -->
+<g id="call~~graph~~CallGraph_edge28" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M295.676,-847.17C307.231,-868.797 334.136,-914.08 369,-940 374.699,-944.237 381.346,-947.703 388.039,-950.51"/>
+<polygon fill="#000000" stroke="#000000" points="387.18,-953.925 397.772,-954.162 389.64,-947.372 387.18,-953.925"/>
+</g>
+<!-- proc~bctoi_i1p -->
+<g id="call~~graph~~CallGraph_node97" class="node"><title>proc~bctoi_i1p</title>
+<g id="a_call~~graph~~CallGraph_node97"><a xlink:href="../proc/bctoi_i1p.html" xlink:title="bctoi_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="455,-889 398,-889 398,-865 455,-865 455,-889"/>
+<text text-anchor="middle" x="426.5" y="-874.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I1P</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i1p -->
+<g id="call~~graph~~CallGraph_edge32" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-843.098C336.297,-849.452 365.203,-858.379 388.189,-865.477"/>
+<polygon fill="#000000" stroke="#000000" points="387.37,-868.888 397.958,-868.494 389.436,-862.199 387.37,-868.888"/>
+</g>
+<!-- proc~bctoi_i2p -->
+<g id="call~~graph~~CallGraph_node112" class="node"><title>proc~bctoi_i2p</title>
+<g id="a_call~~graph~~CallGraph_node112"><a xlink:href="../proc/bctoi_i2p.html" xlink:title="bctoi_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="455,-847 398,-847 398,-823 455,-823 455,-847"/>
+<text text-anchor="middle" x="426.5" y="-832.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I2P</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i2p -->
+<g id="call~~graph~~CallGraph_edge27" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-835C336.205,-835 364.944,-835 387.879,-835"/>
+<polygon fill="#000000" stroke="#000000" points="387.958,-838.5 397.958,-835 387.958,-831.5 387.958,-838.5"/>
+</g>
+<!-- proc~bctor_r4p -->
+<g id="call~~graph~~CallGraph_node145" class="node"><title>proc~bctor_r4p</title>
+<g id="a_call~~graph~~CallGraph_node145"><a xlink:href="../proc/bctor_r4p.html" xlink:title="bctor_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="458,-805 395,-805 395,-781 458,-781 458,-805"/>
+<text text-anchor="middle" x="426.5" y="-790.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctor_R4P</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctor_r4p -->
+<g id="call~~graph~~CallGraph_edge31" class="edge"><title>interface~bcton&#45;&gt;proc~bctor_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-826.902C335.356,-820.839 362.575,-812.433 384.998,-805.508"/>
+<polygon fill="#000000" stroke="#000000" points="386.075,-808.839 394.597,-802.544 384.009,-802.15 386.075,-808.839"/>
+</g>
+<!-- proc~create~4 -->
+<g id="call~~graph~~CallGraph_node40" class="node"><title>proc~create~4</title>
+<g id="a_call~~graph~~CallGraph_node40"><a xlink:href="../proc/create%7E4.html" xlink:title="create">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-2670 77,-2670 77,-2646 131,-2646 131,-2670"/>
+<text text-anchor="middle" x="104" y="-2655.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create</text>
+</a>
+</g>
+</g>
+<!-- c -->
+<g id="call~~graph~~CallGraph_node153" class="node"><title>c</title>
+<polygon fill="#777777" stroke="#777777" points="315.5,-2670 261.5,-2670 261.5,-2646 315.5,-2646 315.5,-2670"/>
+<text text-anchor="middle" x="288.5" y="-2655.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">c</text>
+</g>
+<!-- proc~create~4&#45;&gt;c -->
+<g id="call~~graph~~CallGraph_edge33" class="edge"><title>proc~create~4&#45;&gt;c</title>
+<path fill="none" stroke="#000000" d="M131.148,-2658C162.589,-2658 215.545,-2658 251.002,-2658"/>
+<polygon fill="#000000" stroke="#000000" points="251.401,-2661.5 261.401,-2658 251.401,-2654.5 251.401,-2661.5"/>
+</g>
+<!-- proc~byte_size_r8p -->
+<g id="call~~graph~~CallGraph_node41" class="node"><title>proc~byte_size_r8p</title>
+<g id="a_call~~graph~~CallGraph_node41"><a xlink:href="../proc/byte_size_r8p.html" xlink:title="byte_size_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="330.5,-2586 246.5,-2586 246.5,-2562 330.5,-2562 330.5,-2586"/>
+<text text-anchor="middle" x="288.5" y="-2571.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">byte_size_R8P</text>
+</a>
+</g>
+</g>
+<!-- proc~ctor_r16p -->
+<g id="call~~graph~~CallGraph_node42" class="node"><title>proc~ctor_r16p</title>
+<g id="a_call~~graph~~CallGraph_node42"><a xlink:href="../proc/ctor_r16p.html" xlink:title="ctor_R16P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="135.5,-2712 72.5,-2712 72.5,-2688 135.5,-2688 135.5,-2712"/>
+<text text-anchor="middle" x="104" y="-2697.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ctor_R16P</text>
+</a>
+</g>
+</g>
+<!-- proc~matrix_to_string&#45;&gt;proc~vec_to_string -->
+<g id="call~~graph~~CallGraph_edge34" class="edge"><title>proc~matrix_to_string&#45;&gt;proc~vec_to_string</title>
+<path fill="none" stroke="#000000" d="M310.155,-24.1503C333.154,-37.679 370.497,-59.6456 396.438,-74.9047"/>
+<polygon fill="#000000" stroke="#000000" points="394.702,-77.944 405.096,-79.9975 398.251,-71.9105 394.702,-77.944"/>
+</g>
+<!-- proc~compute -->
+<g id="call~~graph~~CallGraph_node44" class="node"><title>proc~compute</title>
+<g id="a_call~~graph~~CallGraph_node44"><a xlink:href="../proc/compute.html" xlink:title="compute">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-2754 77,-2754 77,-2730 131,-2730 131,-2754"/>
+<text text-anchor="middle" x="104" y="-2739.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute</text>
+</a>
+</g>
+</g>
+<!-- proc~description~8 -->
+<g id="call~~graph~~CallGraph_node45" class="node"><title>proc~description~8</title>
+<g id="a_call~~graph~~CallGraph_node45"><a xlink:href="../proc/description%7E8.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-2796 72,-2796 72,-2772 136,-2772 136,-2796"/>
+<text text-anchor="middle" x="104" y="-2781.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~description~2 -->
+<g id="call~~graph~~CallGraph_node46" class="node"><title>proc~description~2</title>
+<g id="a_call~~graph~~CallGraph_node46"><a xlink:href="../proc/description%7E2.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-2838 72,-2838 72,-2814 136,-2814 136,-2838"/>
+<text text-anchor="middle" x="104" y="-2823.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~add_str -->
+<g id="call~~graph~~CallGraph_node47" class="node"><title>proc~add_str</title>
+<g id="a_call~~graph~~CallGraph_node47"><a xlink:href="../proc/add_str.html" xlink:title="add_str">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-2880 77,-2880 77,-2856 131,-2856 131,-2880"/>
+<text text-anchor="middle" x="104" y="-2865.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">add_str</text>
+</a>
+</g>
+</g>
+<!-- proc~create~2 -->
+<g id="call~~graph~~CallGraph_node48" class="node"><title>proc~create~2</title>
+<g id="a_call~~graph~~CallGraph_node48"><a xlink:href="../proc/create%7E2.html" xlink:title="create">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-2922 77,-2922 77,-2898 131,-2898 131,-2922"/>
+<text text-anchor="middle" x="104" y="-2907.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create</text>
+</a>
+</g>
+</g>
+<!-- proc~bit_size_chr -->
+<g id="call~~graph~~CallGraph_node49" class="node"><title>proc~bit_size_chr</title>
+<g id="a_call~~graph~~CallGraph_node49"><a xlink:href="../proc/bit_size_chr.html" xlink:title="bit_size_chr">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="323.5,-2082 253.5,-2082 253.5,-2058 323.5,-2058 323.5,-2082"/>
+<text text-anchor="middle" x="288.5" y="-2067.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bit_size_chr</text>
+</a>
+</g>
+</g>
+<!-- proc~description~6 -->
+<g id="call~~graph~~CallGraph_node50" class="node"><title>proc~description~6</title>
+<g id="a_call~~graph~~CallGraph_node50"><a xlink:href="../proc/description%7E6.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-2964 72,-2964 72,-2940 136,-2940 136,-2964"/>
+<text text-anchor="middle" x="104" y="-2949.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~add_3d_plot -->
+<g id="call~~graph~~CallGraph_node51" class="node"><title>proc~add_3d_plot</title>
+<g id="a_call~~graph~~CallGraph_node51"><a xlink:href="../proc/add_3d_plot.html" xlink:title="add_3d_plot">
+<polygon fill="#d9534f" stroke="#d9534f" points="324.5,-146 252.5,-146 252.5,-122 324.5,-122 324.5,-146"/>
+<text text-anchor="middle" x="288.5" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">add_3d_plot</text>
+</a>
+</g>
+</g>
+<!-- proc~add_3d_plot&#45;&gt;proc~optional_int_to_string -->
+<g id="call~~graph~~CallGraph_edge36" class="edge"><title>proc~add_3d_plot&#45;&gt;proc~optional_int_to_string</title>
+<path fill="none" stroke="#000000" d="M316.014,-146.104C321.692,-148.889 327.603,-151.936 333,-155 356.433,-168.304 381.917,-185.313 400.191,-197.988"/>
+<polygon fill="#000000" stroke="#000000" points="398.342,-200.966 408.543,-203.827 402.353,-195.229 398.342,-200.966"/>
+</g>
+<!-- proc~add_3d_plot&#45;&gt;proc~vec_to_string -->
+<g id="call~~graph~~CallGraph_edge35" class="edge"><title>proc~add_3d_plot&#45;&gt;proc~vec_to_string</title>
+<path fill="none" stroke="#000000" d="M324.523,-123.184C340.992,-118.098 360.865,-111.961 378.61,-106.481"/>
+<polygon fill="#000000" stroke="#000000" points="379.692,-109.81 388.214,-103.515 377.626,-103.122 379.692,-109.81"/>
+</g>
+<!-- proc~bctoi_i4p&#45;&gt;interface~str -->
+<g id="call~~graph~~CallGraph_edge37" class="edge"><title>proc~bctoi_i4p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M455.186,-715.894C464.889,-719.157 475.48,-723.745 484,-730 515.062,-752.805 540.279,-790.537 554.059,-814.018"/>
+<polygon fill="#000000" stroke="#000000" points="551.094,-815.883 559.089,-822.835 557.174,-812.415 551.094,-815.883"/>
+</g>
+<!-- proc~create_alpha_coefficients_z_constructor -->
+<g id="call~~graph~~CallGraph_node53" class="node"><title>proc~create_alpha_coefficients_z_constructor</title>
+<g id="a_call~~graph~~CallGraph_node53"><a xlink:href="../proc/create_alpha_coefficients_z_constructor.html" xlink:title="create_alpha_coefficients_z_constructor">
+<polygon fill="#d9534f" stroke="#d9534f" points="206.5,-3006 1.5,-3006 1.5,-2982 206.5,-2982 206.5,-3006"/>
+<text text-anchor="middle" x="104" y="-2991.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_alpha_coefficients_z_constructor</text>
+</a>
+</g>
+</g>
+<!-- interface~byte_size -->
+<g id="call~~graph~~CallGraph_node54" class="node"><title>interface~byte_size</title>
+<g id="a_call~~graph~~CallGraph_node54"><a xlink:href="../interface/byte_size.html" xlink:title="byte_size">
+<polygon fill="#a7506f" stroke="#a7506f" points="133,-2502 75,-2502 75,-2478 133,-2478 133,-2502"/>
+<text text-anchor="middle" x="104" y="-2487.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">byte_size</text>
+</a>
+</g>
+</g>
+<!-- interface~byte_size&#45;&gt;proc~byte_size_i2p -->
+<g id="call~~graph~~CallGraph_edge39" class="edge"><title>interface~byte_size&#45;&gt;proc~byte_size_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M133.346,-2488.95C155.904,-2489.59 187.058,-2493.94 208,-2511 239.493,-2536.65 215.931,-2565.64 244,-2595 244.913,-2595.95 245.878,-2596.87 246.885,-2597.75"/>
+<polygon fill="#000000" stroke="#000000" points="245.115,-2600.79 255.276,-2603.79 249.205,-2595.11 245.115,-2600.79"/>
+</g>
+<!-- interface~byte_size&#45;&gt;proc~byte_size_r8p -->
+<g id="call~~graph~~CallGraph_edge43" class="edge"><title>interface~byte_size&#45;&gt;proc~byte_size_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M133.436,-2490.85C155.176,-2492.63 185.19,-2497.58 208,-2511 229.192,-2523.46 224.517,-2538 244,-2553 245.595,-2554.23 247.273,-2555.41 249.005,-2556.54"/>
+<polygon fill="#000000" stroke="#000000" points="247.578,-2559.76 257.974,-2561.81 251.12,-2553.73 247.578,-2559.76"/>
+</g>
+<!-- proc~byte_size_i1p -->
+<g id="call~~graph~~CallGraph_node61" class="node"><title>proc~byte_size_i1p</title>
+<g id="a_call~~graph~~CallGraph_node61"><a xlink:href="../proc/byte_size_i1p.html" xlink:title="byte_size_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="328,-2544 249,-2544 249,-2520 328,-2520 328,-2544"/>
+<text text-anchor="middle" x="288.5" y="-2529.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">byte_size_I1P</text>
+</a>
+</g>
+</g>
+<!-- interface~byte_size&#45;&gt;proc~byte_size_i1p -->
+<g id="call~~graph~~CallGraph_edge41" class="edge"><title>interface~byte_size&#45;&gt;proc~byte_size_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M133.072,-2495.27C153.835,-2499.28 182.766,-2505.1 208,-2511 218.008,-2513.34 228.676,-2516.03 238.839,-2518.68"/>
+<polygon fill="#000000" stroke="#000000" points="238.23,-2522.13 248.792,-2521.3 240.016,-2515.37 238.23,-2522.13"/>
+</g>
+<!-- proc~byte_size_r4p -->
+<g id="call~~graph~~CallGraph_node63" class="node"><title>proc~byte_size_r4p</title>
+<g id="a_call~~graph~~CallGraph_node63"><a xlink:href="../proc/byte_size_r4p.html" xlink:title="byte_size_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="330.5,-2502 246.5,-2502 246.5,-2478 330.5,-2478 330.5,-2502"/>
+<text text-anchor="middle" x="288.5" y="-2487.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">byte_size_R4P</text>
+</a>
+</g>
+</g>
+<!-- interface~byte_size&#45;&gt;proc~byte_size_r4p -->
+<g id="call~~graph~~CallGraph_edge40" class="edge"><title>interface~byte_size&#45;&gt;proc~byte_size_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M133.116,-2490C160.571,-2490 202.983,-2490 236.412,-2490"/>
+<polygon fill="#000000" stroke="#000000" points="236.472,-2493.5 246.471,-2490 236.471,-2486.5 236.472,-2493.5"/>
+</g>
+<!-- proc~byte_size_i8p -->
+<g id="call~~graph~~CallGraph_node71" class="node"><title>proc~byte_size_i8p</title>
+<g id="a_call~~graph~~CallGraph_node71"><a xlink:href="../proc/byte_size_i8p.html" xlink:title="byte_size_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="328,-2460 249,-2460 249,-2436 328,-2436 328,-2460"/>
+<text text-anchor="middle" x="288.5" y="-2445.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">byte_size_I8P</text>
+</a>
+</g>
+</g>
+<!-- interface~byte_size&#45;&gt;proc~byte_size_i8p -->
+<g id="call~~graph~~CallGraph_edge38" class="edge"><title>interface~byte_size&#45;&gt;proc~byte_size_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M133.072,-2484.73C153.835,-2480.72 182.766,-2474.9 208,-2469 218.008,-2466.66 228.676,-2463.97 238.839,-2461.32"/>
+<polygon fill="#000000" stroke="#000000" points="240.016,-2464.63 248.792,-2458.7 238.23,-2457.87 240.016,-2464.63"/>
+</g>
+<!-- proc~byte_size_i4p -->
+<g id="call~~graph~~CallGraph_node98" class="node"><title>proc~byte_size_i4p</title>
+<g id="a_call~~graph~~CallGraph_node98"><a xlink:href="../proc/byte_size_i4p.html" xlink:title="byte_size_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="328,-2418 249,-2418 249,-2394 328,-2394 328,-2418"/>
+<text text-anchor="middle" x="288.5" y="-2403.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">byte_size_I4P</text>
+</a>
+</g>
+</g>
+<!-- interface~byte_size&#45;&gt;proc~byte_size_i4p -->
+<g id="call~~graph~~CallGraph_edge44" class="edge"><title>interface~byte_size&#45;&gt;proc~byte_size_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M133.436,-2489.15C155.176,-2487.37 185.19,-2482.42 208,-2469 229.192,-2456.54 224.517,-2442 244,-2427 245.595,-2425.77 247.273,-2424.59 249.005,-2423.46"/>
+<polygon fill="#000000" stroke="#000000" points="251.12,-2426.27 257.974,-2418.19 247.578,-2420.24 251.12,-2426.27"/>
+</g>
+<!-- proc~byte_size_chr -->
+<g id="call~~graph~~CallGraph_node126" class="node"><title>proc~byte_size_chr</title>
+<g id="a_call~~graph~~CallGraph_node126"><a xlink:href="../proc/byte_size_chr.html" xlink:title="byte_size_chr">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="328,-2376 249,-2376 249,-2352 328,-2352 328,-2376"/>
+<text text-anchor="middle" x="288.5" y="-2361.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">byte_size_chr</text>
+</a>
+</g>
+</g>
+<!-- interface~byte_size&#45;&gt;proc~byte_size_chr -->
+<g id="call~~graph~~CallGraph_edge42" class="edge"><title>interface~byte_size&#45;&gt;proc~byte_size_chr</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M133.346,-2491.05C155.904,-2490.41 187.058,-2486.06 208,-2469 239.493,-2443.35 215.931,-2414.36 244,-2385 244.913,-2384.05 245.878,-2383.13 246.885,-2382.25"/>
+<polygon fill="#000000" stroke="#000000" points="249.205,-2384.89 255.276,-2376.21 245.115,-2379.21 249.205,-2384.89"/>
+</g>
+<!-- interface~str&#45;&gt;proc~str_r8p -->
+<g id="call~~graph~~CallGraph_edge62" class="edge"><title>interface~str&#45;&gt;proc~str_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M568.613,-822.735C573.862,-767.858 598.042,-545.683 649,-503 687.2,-471.004 837.373,-476.661 907.306,-481.224"/>
+<polygon fill="#000000" stroke="#000000" points="907.201,-484.725 917.416,-481.913 907.677,-477.742 907.201,-484.725"/>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_i2p -->
+<g id="call~~graph~~CallGraph_edge45" class="edge"><title>interface~str&#45;&gt;proc~strf_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M575.39,-847.013C588.35,-865.69 616.028,-901.373 649,-919 673.111,-931.89 703.714,-937.021 727.214,-938.994"/>
+<polygon fill="#000000" stroke="#000000" points="727.248,-942.504 737.463,-939.695 727.725,-935.521 727.248,-942.504"/>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_i1p -->
+<g id="call~~graph~~CallGraph_edge49" class="edge"><title>interface~str&#45;&gt;proc~strf_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M586.872,-847.059C602.947,-856.547 626.702,-869.397 649,-877 674.546,-885.711 704.598,-891.048 727.504,-894.161"/>
+<polygon fill="#000000" stroke="#000000" points="727.119,-897.64 737.483,-895.439 728.009,-890.697 727.119,-897.64"/>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_i8p -->
+<g id="call~~graph~~CallGraph_edge57" class="edge"><title>interface~str&#45;&gt;proc~strf_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M593.527,-837.789C627.793,-841.46 688.223,-847.935 727.032,-852.093"/>
+<polygon fill="#000000" stroke="#000000" points="727.049,-855.614 737.365,-853.2 727.795,-848.654 727.049,-855.614"/>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_r4p -->
+<g id="call~~graph~~CallGraph_edge51" class="edge"><title>interface~str&#45;&gt;proc~strf_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M593.527,-832.211C627.793,-828.54 688.223,-822.065 727.032,-817.907"/>
+<polygon fill="#000000" stroke="#000000" points="727.795,-821.346 737.365,-816.8 727.049,-814.386 727.795,-821.346"/>
+</g>
+<!-- proc~str_a_r4p -->
+<g id="call~~graph~~CallGraph_node56" class="node"><title>proc~str_a_r4p</title>
+<g id="a_call~~graph~~CallGraph_node56"><a xlink:href="../proc/str_a_r4p.html" xlink:title="str_a_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="796,-578 733,-578 733,-554 796,-554 796,-578"/>
+<text text-anchor="middle" x="764.5" y="-563.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_R4P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_r4p -->
+<g id="call~~graph~~CallGraph_edge61" class="edge"><title>interface~str&#45;&gt;proc~str_a_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M567.452,-822.883C567.996,-782.441 575.573,-651.055 649,-587 668.966,-569.583 698.51,-564.497 722.587,-563.681"/>
+<polygon fill="#000000" stroke="#000000" points="722.905,-567.178 732.868,-563.572 722.831,-560.178 722.905,-567.178"/>
+</g>
+<!-- proc~str_r4p -->
+<g id="call~~graph~~CallGraph_node60" class="node"><title>proc~str_r4p</title>
+<g id="a_call~~graph~~CallGraph_node60"><a xlink:href="../proc/str_r4p.html" xlink:title="str_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="971.5,-623 917.5,-623 917.5,-599 971.5,-599 971.5,-623"/>
+<text text-anchor="middle" x="944.5" y="-608.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_R4P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_r4p -->
+<g id="call~~graph~~CallGraph_edge56" class="edge"><title>interface~str&#45;&gt;proc~str_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M571.51,-822.88C580.693,-797.18 605.848,-737.262 649,-709 736.04,-651.993 786.771,-717.196 880,-671 898.907,-661.631 916.018,-644.725 927.702,-631.24"/>
+<polygon fill="#000000" stroke="#000000" points="930.533,-633.309 934.242,-623.385 925.154,-628.83 930.533,-633.309"/>
+</g>
+<!-- proc~str_i8p -->
+<g id="call~~graph~~CallGraph_node67" class="node"><title>proc~str_i8p</title>
+<g id="a_call~~graph~~CallGraph_node67"><a xlink:href="../proc/str_i8p.html" xlink:title="str_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="971.5,-1052 917.5,-1052 917.5,-1028 971.5,-1028 971.5,-1052"/>
+<text text-anchor="middle" x="944.5" y="-1037.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_I8P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_i8p -->
+<g id="call~~graph~~CallGraph_edge48" class="edge"><title>interface~str&#45;&gt;proc~str_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M567.919,-847.102C569.928,-883.97 581.568,-995.16 649,-1041 727.944,-1094.66 848.377,-1069.52 907.795,-1051.98"/>
+<polygon fill="#000000" stroke="#000000" points="908.931,-1055.29 917.475,-1049.03 906.889,-1048.6 908.931,-1055.29"/>
+</g>
+<!-- proc~strf_r8p -->
+<g id="call~~graph~~CallGraph_node82" class="node"><title>proc~strf_r8p</title>
+<g id="a_call~~graph~~CallGraph_node82"><a xlink:href="../proc/strf_r8p.html" xlink:title="strf_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="791.5,-662 737.5,-662 737.5,-638 791.5,-638 791.5,-662"/>
+<text text-anchor="middle" x="764.5" y="-647.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_R8P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_r8p -->
+<g id="call~~graph~~CallGraph_edge63" class="edge"><title>interface~str&#45;&gt;proc~strf_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M570.035,-822.788C576.942,-792.732 599.018,-714.808 649,-676 671.16,-658.794 702.588,-652.574 726.913,-650.5"/>
+<polygon fill="#000000" stroke="#000000" points="727.442,-653.973 737.193,-649.83 726.986,-646.988 727.442,-653.973"/>
+</g>
+<!-- proc~strf_i4p -->
+<g id="call~~graph~~CallGraph_node88" class="node"><title>proc~strf_i4p</title>
+<g id="a_call~~graph~~CallGraph_node88"><a xlink:href="../proc/strf_i4p.html" xlink:title="strf_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="791.5,-620 737.5,-620 737.5,-596 791.5,-596 791.5,-620"/>
+<text text-anchor="middle" x="764.5" y="-605.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_I4P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_i4p -->
+<g id="call~~graph~~CallGraph_edge46" class="edge"><title>interface~str&#45;&gt;proc~strf_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M568.357,-822.917C571.589,-787.054 586.294,-680.514 649,-629 670.726,-611.152 702.655,-606.501 727.28,-605.974"/>
+<polygon fill="#000000" stroke="#000000" points="727.335,-609.474 737.336,-605.974 727.336,-602.474 727.335,-609.474"/>
+</g>
+<!-- proc~str_a_i1p -->
+<g id="call~~graph~~CallGraph_node89" class="node"><title>proc~str_a_i1p</title>
+<g id="a_call~~graph~~CallGraph_node89"><a xlink:href="../proc/str_a_i1p.html" xlink:title="str_a_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="793.5,-784 735.5,-784 735.5,-760 793.5,-760 793.5,-784"/>
+<text text-anchor="middle" x="764.5" y="-769.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_I1P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_i1p -->
+<g id="call~~graph~~CallGraph_edge50" class="edge"><title>interface~str&#45;&gt;proc~str_a_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M586.872,-822.941C602.947,-813.453 626.702,-800.603 649,-793 673.605,-784.61 702.391,-779.35 724.945,-776.192"/>
+<polygon fill="#000000" stroke="#000000" points="725.694,-779.624 735.15,-774.846 724.778,-772.684 725.694,-779.624"/>
+</g>
+<!-- proc~str_bol -->
+<g id="call~~graph~~CallGraph_node93" class="node"><title>proc~str_bol</title>
+<g id="a_call~~graph~~CallGraph_node93"><a xlink:href="../proc/str_bol.html" xlink:title="str_bol">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="791.5,-536 737.5,-536 737.5,-512 791.5,-512 791.5,-536"/>
+<text text-anchor="middle" x="764.5" y="-521.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_bol</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_bol -->
+<g id="call~~graph~~CallGraph_edge60" class="edge"><title>interface~str&#45;&gt;proc~str_bol</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M569.209,-822.745C576.449,-772.619 606.193,-584.016 649,-545 669.911,-525.94 702.195,-521.447 727.158,-521.288"/>
+<polygon fill="#000000" stroke="#000000" points="727.298,-524.79 737.354,-521.455 727.413,-517.791 727.298,-524.79"/>
+</g>
+<!-- proc~str_a_i4p -->
+<g id="call~~graph~~CallGraph_node102" class="node"><title>proc~str_a_i4p</title>
+<g id="a_call~~graph~~CallGraph_node102"><a xlink:href="../proc/str_a_i4p.html" xlink:title="str_a_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="793.5,-1192 735.5,-1192 735.5,-1168 793.5,-1168 793.5,-1192"/>
+<text text-anchor="middle" x="764.5" y="-1177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_I4P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_i4p -->
+<g id="call~~graph~~CallGraph_edge52" class="edge"><title>interface~str&#45;&gt;proc~str_a_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M568.82,-847.197C574.87,-900.791 601.701,-1114.68 649,-1159 669.131,-1177.86 700.347,-1182.58 725.104,-1182.87"/>
+<polygon fill="#000000" stroke="#000000" points="725.308,-1186.37 735.267,-1182.76 725.228,-1179.37 725.308,-1186.37"/>
+</g>
+<!-- proc~str_i4p -->
+<g id="call~~graph~~CallGraph_node109" class="node"><title>proc~str_i4p</title>
+<g id="a_call~~graph~~CallGraph_node109"><a xlink:href="../proc/str_i4p.html" xlink:title="str_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="971.5,-1212 917.5,-1212 917.5,-1188 971.5,-1188 971.5,-1212"/>
+<text text-anchor="middle" x="944.5" y="-1197.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_I4P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_i4p -->
+<g id="call~~graph~~CallGraph_edge59" class="edge"><title>interface~str&#45;&gt;proc~str_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M568.231,-847.005C572.031,-904.97 591.61,-1154.98 649,-1201 723.816,-1260.99 847.085,-1232.54 907.649,-1213.04"/>
+<polygon fill="#000000" stroke="#000000" points="908.773,-1216.35 917.162,-1209.88 906.568,-1209.71 908.773,-1216.35"/>
+</g>
+<!-- proc~str_i1p -->
+<g id="call~~graph~~CallGraph_node121" class="node"><title>proc~str_i1p</title>
+<g id="a_call~~graph~~CallGraph_node121"><a xlink:href="../proc/str_i1p.html" xlink:title="str_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="971.5,-814 917.5,-814 917.5,-790 971.5,-790 971.5,-814"/>
+<text text-anchor="middle" x="944.5" y="-799.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_I1P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_i1p -->
+<g id="call~~graph~~CallGraph_edge53" class="edge"><title>interface~str&#45;&gt;proc~str_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M571.049,-847.273C579.474,-873.828 603.461,-936.221 649,-961 694.09,-985.535 837.5,-989.79 880,-961 925.719,-930.029 938.523,-860.272 942.108,-824.335"/>
+<polygon fill="#000000" stroke="#000000" points="945.597,-824.607 942.95,-814.348 938.622,-824.018 945.597,-824.607"/>
+</g>
+<!-- proc~str_i2p -->
+<g id="call~~graph~~CallGraph_node128" class="node"><title>proc~str_i2p</title>
+<g id="a_call~~graph~~CallGraph_node128"><a xlink:href="../proc/str_i2p.html" xlink:title="str_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="971.5,-1130 917.5,-1130 917.5,-1106 971.5,-1106 971.5,-1130"/>
+<text text-anchor="middle" x="944.5" y="-1115.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_I2P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_i2p -->
+<g id="call~~graph~~CallGraph_edge54" class="edge"><title>interface~str&#45;&gt;proc~str_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M567.597,-847.216C568.627,-886.768 577.619,-1012.21 649,-1072 687.582,-1104.32 837.557,-1114.08 907.373,-1116.91"/>
+<polygon fill="#000000" stroke="#000000" points="907.339,-1120.41 917.465,-1117.29 907.604,-1113.41 907.339,-1120.41"/>
+</g>
+<!-- proc~str_a_i8p -->
+<g id="call~~graph~~CallGraph_node136" class="node"><title>proc~str_a_i8p</title>
+<g id="a_call~~graph~~CallGraph_node136"><a xlink:href="../proc/str_a_i8p.html" xlink:title="str_a_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="793.5,-1032 735.5,-1032 735.5,-1008 793.5,-1008 793.5,-1032"/>
+<text text-anchor="middle" x="764.5" y="-1017.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_I8P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_i8p -->
+<g id="call~~graph~~CallGraph_edge55" class="edge"><title>interface~str&#45;&gt;proc~str_a_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M570.035,-847.212C576.942,-877.268 599.018,-955.192 649,-994 670.599,-1010.77 701.003,-1017.1 725.052,-1019.33"/>
+<polygon fill="#000000" stroke="#000000" points="725.035,-1022.84 735.262,-1020.08 725.542,-1015.86 725.035,-1022.84"/>
+</g>
+<!-- proc~str_a_r8p -->
+<g id="call~~graph~~CallGraph_node144" class="node"><title>proc~str_a_r8p</title>
+<g id="a_call~~graph~~CallGraph_node144"><a xlink:href="../proc/str_a_r8p.html" xlink:title="str_a_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="796,-456 733,-456 733,-432 796,-432 796,-456"/>
+<text text-anchor="middle" x="764.5" y="-441.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_R8P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_r8p -->
+<g id="call~~graph~~CallGraph_edge58" class="edge"><title>interface~str&#45;&gt;proc~str_a_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M568.495,-822.9C573.451,-765.565 597.328,-521.858 649,-470 668.136,-450.795 698.294,-444.527 722.855,-442.938"/>
+<polygon fill="#000000" stroke="#000000" points="723.144,-446.429 732.991,-442.519 722.855,-439.435 723.144,-446.429"/>
+</g>
+<!-- proc~str_a_i2p -->
+<g id="call~~graph~~CallGraph_node149" class="node"><title>proc~str_a_i2p</title>
+<g id="a_call~~graph~~CallGraph_node149"><a xlink:href="../proc/str_a_i2p.html" xlink:title="str_a_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="793.5,-1150 735.5,-1150 735.5,-1126 793.5,-1126 793.5,-1150"/>
+<text text-anchor="middle" x="764.5" y="-1135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_I2P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_i2p -->
+<g id="call~~graph~~CallGraph_edge47" class="edge"><title>interface~str&#45;&gt;proc~str_a_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M567.077,-847.143C566.28,-890.282 569.702,-1037.54 649,-1112 669.284,-1131.05 700.49,-1137.17 725.204,-1138.74"/>
+<polygon fill="#000000" stroke="#000000" points="725.211,-1142.25 735.347,-1139.16 725.5,-1135.25 725.211,-1142.25"/>
+</g>
+<!-- proc~str_a_r4p&#45;&gt;proc~str_r4p -->
+<g id="call~~graph~~CallGraph_edge64" class="edge"><title>proc~str_a_r4p&#45;&gt;proc~str_r4p</title>
+<path fill="none" stroke="#000000" d="M796.458,-570.135C819.693,-573.608 852.157,-579.253 880,-587 889.172,-589.552 898.878,-592.883 907.869,-596.248"/>
+<polygon fill="#000000" stroke="#000000" points="906.694,-599.546 917.284,-599.876 909.211,-593.014 906.694,-599.546"/>
+</g>
+<!-- proc~interpolate -->
+<g id="call~~graph~~CallGraph_node57" class="node"><title>proc~interpolate</title>
+<g id="a_call~~graph~~CallGraph_node57"><a xlink:href="../proc/interpolate.html" xlink:title="interpolate">
+<polygon fill="#d9534f" stroke="#d9534f" points="135.5,-3048 72.5,-3048 72.5,-3024 135.5,-3024 135.5,-3048"/>
+<text text-anchor="middle" x="104" y="-3033.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">interpolate</text>
+</a>
+</g>
+</g>
+<!-- proc~description~9 -->
+<g id="call~~graph~~CallGraph_node58" class="node"><title>proc~description~9</title>
+<g id="a_call~~graph~~CallGraph_node58"><a xlink:href="../proc/description%7E9.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-3090 72,-3090 72,-3066 136,-3066 136,-3090"/>
+<text text-anchor="middle" x="104" y="-3075.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~description~4 -->
+<g id="call~~graph~~CallGraph_node59" class="node"><title>proc~description~4</title>
+<g id="a_call~~graph~~CallGraph_node59"><a xlink:href="../proc/description%7E4.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-3132 72,-3132 72,-3108 136,-3108 136,-3132"/>
+<text text-anchor="middle" x="104" y="-3117.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~str_r4p&#45;&gt;proc~compact_real_string -->
+<g id="call~~graph~~CallGraph_edge65" class="edge"><title>proc~str_r4p&#45;&gt;proc~compact_real_string</title>
+<path fill="none" stroke="#000000" d="M971.757,-611C979.772,-611 988.962,-611 998.348,-611"/>
+<polygon fill="#000000" stroke="#000000" points="998.563,-614.5 1008.56,-611 998.563,-607.5 998.563,-614.5"/>
+</g>
+<!-- interface~strz -->
+<g id="call~~graph~~CallGraph_node64" class="node"><title>interface~strz</title>
+<g id="a_call~~graph~~CallGraph_node64"><a xlink:href="../interface/strz.html" xlink:title="strz">
+<polygon fill="#a7506f" stroke="#a7506f" points="315.5,-1767 261.5,-1767 261.5,-1743 315.5,-1743 315.5,-1767"/>
+<text text-anchor="middle" x="288.5" y="-1752.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strz</text>
+</a>
+</g>
+</g>
+<!-- proc~strz_i8p -->
+<g id="call~~graph~~CallGraph_node81" class="node"><title>proc~strz_i8p</title>
+<g id="a_call~~graph~~CallGraph_node81"><a xlink:href="../proc/strz_i8p.html" xlink:title="strz_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1725 399.5,-1725 399.5,-1701 453.5,-1701 453.5,-1725"/>
+<text text-anchor="middle" x="426.5" y="-1710.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strz_I8P</text>
+</a>
+</g>
+</g>
+<!-- interface~strz&#45;&gt;proc~strz_i8p -->
+<g id="call~~graph~~CallGraph_edge68" class="edge"><title>interface~strz&#45;&gt;proc~strz_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-1746.9C336.7,-1740.42 366.339,-1731.27 389.534,-1724.11"/>
+<polygon fill="#000000" stroke="#000000" points="390.836,-1727.37 399.358,-1721.07 388.771,-1720.68 390.836,-1727.37"/>
+</g>
+<!-- proc~strz_i1p -->
+<g id="call~~graph~~CallGraph_node116" class="node"><title>proc~strz_i1p</title>
+<g id="a_call~~graph~~CallGraph_node116"><a xlink:href="../proc/strz_i1p.html" xlink:title="strz_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1851 399.5,-1851 399.5,-1827 453.5,-1827 453.5,-1851"/>
+<text text-anchor="middle" x="426.5" y="-1836.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strz_I1P</text>
+</a>
+</g>
+</g>
+<!-- interface~strz&#45;&gt;proc~strz_i1p -->
+<g id="call~~graph~~CallGraph_edge67" class="edge"><title>interface~strz&#45;&gt;proc~strz_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M302.086,-1767.07C317.04,-1780.89 343.223,-1803.48 369,-1818 375.519,-1821.67 382.804,-1824.93 389.919,-1827.72"/>
+<polygon fill="#000000" stroke="#000000" points="388.833,-1831.05 399.427,-1831.23 391.257,-1824.48 388.833,-1831.05"/>
+</g>
+<!-- proc~strz_i2p -->
+<g id="call~~graph~~CallGraph_node117" class="node"><title>proc~strz_i2p</title>
+<g id="a_call~~graph~~CallGraph_node117"><a xlink:href="../proc/strz_i2p.html" xlink:title="strz_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1809 399.5,-1809 399.5,-1785 453.5,-1785 453.5,-1809"/>
+<text text-anchor="middle" x="426.5" y="-1794.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strz_I2P</text>
+</a>
+</g>
+</g>
+<!-- interface~strz&#45;&gt;proc~strz_i2p -->
+<g id="call~~graph~~CallGraph_edge66" class="edge"><title>interface~strz&#45;&gt;proc~strz_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-1763.1C336.7,-1769.58 366.339,-1778.73 389.534,-1785.89"/>
+<polygon fill="#000000" stroke="#000000" points="388.771,-1789.32 399.358,-1788.93 390.836,-1782.63 388.771,-1789.32"/>
+</g>
+<!-- proc~strz_i4p -->
+<g id="call~~graph~~CallGraph_node133" class="node"><title>proc~strz_i4p</title>
+<g id="a_call~~graph~~CallGraph_node133"><a xlink:href="../proc/strz_i4p.html" xlink:title="strz_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="453.5,-1767 399.5,-1767 399.5,-1743 453.5,-1743 453.5,-1767"/>
+<text text-anchor="middle" x="426.5" y="-1752.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strz_I4P</text>
+</a>
+</g>
+</g>
+<!-- interface~strz&#45;&gt;proc~strz_i4p -->
+<g id="call~~graph~~CallGraph_edge69" class="edge"><title>interface~strz&#45;&gt;proc~strz_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.722,-1755C336.606,-1755 366.074,-1755 389.221,-1755"/>
+<polygon fill="#000000" stroke="#000000" points="389.358,-1758.5 399.358,-1755 389.358,-1751.5 389.358,-1758.5"/>
+</g>
+<!-- proc~create_interpolator_constructor -->
+<g id="call~~graph~~CallGraph_node65" class="node"><title>proc~create_interpolator_constructor</title>
+<g id="a_call~~graph~~CallGraph_node65"><a xlink:href="../proc/create_interpolator_constructor.html" xlink:title="create_interpolator_constructor">
+<polygon fill="#d9534f" stroke="#d9534f" points="185,-3174 23,-3174 23,-3150 185,-3150 185,-3174"/>
+<text text-anchor="middle" x="104" y="-3159.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_interpolator_constructor</text>
+</a>
+</g>
+</g>
+<!-- proc~compute~5 -->
+<g id="call~~graph~~CallGraph_node66" class="node"><title>proc~compute~5</title>
+<g id="a_call~~graph~~CallGraph_node66"><a xlink:href="../proc/compute%7E5.html" xlink:title="compute">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3216 77,-3216 77,-3192 131,-3192 131,-3216"/>
+<text text-anchor="middle" x="104" y="-3201.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute</text>
+</a>
+</g>
+</g>
+<!-- proc~destroy~5 -->
+<g id="call~~graph~~CallGraph_node68" class="node"><title>proc~destroy~5</title>
+<g id="a_call~~graph~~CallGraph_node68"><a xlink:href="../proc/destroy%7E5.html" xlink:title="destroy">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3258 77,-3258 77,-3234 131,-3234 131,-3258"/>
+<text text-anchor="middle" x="104" y="-3243.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy</text>
+</a>
+</g>
+</g>
+<!-- proc~strf_r16p -->
+<g id="call~~graph~~CallGraph_node69" class="node"><title>proc~strf_r16p</title>
+<g id="a_call~~graph~~CallGraph_node69"><a xlink:href="../proc/strf_r16p.html" xlink:title="strf_R16P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="134,-3300 74,-3300 74,-3276 134,-3276 134,-3300"/>
+<text text-anchor="middle" x="104" y="-3285.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_R16P</text>
+</a>
+</g>
+</g>
+<!-- proc~initialize -->
+<g id="call~~graph~~CallGraph_node70" class="node"><title>proc~initialize</title>
+<g id="a_call~~graph~~CallGraph_node70"><a xlink:href="../proc/initialize.html" xlink:title="initialize">
+<polygon fill="#d9534f" stroke="#d9534f" points="315.5,-268 261.5,-268 261.5,-244 315.5,-244 315.5,-268"/>
+<text text-anchor="middle" x="288.5" y="-253.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">initialize</text>
+</a>
+</g>
+</g>
+<!-- proc~initialize&#45;&gt;proc~optional_int_to_string -->
+<g id="call~~graph~~CallGraph_edge71" class="edge"><title>proc~initialize&#45;&gt;proc~optional_int_to_string</title>
+<path fill="none" stroke="#000000" d="M315.722,-248.288C332.504,-243.352 354.83,-236.785 374.964,-230.864"/>
+<polygon fill="#000000" stroke="#000000" points="376.032,-234.198 384.638,-228.018 374.057,-227.482 376.032,-234.198"/>
+</g>
+<!-- proc~initialize&#45;&gt;proc~integer_to_string -->
+<g id="call~~graph~~CallGraph_edge70" class="edge"><title>proc~initialize&#45;&gt;proc~integer_to_string</title>
+<path fill="none" stroke="#000000" d="M315.964,-254.082C360.258,-250.873 450.34,-244.345 509.283,-240.074"/>
+<polygon fill="#000000" stroke="#000000" points="509.826,-243.544 519.547,-239.33 509.32,-236.562 509.826,-243.544"/>
+</g>
+<!-- proc~compute~4 -->
+<g id="call~~graph~~CallGraph_node72" class="node"><title>proc~compute~4</title>
+<g id="a_call~~graph~~CallGraph_node72"><a xlink:href="../proc/compute%7E4.html" xlink:title="compute">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3342 77,-3342 77,-3318 131,-3318 131,-3342"/>
+<text text-anchor="middle" x="104" y="-3327.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute</text>
+</a>
+</g>
+</g>
+<!-- opt -->
+<g id="call~~graph~~CallGraph_node154" class="node"><title>opt</title>
+<polygon fill="#777777" stroke="#777777" points="315.5,-3342 261.5,-3342 261.5,-3318 315.5,-3318 315.5,-3342"/>
+<text text-anchor="middle" x="288.5" y="-3327.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">opt</text>
+</g>
+<!-- proc~compute~4&#45;&gt;opt -->
+<g id="call~~graph~~CallGraph_edge72" class="edge"><title>proc~compute~4&#45;&gt;opt</title>
+<path fill="none" stroke="#000000" d="M131.148,-3330C162.589,-3330 215.545,-3330 251.002,-3330"/>
+<polygon fill="#000000" stroke="#000000" points="251.401,-3333.5 261.401,-3330 251.401,-3326.5 251.401,-3333.5"/>
+</g>
+<!-- proc~compute~2 -->
+<g id="call~~graph~~CallGraph_node73" class="node"><title>proc~compute~2</title>
+<g id="a_call~~graph~~CallGraph_node73"><a xlink:href="../proc/compute%7E2.html" xlink:title="compute">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3384 77,-3384 77,-3360 131,-3360 131,-3384"/>
+<text text-anchor="middle" x="104" y="-3369.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute</text>
+</a>
+</g>
+</g>
+<!-- proc~create~3 -->
+<g id="call~~graph~~CallGraph_node74" class="node"><title>proc~create~3</title>
+<g id="a_call~~graph~~CallGraph_node74"><a xlink:href="../proc/create%7E3.html" xlink:title="create">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3426 77,-3426 77,-3402 131,-3402 131,-3426"/>
+<text text-anchor="middle" x="104" y="-3411.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create</text>
+</a>
+</g>
+</g>
+<!-- proc~str_r16p&#45;&gt;proc~compact_real_string -->
+<g id="call~~graph~~CallGraph_edge73" class="edge"><title>proc~str_r16p&#45;&gt;proc~compact_real_string</title>
+<path fill="none" stroke="#000000" d="M961.768,-686.764C981.589,-671.856 1015.26,-646.531 1038.17,-629.301"/>
+<polygon fill="#000000" stroke="#000000" points="1040.48,-631.94 1046.37,-623.132 1036.27,-626.346 1040.48,-631.94"/>
+</g>
+<!-- proc~compute~6 -->
+<g id="call~~graph~~CallGraph_node76" class="node"><title>proc~compute~6</title>
+<g id="a_call~~graph~~CallGraph_node76"><a xlink:href="../proc/compute%7E6.html" xlink:title="compute">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3468 77,-3468 77,-3444 131,-3444 131,-3468"/>
+<text text-anchor="middle" x="104" y="-3453.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute</text>
+</a>
+</g>
+</g>
+<!-- proc~bit_size_r8p -->
+<g id="call~~graph~~CallGraph_node77" class="node"><title>proc~bit_size_r8p</title>
+<g id="a_call~~graph~~CallGraph_node77"><a xlink:href="../proc/bit_size_r8p.html" xlink:title="bit_size_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="326,-2040 251,-2040 251,-2016 326,-2016 326,-2040"/>
+<text text-anchor="middle" x="288.5" y="-2025.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bit_size_R8P</text>
+</a>
+</g>
+</g>
+<!-- proc~description~5 -->
+<g id="call~~graph~~CallGraph_node78" class="node"><title>proc~description~5</title>
+<g id="a_call~~graph~~CallGraph_node78"><a xlink:href="../proc/description%7E5.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-3510 72,-3510 72,-3486 136,-3486 136,-3510"/>
+<text text-anchor="middle" x="104" y="-3495.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~add_bar -->
+<g id="call~~graph~~CallGraph_node79" class="node"><title>proc~add_bar</title>
+<g id="a_call~~graph~~CallGraph_node79"><a xlink:href="../proc/add_bar.html" xlink:title="add_bar">
+<polygon fill="#d9534f" stroke="#d9534f" points="315.5,-104 261.5,-104 261.5,-80 315.5,-80 315.5,-104"/>
+<text text-anchor="middle" x="288.5" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">add_bar</text>
+</a>
+</g>
+</g>
+<!-- proc~add_bar&#45;&gt;proc~vec_to_string -->
+<g id="call~~graph~~CallGraph_edge74" class="edge"><title>proc~add_bar&#45;&gt;proc~vec_to_string</title>
+<path fill="none" stroke="#000000" d="M315.722,-92C333.433,-92 357.317,-92 378.285,-92"/>
+<polygon fill="#000000" stroke="#000000" points="378.304,-95.5001 388.304,-92 378.304,-88.5001 378.304,-95.5001"/>
+</g>
+<!-- proc~create_smoothness_indicators_js_constructor -->
+<g id="call~~graph~~CallGraph_node80" class="node"><title>proc~create_smoothness_indicators_js_constructor</title>
+<g id="a_call~~graph~~CallGraph_node80"><a xlink:href="../proc/create_smoothness_indicators_js_constructor.html" xlink:title="create_smoothness_indicators_js_constructor">
+<polygon fill="#d9534f" stroke="#d9534f" points="880,-372 649,-372 649,-348 880,-348 880,-372"/>
+<text text-anchor="middle" x="764.5" y="-357.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_smoothness_indicators_js_constructor</text>
+</a>
+</g>
+</g>
+<!-- proc~wenoof_create -->
+<g id="call~~graph~~CallGraph_node83" class="node"><title>proc~wenoof_create</title>
+<g id="a_call~~graph~~CallGraph_node83"><a xlink:href="../proc/wenoof_create.html" xlink:title="wenoof_create">
+<polygon fill="#d9534f" stroke="#d9534f" points="608,-351 525,-351 525,-327 608,-327 608,-351"/>
+<text text-anchor="middle" x="566.5" y="-336.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_create</text>
+</a>
+</g>
+</g>
+<!-- proc~wenoof_create&#45;&gt;proc~create_alpha_coefficients_js_constructor -->
+<g id="call~~graph~~CallGraph_edge79" class="edge"><title>proc~wenoof_create&#45;&gt;proc~create_alpha_coefficients_js_constructor</title>
+<path fill="none" stroke="#000000" d="M586.872,-351.059C602.947,-360.547 626.702,-373.397 649,-381 656.263,-383.476 663.89,-385.68 671.614,-387.638"/>
+<polygon fill="#000000" stroke="#000000" points="670.888,-391.063 681.429,-389.988 672.518,-384.255 670.888,-391.063"/>
+</g>
+<!-- proc~wenoof_create&#45;&gt;proc~create_smoothness_indicators_js_constructor -->
+<g id="call~~graph~~CallGraph_edge78" class="edge"><title>proc~wenoof_create&#45;&gt;proc~create_smoothness_indicators_js_constructor</title>
+<path fill="none" stroke="#000000" d="M608.111,-343.351C618.185,-344.431 629.509,-345.644 641.332,-346.911"/>
+<polygon fill="#000000" stroke="#000000" points="641.05,-350.4 651.366,-347.986 641.796,-343.44 641.05,-350.4"/>
+</g>
+<!-- proc~create_optimal_weights_js_constructor -->
+<g id="call~~graph~~CallGraph_node84" class="node"><title>proc~create_optimal_weights_js_constructor</title>
+<g id="a_call~~graph~~CallGraph_node84"><a xlink:href="../proc/create_optimal_weights_js_constructor.html" xlink:title="create_optimal_weights_js_constructor">
+<polygon fill="#d9534f" stroke="#d9534f" points="863.5,-330 665.5,-330 665.5,-306 863.5,-306 863.5,-330"/>
+<text text-anchor="middle" x="764.5" y="-315.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_optimal_weights_js_constructor</text>
+</a>
+</g>
+</g>
+<!-- proc~wenoof_create&#45;&gt;proc~create_optimal_weights_js_constructor -->
+<g id="call~~graph~~CallGraph_edge77" class="edge"><title>proc~wenoof_create&#45;&gt;proc~create_optimal_weights_js_constructor</title>
+<path fill="none" stroke="#000000" d="M608.111,-334.649C621.947,-333.166 638.139,-331.432 654.748,-329.652"/>
+<polygon fill="#000000" stroke="#000000" points="655.555,-333.086 665.125,-328.54 654.809,-326.125 655.555,-333.086"/>
+</g>
+<!-- proc~create_interpolator_js_constructor -->
+<g id="call~~graph~~CallGraph_node108" class="node"><title>proc~create_interpolator_js_constructor</title>
+<g id="a_call~~graph~~CallGraph_node108"><a xlink:href="../proc/create_interpolator_js_constructor.html" xlink:title="create_interpolator_js_constructor">
+<polygon fill="#d9534f" stroke="#d9534f" points="852,-288 677,-288 677,-264 852,-264 852,-288"/>
+<text text-anchor="middle" x="764.5" y="-273.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_interpolator_js_constructor</text>
+</a>
+</g>
+</g>
+<!-- proc~wenoof_create&#45;&gt;proc~create_interpolator_js_constructor -->
+<g id="call~~graph~~CallGraph_edge75" class="edge"><title>proc~wenoof_create&#45;&gt;proc~create_interpolator_js_constructor</title>
+<path fill="none" stroke="#000000" d="M586.872,-326.941C602.947,-317.453 626.702,-304.603 649,-297 656.263,-294.524 663.89,-292.32 671.614,-290.362"/>
+<polygon fill="#000000" stroke="#000000" points="672.518,-293.745 681.429,-288.012 670.888,-286.937 672.518,-293.745"/>
+</g>
+<!-- proc~create_polynomials_js_constructor -->
+<g id="call~~graph~~CallGraph_node143" class="node"><title>proc~create_polynomials_js_constructor</title>
+<g id="a_call~~graph~~CallGraph_node143"><a xlink:href="../proc/create_polynomials_js_constructor.html" xlink:title="create_polynomials_js_constructor">
+<polygon fill="#d9534f" stroke="#d9534f" points="853.5,-246 675.5,-246 675.5,-222 853.5,-222 853.5,-246"/>
+<text text-anchor="middle" x="764.5" y="-231.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_polynomials_js_constructor</text>
+</a>
+</g>
+</g>
+<!-- proc~wenoof_create&#45;&gt;proc~create_polynomials_js_constructor -->
+<g id="call~~graph~~CallGraph_edge76" class="edge"><title>proc~wenoof_create&#45;&gt;proc~create_polynomials_js_constructor</title>
+<path fill="none" stroke="#000000" d="M575.39,-326.987C588.35,-308.31 616.028,-272.627 649,-255 654.252,-252.192 659.812,-249.752 665.54,-247.633"/>
+<polygon fill="#000000" stroke="#000000" points="666.942,-250.855 675.313,-244.361 664.719,-244.217 666.942,-250.855"/>
+</g>
+<!-- proc~penf_init -->
+<g id="call~~graph~~CallGraph_node86" class="node"><title>proc~penf_init</title>
+<g id="a_call~~graph~~CallGraph_node86"><a xlink:href="../proc/penf_init.html" xlink:title="penf_init">
+<polygon fill="#d9534f" stroke="#d9534f" points="315.5,-679 261.5,-679 261.5,-655 315.5,-655 315.5,-679"/>
+<text text-anchor="middle" x="288.5" y="-664.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_init</text>
+</a>
+</g>
+</g>
+<!-- proc~penf_init&#45;&gt;proc~check_endian -->
+<g id="call~~graph~~CallGraph_edge80" class="edge"><title>proc~penf_init&#45;&gt;proc~check_endian</title>
+<path fill="none" stroke="#000000" d="M315.722,-667C332.956,-667 356.036,-667 376.586,-667"/>
+<polygon fill="#000000" stroke="#000000" points="376.744,-670.5 386.744,-667 376.744,-663.5 376.744,-670.5"/>
+</g>
+<!-- proc~byte_size_r16p -->
+<g id="call~~graph~~CallGraph_node87" class="node"><title>proc~byte_size_r16p</title>
+<g id="a_call~~graph~~CallGraph_node87"><a xlink:href="../proc/byte_size_r16p.html" xlink:title="byte_size_R16P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="149,-3552 59,-3552 59,-3528 149,-3528 149,-3552"/>
+<text text-anchor="middle" x="104" y="-3537.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">byte_size_R16P</text>
+</a>
+</g>
+</g>
+<!-- proc~str_a_i1p&#45;&gt;proc~str_i1p -->
+<g id="call~~graph~~CallGraph_edge81" class="edge"><title>proc~str_a_i1p&#45;&gt;proc~str_i1p</title>
+<path fill="none" stroke="#000000" d="M793.705,-776.754C824.532,-781.949 874,-790.286 907.581,-795.946"/>
+<polygon fill="#000000" stroke="#000000" points="907.012,-799.4 917.454,-797.61 908.175,-792.497 907.012,-799.4"/>
+</g>
+<!-- proc~bctoi_i8p&#45;&gt;interface~str -->
+<g id="call~~graph~~CallGraph_edge82" class="edge"><title>proc~bctoi_i8p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M455.186,-954.106C464.889,-950.843 475.48,-946.255 484,-940 515.062,-917.195 540.279,-879.463 554.059,-855.982"/>
+<polygon fill="#000000" stroke="#000000" points="557.174,-857.585 559.089,-847.165 551.094,-854.117 557.174,-857.585"/>
+</g>
+<!-- proc~destroy~10 -->
+<g id="call~~graph~~CallGraph_node94" class="node"><title>proc~destroy~10</title>
+<g id="a_call~~graph~~CallGraph_node94"><a xlink:href="../proc/destroy%7E10.html" xlink:title="destroy">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3594 77,-3594 77,-3570 131,-3570 131,-3594"/>
+<text text-anchor="middle" x="104" y="-3579.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy</text>
+</a>
+</g>
+</g>
+<!-- proc~destroy~6 -->
+<g id="call~~graph~~CallGraph_node95" class="node"><title>proc~destroy~6</title>
+<g id="a_call~~graph~~CallGraph_node95"><a xlink:href="../proc/destroy%7E6.html" xlink:title="destroy">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3636 77,-3636 77,-3612 131,-3612 131,-3636"/>
+<text text-anchor="middle" x="104" y="-3621.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy</text>
+</a>
+</g>
+</g>
+<!-- proc~destroy -->
+<g id="call~~graph~~CallGraph_node96" class="node"><title>proc~destroy</title>
+<g id="a_call~~graph~~CallGraph_node96"><a xlink:href="../proc/destroy.html" xlink:title="destroy">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3678 77,-3678 77,-3654 131,-3654 131,-3678"/>
+<text text-anchor="middle" x="104" y="-3663.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy</text>
+</a>
+</g>
+</g>
+<!-- proc~bctoi_i1p&#45;&gt;interface~str -->
+<g id="call~~graph~~CallGraph_edge83" class="edge"><title>proc~bctoi_i1p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M455.095,-868.602C476.472,-862.095 506.263,-853.029 529.513,-845.953"/>
+<polygon fill="#000000" stroke="#000000" points="530.808,-849.217 539.356,-842.957 528.77,-842.52 530.808,-849.217"/>
+</g>
+<!-- proc~create~9 -->
+<g id="call~~graph~~CallGraph_node99" class="node"><title>proc~create~9</title>
+<g id="a_call~~graph~~CallGraph_node99"><a xlink:href="../proc/create%7E9.html" xlink:title="create">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3720 77,-3720 77,-3696 131,-3696 131,-3720"/>
+<text text-anchor="middle" x="104" y="-3705.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create</text>
+</a>
+</g>
+</g>
+<!-- proc~destroy~8 -->
+<g id="call~~graph~~CallGraph_node100" class="node"><title>proc~destroy~8</title>
+<g id="a_call~~graph~~CallGraph_node100"><a xlink:href="../proc/destroy%7E8.html" xlink:title="destroy">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3762 77,-3762 77,-3738 131,-3738 131,-3762"/>
+<text text-anchor="middle" x="104" y="-3747.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy</text>
+</a>
+</g>
+</g>
+<!-- proc~create~8 -->
+<g id="call~~graph~~CallGraph_node101" class="node"><title>proc~create~8</title>
+<g id="a_call~~graph~~CallGraph_node101"><a xlink:href="../proc/create%7E8.html" xlink:title="create">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3804 77,-3804 77,-3780 131,-3780 131,-3804"/>
+<text text-anchor="middle" x="104" y="-3789.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create</text>
+</a>
+</g>
+</g>
+<!-- proc~str_a_i4p&#45;&gt;proc~str_i4p -->
+<g id="call~~graph~~CallGraph_edge84" class="edge"><title>proc~str_a_i4p&#45;&gt;proc~str_i4p</title>
+<path fill="none" stroke="#000000" d="M793.705,-1183.17C824.399,-1186.62 873.573,-1192.14 907.146,-1195.92"/>
+<polygon fill="#000000" stroke="#000000" points="907.126,-1199.43 917.454,-1197.07 907.908,-1192.48 907.126,-1199.43"/>
+</g>
+<!-- proc~compute~9 -->
+<g id="call~~graph~~CallGraph_node103" class="node"><title>proc~compute~9</title>
+<g id="a_call~~graph~~CallGraph_node103"><a xlink:href="../proc/compute%7E9.html" xlink:title="compute">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3846 77,-3846 77,-3822 131,-3822 131,-3846"/>
+<text text-anchor="middle" x="104" y="-3831.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute</text>
+</a>
+</g>
+</g>
+<!-- proc~savefig -->
+<g id="call~~graph~~CallGraph_node104" class="node"><title>proc~savefig</title>
+<g id="a_call~~graph~~CallGraph_node104"><a xlink:href="../proc/savefig.html" xlink:title="savefig">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-3888 77,-3888 77,-3864 131,-3864 131,-3888"/>
+<text text-anchor="middle" x="104" y="-3873.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">savefig</text>
+</a>
+</g>
+</g>
+<!-- proc~create~7 -->
+<g id="call~~graph~~CallGraph_node107" class="node"><title>proc~create~7</title>
+<g id="a_call~~graph~~CallGraph_node107"><a xlink:href="../proc/create%7E7.html" xlink:title="create">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-2628 77,-2628 77,-2604 131,-2604 131,-2628"/>
+<text text-anchor="middle" x="104" y="-2613.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create</text>
+</a>
+</g>
+</g>
+<!-- proc~create~7&#45;&gt;c -->
+<g id="call~~graph~~CallGraph_edge85" class="edge"><title>proc~create~7&#45;&gt;c</title>
+<path fill="none" stroke="#000000" d="M131.338,-2620.94C152.202,-2624.96 182.055,-2630.93 208,-2637 222.289,-2640.34 237.922,-2644.39 251.514,-2648.03"/>
+<polygon fill="#000000" stroke="#000000" points="250.888,-2651.49 261.455,-2650.72 252.717,-2644.73 250.888,-2651.49"/>
+</g>
+<!-- proc~bctoi_i2p&#45;&gt;interface~str -->
+<g id="call~~graph~~CallGraph_edge86" class="edge"><title>proc~bctoi_i2p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M455.095,-835C476.376,-835 505.996,-835 529.199,-835"/>
+<polygon fill="#000000" stroke="#000000" points="529.356,-838.5 539.356,-835 529.356,-831.5 529.356,-838.5"/>
+</g>
+<!-- proc~description~12 -->
+<g id="call~~graph~~CallGraph_node113" class="node"><title>proc~description~12</title>
+<g id="a_call~~graph~~CallGraph_node113"><a xlink:href="../proc/description%7E12.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-3930 72,-3930 72,-3906 136,-3906 136,-3930"/>
+<text text-anchor="middle" x="104" y="-3915.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~description~10 -->
+<g id="call~~graph~~CallGraph_node114" class="node"><title>proc~description~10</title>
+<g id="a_call~~graph~~CallGraph_node114"><a xlink:href="../proc/description%7E10.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-3972 72,-3972 72,-3948 136,-3948 136,-3972"/>
+<text text-anchor="middle" x="104" y="-3957.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~penf_print -->
+<g id="call~~graph~~CallGraph_node115" class="node"><title>proc~penf_print</title>
+<g id="a_call~~graph~~CallGraph_node115"><a xlink:href="../proc/penf_print.html" xlink:title="penf_print">
+<polygon fill="#d9534f" stroke="#d9534f" points="319,-1578 258,-1578 258,-1554 319,-1554 319,-1578"/>
+<text text-anchor="middle" x="288.5" y="-1563.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_print</text>
+</a>
+</g>
+</g>
+<!-- proc~execute -->
+<g id="call~~graph~~CallGraph_node119" class="node"><title>proc~execute</title>
+<g id="a_call~~graph~~CallGraph_node119"><a xlink:href="../proc/execute.html" xlink:title="execute">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-4014 77,-4014 77,-3990 131,-3990 131,-4014"/>
+<text text-anchor="middle" x="104" y="-3999.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">execute</text>
+</a>
+</g>
+</g>
+<!-- proc~compute~8 -->
+<g id="call~~graph~~CallGraph_node120" class="node"><title>proc~compute~8</title>
+<g id="a_call~~graph~~CallGraph_node120"><a xlink:href="../proc/compute%7E8.html" xlink:title="compute">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-4056 77,-4056 77,-4032 131,-4032 131,-4056"/>
+<text text-anchor="middle" x="104" y="-4041.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute</text>
+</a>
+</g>
+</g>
+<!-- proc~bstr_r16p -->
+<g id="call~~graph~~CallGraph_node127" class="node"><title>proc~bstr_r16p</title>
+<g id="a_call~~graph~~CallGraph_node127"><a xlink:href="../proc/bstr_r16p.html" xlink:title="bstr_R16P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="135.5,-4098 72.5,-4098 72.5,-4074 135.5,-4074 135.5,-4098"/>
+<text text-anchor="middle" x="104" y="-4083.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bstr_R16P</text>
+</a>
+</g>
+</g>
+<!-- proc~bctor_r16p -->
+<g id="call~~graph~~CallGraph_node129" class="node"><title>proc~bctor_r16p</title>
+<g id="a_call~~graph~~CallGraph_node129"><a xlink:href="../proc/bctor_r16p.html" xlink:title="bctor_R16P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="461,-931 392,-931 392,-907 461,-907 461,-931"/>
+<text text-anchor="middle" x="426.5" y="-916.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctor_R16P</text>
+</a>
+</g>
+</g>
+<!-- proc~bctor_r16p&#45;&gt;interface~str -->
+<g id="call~~graph~~CallGraph_edge87" class="edge"><title>proc~bctor_r16p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M461.111,-908.408C468.832,-905.461 476.864,-901.963 484,-898 506.367,-885.578 529.187,-867.365 544.969,-853.713"/>
+<polygon fill="#000000" stroke="#000000" points="547.35,-856.28 552.541,-847.044 542.723,-851.027 547.35,-856.28"/>
+</g>
+<!-- proc~interpolate~2 -->
+<g id="call~~graph~~CallGraph_node130" class="node"><title>proc~interpolate~2</title>
+<g id="a_call~~graph~~CallGraph_node130"><a xlink:href="../proc/interpolate%7E2.html" xlink:title="interpolate">
+<polygon fill="#d9534f" stroke="#d9534f" points="135.5,-4140 72.5,-4140 72.5,-4116 135.5,-4116 135.5,-4140"/>
+<text text-anchor="middle" x="104" y="-4125.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">interpolate</text>
+</a>
+</g>
+</g>
+<!-- proc~create -->
+<g id="call~~graph~~CallGraph_node131" class="node"><title>proc~create</title>
+<g id="a_call~~graph~~CallGraph_node131"><a xlink:href="../proc/create.html" xlink:title="create">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-4182 77,-4182 77,-4158 131,-4158 131,-4182"/>
+<text text-anchor="middle" x="104" y="-4167.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create</text>
+</a>
+</g>
+</g>
+<!-- proc~create_base_object -->
+<g id="call~~graph~~CallGraph_node132" class="node"><title>proc~create_base_object</title>
+<g id="a_call~~graph~~CallGraph_node132"><a xlink:href="../proc/create_base_object.html" xlink:title="create_base_object">
+<polygon fill="#d9534f" stroke="#d9534f" points="157,-4224 51,-4224 51,-4200 157,-4200 157,-4224"/>
+<text text-anchor="middle" x="104" y="-4209.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_base_object</text>
+</a>
+</g>
+</g>
+<!-- proc~description~11 -->
+<g id="call~~graph~~CallGraph_node135" class="node"><title>proc~description~11</title>
+<g id="a_call~~graph~~CallGraph_node135"><a xlink:href="../proc/description%7E11.html" xlink:title="description">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-4266 72,-4266 72,-4242 136,-4242 136,-4266"/>
+<text text-anchor="middle" x="104" y="-4251.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">description</text>
+</a>
+</g>
+</g>
+<!-- proc~str_a_i8p&#45;&gt;proc~str_i8p -->
+<g id="call~~graph~~CallGraph_edge88" class="edge"><title>proc~str_a_i8p&#45;&gt;proc~str_i8p</title>
+<path fill="none" stroke="#000000" d="M793.705,-1023.17C824.399,-1026.62 873.573,-1032.14 907.146,-1035.92"/>
+<polygon fill="#000000" stroke="#000000" points="907.126,-1039.43 917.454,-1037.07 907.908,-1032.48 907.126,-1039.43"/>
+</g>
+<!-- interface~bit_size -->
+<g id="call~~graph~~CallGraph_node137" class="node"><title>interface~bit_size</title>
+<g id="a_call~~graph~~CallGraph_node137"><a xlink:href="../interface/bit_size.html" xlink:title="bit_size">
+<polygon fill="#a7506f" stroke="#a7506f" points="131,-2082 77,-2082 77,-2058 131,-2058 131,-2082"/>
+<text text-anchor="middle" x="104" y="-2067.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bit_size</text>
+</a>
+</g>
+</g>
+<!-- interface~bit_size&#45;&gt;proc~bit_size_r4p -->
+<g id="call~~graph~~CallGraph_edge91" class="edge"><title>interface~bit_size&#45;&gt;proc~bit_size_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M131.338,-2074.94C152.202,-2078.96 182.055,-2084.93 208,-2091 218.749,-2093.51 230.258,-2096.42 241.087,-2099.26"/>
+<polygon fill="#000000" stroke="#000000" points="240.237,-2102.66 250.8,-2101.84 242.03,-2095.89 240.237,-2102.66"/>
+</g>
+<!-- interface~bit_size&#45;&gt;proc~bit_size_chr -->
+<g id="call~~graph~~CallGraph_edge89" class="edge"><title>interface~bit_size&#45;&gt;proc~bit_size_chr</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M131.148,-2070C160.266,-2070 207.839,-2070 242.874,-2070"/>
+<polygon fill="#000000" stroke="#000000" points="243.31,-2073.5 253.31,-2070 243.31,-2066.5 243.31,-2073.5"/>
+</g>
+<!-- interface~bit_size&#45;&gt;proc~bit_size_r8p -->
+<g id="call~~graph~~CallGraph_edge90" class="edge"><title>interface~bit_size&#45;&gt;proc~bit_size_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M131.338,-2065.06C152.202,-2061.04 182.055,-2055.07 208,-2049 218.749,-2046.49 230.258,-2043.58 241.087,-2040.74"/>
+<polygon fill="#000000" stroke="#000000" points="242.03,-2044.11 250.8,-2038.16 240.237,-2037.34 242.03,-2044.11"/>
+</g>
+<!-- proc~add_plot -->
+<g id="call~~graph~~CallGraph_node138" class="node"><title>proc~add_plot</title>
+<g id="a_call~~graph~~CallGraph_node138"><a xlink:href="../proc/add_plot.html" xlink:title="add_plot">
+<polygon fill="#d9534f" stroke="#d9534f" points="315.5,-188 261.5,-188 261.5,-164 315.5,-164 315.5,-188"/>
+<text text-anchor="middle" x="288.5" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">add_plot</text>
+</a>
+</g>
+</g>
+<!-- proc~add_plot&#45;&gt;proc~optional_int_to_string -->
+<g id="call~~graph~~CallGraph_edge93" class="edge"><title>proc~add_plot&#45;&gt;proc~optional_int_to_string</title>
+<path fill="none" stroke="#000000" d="M315.722,-183.712C332.504,-188.648 354.83,-195.215 374.964,-201.136"/>
+<polygon fill="#000000" stroke="#000000" points="374.057,-204.518 384.638,-203.982 376.032,-197.802 374.057,-204.518"/>
+</g>
+<!-- proc~add_plot&#45;&gt;proc~vec_to_string -->
+<g id="call~~graph~~CallGraph_edge92" class="edge"><title>proc~add_plot&#45;&gt;proc~vec_to_string</title>
+<path fill="none" stroke="#000000" d="M315.59,-164.182C321.405,-161.334 327.481,-158.188 333,-155 356.857,-141.219 382.664,-123.376 400.942,-110.199"/>
+<polygon fill="#000000" stroke="#000000" points="403.24,-112.856 409.268,-104.143 399.122,-107.194 403.24,-112.856"/>
+</g>
+<!-- proc~destroy~7 -->
+<g id="call~~graph~~CallGraph_node139" class="node"><title>proc~destroy~7</title>
+<g id="a_call~~graph~~CallGraph_node139"><a xlink:href="../proc/destroy%7E7.html" xlink:title="destroy">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-4308 77,-4308 77,-4284 131,-4284 131,-4308"/>
+<text text-anchor="middle" x="104" y="-4293.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy</text>
+</a>
+</g>
+</g>
+<!-- proc~create_alpha_coefficients -->
+<g id="call~~graph~~CallGraph_node140" class="node"><title>proc~create_alpha_coefficients</title>
+<g id="a_call~~graph~~CallGraph_node140"><a xlink:href="../proc/create_alpha_coefficients.html" xlink:title="create_alpha_coefficients">
+<polygon fill="#d9534f" stroke="#d9534f" points="171,-4350 37,-4350 37,-4326 171,-4326 171,-4350"/>
+<text text-anchor="middle" x="104" y="-4335.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">create_alpha_coefficients</text>
+</a>
+</g>
+</g>
+<!-- proc~compute~10 -->
+<g id="call~~graph~~CallGraph_node141" class="node"><title>proc~compute~10</title>
+<g id="a_call~~graph~~CallGraph_node141"><a xlink:href="../proc/compute%7E10.html" xlink:title="compute">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-4392 77,-4392 77,-4368 131,-4368 131,-4392"/>
+<text text-anchor="middle" x="104" y="-4377.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute</text>
+</a>
+</g>
+</g>
+<!-- proc~str_a_r8p&#45;&gt;proc~str_r8p -->
+<g id="call~~graph~~CallGraph_edge94" class="edge"><title>proc~str_a_r8p&#45;&gt;proc~str_r8p</title>
+<path fill="none" stroke="#000000" d="M796.099,-450.876C826.954,-457.81 874.574,-468.511 907.291,-475.863"/>
+<polygon fill="#000000" stroke="#000000" points="906.825,-479.346 917.349,-478.123 908.36,-472.516 906.825,-479.346"/>
+</g>
+<!-- proc~bctor_r4p&#45;&gt;interface~str -->
+<g id="call~~graph~~CallGraph_edge95" class="edge"><title>proc~bctor_r4p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M458.127,-802.321C479.198,-808.734 507.269,-817.278 529.425,-824.021"/>
+<polygon fill="#000000" stroke="#000000" points="528.556,-827.415 539.142,-826.978 530.594,-820.718 528.556,-827.415"/>
+</g>
+<!-- proc~destroy~2 -->
+<g id="call~~graph~~CallGraph_node146" class="node"><title>proc~destroy~2</title>
+<g id="a_call~~graph~~CallGraph_node146"><a xlink:href="../proc/destroy%7E2.html" xlink:title="destroy">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-4434 77,-4434 77,-4410 131,-4410 131,-4434"/>
+<text text-anchor="middle" x="104" y="-4419.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy</text>
+</a>
+</g>
+</g>
+<!-- proc~destroy~9 -->
+<g id="call~~graph~~CallGraph_node147" class="node"><title>proc~destroy~9</title>
+<g id="a_call~~graph~~CallGraph_node147"><a xlink:href="../proc/destroy%7E9.html" xlink:title="destroy">
+<polygon fill="#d9534f" stroke="#d9534f" points="131,-4476 77,-4476 77,-4452 131,-4452 131,-4476"/>
+<text text-anchor="middle" x="104" y="-4461.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy</text>
+</a>
+</g>
+</g>
+<!-- proc~str_a_i2p&#45;&gt;proc~str_i2p -->
+<g id="call~~graph~~CallGraph_edge96" class="edge"><title>proc~str_a_i2p&#45;&gt;proc~str_i2p</title>
+<path fill="none" stroke="#000000" d="M793.705,-1134.83C824.399,-1131.38 873.573,-1125.86 907.146,-1122.08"/>
+<polygon fill="#000000" stroke="#000000" points="907.908,-1125.52 917.454,-1120.93 907.126,-1118.57 907.908,-1125.52"/>
+</g>
+<!-- program~sin_reconstruction -->
+<g id="call~~graph~~CallGraph_node150" class="node"><title>program~sin_reconstruction</title>
+<g id="a_call~~graph~~CallGraph_node150"><a xlink:href="../program/sin_reconstruction.html" xlink:title="sin_reconstruction">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="476.5,-392 376.5,-392 376.5,-368 476.5,-368 476.5,-392"/>
+<text text-anchor="middle" x="426.5" y="-377.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sin_reconstruction</text>
+</a>
+</g>
+</g>
+<!-- program~sin_reconstruction&#45;&gt;interface~str -->
+<g id="call~~graph~~CallGraph_edge98" class="edge"><title>program~sin_reconstruction&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M431.191,-392.17C449.897,-453.845 534.292,-732.103 558.805,-812.924"/>
+<polygon fill="#000000" stroke="#000000" points="555.481,-814.025 561.733,-822.579 562.18,-811.994 555.481,-814.025"/>
+</g>
+<!-- program~sin_reconstruction&#45;&gt;proc~wenoof_create -->
+<g id="call~~graph~~CallGraph_edge97" class="edge"><title>program~sin_reconstruction&#45;&gt;proc~wenoof_create</title>
+<path fill="none" stroke="#000000" d="M468.158,-367.92C482.767,-363.58 499.428,-358.63 514.786,-354.067"/>
+<polygon fill="#000000" stroke="#000000" points="516.067,-357.338 524.656,-351.135 514.073,-350.628 516.067,-357.338"/>
+</g>
+<!-- program~compact_real -->
+<g id="call~~graph~~CallGraph_node151" class="node"><title>program~compact_real</title>
+<g id="a_call~~graph~~CallGraph_node151"><a xlink:href="../program/compact_real.html" xlink:title="compact_real">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="142.5,-659 65.5,-659 65.5,-635 142.5,-635 142.5,-659"/>
+<text text-anchor="middle" x="104" y="-644.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compact_real</text>
+</a>
+</g>
+</g>
+<!-- program~compact_real&#45;&gt;interface~str -->
+<g id="call~~graph~~CallGraph_edge100" class="edge"><title>program~compact_real&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M140.766,-634.93C212.593,-613.073 376.667,-575.397 484,-646 541.427,-683.775 558.568,-771.496 563.541,-812.773"/>
+<polygon fill="#000000" stroke="#000000" points="560.079,-813.31 564.624,-822.88 567.039,-812.565 560.079,-813.31"/>
+</g>
+<!-- program~compact_real&#45;&gt;proc~penf_init -->
+<g id="call~~graph~~CallGraph_edge99" class="edge"><title>program~compact_real&#45;&gt;proc~penf_init</title>
+<path fill="none" stroke="#000000" d="M142.814,-651.144C174.613,-654.629 219.779,-659.578 251.156,-663.017"/>
+<polygon fill="#000000" stroke="#000000" points="250.907,-666.511 261.229,-664.121 251.67,-659.552 250.907,-666.511"/>
+</g>
+<!-- program~test_all -->
+<g id="call~~graph~~CallGraph_node152" class="node"><title>program~test_all</title>
+<g id="a_call~~graph~~CallGraph_node152"><a xlink:href="../program/test_all.html" xlink:title="test_all">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="131,-1221 77,-1221 77,-1197 131,-1197 131,-1221"/>
+<text text-anchor="middle" x="104" y="-1206.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">test_all</text>
+</a>
+</g>
+</g>
+<!-- program~test_all&#45;&gt;interface~bstr -->
+<g id="call~~graph~~CallGraph_edge105" class="edge"><title>program~test_all&#45;&gt;interface~bstr</title>
+<path fill="none" stroke="#000000" d="M112.154,-1221.35C139.866,-1269.18 240.334,-1442.59 275.357,-1503.04"/>
+<polygon fill="#000000" stroke="#000000" points="272.354,-1504.84 280.395,-1511.74 278.411,-1501.33 272.354,-1504.84"/>
+</g>
+<!-- program~test_all&#45;&gt;interface~cton -->
+<g id="call~~graph~~CallGraph_edge104" class="edge"><title>program~test_all&#45;&gt;interface~cton</title>
+<path fill="none" stroke="#000000" d="M131.148,-1221.04C162.86,-1235.63 216.46,-1260.3 251.915,-1276.62"/>
+<polygon fill="#000000" stroke="#000000" points="250.853,-1279.99 261.401,-1280.99 253.78,-1273.63 250.853,-1279.99"/>
+</g>
+<!-- program~test_all&#45;&gt;interface~digit -->
+<g id="call~~graph~~CallGraph_edge101" class="edge"><title>program~test_all&#45;&gt;interface~digit</title>
+<path fill="none" stroke="#000000" d="M131.148,-1196.96C162.86,-1182.37 216.46,-1157.7 251.915,-1141.38"/>
+<polygon fill="#000000" stroke="#000000" points="253.78,-1144.37 261.401,-1137.01 250.853,-1138.01 253.78,-1144.37"/>
+</g>
+<!-- program~test_all&#45;&gt;interface~bcton -->
+<g id="call~~graph~~CallGraph_edge103" class="edge"><title>program~test_all&#45;&gt;interface~bcton</title>
+<path fill="none" stroke="#000000" d="M110.865,-1196.98C137.033,-1143.35 243.313,-925.553 277.121,-856.27"/>
+<polygon fill="#000000" stroke="#000000" points="280.325,-857.685 281.565,-847.163 274.034,-854.615 280.325,-857.685"/>
+</g>
+<!-- program~test_all&#45;&gt;interface~str -->
+<g id="call~~graph~~CallGraph_edge102" class="edge"><title>program~test_all&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M120.632,-1196.74C146.139,-1176.85 198.441,-1136.48 244,-1104 298.503,-1065.15 308.888,-1049.44 369,-1020 417.343,-996.324 442.548,-1016.34 484,-982 524.58,-948.382 548.464,-889.045 559.014,-857.002"/>
+<polygon fill="#000000" stroke="#000000" points="562.417,-857.848 562.085,-847.259 555.741,-855.744 562.417,-857.848"/>
+</g>
+<!-- program~test_all&#45;&gt;interface~strz -->
+<g id="call~~graph~~CallGraph_edge107" class="edge"><title>program~test_all&#45;&gt;interface~strz</title>
+<path fill="none" stroke="#000000" d="M109.068,-1221.17C132.44,-1291.1 249.667,-1641.81 280.213,-1733.2"/>
+<polygon fill="#000000" stroke="#000000" points="276.933,-1734.43 283.423,-1742.8 283.572,-1732.21 276.933,-1734.43"/>
+</g>
+<!-- program~test_all&#45;&gt;proc~penf_init -->
+<g id="call~~graph~~CallGraph_edge108" class="edge"><title>program~test_all&#45;&gt;proc~penf_init</title>
+<path fill="none" stroke="#000000" d="M109.068,-1196.92C132.44,-1127.51 249.667,-779.358 280.213,-688.641"/>
+<polygon fill="#000000" stroke="#000000" points="283.548,-689.704 283.423,-679.11 276.914,-687.47 283.548,-689.704"/>
+</g>
+<!-- program~test_all&#45;&gt;proc~penf_print -->
+<g id="call~~graph~~CallGraph_edge106" class="edge"><title>program~test_all&#45;&gt;proc~penf_print</title>
+<path fill="none" stroke="#000000" d="M106.817,-1221.07C114.531,-1268.45 148.66,-1444.01 244,-1545 245.59,-1546.68 247.344,-1548.25 249.207,-1549.7"/>
+<polygon fill="#000000" stroke="#000000" points="247.62,-1552.85 257.911,-1555.37 251.438,-1546.98 247.62,-1552.85"/>
+</g>
+</g>
+</svg>
+</div>
+                <script>var pancallgraphCallGraph = svgPanZoom('#callgraphCallGraph', {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,});
+                    </script>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="560pt" height="32pt"
+ viewBox="0.00 0.00 559.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 555.5,-28 555.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,-0 64,-0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,-0 136,-0 136,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="209.5,-24 154.5,-24 154.5,-0 209.5,-0 209.5,-24"/>
+<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,-0 364,-0 364,-24"/>
+<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,-0 436,-0 436,-24"/>
+<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="551.5,-24 454.5,-24 454.5,-0 551.5,-0 551.5,-24"/>
+<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
         </div>
       </div>
 
-    <hr>
-    <footer>
-        <div class="row">
-        <div class="col-md-6">&copy; 2015 WenOOF was written by Fortran-FOSS-Programmers Group. </div>
-        <div class="col-md-6"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a>.</span></div>
-        </div>
-        <br>
-    </footer>
+    <hr>    
     </div> <!-- /container -->
-
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> WenOOF was developed by Fortran-FOSS-Programmers</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -308,6 +2307,6 @@ All Procedures &ndash; WenOOF
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>

@@ -7,7 +7,7 @@
 	 
 	 <meta name="description" content="WENO interpolation Object Oriented Fortran library">
     
-    <meta name="author" content="Chris MacMackin" >
+    <meta name="author" content="Fortran-FOSS-Programmers" >
     <link rel="icon" href="../favicon.png">
 
     <title>wenoof &ndash; WenOOF</title>
@@ -25,12 +25,8 @@
     <![endif]-->
     
     <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
 
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
     
 
   </head>
@@ -38,7 +34,7 @@
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -52,13 +48,20 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 				
-                
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
             <li><a href="../lists/files.html">Source Files</a></li>
 				
 				
             <li><a href="../lists/modules.html">Modules</a></li>
 				
-				
+            
+                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
 				
 				
@@ -69,16 +72,27 @@
 				
             <li><a href="../lists/programs.html">Programs</a></li>
 				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
           </ul>
-        
-        <form action="../search.html" class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
-        </div>
-<!--
-        <button type="submit" class="btn btn-default">Submit</button>
--->
-        </form>
         
         </div><!--/.nav-collapse -->
       </div>
@@ -92,9 +106,9 @@
     <small>Module</small>
     
     </h1>
-	 
+    
 <div class="row">
-<div class="col-lg-12">
+  <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
      
@@ -103,6 +117,13 @@
      
     
     
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title=" 0.9% of total for modules and submodules.">44 statements</a>
+     </li> 
+     
+     
     <li><i class="fa fa-code"></i><a href="../src/wenoof.f90"> Source File</a></li>
      
   </ul>
@@ -112,129 +133,939 @@
   
      <li class="active">wenoof</li>
   </ol>
-  </div>
 </div>
-    
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
   </div>
   
   <div class="row">
-    <div class="col-lg-3">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
     
+<div id="sidebar">
   
-  
-  
-  
-  
-  
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title">Derived Types</h3></div>
-    <div class="list-group">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-0">Subroutines</a></h3></div>
+  <div class="list-group">
+    <div id="subs-0" class="panel-collapse collapse">
       
-      <a class="list-group-item" href="../module/wenoof.html#type-weno_factory">weno_factory</a>
-      
-    </div>
-  </div>
-  
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title">Subroutines</h3></div>
-    <div class="list-group">
-      
-      <a class="list-group-item" href="../module/wenoof.html#proc-create">create</a>
+      <a class="list-group-item" href="../module/wenoof.html#proc-wenoof_create">wenoof_create</a>
       
     </div>
   </div>
-  
-  
-  
-  
-  
+</div>
+
+
+
+
+
+
+
+
+
   <hr>
   
-  <div class="panel panel-default">
-    <div class="panel-heading text-left"><h3 class="panel-title">All Modules</h3></div>
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allmods-0">All Modules</a></h3></div>
+  <div id="allmods-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../module/ir_precision.html">IR_Precision</a>
+      <a class="list-group-item" href="../module/penf.html">penf</a>
+      
+      <a class="list-group-item" href="../module/penf_b_size.html">penf_b_size</a>
+      
+      <a class="list-group-item" href="../module/penf_global_parameters_variables.html">penf_global_parameters_variables</a>
+      
+      <a class="list-group-item" href="../module/penf_stringify.html">penf_stringify</a>
       
       <a class="list-group-item" href="../module/pyplot_module.html">pyplot_module</a>
       
-      <a class="list-group-item" href="../module/type_weno_interpolator.html">type_weno_interpolator</a>
-      
       <a class="list-group-item" href="../module/wenoof.html">wenoof</a>
+      
+      <a class="list-group-item" href="../module/wenoof_alpha_coefficients.html">wenoof_alpha_coefficients</a>
+      
+      <a class="list-group-item" href="../module/wenoof_alpha_coefficients_js.html">wenoof_alpha_coefficients_js</a>
+      
+      <a class="list-group-item" href="../module/wenoof_alpha_coefficients_m.html">wenoof_alpha_coefficients_m</a>
+      
+      <a class="list-group-item" href="../module/wenoof_alpha_coefficients_z.html">wenoof_alpha_coefficients_z</a>
+      
+      <a class="list-group-item" href="../module/wenoof_base_object.html">wenoof_base_object</a>
+      
+      <a class="list-group-item" href="../module/wenoof_interpolator.html">wenoof_interpolator</a>
+      
+      <a class="list-group-item" href="../module/wenoof_interpolator_js.html">wenoof_interpolator_js</a>
+      
+      <a class="list-group-item" href="../module/wenoof_objects_factory.html">wenoof_objects_factory</a>
+      
+      <a class="list-group-item" href="../module/wenoof_optimal_weights.html">wenoof_optimal_weights</a>
+      
+      <a class="list-group-item" href="../module/wenoof_optimal_weights_js.html">wenoof_optimal_weights_js</a>
+      
+      <a class="list-group-item" href="../module/wenoof_polynomials.html">wenoof_polynomials</a>
+      
+      <a class="list-group-item" href="../module/wenoof_polynomials_js.html">wenoof_polynomials_js</a>
+      
+      <a class="list-group-item" href="../module/wenoof_smoothness_indicators.html">wenoof_smoothness_indicators</a>
+      
+      <a class="list-group-item" href="../module/wenoof_smoothness_indicators_js.html">wenoof_smoothness_indicators_js</a>
       
     </div>
   </div>
-  
-  
+</div>
+
+
+</div>  
+
     </div>
     
-    <div class="col-lg-9" id='text'>
+    <div class="col-md-9" id='text'>
+      
     
   
     <ul class="list-inline">
       <li><h4>Uses:</h4></li>
       
-      <li><a href='../module/type_weno_interpolator.html'>type_weno_interpolator</a></li>
+      <li><a href='../module/penf.html'>penf</a></li>
       
-      <li>type_weno_interpolator_upwind</li>
+      <li><a href='../module/wenoof_alpha_coefficients.html'>wenoof_alpha_coefficients</a></li>
+      
+      <li><a href='../module/wenoof_alpha_coefficients_js.html'>wenoof_alpha_coefficients_js</a></li>
+      
+      <li><a href='../module/wenoof_alpha_coefficients_z.html'>wenoof_alpha_coefficients_z</a></li>
+      
+      <li><a href='../module/wenoof_alpha_coefficients_m.html'>wenoof_alpha_coefficients_m</a></li>
+      
+      <li><a href='../module/wenoof_interpolator.html'>wenoof_interpolator</a></li>
+      
+      <li><a href='../module/wenoof_interpolator_js.html'>wenoof_interpolator_js</a></li>
+      
+      <li><a href='../module/wenoof_optimal_weights.html'>wenoof_optimal_weights</a></li>
+      
+      <li><a href='../module/wenoof_optimal_weights_js.html'>wenoof_optimal_weights_js</a></li>
+      
+      <li><a href='../module/wenoof_polynomials.html'>wenoof_polynomials</a></li>
+      
+      <li><a href='../module/wenoof_polynomials_js.html'>wenoof_polynomials_js</a></li>
+      
+      <li><a href='../module/wenoof_smoothness_indicators.html'>wenoof_smoothness_indicators</a></li>
+      
+      <li><a href='../module/wenoof_smoothness_indicators_js.html'>wenoof_smoothness_indicators_js</a></li>
       
     </ul>
-  
+    
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: module~~wenoof~~UsesGraph Pages: 1 -->
+<svg id="modulewenoofUsesGraph" width="641pt" height="338pt"
+ viewBox="0.00 0.00 641.00 338.15" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~wenoof~~UsesGraph" class="graph" transform="scale(0.375953 0.375953) rotate(0) translate(4 895.447)">
+<title>module~~wenoof~~UsesGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-895.447 1701,-895.447 1701,4 -4,4"/>
+<!-- module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_node1" class="node"><title>module~wenoof</title>
+<polygon fill="none" stroke="black" points="1697,-614.839 1643,-614.839 1643,-590.839 1697,-590.839 1697,-614.839"/>
+<text text-anchor="middle" x="1670" y="-600.439" font-family="Helvetica,sans-Serif" font-size="10.50">wenoof</text>
+</g>
+<!-- module~wenoof_polynomials -->
+<g id="module~~wenoof~~UsesGraph_node2" class="node"><title>module~wenoof_polynomials</title>
+<g id="a_module~~wenoof~~UsesGraph_node2"><a xlink:href="../module/wenoof_polynomials.html" xlink:title="wenoof_polynomials">
+<polygon fill="#337ab7" stroke="#337ab7" points="907,-770.839 798,-770.839 798,-746.839 907,-746.839 907,-770.839"/>
+<text text-anchor="middle" x="852.5" y="-756.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_polynomials</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_polynomials&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge65" class="edge"><title>module~wenoof_polynomials&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M871.03,-771.055C892.979,-785.535 932.292,-808.835 970,-817.839 1220.18,-877.577 1311.17,-862.881 1545.5,-756.839"/>
+</g>
+<!-- module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_node4" class="node"><title>module~wenoof_interpolator_js</title>
+<g id="a_module~~wenoof~~UsesGraph_node4"><a xlink:href="../module/wenoof_interpolator_js.html" xlink:title="wenoof_interpolator_js">
+<polygon fill="#337ab7" stroke="#337ab7" points="1607,-614.839 1486,-614.839 1486,-590.839 1607,-590.839 1607,-614.839"/>
+<text text-anchor="middle" x="1546.5" y="-600.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator_js</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_polynomials&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge8" class="edge"><title>module~wenoof_polynomials&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-756.839C1171.06,-746.599 1210.05,-762.968 1307,-705.839 1328.18,-693.358 1323.01,-678.151 1343,-663.839 1363.43,-649.21 1370.82,-647.567 1395.5,-642.839"/>
+</g>
+<!-- module~wenoof_polynomials_js -->
+<g id="module~~wenoof~~UsesGraph_node6" class="node"><title>module~wenoof_polynomials_js</title>
+<g id="a_module~~wenoof~~UsesGraph_node6"><a xlink:href="../module/wenoof_polynomials_js.html" xlink:title="wenoof_polynomials_js">
+<polygon fill="#337ab7" stroke="#337ab7" points="1119.5,-808.839 996.5,-808.839 996.5,-784.839 1119.5,-784.839 1119.5,-808.839"/>
+<text text-anchor="middle" x="1058" y="-794.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_polynomials_js</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_polynomials&#45;&gt;module~wenoof_polynomials_js -->
+<g id="module~~wenoof~~UsesGraph_edge24" class="edge"><title>module~wenoof_polynomials&#45;&gt;module~wenoof_polynomials_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M907.233,-768.873C931.455,-773.396 960.388,-778.799 986.336,-783.644"/>
+<polygon fill="#000000" stroke="#000000" points="986.021,-787.146 996.494,-785.541 987.306,-780.265 986.021,-787.146"/>
+</g>
+<!-- module~wenoof_interpolator -->
+<g id="module~~wenoof~~UsesGraph_node8" class="node"><title>module~wenoof_interpolator</title>
+<g id="a_module~~wenoof~~UsesGraph_node8"><a xlink:href="../module/wenoof_interpolator.html" xlink:title="wenoof_interpolator">
+<polygon fill="#337ab7" stroke="#337ab7" points="1450,-614.839 1343,-614.839 1343,-590.839 1450,-590.839 1450,-614.839"/>
+<text text-anchor="middle" x="1396.5" y="-600.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_polynomials&#45;&gt;module~wenoof_interpolator -->
+<g id="module~~wenoof~~UsesGraph_edge41" class="edge"><title>module~wenoof_polynomials&#45;&gt;module~wenoof_interpolator</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M907.218,-761.098C948.34,-762.154 1006.4,-762.19 1057,-756.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-756.839C1177.19,-744.34 1205.75,-719.064 1307,-656.839 1324.27,-646.227 1325.83,-639.614 1343,-628.839 1348.13,-625.618 1353.72,-622.488 1359.27,-619.581"/>
+<polygon fill="#000000" stroke="#000000" points="1361.15,-622.555 1368.5,-614.923 1357.99,-616.307 1361.15,-622.555"/>
+</g>
+<!-- module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_node17" class="node"><title>module~wenoof_objects_factory</title>
+<g id="a_module~~wenoof~~UsesGraph_node17"><a xlink:href="../module/wenoof_objects_factory.html" xlink:title="wenoof_objects_factory">
+<polygon fill="#337ab7" stroke="#337ab7" points="1307,-500.839 1182,-500.839 1182,-476.839 1307,-476.839 1307,-500.839"/>
+<text text-anchor="middle" x="1244.5" y="-486.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_objects_factory</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_polynomials&#45;&gt;module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_edge30" class="edge"><title>module~wenoof_polynomials&#45;&gt;module~wenoof_objects_factory</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M879.338,-746.668C902.898,-735.616 938.698,-718.939 970,-704.839 1047.85,-669.773 1079.92,-681.908 1146,-627.839 1186.79,-594.466 1218.16,-539.91 1233.37,-510.037"/>
+<polygon fill="#000000" stroke="#000000" points="1236.59,-511.432 1237.9,-500.919 1230.32,-508.317 1236.59,-511.432"/>
+</g>
+<!-- module~wenoof_optimal_weights -->
+<g id="module~~wenoof~~UsesGraph_node3" class="node"><title>module~wenoof_optimal_weights</title>
+<g id="a_module~~wenoof~~UsesGraph_node3"><a xlink:href="../module/wenoof_optimal_weights.html" xlink:title="wenoof_optimal_weights">
+<polygon fill="#337ab7" stroke="#337ab7" points="917.5,-194.839 787.5,-194.839 787.5,-170.839 917.5,-170.839 917.5,-194.839"/>
+<text text-anchor="middle" x="852.5" y="-180.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_optimal_weights</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_optimal_weights&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge66" class="edge"><title>module~wenoof_optimal_weights&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M869.613,-170.784C886.142,-158.245 912.418,-137.826 934,-118.839 950.755,-104.1 949.627,-92.9455 970,-83.8393 1081.24,-34.1168 1126.21,-31.826 1243.5,-64.8393"/>
+</g>
+<!-- module~wenoof_optimal_weights&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge6" class="edge"><title>module~wenoof_optimal_weights&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M917.624,-188.558C1045.15,-201.144 1324.43,-235.143 1395.5,-296.839"/>
+</g>
+<!-- module~wenoof_optimal_weights&#45;&gt;module~wenoof_interpolator -->
+<g id="module~~wenoof~~UsesGraph_edge39" class="edge"><title>module~wenoof_optimal_weights&#45;&gt;module~wenoof_interpolator</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M880.297,-194.911C903.883,-205.51 939.174,-221.305 970,-234.839 1048.01,-269.093 1088.89,-247.605 1146,-310.839 1181.61,-350.272 1145.69,-386.046 1182,-424.839 1202.05,-446.262 1220.9,-430.122 1243.5,-448.839"/>
+</g>
+<!-- module~wenoof_optimal_weights_js -->
+<g id="module~~wenoof~~UsesGraph_node11" class="node"><title>module~wenoof_optimal_weights_js</title>
+<g id="a_module~~wenoof~~UsesGraph_node11"><a xlink:href="../module/wenoof_optimal_weights_js.html" xlink:title="wenoof_optimal_weights_js">
+<polygon fill="#337ab7" stroke="#337ab7" points="1129.5,-116.839 986.5,-116.839 986.5,-92.8393 1129.5,-92.8393 1129.5,-116.839"/>
+<text text-anchor="middle" x="1058" y="-102.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_optimal_weights_js</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_optimal_weights&#45;&gt;module~wenoof_optimal_weights_js -->
+<g id="module~~wenoof~~UsesGraph_edge55" class="edge"><title>module~wenoof_optimal_weights&#45;&gt;module~wenoof_optimal_weights_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M878.112,-170.734C901.429,-159.535 937.603,-142.853 970,-130.839 980.411,-126.979 991.679,-123.274 1002.55,-119.932"/>
+<polygon fill="#000000" stroke="#000000" points="1003.81,-123.207 1012.37,-116.971 1001.79,-116.504 1003.81,-123.207"/>
+</g>
+<!-- module~wenoof_optimal_weights&#45;&gt;module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_edge29" class="edge"><title>module~wenoof_optimal_weights&#45;&gt;module~wenoof_objects_factory</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M912.931,-194.961C920.683,-198.472 928.002,-203 934,-208.839 968.447,-242.373 937.606,-275.318 970,-310.839 1028.02,-374.464 1083.97,-332.117 1146,-391.839 1171.49,-416.378 1156.13,-438.703 1182,-462.839 1185.77,-466.357 1190.09,-469.437 1194.65,-472.126"/>
+<polygon fill="#000000" stroke="#000000" points="1193.15,-475.294 1203.64,-476.826 1196.4,-469.091 1193.15,-475.294"/>
+</g>
+<!-- module~wenoof_interpolator_js&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge67" class="edge"><title>module~wenoof_interpolator_js&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1607.18,-602.839C1615.86,-602.839 1624.57,-602.839 1632.6,-602.839"/>
+<polygon fill="#000000" stroke="#000000" points="1632.7,-606.339 1642.7,-602.839 1632.7,-599.339 1632.7,-606.339"/>
+</g>
+<!-- module~wenoof_smoothness_indicators_js -->
+<g id="module~~wenoof~~UsesGraph_node5" class="node"><title>module~wenoof_smoothness_indicators_js</title>
+<g id="a_module~~wenoof~~UsesGraph_node5"><a xlink:href="../module/wenoof_smoothness_indicators_js.html" xlink:title="wenoof_smoothness_indicators_js">
+<polygon fill="#337ab7" stroke="#337ab7" points="1146,-424.839 970,-424.839 970,-400.839 1146,-400.839 1146,-424.839"/>
+<text text-anchor="middle" x="1058" y="-410.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_smoothness_indicators_js</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_smoothness_indicators_js&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge68" class="edge"><title>module~wenoof_smoothness_indicators_js&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1108.49,-400.824C1145.5,-392.151 1197.45,-380.64 1243.5,-372.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1245.5,-372.839C1280.66,-366.883 1517.22,-237.112 1545.5,-258.839"/>
+</g>
+<!-- module~wenoof_smoothness_indicators_js&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge9" class="edge"><title>module~wenoof_smoothness_indicators_js&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1245.5,-372.839C1311.23,-361.704 1336.88,-341.086 1395.5,-372.839"/>
+</g>
+<!-- module~wenoof_smoothness_indicators_js&#45;&gt;module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_edge31" class="edge"><title>module~wenoof_smoothness_indicators_js&#45;&gt;module~wenoof_objects_factory</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1108.72,-424.927C1121.17,-428.7 1134.3,-433.343 1146,-438.839 1163.4,-447.016 1165.07,-453.722 1182,-462.839 1188.46,-466.316 1195.48,-469.661 1202.39,-472.729"/>
+<polygon fill="#000000" stroke="#000000" points="1201.11,-475.99 1211.68,-476.725 1203.88,-469.559 1201.11,-475.99"/>
+</g>
+<!-- module~wenoof_polynomials_js&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge69" class="edge"><title>module~wenoof_polynomials_js&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1119.68,-797.431C1139.54,-797.598 1161.71,-797.757 1182,-797.839 1237.56,-798.065 1252.75,-809.796 1307,-797.839 1349.33,-788.51 1352.27,-753.587 1395.5,-756.839"/>
+</g>
+<!-- module~wenoof_polynomials_js&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge10" class="edge"><title>module~wenoof_polynomials_js&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1119.59,-799.628C1171.22,-799.897 1246.46,-795.213 1307,-770.839 1325.8,-763.269 1326.66,-754.83 1343,-742.839 1404.89,-697.431 1479.61,-646.829 1518.7,-620.671"/>
+<polygon fill="#000000" stroke="#000000" points="1521.01,-623.332 1527.38,-614.866 1517.12,-617.511 1521.01,-623.332"/>
+</g>
+<!-- module~wenoof_polynomials_js&#45;&gt;module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_edge32" class="edge"><title>module~wenoof_polynomials_js&#45;&gt;module~wenoof_objects_factory</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1119.73,-787.544C1129.53,-783.716 1138.8,-778.35 1146,-770.839 1191.06,-723.842 1160.83,-690.411 1182,-628.839 1196.85,-585.652 1219.51,-537.29 1232.78,-510.209"/>
+<polygon fill="#000000" stroke="#000000" points="1236.08,-511.442 1237.37,-500.927 1229.8,-508.339 1236.08,-511.442"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_z -->
+<g id="module~~wenoof~~UsesGraph_node7" class="node"><title>module~wenoof_alpha_coefficients_z</title>
+<g id="a_module~~wenoof~~UsesGraph_node7"><a xlink:href="../module/wenoof_alpha_coefficients_z.html" xlink:title="wenoof_alpha_coefficients_z">
+<polygon fill="#337ab7" stroke="#337ab7" points="927.5,-381.839 777.5,-381.839 777.5,-357.839 927.5,-357.839 927.5,-381.839"/>
+<text text-anchor="middle" x="852.5" y="-367.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_z</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_alpha_coefficients_z&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge70" class="edge"><title>module~wenoof_alpha_coefficients_z&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M865.17,-357.536C923.411,-297.666 1188.07,-43.7176 1395.5,-144.839"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_z&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge18" class="edge"><title>module~wenoof_alpha_coefficients_z&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M894.42,-357.815C989.318,-332.404 1228.99,-282.64 1395.5,-372.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1397.5,-372.839C1480.65,-418.594 1524.18,-533.115 1539.27,-581.125"/>
+<polygon fill="#000000" stroke="#000000" points="1535.96,-582.264 1542.21,-590.818 1542.66,-580.232 1535.96,-582.264"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_m -->
+<g id="module~~wenoof~~UsesGraph_node12" class="node"><title>module~wenoof_alpha_coefficients_m</title>
+<g id="a_module~~wenoof~~UsesGraph_node12"><a xlink:href="../module/wenoof_alpha_coefficients_m.html" xlink:title="wenoof_alpha_coefficients_m">
+<polygon fill="#337ab7" stroke="#337ab7" points="1135,-618.839 981,-618.839 981,-594.839 1135,-594.839 1135,-618.839"/>
+<text text-anchor="middle" x="1058" y="-604.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_m</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_alpha_coefficients_z&#45;&gt;module~wenoof_alpha_coefficients_m -->
+<g id="module~~wenoof~~UsesGraph_edge57" class="edge"><title>module~wenoof_alpha_coefficients_z&#45;&gt;module~wenoof_alpha_coefficients_m</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M877.521,-381.981C895.478,-392.205 919.359,-408.421 934,-428.839 964.963,-472.018 939.075,-499.633 970,-542.839 984.068,-562.494 1006.03,-578.583 1024.36,-589.712"/>
+<polygon fill="#000000" stroke="#000000" points="1022.62,-592.749 1033.02,-594.772 1026.16,-586.705 1022.62,-592.749"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_z&#45;&gt;module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_edge37" class="edge"><title>module~wenoof_alpha_coefficients_z&#45;&gt;module~wenoof_objects_factory</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M871.244,-381.841C893.407,-396.288 932.937,-420.293 970,-433.839 1036.16,-458.021 1115.43,-472.479 1171.55,-480.456"/>
+<polygon fill="#000000" stroke="#000000" points="1171.37,-483.964 1181.76,-481.871 1172.33,-477.03 1171.37,-483.964"/>
+</g>
+<!-- module~wenoof_interpolator&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge71" class="edge"><title>module~wenoof_interpolator&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1408.09,-615.011C1440.46,-652.076 1536.48,-760.803 1545.5,-756.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1547.5,-756.839C1605.95,-731.145 1643.96,-660.482 1660.11,-624.502"/>
+<polygon fill="#000000" stroke="#000000" points="1663.49,-625.505 1664.26,-614.938 1657.07,-622.722 1663.49,-625.505"/>
+</g>
+<!-- module~wenoof_interpolator&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge7" class="edge"><title>module~wenoof_interpolator&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1450.1,-602.839C1458.4,-602.839 1467.09,-602.839 1475.71,-602.839"/>
+<polygon fill="#000000" stroke="#000000" points="1475.76,-606.339 1485.76,-602.839 1475.76,-599.339 1475.76,-606.339"/>
+</g>
+<!-- module~wenoof_alpha_coefficients -->
+<g id="module~~wenoof~~UsesGraph_node9" class="node"><title>module~wenoof_alpha_coefficients</title>
+<g id="a_module~~wenoof~~UsesGraph_node9"><a xlink:href="../module/wenoof_alpha_coefficients.html" xlink:title="wenoof_alpha_coefficients">
+<polygon fill="#337ab7" stroke="#337ab7" points="735,-581.839 596,-581.839 596,-557.839 735,-557.839 735,-581.839"/>
+<text text-anchor="middle" x="665.5" y="-567.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_alpha_coefficients&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge72" class="edge"><title>module~wenoof_alpha_coefficients&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-718.839C1209.22,-728.085 1246.66,-734.506 1395.5,-756.839"/>
+</g>
+<!-- module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge13" class="edge"><title>module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1245.5,-642.839C1309.94,-625.772 1329.65,-653.236 1395.5,-642.839"/>
+</g>
+<!-- module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_alpha_coefficients_z -->
+<g id="module~~wenoof~~UsesGraph_edge26" class="edge"><title>module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_alpha_coefficients_z</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M673.812,-557.569C689.501,-531.848 728.444,-471.17 771,-428.839 786.755,-413.168 806.928,-398.39 823.138,-387.545"/>
+<polygon fill="#000000" stroke="#000000" points="825.239,-390.353 831.683,-381.943 821.401,-384.499 825.239,-390.353"/>
+</g>
+<!-- module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_interpolator -->
+<g id="module~~wenoof~~UsesGraph_edge44" class="edge"><title>module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_interpolator</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M718.345,-581.852C723.999,-583.415 729.643,-585.087 735,-586.839 882.004,-634.928 903.111,-734.358 1057,-718.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-718.839C1101.29,-721.442 1108.71,-699.967 1146,-679.839 1162.71,-670.82 1164.48,-664.166 1182,-656.839 1207.86,-646.022 1216.4,-650.016 1243.5,-642.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1245.5,-642.839C1277.08,-634.476 1312.38,-625.065 1340.8,-617.474"/>
+<polygon fill="#000000" stroke="#000000" points="1341.79,-620.832 1350.55,-614.869 1339.98,-614.069 1341.79,-620.832"/>
+</g>
+<!-- module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_alpha_coefficients_m -->
+<g id="module~~wenoof~~UsesGraph_edge60" class="edge"><title>module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_alpha_coefficients_m</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M853.5,-569.839C904.106,-571.929 960.722,-582.948 1001.36,-592.422"/>
+<polygon fill="#000000" stroke="#000000" points="1000.8,-595.886 1011.34,-594.791 1002.42,-589.075 1000.8,-595.886"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_js -->
+<g id="module~~wenoof~~UsesGraph_node14" class="node"><title>module~wenoof_alpha_coefficients_js</title>
+<g id="a_module~~wenoof~~UsesGraph_node14"><a xlink:href="../module/wenoof_alpha_coefficients_js.html" xlink:title="wenoof_alpha_coefficients_js">
+<polygon fill="#337ab7" stroke="#337ab7" points="928.5,-503.839 776.5,-503.839 776.5,-479.839 928.5,-479.839 928.5,-503.839"/>
+<text text-anchor="middle" x="852.5" y="-489.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_js</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_alpha_coefficients_js -->
+<g id="module~~wenoof~~UsesGraph_edge64" class="edge"><title>module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_alpha_coefficients_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M695.001,-557.823C726.778,-544.425 778.321,-522.693 813.506,-507.858"/>
+<polygon fill="#000000" stroke="#000000" points="815.112,-510.98 822.967,-503.87 812.393,-504.53 815.112,-510.98"/>
+</g>
+<!-- module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_edge33" class="edge"><title>module~wenoof_alpha_coefficients&#45;&gt;module~wenoof_objects_factory</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M735.056,-568.493C769.935,-568.15 812.991,-568.249 851.5,-569.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M853.5,-569.839C983.942,-575.225 1021.24,-581.285 1146,-542.839 1172.34,-534.723 1199.55,-518.92 1218.51,-506.498"/>
+<polygon fill="#000000" stroke="#000000" points="1220.51,-509.373 1226.87,-500.894 1216.61,-503.56 1220.51,-509.373"/>
+</g>
+<!-- module~penf -->
+<g id="module~~wenoof~~UsesGraph_node10" class="node"><title>module~penf</title>
+<g id="a_module~~wenoof~~UsesGraph_node10"><a xlink:href="../module/penf.html" xlink:title="penf">
+<polygon fill="#337ab7" stroke="#337ab7" points="531.5,-465.839 477.5,-465.839 477.5,-441.839 531.5,-441.839 531.5,-465.839"/>
+<text text-anchor="middle" x="504.5" y="-451.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf</text>
+</a>
+</g>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge73" class="edge"><title>module~penf&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M506.572,-441.804C510.734,-401.475 529.088,-269.139 596,-188.839 713.601,-47.7065 789.487,-46.9527 970,-12.8393 1046.86,1.6861 1070.11,6.13238 1146,-12.8393 1193.64,-24.7505 1196.24,-51.4912 1243.5,-64.8393"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1245.5,-64.8393C1318.53,-84.2056 1328.3,-110.293 1395.5,-144.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1397.5,-144.839C1420.32,-156.57 1428.71,-154.517 1450,-168.839 1498.39,-201.398 1502.77,-219.147 1545.5,-258.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1547.5,-258.839C1644.05,-348.521 1663.92,-519.639 1667.97,-580.594"/>
+<polygon fill="#000000" stroke="#000000" points="1664.48,-580.871 1668.56,-590.649 1671.47,-580.462 1664.48,-580.871"/>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_polynomials -->
+<g id="module~~wenoof~~UsesGraph_edge2" class="edge"><title>module~penf&#45;&gt;module~wenoof_polynomials</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M519.382,-466.143C531.279,-477.221 548.299,-494.399 560,-511.839 581.497,-543.881 572.393,-560.319 596,-590.839 657.281,-670.067 682.958,-685.08 771,-732.839 778.423,-736.866 786.573,-740.395 794.748,-743.448"/>
+<polygon fill="#000000" stroke="#000000" points="793.72,-746.797 804.315,-746.813 796.043,-740.193 793.72,-746.797"/>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_optimal_weights -->
+<g id="module~~wenoof~~UsesGraph_edge4" class="edge"><title>module~penf&#45;&gt;module~wenoof_optimal_weights</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M666.5,-202.839C698.714,-181.424 741.267,-175.666 777.44,-175.605"/>
+<polygon fill="#000000" stroke="#000000" points="777.416,-179.105 787.459,-175.73 777.503,-172.105 777.416,-179.105"/>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge14" class="edge"><title>module~penf&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M507.696,-441.665C514.623,-406.368 539.017,-302.52 596,-239.839 619.276,-214.236 634.454,-220 664.5,-202.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M666.5,-202.839C747.296,-156.692 761.097,-126.859 851.5,-104.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M853.5,-104.839C910.898,-90.8585 914.129,-60.0357 970,-40.8393 1007.04,-28.1132 1018.05,-22.7624 1057,-26.8393"/>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_smoothness_indicators_js -->
+<g id="module~~wenoof~~UsesGraph_edge20" class="edge"><title>module~penf&#45;&gt;module~wenoof_smoothness_indicators_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M666.5,-202.839C670.741,-200.02 935.083,-345.512 1026.38,-395.917"/>
+<polygon fill="#000000" stroke="#000000" points="1024.72,-398.994 1035.16,-400.764 1028.1,-392.866 1024.72,-398.994"/>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_polynomials_js -->
+<g id="module~~wenoof~~UsesGraph_edge23" class="edge"><title>module~penf&#45;&gt;module~wenoof_polynomials_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.751,-466.044C533.17,-476.804 550.197,-493.578 560,-511.839 593.042,-573.388 555.967,-607.591 596,-664.839 649.335,-741.109 682.667,-750.53 771,-779.839 841.477,-803.224 927.015,-805.116 986.082,-802.63"/>
+<polygon fill="#000000" stroke="#000000" points="986.603,-806.11 996.426,-802.139 986.271,-799.118 986.603,-806.11"/>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_alpha_coefficients_z -->
+<g id="module~~wenoof~~UsesGraph_edge25" class="edge"><title>module~penf&#45;&gt;module~wenoof_alpha_coefficients_z</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M522.016,-441.628C549.73,-422.172 608.116,-385.542 664.5,-377.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M666.5,-377.839C699.265,-373.363 735.57,-371.192 767.278,-370.197"/>
+<polygon fill="#000000" stroke="#000000" points="767.503,-373.692 777.402,-369.914 767.307,-366.695 767.503,-373.692"/>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_interpolator -->
+<g id="module~~wenoof~~UsesGraph_edge42" class="edge"><title>module~penf&#45;&gt;module~wenoof_interpolator</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M853.5,-104.839C887.861,-96.3811 1123.92,-203.185 1146,-230.839 1200.72,-299.37 1126.1,-357.267 1182,-424.839 1200.7,-447.448 1221.18,-429.796 1243.5,-448.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1245.5,-448.839C1267.3,-467.368 1284.14,-450.638 1307,-467.839 1346.86,-497.835 1374.08,-551.391 1386.96,-581.238"/>
+<polygon fill="#000000" stroke="#000000" points="1383.84,-582.845 1390.92,-590.729 1390.3,-580.152 1383.84,-582.845"/>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_alpha_coefficients -->
+<g id="module~~wenoof~~UsesGraph_edge46" class="edge"><title>module~penf&#45;&gt;module~wenoof_alpha_coefficients</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M516.601,-466.082C536.591,-487.917 578.215,-532.372 596,-543.839 601.818,-547.591 608.258,-550.922 614.793,-553.842"/>
+<polygon fill="#000000" stroke="#000000" points="613.796,-557.218 624.373,-557.828 616.485,-550.756 613.796,-557.218"/>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_optimal_weights_js -->
+<g id="module~~wenoof~~UsesGraph_edge54" class="edge"><title>module~penf&#45;&gt;module~wenoof_optimal_weights_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M853.5,-104.839C893.011,-95.1136 938.159,-94.1388 975.875,-96.0097"/>
+<polygon fill="#000000" stroke="#000000" points="976.121,-99.5294 986.305,-96.6079 976.522,-92.5409 976.121,-99.5294"/>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_alpha_coefficients_m -->
+<g id="module~~wenoof~~UsesGraph_edge58" class="edge"><title>module~penf&#45;&gt;module~wenoof_alpha_coefficients_m</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M531.765,-463.794C549.686,-470.349 574.062,-478.803 596,-484.839 743.999,-525.566 787.358,-510.469 934,-555.839 964.609,-565.31 998.128,-579.475 1022.43,-590.475"/>
+<polygon fill="#000000" stroke="#000000" points="1021.05,-593.69 1031.6,-594.67 1023.96,-587.325 1021.05,-593.69"/>
+</g>
+<!-- module~wenoof_smoothness_indicators -->
+<g id="module~~wenoof~~UsesGraph_node13" class="node"><title>module~wenoof_smoothness_indicators</title>
+<g id="a_module~~wenoof~~UsesGraph_node13"><a xlink:href="../module/wenoof_smoothness_indicators.html" xlink:title="wenoof_smoothness_indicators">
+<polygon fill="#337ab7" stroke="#337ab7" points="934,-461.839 771,-461.839 771,-437.839 934,-437.839 934,-461.839"/>
+<text text-anchor="middle" x="852.5" y="-447.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_smoothness_indicators</text>
+</a>
+</g>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_smoothness_indicators -->
+<g id="module~~wenoof~~UsesGraph_edge62" class="edge"><title>module~penf&#45;&gt;module~wenoof_smoothness_indicators</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M666.5,-377.839C727.312,-369.531 793.043,-407.625 827.42,-431.582"/>
+<polygon fill="#000000" stroke="#000000" points="825.691,-434.648 835.86,-437.623 829.765,-428.956 825.691,-434.648"/>
+</g>
+<!-- module~penf&#45;&gt;module~wenoof_alpha_coefficients_js -->
+<g id="module~~wenoof~~UsesGraph_edge63" class="edge"><title>module~penf&#45;&gt;module~wenoof_alpha_coefficients_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M531.506,-456.695C580.69,-462.097 689.298,-474.025 766.312,-482.483"/>
+<polygon fill="#000000" stroke="#000000" points="766.164,-485.988 776.486,-483.601 766.928,-479.03 766.164,-485.988"/>
+</g>
+<!-- module~wenoof_optimal_weights_js&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge74" class="edge"><title>module~wenoof_optimal_weights_js&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1103.82,-92.8201C1154.03,-79.7215 1230.17,-61.0875 1243.5,-64.8393"/>
+</g>
+<!-- module~wenoof_optimal_weights_js&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge15" class="edge"><title>module~wenoof_optimal_weights_js&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1086.59,-116.841C1146.55,-143.69 1291.68,-212.887 1395.5,-296.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1397.5,-296.839C1488.99,-376.267 1528.93,-525.114 1541.15,-580.943"/>
+<polygon fill="#000000" stroke="#000000" points="1537.75,-581.757 1543.23,-590.82 1544.6,-580.313 1537.75,-581.757"/>
+</g>
+<!-- module~wenoof_optimal_weights_js&#45;&gt;module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_edge34" class="edge"><title>module~wenoof_optimal_weights_js&#45;&gt;module~wenoof_objects_factory</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1063.2,-117.131C1084.68,-179.923 1181.2,-461.985 1182,-462.839 1185.11,-466.171 1188.71,-469.092 1192.59,-471.651"/>
+<polygon fill="#000000" stroke="#000000" points="1190.99,-474.772 1201.41,-476.692 1194.47,-468.693 1190.99,-474.772"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_m&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge75" class="edge"><title>module~wenoof_alpha_coefficients_m&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1135.28,-595.812C1187.7,-592.245 1256.65,-595.855 1307,-628.839 1334.95,-647.15 1324.11,-667.281 1343,-694.839 1363.42,-724.62 1359.52,-753.861 1395.5,-756.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1397.5,-756.839C1463.09,-761.774 1485.28,-783.309 1545.5,-756.839"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_m&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge16" class="edge"><title>module~wenoof_alpha_coefficients_m&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1096.64,-594.827C1146.58,-580.995 1236.63,-563.467 1307,-590.839 1327.23,-598.708 1324.43,-612.595 1343,-623.839 1364.22,-636.695 1370.9,-646.063 1395.5,-642.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1397.5,-642.839C1431.29,-636.368 1468.69,-626.233 1497.44,-617.785"/>
+<polygon fill="#000000" stroke="#000000" points="1498.64,-621.08 1507.23,-614.876 1496.64,-614.37 1498.64,-621.08"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_m&#45;&gt;module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_edge35" class="edge"><title>module~wenoof_alpha_coefficients_m&#45;&gt;module~wenoof_objects_factory</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1121.43,-594.747C1130.26,-591.232 1138.77,-586.694 1146,-580.839 1171.96,-559.805 1157.23,-537.263 1182,-514.839 1185.88,-511.331 1190.29,-508.252 1194.94,-505.56"/>
+<polygon fill="#000000" stroke="#000000" points="1196.8,-508.54 1204.09,-500.849 1193.6,-502.317 1196.8,-508.54"/>
+</g>
+<!-- module~wenoof_smoothness_indicators&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge76" class="edge"><title>module~wenoof_smoothness_indicators&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M874.876,-437.752C897.853,-425.107 935.706,-405.264 970,-391.839 1214.46,-296.145 1342.53,-92.3523 1545.5,-258.839"/>
+</g>
+<!-- module~wenoof_smoothness_indicators&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge17" class="edge"><title>module~wenoof_smoothness_indicators&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M901.548,-461.929C951.785,-474.134 1027.36,-491.153 1057,-490.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-490.839C1119.06,-490.203 1126.67,-458.211 1182,-434.839 1209.03,-423.423 1216.11,-421.353 1243.5,-410.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1245.5,-410.839C1261.55,-404.678 1380.38,-364.65 1395.5,-372.839"/>
+</g>
+<!-- module~wenoof_smoothness_indicators&#45;&gt;module~wenoof_smoothness_indicators_js -->
+<g id="module~~wenoof~~UsesGraph_edge21" class="edge"><title>module~wenoof_smoothness_indicators&#45;&gt;module~wenoof_smoothness_indicators_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M919.571,-437.826C939.129,-434.27 960.702,-430.348 980.843,-426.686"/>
+<polygon fill="#000000" stroke="#000000" points="981.7,-430.088 990.913,-424.855 980.448,-423.201 981.7,-430.088"/>
+</g>
+<!-- module~wenoof_smoothness_indicators&#45;&gt;module~wenoof_interpolator -->
+<g id="module~~wenoof~~UsesGraph_edge40" class="edge"><title>module~wenoof_smoothness_indicators&#45;&gt;module~wenoof_interpolator</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-490.839C1143.09,-489.949 1178.74,-395.19 1243.5,-448.839"/>
+</g>
+<!-- module~wenoof_smoothness_indicators&#45;&gt;module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_edge36" class="edge"><title>module~wenoof_smoothness_indicators&#45;&gt;module~wenoof_objects_factory</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-490.839C1096.01,-490.447 1137.2,-490.002 1171.25,-489.631"/>
+<polygon fill="#000000" stroke="#000000" points="1171.62,-493.127 1181.58,-489.518 1171.54,-486.128 1171.62,-493.127"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_js&#45;&gt;module~wenoof -->
+<g id="module~~wenoof~~UsesGraph_edge77" class="edge"><title>module~wenoof_alpha_coefficients_js&#45;&gt;module~wenoof</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-528.839C1172.6,-526.957 1217.12,-521.341 1307,-590.839 1333.43,-611.278 1318.9,-633.698 1343,-656.839 1379.2,-691.599 1499.56,-777.036 1545.5,-756.839"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_js&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge11" class="edge"><title>module~wenoof_alpha_coefficients_js&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M893.272,-503.843C934.016,-515.008 999.374,-529.794 1057,-528.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-528.839C1099.11,-528.175 1114.87,-530.138 1146,-504.839 1173.15,-482.774 1156.02,-458.271 1182,-434.839 1203.79,-415.187 1216.11,-421.353 1243.5,-410.839"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_js&#45;&gt;module~wenoof_alpha_coefficients_m -->
+<g id="module~~wenoof~~UsesGraph_edge56" class="edge"><title>module~wenoof_alpha_coefficients_js&#45;&gt;module~wenoof_alpha_coefficients_m</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M899.207,-503.858C910.845,-507.654 923.129,-512.325 934,-517.839 939.282,-520.518 997.797,-563.321 1032.18,-588.575"/>
+<polygon fill="#000000" stroke="#000000" points="1030.22,-591.481 1040.35,-594.583 1034.37,-585.84 1030.22,-591.481"/>
+</g>
+<!-- module~wenoof_alpha_coefficients_js&#45;&gt;module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_edge28" class="edge"><title>module~wenoof_alpha_coefficients_js&#45;&gt;module~wenoof_objects_factory</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-528.839C1107.23,-528.04 1160.98,-514.941 1197.96,-503.948"/>
+<polygon fill="#000000" stroke="#000000" points="1199.38,-507.174 1207.93,-500.915 1197.35,-500.477 1199.38,-507.174"/>
+</g>
+<!-- module~wenoof_base_object -->
+<g id="module~~wenoof~~UsesGraph_node15" class="node"><title>module~wenoof_base_object</title>
+<g id="a_module~~wenoof~~UsesGraph_node15"><a xlink:href="../module/wenoof_base_object.html" xlink:title="wenoof_base_object">
+<polygon fill="#337ab7" stroke="#337ab7" points="560,-544.839 449,-544.839 449,-520.839 560,-520.839 560,-544.839"/>
+<text text-anchor="middle" x="504.5" y="-530.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_base_object</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof_base_object&#45;&gt;module~wenoof_polynomials -->
+<g id="module~~wenoof~~UsesGraph_edge1" class="edge"><title>module~wenoof_base_object&#45;&gt;module~wenoof_polynomials</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M506.062,-545.123C509.305,-599.181 530.58,-815.831 664.5,-874.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M666.5,-874.839C734.856,-904.959 807.585,-819.991 837.459,-779.256"/>
+<polygon fill="#000000" stroke="#000000" points="840.347,-781.235 843.324,-771.067 834.656,-777.159 840.347,-781.235"/>
+</g>
+<!-- module~wenoof_base_object&#45;&gt;module~wenoof_optimal_weights -->
+<g id="module~~wenoof~~UsesGraph_edge3" class="edge"><title>module~wenoof_base_object&#45;&gt;module~wenoof_optimal_weights</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.368,-520.419C532.554,-509.527 549.452,-492.68 560,-474.839 586.395,-430.196 565.276,-405.623 596,-363.839 654.753,-283.937 759.533,-225.992 814.894,-199.291"/>
+<polygon fill="#000000" stroke="#000000" points="816.456,-202.424 823.987,-194.972 813.453,-196.101 816.456,-202.424"/>
+</g>
+<!-- module~wenoof_base_object&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge5" class="edge"><title>module~wenoof_base_object&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-874.839C1234.63,-810.341 1298.91,-829.192 1450,-718.839 1486.21,-692.393 1516.85,-649.164 1533.07,-623.612"/>
+<polygon fill="#000000" stroke="#000000" points="1536.08,-625.404 1538.38,-615.062 1530.13,-621.711 1536.08,-625.404"/>
+</g>
+<!-- module~wenoof_base_object&#45;&gt;module~wenoof_smoothness_indicators_js -->
+<g id="module~~wenoof~~UsesGraph_edge19" class="edge"><title>module~wenoof_base_object&#45;&gt;module~wenoof_smoothness_indicators_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M528.863,-520.741C574.151,-497.965 677.649,-449.187 771,-428.839 832.867,-415.354 903.941,-411.325 959.76,-410.682"/>
+<polygon fill="#000000" stroke="#000000" points="960.028,-414.18 969.999,-410.6 959.971,-407.18 960.028,-414.18"/>
+</g>
+<!-- module~wenoof_base_object&#45;&gt;module~wenoof_polynomials_js -->
+<g id="module~~wenoof~~UsesGraph_edge22" class="edge"><title>module~wenoof_base_object&#45;&gt;module~wenoof_polynomials_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M666.5,-874.839C741.742,-907.993 769.639,-882.538 851.5,-874.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M853.5,-874.839C918.96,-868.683 989.319,-834.944 1027.76,-813.906"/>
+<polygon fill="#000000" stroke="#000000" points="1029.8,-816.78 1036.83,-808.855 1026.39,-810.665 1029.8,-816.78"/>
+</g>
+<!-- module~wenoof_base_object&#45;&gt;module~wenoof_interpolator -->
+<g id="module~~wenoof~~UsesGraph_edge38" class="edge"><title>module~wenoof_base_object&#45;&gt;module~wenoof_interpolator</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-874.839C1098.81,-862.23 1278.46,-739.715 1307,-705.839 1331.34,-676.949 1316.59,-655.851 1343,-628.839 1346.21,-625.56 1349.91,-622.629 1353.84,-620.026"/>
+<polygon fill="#000000" stroke="#000000" points="1355.83,-622.915 1362.7,-614.842 1352.3,-616.874 1355.83,-622.915"/>
+</g>
+<!-- module~wenoof_base_object&#45;&gt;module~wenoof_alpha_coefficients -->
+<g id="module~~wenoof~~UsesGraph_edge45" class="edge"><title>module~wenoof_base_object&#45;&gt;module~wenoof_alpha_coefficients</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M557.123,-544.852C571.776,-548.262 587.877,-552.009 603.051,-555.54"/>
+<polygon fill="#000000" stroke="#000000" points="602.331,-558.966 612.864,-557.823 603.918,-552.148 602.331,-558.966"/>
+</g>
+<!-- module~wenoof_base_object&#45;&gt;module~wenoof_alpha_coefficients_m -->
+<g id="module~~wenoof~~UsesGraph_edge59" class="edge"><title>module~wenoof_base_object&#45;&gt;module~wenoof_alpha_coefficients_m</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M519.024,-544.88C535.743,-558.916 565.714,-581.394 596,-590.839 721.767,-630.063 876.261,-625.483 970.629,-617.199"/>
+<polygon fill="#000000" stroke="#000000" points="971.06,-620.675 980.701,-616.281 970.424,-613.704 971.06,-620.675"/>
+</g>
+<!-- module~wenoof_base_object&#45;&gt;module~wenoof_smoothness_indicators -->
+<g id="module~~wenoof~~UsesGraph_edge61" class="edge"><title>module~wenoof_base_object&#45;&gt;module~wenoof_smoothness_indicators</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M555.811,-520.77C618.297,-505.781 724.777,-480.238 791.465,-464.241"/>
+<polygon fill="#000000" stroke="#000000" points="792.501,-467.592 801.409,-461.855 790.868,-460.785 792.501,-467.592"/>
+</g>
+<!-- module~wenoof_base_object&#45;&gt;module~wenoof_objects_factory -->
+<g id="module~~wenoof~~UsesGraph_edge27" class="edge"><title>module~wenoof_base_object&#45;&gt;module~wenoof_objects_factory</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M853.5,-874.839C943.547,-866.37 970.778,-902.152 1057,-874.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-874.839C1103.07,-860.88 1120.3,-856.263 1146,-817.839 1193.54,-746.762 1156.64,-710.503 1182,-628.839 1195.54,-585.226 1218.65,-537.01 1232.36,-510.071"/>
+<polygon fill="#000000" stroke="#000000" points="1235.65,-511.335 1237.11,-500.842 1229.42,-508.13 1235.65,-511.335"/>
+</g>
+<!-- iso_fortran_env -->
+<g id="module~~wenoof~~UsesGraph_node16" class="node"><title>iso_fortran_env</title>
+<g id="a_module~~wenoof~~UsesGraph_node16"><a xlink:href="https://software.intel.com/en-us/node/511041" xlink:title="iso_fortran_env">
+<polygon fill="#337ab7" stroke="#337ab7" points="301,-193.839 214,-193.839 214,-169.839 301,-169.839 301,-193.839"/>
+<text text-anchor="middle" x="257.5" y="-179.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+</a>
+</g>
+</g>
+<!-- iso_fortran_env&#45;&gt;module~wenoof_interpolator_js -->
+<g id="module~~wenoof~~UsesGraph_edge12" class="edge"><title>iso_fortran_env&#45;&gt;module~wenoof_interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M268.268,-169.677C298.802,-133.137 396.796,-26.8393 503.5,-26.8393 503.5,-26.8393 503.5,-26.8393 666.5,-26.8393 840.056,-26.8393 884.387,-8.77264 1057,-26.8393"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1059,-26.8393C1121.26,-33.7266 1255.33,-125.425 1307,-160.839 1375.91,-208.07 1404.41,-212.833 1450,-282.839 1514.53,-381.923 1536.85,-526.233 1543.26,-580.821"/>
+<polygon fill="#000000" stroke="#000000" points="1539.79,-581.229 1544.37,-590.781 1546.75,-580.455 1539.79,-581.229"/>
+</g>
+<!-- module~penf_stringify -->
+<g id="module~~wenoof~~UsesGraph_node20" class="node"><title>module~penf_stringify</title>
+<g id="a_module~~wenoof~~UsesGraph_node20"><a xlink:href="../module/penf_stringify.html" xlink:title="penf_stringify">
+<polygon fill="#337ab7" stroke="#337ab7" points="413,-445.839 337,-445.839 337,-421.839 413,-421.839 413,-445.839"/>
+<text text-anchor="middle" x="375" y="-431.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_stringify</text>
+</a>
+</g>
+</g>
+<!-- iso_fortran_env&#45;&gt;module~penf_stringify -->
+<g id="module~~wenoof~~UsesGraph_edge48" class="edge"><title>iso_fortran_env&#45;&gt;module~penf_stringify</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M264.071,-193.994C282.367,-233.913 340.777,-361.354 364.173,-412.398"/>
+<polygon fill="#000000" stroke="#000000" points="361.137,-414.174 368.485,-421.807 367.5,-411.258 361.137,-414.174"/>
+</g>
+<!-- module~wenoof_objects_factory&#45;&gt;module~wenoof_interpolator -->
+<g id="module~~wenoof~~UsesGraph_edge43" class="edge"><title>module~wenoof_objects_factory&#45;&gt;module~wenoof_interpolator</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1280.53,-500.928C1289.52,-504.746 1298.92,-509.412 1307,-514.839 1335.52,-533.987 1362.66,-563.169 1379.19,-582.613"/>
+<polygon fill="#000000" stroke="#000000" points="1376.71,-585.103 1385.8,-590.541 1382.08,-580.62 1376.71,-585.103"/>
+</g>
+<!-- module~penf_global_parameters_variables -->
+<g id="module~~wenoof~~UsesGraph_node18" class="node"><title>module~penf_global_parameters_variables</title>
+<g id="a_module~~wenoof~~UsesGraph_node18"><a xlink:href="../module/penf_global_parameters_variables.html" xlink:title="penf_global_parameters_variables">
+<polygon fill="#337ab7" stroke="#337ab7" points="178,-425.839 1.42109e-14,-425.839 1.42109e-14,-401.839 178,-401.839 178,-425.839"/>
+<text text-anchor="middle" x="89" y="-411.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_global_parameters_variables</text>
+</a>
+</g>
+</g>
+<!-- module~penf_global_parameters_variables&#45;&gt;module~penf -->
+<g id="module~~wenoof~~UsesGraph_edge51" class="edge"><title>module~penf_global_parameters_variables&#45;&gt;module~penf</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M153.837,-401.793C184.743,-397.084 222.447,-392.98 256.5,-393.839"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M258.5,-393.839C327.662,-395.584 346.394,-394.128 413,-412.839 433.737,-418.665 455.777,-428.563 472.915,-437.174"/>
+<polygon fill="#000000" stroke="#000000" points="471.398,-440.33 481.892,-441.791 474.6,-434.105 471.398,-440.33"/>
+</g>
+<!-- module~penf_b_size -->
+<g id="module~~wenoof~~UsesGraph_node19" class="node"><title>module~penf_b_size</title>
+<g id="a_module~~wenoof~~UsesGraph_node19"><a xlink:href="../module/penf_b_size.html" xlink:title="penf_b_size">
+<polygon fill="#337ab7" stroke="#337ab7" points="292.5,-445.839 222.5,-445.839 222.5,-421.839 292.5,-421.839 292.5,-445.839"/>
+<text text-anchor="middle" x="257.5" y="-431.439" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_b_size</text>
+</a>
+</g>
+</g>
+<!-- module~penf_global_parameters_variables&#45;&gt;module~penf_b_size -->
+<g id="module~~wenoof~~UsesGraph_edge47" class="edge"><title>module~penf_global_parameters_variables&#45;&gt;module~penf_b_size</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M178.125,-424.425C189.943,-425.844 201.629,-427.248 212.227,-428.521"/>
+<polygon fill="#000000" stroke="#000000" points="212.08,-432.029 222.426,-429.746 212.915,-425.079 212.08,-432.029"/>
+</g>
+<!-- module~penf_global_parameters_variables&#45;&gt;module~penf_stringify -->
+<g id="module~~wenoof~~UsesGraph_edge50" class="edge"><title>module~penf_global_parameters_variables&#45;&gt;module~penf_stringify</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M258.5,-393.839C288.385,-394.593 320.355,-406.63 343.065,-417.304"/>
+<polygon fill="#000000" stroke="#000000" points="341.676,-420.521 352.198,-421.758 344.745,-414.229 341.676,-420.521"/>
+</g>
+<!-- module~penf_b_size&#45;&gt;module~penf -->
+<g id="module~~wenoof~~UsesGraph_edge52" class="edge"><title>module~penf_b_size&#45;&gt;module~penf</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M292.886,-445.124C306.468,-449.029 322.313,-452.909 337,-454.839 381.482,-460.686 433.226,-459.076 467.077,-456.902"/>
+<polygon fill="#000000" stroke="#000000" points="467.674,-460.369 477.407,-456.185 467.189,-453.386 467.674,-460.369"/>
+</g>
+<!-- module~penf_b_size&#45;&gt;module~penf_stringify -->
+<g id="module~~wenoof~~UsesGraph_edge49" class="edge"><title>module~penf_b_size&#45;&gt;module~penf_stringify</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M292.529,-433.839C303.228,-433.839 315.241,-433.839 326.689,-433.839"/>
+<polygon fill="#000000" stroke="#000000" points="326.988,-437.339 336.988,-433.839 326.988,-430.339 326.988,-437.339"/>
+</g>
+<!-- module~penf_stringify&#45;&gt;module~penf -->
+<g id="module~~wenoof~~UsesGraph_edge53" class="edge"><title>module~penf_stringify&#45;&gt;module~penf</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M413.221,-439.678C430.264,-442.351 450.387,-445.508 467.304,-448.161"/>
+<polygon fill="#000000" stroke="#000000" points="466.945,-451.648 477.367,-449.74 468.03,-444.732 466.945,-451.648"/>
+</g>
+</g>
+</svg>
+</div>
+                <script>var panmodulewenoofUsesGraph = svgPanZoom('#modulewenoofUsesGraph', {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,});
+                    </script>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="490pt" height="32pt"
+ viewBox="0.00 0.00 489.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 485.5,-28 485.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node"><title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,-0 54,-0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node"><title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="139.5,-24 72.5,-24 72.5,-0 139.5,-0 139.5,-24"/>
+<text text-anchor="middle" x="106" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="222,-24 158,-24 158,-0 222,-0 222,-24"/>
+<text text-anchor="middle" x="190" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="294,-24 240,-24 240,-0 294,-0 294,-24"/>
+<text text-anchor="middle" x="267" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="366,-24 312,-24 312,-0 366,-0 366,-24"/>
+<text text-anchor="middle" x="339" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="481.5,-24 384.5,-24 384.5,-0 481.5,-0 481.5,-24"/>
+<text text-anchor="middle" x="433" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
 
+    
+    <p>Solid arrows point from a parent (sub)module to the submodule which is
+    descended from it. Dashed arrows point from a module being used to the
+    module or program unit using it.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+    
+
+    
     <p>WenOOF, WENO interpolation Object Oriented Fortran library</p>
+    
+    
+    <h3>Used By</h3>
+    
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: module~~wenoof~~UsedByGraph Pages: 1 -->
+<svg id="modulewenoofUsedByGraph" width="198pt" height="32pt"
+ viewBox="0.00 0.00 198.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~wenoof~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>module~~wenoof~~UsedByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 194,-28 194,4 -4,4"/>
+<!-- module~wenoof -->
+<g id="module~~wenoof~~UsedByGraph_node1" class="node"><title>module~wenoof</title>
+<polygon fill="none" stroke="black" points="54,-24 0,-24 0,-0 54,-0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">wenoof</text>
+</g>
+<!-- program~sin_reconstruction -->
+<g id="module~~wenoof~~UsedByGraph_node2" class="node"><title>program~sin_reconstruction</title>
+<g id="a_module~~wenoof~~UsedByGraph_node2"><a xlink:href="../program/sin_reconstruction.html" xlink:title="sin_reconstruction">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="190,-24 90,-24 90,-0 190,-0 190,-24"/>
+<text text-anchor="middle" x="140" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sin_reconstruction</text>
+</a>
+</g>
+</g>
+<!-- module~wenoof&#45;&gt;program~sin_reconstruction -->
+<g id="module~~wenoof~~UsedByGraph_edge1" class="edge"><title>module~wenoof&#45;&gt;program~sin_reconstruction</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M54.0246,-12C61.7531,-12 70.5558,-12 79.4978,-12"/>
+<polygon fill="#000000" stroke="#000000" points="79.603,-15.5001 89.6029,-12 79.6029,-8.5001 79.603,-15.5001"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="490pt" height="32pt"
+ viewBox="0.00 0.00 489.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 485.5,-28 485.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node"><title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,-0 54,-0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node"><title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="139.5,-24 72.5,-24 72.5,-0 139.5,-0 139.5,-24"/>
+<text text-anchor="middle" x="106" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="222,-24 158,-24 158,-0 222,-0 222,-24"/>
+<text text-anchor="middle" x="190" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="294,-24 240,-24 240,-0 294,-0 294,-24"/>
+<text text-anchor="middle" x="267" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="366,-24 312,-24 312,-0 366,-0 366,-24"/>
+<text text-anchor="middle" x="339" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="481.5,-24 384.5,-24 384.5,-0 481.5,-0 481.5,-24"/>
+<text text-anchor="middle" x="433" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a parent (sub)module to the submodule which is
+    descended from it. Dashed arrows point from a module being used to the
+    module or program unit using it.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
     <br>
-
-    
-    
     
 
-    
-    
-    
-	 <h2>Derived Types</h2>
-	 
-	   
-<div class="panel panel-default">
-  <div class="panel-heading codesum"><a class="anchor" name="type-weno_factory"></a><h3>type, public :: <a href='../type/weno_factory.html'>weno_factory</a>
-    
-  </h3></div>
-  <div class="panel-body">
-     
-     
-          
-     
-     <h4>Type-Bound Procedures</h4>
-      <table class="table table-striped varlist">
-      <tbody>
+    <section class="visible-xs visible-sm hidden-md">
       
-       <tr><td>procedure, public, nopass :: <strong>create</strong>  </td>
-       <td></td></tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-1">Subroutines</a></h3></div>
+  <div class="list-group">
+    <div id="subs-1" class="panel-collapse collapse">
       
-       </tbody>
-       </table>
-     
-     
-     <h4>Description</h4>
-       
-       <p>WENO factory aimed to create and return a concrete WENO interpolator to the client code without exposing the concrete
- interpolators classes.</p>
-     
+      <a class="list-group-item" href="../module/wenoof.html#proc-wenoof_create">wenoof_create</a>
+      
+    </div>
   </div>
 </div>
 
-    
+
+
+
+
+
+
+
+
     </section>
-	 <br>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    
     
     
     
 
+    
+    
+    
+    
+    
 
     
     <section>
@@ -242,11 +1073,23 @@
     
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><a class="anchor" name="proc-create"></a><h3>
-private  subroutine <a href='../proc/create.html'>create</a>(constructor, interpolator)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-wenoof_create"></span><h3>
+public subroutine <a href='../proc/wenoof_create.html'>wenoof_create</a>(interpolator_type, S, wenoof_interpolator, eps)
+    
+    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+
+
+<p>WenOOF creator, create a concrete WENO interpolator object.</p>
     
     <h4>Arguments</h4>
     
@@ -267,12 +1110,12 @@ private  subroutine <a href='../proc/create.html'>create</a>(constructor, interp
   
 <tr>
   
-  <td><a class="anchor" name="var-constructor"></a>class(<a href='../type/weno_constructor.html'>weno_constructor</a>),</td>
+  <td><span class="anchor" ></span>character(len=*),</td>
   <td>intent(in)</td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>constructor</strong></td><td><p>The concrete WENO constructor selected by client code.</p></td>
+  <td><strong>interpolator_type</strong></td><td><p>Type of the interpolator.</p></td>
   
 </tr>
 
@@ -282,12 +1125,42 @@ private  subroutine <a href='../proc/create.html'>create</a>(constructor, interp
   
 <tr>
   
-  <td><a class="anchor" name="var-interpolator"></a>class(<a href='../type/weno_interpolator.html'>weno_interpolator</a>),</td>
+  <td><span class="anchor" ></span>integer(kind=I_P),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>S</strong></td><td><p>Stencil dimension.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/interpolator.html'>interpolator</a>),</td>
   <td>intent(out),</td>
   <td></td>
   
   <td>allocatable</td><td>::</td>
-  <td><strong>interpolator</strong></td><td><p>The concrete WENO interpolator.</p></td>
+  <td><strong>wenoof_interpolator</strong></td><td><p>The concrete WENO interpolator.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=R_P),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>eps</strong></td><td><p>Parameter for avoiding division by zero.</p></td>
   
 </tr>
 
@@ -297,32 +1170,93 @@ private  subroutine <a href='../proc/create.html'>create</a>(constructor, interp
       
     
     
-    
-    <h4>Description</h4>
-       
-       <p>Create and return a concrete WENO interpolator object being an extension of the abstract <em>weno_interpolator</em> type.</p>
-        
 
   </div>
   </div>
 
     
     </section>    
+    <br>
+    
     
     
     </div>
   </div>
 
+  <section class="visible-xs visible-sm hidden-md">
     <hr>
-    <footer>
-        <div class="row">
-        <div class="col-md-6">&copy; 2015 WenOOF was written by Fortran-FOSS-Programmers Group. </div>
-        <div class="col-md-6"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a>.</span></div>
-        </div>
-        <br>
-    </footer>
-    </div> <!-- /container -->
+    
 
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allmods-1">All Modules</a></h3></div>
+  <div id="allmods-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/penf.html">penf</a>
+      
+      <a class="list-group-item" href="../module/penf_b_size.html">penf_b_size</a>
+      
+      <a class="list-group-item" href="../module/penf_global_parameters_variables.html">penf_global_parameters_variables</a>
+      
+      <a class="list-group-item" href="../module/penf_stringify.html">penf_stringify</a>
+      
+      <a class="list-group-item" href="../module/pyplot_module.html">pyplot_module</a>
+      
+      <a class="list-group-item" href="../module/wenoof.html">wenoof</a>
+      
+      <a class="list-group-item" href="../module/wenoof_alpha_coefficients.html">wenoof_alpha_coefficients</a>
+      
+      <a class="list-group-item" href="../module/wenoof_alpha_coefficients_js.html">wenoof_alpha_coefficients_js</a>
+      
+      <a class="list-group-item" href="../module/wenoof_alpha_coefficients_m.html">wenoof_alpha_coefficients_m</a>
+      
+      <a class="list-group-item" href="../module/wenoof_alpha_coefficients_z.html">wenoof_alpha_coefficients_z</a>
+      
+      <a class="list-group-item" href="../module/wenoof_base_object.html">wenoof_base_object</a>
+      
+      <a class="list-group-item" href="../module/wenoof_interpolator.html">wenoof_interpolator</a>
+      
+      <a class="list-group-item" href="../module/wenoof_interpolator_js.html">wenoof_interpolator_js</a>
+      
+      <a class="list-group-item" href="../module/wenoof_objects_factory.html">wenoof_objects_factory</a>
+      
+      <a class="list-group-item" href="../module/wenoof_optimal_weights.html">wenoof_optimal_weights</a>
+      
+      <a class="list-group-item" href="../module/wenoof_optimal_weights_js.html">wenoof_optimal_weights_js</a>
+      
+      <a class="list-group-item" href="../module/wenoof_polynomials.html">wenoof_polynomials</a>
+      
+      <a class="list-group-item" href="../module/wenoof_polynomials_js.html">wenoof_polynomials_js</a>
+      
+      <a class="list-group-item" href="../module/wenoof_smoothness_indicators.html">wenoof_smoothness_indicators</a>
+      
+      <a class="list-group-item" href="../module/wenoof_smoothness_indicators_js.html">wenoof_smoothness_indicators_js</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+  
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> WenOOF was developed by Fortran-FOSS-Programmers</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -347,6 +1281,6 @@ private  subroutine <a href='../proc/create.html'>create</a>(constructor, interp
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>

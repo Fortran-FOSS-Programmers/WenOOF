@@ -7,7 +7,7 @@
 	 
 	 <meta name="description" content="WENO interpolation Object Oriented Fortran library">
     
-    <meta name="author" content="Chris MacMackin" >
+    <meta name="author" content="Fortran-FOSS-Programmers" >
     <link rel="icon" href="../favicon.png">
 
     <title>sin_reconstruction.f90 &ndash; WenOOF</title>
@@ -25,12 +25,8 @@
     <![endif]-->
     
     <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
 
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
     
 
   </head>
@@ -38,7 +34,7 @@
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -52,13 +48,20 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 				
-                
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
             <li><a href="../lists/files.html">Source Files</a></li>
 				
 				
             <li><a href="../lists/modules.html">Modules</a></li>
 				
-				
+            
+                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
 				
 				
@@ -69,16 +72,27 @@
 				
             <li><a href="../lists/programs.html">Programs</a></li>
 				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
           </ul>
-        
-        <form action="../search.html" class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
-        </div>
-<!--
-        <button type="submit" class="btn btn-default">Submit</button>
--->
-        </form>
         
         </div><!--/.nav-collapse -->
       </div>
@@ -92,9 +106,9 @@
     <small>Source File</small>
     
     </h1>
-	 
+    
 <div class="row">
-<div class="col-lg-12">
+  <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
      
@@ -103,6 +117,13 @@
      
     
     
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title=" 0.8% of total for source files.">39 statements</a>
+     </li> 
+     
+     
     <li><i class="fa fa-code"></i><a href="../src/sin_reconstruction.f90"> Source File</a></li>
      
   </ul>
@@ -110,163 +131,965 @@
   
      <li class="active">sin_reconstruction.f90</li>
   </ol>
-  </div>
 </div>
-    
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
   </div>
   <div class="row">
-    <div class="col-lg-3">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
     
+<div id="sidebar">
   
-  
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title">Programs</h3></div>
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#progs-0">Programs</a></h3></div>
+  <div id="progs-0" class="panel-collapse collapse">
     <div class="list-group">
       
       <a class="list-group-item" href="../program/sin_reconstruction.html">sin_reconstruction</a>
       
     </div>
   </div>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-    <div class="list-group">
-      <a class="list-group-item" href="../sourcefile/sin_reconstruction.f90.html#src">sin_reconstruction.f90</a>
-    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../sourcefile/sin_reconstruction.f90.html#src">sin_reconstruction.f90</a>
   </div>
-  
+</div>
+
+
   <hr>
   
-  <div class="panel panel-default">
-    <div class="panel-heading text-left"><h3 class="panel-title">All Source Files</h3></div>
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allfiles-0">All Source Files</a></h3></div>
+  <div id="allfiles-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../sourcefile/ir_precision.f90.html">IR_Precision.f90</a>
+      <a class="list-group-item" href="../sourcefile/compact_real.f90.html">compact_real.f90</a>
       
-      <a class="list-group-item" href="../sourcefile/modules_imports.f90.html">modules_imports.f90</a>
+      <a class="list-group-item" href="../sourcefile/penf.f90.html">penf.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_b_size.f90.html">penf_b_size.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_global_parameters_variables.f90.html">penf_global_parameters_variables.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_stringify.f90.html">penf_stringify.F90</a>
       
       <a class="list-group-item" href="../sourcefile/pyplot_module.f90.html">pyplot_module.f90</a>
       
       <a class="list-group-item" href="../sourcefile/sin_reconstruction.f90.html">sin_reconstruction.f90</a>
       
-      <a class="list-group-item" href="../sourcefile/type_weno_interpolator.f90.html">type_weno_interpolator.f90</a>
+      <a class="list-group-item" href="../sourcefile/test.f90.html">test.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test_all.f90.html">test_all.F90</a>
       
       <a class="list-group-item" href="../sourcefile/wenoof.f90.html">wenoof.f90</a>
       
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients.f90.html">wenoof_alpha_coefficients.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_js.f90.html">wenoof_alpha_coefficients_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_m.f90.html">wenoof_alpha_coefficients_m.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_z.f90.html">wenoof_alpha_coefficients_z.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_base_object.f90.html">wenoof_base_object.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator.f90.html">wenoof_interpolator.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator_js.f90.html">wenoof_interpolator_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_objects_factory.f90.html">wenoof_objects_factory.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights.f90.html">wenoof_optimal_weights.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights_js.f90.html">wenoof_optimal_weights_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials.f90.html">wenoof_polynomials.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials_js.f90.html">wenoof_polynomials_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators.f90.html">wenoof_smoothness_indicators.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators_js.f90.html">wenoof_smoothness_indicators_js.f90</a>
+      
     </div>
   </div>
-  
-  
+</div>
+
+
+</div>  
+
     </div>
-    <div class="col-lg-9" id='text'>
+    <div class="col-md-9" id='text'>
+    <p>WenOOF test: reconstruction of sin function.</p>
     
+    <h3>This File Depends On</h3>
     
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: sourcefile~~sin_reconstruction.f90~~EfferentGraph Pages: 1 -->
+<svg id="sourcefilesin_reconstructionf90EfferentGraph" width="641pt" height="304pt"
+ viewBox="0.00 0.00 641.00 303.54" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph" class="graph" transform="scale(0.306845 0.306845) rotate(0) translate(4 985.218)">
+<title>sourcefile~~sin_reconstruction.f90~~EfferentGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-985.218 2085,-985.218 2085,4 -4,4"/>
+<!-- sourcefile~sin_reconstruction.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node1" class="node"><title>sourcefile~sin_reconstruction.f90</title>
+<polygon fill="none" stroke="black" points="2081,-941.218 1963,-941.218 1963,-917.218 2081,-917.218 2081,-941.218"/>
+<text text-anchor="middle" x="2022" y="-926.818" font-family="Helvetica,sans-Serif" font-size="10.50">sin_reconstruction.f90</text>
+</g>
+<!-- sourcefile~pyplot_module.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node2" class="node"><title>sourcefile~pyplot_module.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node2"><a xlink:href="../sourcefile/pyplot_module.f90.html" xlink:title="pyplot_module.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1927,-981.218 1827,-981.218 1827,-957.218 1927,-957.218 1927,-981.218"/>
+<text text-anchor="middle" x="1877" y="-966.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">pyplot_module.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~pyplot_module.f90&#45;&gt;sourcefile~sin_reconstruction.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge76" class="edge"><title>sourcefile~pyplot_module.f90&#45;&gt;sourcefile~sin_reconstruction.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1920.9,-957.216C1935.62,-953.101 1952.26,-948.445 1967.7,-944.128"/>
+<polygon fill="#000000" stroke="#000000" points="1968.94,-947.413 1977.63,-941.349 1967.06,-940.672 1968.94,-947.413"/>
+</g>
+<!-- sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node3" class="node"><title>sourcefile~wenoof.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node3"><a xlink:href="../sourcefile/wenoof.f90.html" xlink:title="wenoof.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1909.5,-823.218 1844.5,-823.218 1844.5,-799.218 1909.5,-799.218 1909.5,-823.218"/>
+<text text-anchor="middle" x="1877" y="-808.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof.f90&#45;&gt;sourcefile~sin_reconstruction.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge77" class="edge"><title>sourcefile~wenoof.f90&#45;&gt;sourcefile~sin_reconstruction.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1892.76,-823.401C1917.81,-844.07 1968.78,-886.131 1998.36,-910.539"/>
+<polygon fill="#000000" stroke="#000000" points="1996.16,-913.258 2006.1,-916.923 2000.62,-907.859 1996.16,-913.258"/>
+</g>
+<!-- sourcefile~penf.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node4" class="node"><title>sourcefile~penf.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node4"><a xlink:href="../sourcefile/penf.f90.html" xlink:title="penf.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="589,-595.218 534,-595.218 534,-571.218 589,-571.218 589,-595.218"/>
+<text text-anchor="middle" x="561.5" y="-580.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~sin_reconstruction.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge78" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~sin_reconstruction.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1722.5,-929.218C1800.44,-914.928 1891.76,-917.709 1952.68,-922.265"/>
+<polygon fill="#000000" stroke="#000000" points="1952.69,-925.777 1962.94,-923.071 1953.24,-918.799 1952.69,-925.777"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge65" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1552.5,-929.218C1621.23,-900.039 1647.06,-942.682 1720.5,-929.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1722.5,-929.218C1783.24,-918.081 1835.86,-862.151 1860.73,-831.459"/>
+<polygon fill="#000000" stroke="#000000" points="1863.54,-833.547 1866.99,-823.53 1858.05,-829.209 1863.54,-833.547"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node5" class="node"><title>sourcefile~wenoof_optimal_weights.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node5"><a xlink:href="../sourcefile/wenoof_optimal_weights.f90.html" xlink:title="wenoof_optimal_weights.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1025.5,-843.218 874.5,-843.218 874.5,-819.218 1025.5,-819.218 1025.5,-843.218"/>
+<text text-anchor="middle" x="950" y="-828.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_optimal_weights.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge1" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-929.218C816.345,-948.548 895.241,-884.109 930.334,-850.419"/>
+<polygon fill="#000000" stroke="#000000" points="932.845,-852.858 937.523,-843.352 927.938,-847.866 932.845,-852.858"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node6" class="node"><title>sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node6"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_z.f90.html" xlink:title="wenoof_alpha_coefficients_z.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1034,-555.218 866,-555.218 866,-531.218 1034,-531.218 1034,-555.218"/>
+<text text-anchor="middle" x="950" y="-540.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_z.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge3" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M589.06,-579.116C609.077,-576.114 637.219,-572.082 662,-569.218 726.567,-561.755 799.513,-555.171 855.706,-550.495"/>
+<polygon fill="#000000" stroke="#000000" points="856.32,-553.957 865.998,-549.645 855.744,-546.98 856.32,-553.957"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node7" class="node"><title>sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node7"><a xlink:href="../sourcefile/wenoof_smoothness_indicators_js.f90.html" xlink:title="wenoof_smoothness_indicators_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1272,-323.218 1078,-323.218 1078,-299.218 1272,-299.218 1272,-323.218"/>
+<text text-anchor="middle" x="1175" y="-308.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_smoothness_indicators_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge5" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-347.218C845.715,-293.749 981.088,-291.636 1072.5,-298.409"/>
+<polygon fill="#000000" stroke="#000000" points="1072.34,-301.907 1082.59,-299.205 1072.89,-294.929 1072.34,-301.907"/>
+</g>
+<!-- sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node8" class="node"><title>sourcefile~wenoof_interpolator_js.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node8"><a xlink:href="../sourcefile/wenoof_interpolator_js.f90.html" xlink:title="wenoof_interpolator_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1791,-690.218 1652,-690.218 1652,-666.218 1791,-666.218 1791,-690.218"/>
+<text text-anchor="middle" x="1721.5" y="-675.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge16" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M951,-929.218C1216.46,-906.381 1297.41,-1012.52 1550.5,-929.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1552.5,-929.218C1577.76,-918.493 1674.05,-757.458 1708.31,-699.12"/>
+<polygon fill="#000000" stroke="#000000" points="1711.4,-700.773 1713.43,-690.375 1705.36,-697.235 1711.4,-700.773"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node9" class="node"><title>sourcefile~wenoof_polynomials.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node9"><a xlink:href="../sourcefile/wenoof_polynomials.f90.html" xlink:title="wenoof_polynomials.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1015.5,-206.218 884.5,-206.218 884.5,-182.218 1015.5,-182.218 1015.5,-206.218"/>
+<text text-anchor="middle" x="950" y="-191.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_polynomials.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge21" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M582.301,-571.073C596.925,-560.973 615.963,-545.209 626,-526.218 682.359,-419.572 580.322,-345.977 662,-257.218 715.2,-199.405 808.263,-188.352 873.97,-188.72"/>
+<polygon fill="#000000" stroke="#000000" points="874.22,-192.224 884.271,-188.872 874.323,-185.225 874.22,-192.224"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node10" class="node"><title>sourcefile~wenoof_interpolator.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node10"><a xlink:href="../sourcefile/wenoof_interpolator.f90.html" xlink:title="wenoof_interpolator.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1616,-395.218 1487,-395.218 1487,-371.218 1616,-371.218 1616,-395.218"/>
+<text text-anchor="middle" x="1551.5" y="-380.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge38" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-347.218C793.347,-318.712 802.034,-393.549 858,-408.218 1081.84,-466.887 1151.46,-465.979 1378.5,-421.218"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node11" class="node"><title>sourcefile~wenoof_smoothness_indicators.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node11"><a xlink:href="../sourcefile/wenoof_smoothness_indicators.f90.html" xlink:title="wenoof_smoothness_indicators.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1042,-399.218 858,-399.218 858,-375.218 1042,-375.218 1042,-399.218"/>
+<text text-anchor="middle" x="950" y="-384.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_smoothness_indicators.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge41" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-347.218C756.223,-340.334 836.743,-358.603 893.103,-372.676"/>
+<polygon fill="#000000" stroke="#000000" points="892.422,-376.114 902.974,-375.159 894.13,-369.325 892.422,-376.114"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node12" class="node"><title>sourcefile~wenoof_alpha_coefficients.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node12"><a xlink:href="../sourcefile/wenoof_alpha_coefficients.f90.html" xlink:title="wenoof_alpha_coefficients.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="822,-517.218 662,-517.218 662,-493.218 822,-493.218 822,-517.218"/>
+<text text-anchor="middle" x="742" y="-502.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge43" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M583.365,-571.03C603.17,-559.772 633.991,-543.052 662,-531.218 670.983,-527.422 680.725,-523.82 690.2,-520.572"/>
+<polygon fill="#000000" stroke="#000000" points="691.556,-523.81 699.934,-517.324 689.34,-517.17 691.556,-523.81"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node13" class="node"><title>sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node13"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_m.f90.html" xlink:title="wenoof_alpha_coefficients_m.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1261,-593.218 1089,-593.218 1089,-569.218 1261,-569.218 1261,-593.218"/>
+<text text-anchor="middle" x="1175" y="-578.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_m.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge45" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M589.207,-581.455C624.189,-579.549 687.383,-577.491 741,-583.218"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node14" class="node"><title>sourcefile~wenoof_optimal_weights_js.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node14"><a xlink:href="../sourcefile/wenoof_optimal_weights_js.f90.html" xlink:title="wenoof_optimal_weights_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1255.5,-863.218 1094.5,-863.218 1094.5,-839.218 1255.5,-839.218 1255.5,-863.218"/>
+<text text-anchor="middle" x="1175" y="-848.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_optimal_weights_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge50" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-929.218C831.532,-952.551 857.781,-937.065 949,-929.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M951,-929.218C1022.61,-923.057 1100.68,-888.779 1142.81,-867.766"/>
+<polygon fill="#000000" stroke="#000000" points="1144.39,-870.887 1151.73,-863.244 1141.23,-864.643 1144.39,-870.887"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node15" class="node"><title>sourcefile~wenoof_polynomials_js.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node15"><a xlink:href="../sourcefile/wenoof_polynomials_js.f90.html" xlink:title="wenoof_polynomials_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1245.5,-91.2175 1104.5,-91.2175 1104.5,-67.2175 1245.5,-67.2175 1245.5,-91.2175"/>
+<text text-anchor="middle" x="1175" y="-76.8175" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_polynomials_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge52" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M578.199,-571.129C591.755,-560.244 611.405,-543.365 626,-526.218 687.29,-454.211 658.33,-393.12 741,-347.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-347.218C782.021,-325.551 796.497,-321.847 822,-285.218 851.875,-242.307 820.821,-209.981 858,-173.218 891.976,-139.62 1016.05,-109.863 1098.24,-93.228"/>
+<polygon fill="#000000" stroke="#000000" points="1098.93,-96.6597 1108.05,-91.265 1097.56,-89.7958 1098.93,-96.6597"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node16" class="node"><title>sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node16"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_js.f90.html" xlink:title="wenoof_alpha_coefficients_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1035,-635.218 865,-635.218 865,-611.218 1035,-611.218 1035,-635.218"/>
+<text text-anchor="middle" x="950" y="-620.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge55" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M563.249,-595.505C567.497,-652.554 593.939,-890.459 741,-929.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-929.218C776.417,-938.025 899.93,-714.442 937.853,-644.089"/>
+<polygon fill="#000000" stroke="#000000" points="940.969,-645.685 942.618,-635.219 934.802,-642.372 940.969,-645.685"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge57" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M979.625,-843.308C1004.96,-853.314 1043.21,-866.741 1078,-872.218 1163.17,-885.625 1186.28,-881.495 1272,-872.218 1334.99,-865.4 1487.14,-811.218 1550.5,-811.218"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge8" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M997.082,-819.175C1064.7,-802.134 1195.03,-771.673 1308,-759.218 1334.79,-756.264 1524.49,-761.282 1550.5,-754.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1552.5,-754.218C1602.22,-738.95 1656.49,-712.452 1689.52,-695.127"/>
+<polygon fill="#000000" stroke="#000000" points="1691.45,-698.061 1698.65,-690.284 1688.18,-691.876 1691.45,-698.061"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge34" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M990.287,-819.184C1067.39,-794.803 1234.33,-738 1272,-692.218 1319.69,-634.257 1257.37,-582.627 1308,-527.218 1352.94,-478.031 1393.99,-516.695 1451,-482.218 1485.61,-461.29 1517.16,-425.886 1535.08,-403.573"/>
+<polygon fill="#000000" stroke="#000000" points="1538.04,-405.469 1541.47,-395.444 1532.54,-401.144 1538.04,-405.469"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge51" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1025.57,-837.905C1044.33,-839.588 1064.66,-841.411 1084.09,-843.153"/>
+<polygon fill="#000000" stroke="#000000" points="1083.87,-846.648 1094.15,-844.056 1084.5,-839.676 1083.87,-846.648"/>
+</g>
+<!-- sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node18" class="node"><title>sourcefile~wenoof_objects_factory.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node18"><a xlink:href="../sourcefile/wenoof_objects_factory.f90.html" xlink:title="wenoof_objects_factory.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1451,-473.218 1308,-473.218 1308,-449.218 1451,-449.218 1451,-473.218"/>
+<text text-anchor="middle" x="1379.5" y="-458.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_objects_factory.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge24" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M962.641,-818.975C983.916,-797.123 1031.21,-750.916 1078,-721.218 1157.63,-670.678 1211.41,-707.496 1272,-635.218 1314.93,-584 1264.07,-539.584 1308,-489.218 1311.73,-484.937 1316.21,-481.305 1321.07,-478.223"/>
+<polygon fill="#000000" stroke="#000000" points="1323.07,-481.119 1330.17,-473.249 1319.71,-474.977 1323.07,-481.119"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge58" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M971.906,-555.401C990.795,-566.726 1019.07,-584.472 1042,-602.218 1059.17,-615.501 1059.58,-623.731 1078,-635.218 1156.57,-684.223 1188.63,-670.915 1272,-711.218 1321.31,-735.055 1325.39,-759.832 1378.5,-773.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1380.5,-773.218C1455.04,-794.138 1473.08,-811.067 1550.5,-811.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1552.5,-811.218C1627.17,-811.362 1646.99,-798.133 1720.5,-811.218"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge20" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1176,-541.218C1265.54,-532.141 1289.74,-526.34 1378.5,-541.218"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge48" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1021.56,-555.241C1044.45,-559.141 1070.01,-563.497 1093.56,-567.51"/>
+<polygon fill="#000000" stroke="#000000" points="1093.07,-570.977 1103.52,-569.207 1094.25,-564.077 1093.07,-570.977"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge33" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1034.07,-546.094C1076.1,-546.632 1127.87,-545.893 1174,-541.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1176,-541.218C1219.76,-536.782 1232.46,-536.466 1272,-517.218 1290.23,-508.346 1290.4,-499.281 1308,-489.218 1315.81,-484.752 1324.47,-480.676 1332.97,-477.1"/>
+<polygon fill="#000000" stroke="#000000" points="1334.48,-480.265 1342.44,-473.281 1331.86,-473.772 1334.48,-480.265"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge59" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1205.25,-299.177C1280.59,-268.617 1480.33,-190.637 1550.5,-193.218"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge10" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1272.08,-307.01C1305.74,-306.148 1343.8,-305.862 1378.5,-307.218"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge30" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1186.03,-323.492C1206.56,-347.905 1255.85,-402.975 1308,-435.218 1314.18,-439.038 1321.01,-442.426 1327.91,-445.39"/>
+<polygon fill="#000000" stroke="#000000" points="1326.72,-448.687 1337.31,-449.169 1329.33,-442.192 1326.72,-448.687"/>
+</g>
+<!-- sourcefile~wenoof_interpolator_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge60" class="edge"><title>sourcefile~wenoof_interpolator_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1736.39,-690.255C1763.08,-713.382 1821.73,-764.196 1853.87,-792.04"/>
+<polygon fill="#000000" stroke="#000000" points="1851.96,-795.015 1861.81,-798.919 1856.54,-789.725 1851.96,-795.015"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge61" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M963.863,-182.004C982.558,-163.824 1017.66,-128.036 1042,-93.2175 1061.59,-65.1912 1048.7,-42.8561 1078,-25.2175 1151.87,19.2565 1188.14,-5.17206 1272,-25.2175 1323.62,-37.5556 1328.14,-62.4654 1378.5,-79.2175"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1380.5,-79.2175C1467.1,-107.09 1459.75,-186.916 1550.5,-193.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1552.5,-193.218C1626.99,-198.389 1651.94,-163.636 1720.5,-193.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1722.5,-193.218C1836.96,-242.607 1868.88,-684.625 1874.86,-789.139"/>
+<polygon fill="#000000" stroke="#000000" points="1871.37,-789.391 1875.41,-799.184 1878.36,-789.007 1871.37,-789.391"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge12" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M981.075,-182.208C1024.04,-166.64 1105.39,-143.069 1174,-157.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1176,-157.218C1263.8,-175.324 1479.86,-252.023 1550.5,-307.218"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge40" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1176,-157.218C1221.61,-166.624 1241.2,-164.287 1272,-199.218 1309.39,-241.62 1267.3,-281.981 1308,-321.218 1332.04,-344.394 1414.62,-362.089 1476.79,-372.531"/>
+<polygon fill="#000000" stroke="#000000" points="1476.53,-376.035 1486.97,-374.207 1477.67,-369.128 1476.53,-376.035"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge54" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1015.7,-182.53C1025.12,-178.96 1034.24,-174.301 1042,-168.218 1067.38,-148.319 1052.49,-124.941 1078,-105.218 1083.11,-101.267 1088.78,-97.9163 1094.73,-95.0738"/>
+<polygon fill="#000000" stroke="#000000" points="1096.44,-98.1479 1104.27,-91.0126 1093.7,-91.7065 1096.44,-98.1479"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge27" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1015.78,-195.449C1088.43,-200.431 1204.85,-219.82 1272,-290.218 1317.83,-338.266 1263.7,-385.756 1308,-435.218 1311.02,-438.588 1314.51,-441.523 1318.3,-444.078"/>
+<polygon fill="#000000" stroke="#000000" points="1316.57,-447.122 1326.99,-449.086 1320.07,-441.058 1316.57,-447.122"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge62" class="edge"><title>sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1556.15,-371.051C1571.14,-323.508 1631.35,-154.753 1720.5,-193.218"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge15" class="edge"><title>sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1559.5,-395.518C1585.39,-440.977 1675.86,-599.827 1708.58,-657.279"/>
+<polygon fill="#000000" stroke="#000000" points="1705.66,-659.233 1713.65,-666.191 1711.74,-655.769 1705.66,-659.233"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge63" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M965.676,-374.97C985.928,-357.262 1022.18,-322.521 1042,-285.218 1072.55,-227.721 1031.09,-188.362 1078,-143.218 1081.07,-140.259 1374.45,-77.8607 1378.5,-79.2175"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge7" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1003.5,-375.21C1016.37,-371.458 1029.92,-366.804 1042,-361.218 1059.45,-353.146 1060.49,-345.168 1078,-337.218 1087.41,-332.943 1097.67,-329.247 1107.87,-326.091"/>
+<polygon fill="#000000" stroke="#000000" points="1108.99,-329.409 1117.6,-323.229 1107.02,-322.694 1108.99,-329.409"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge14" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1042.34,-387.512C1128.91,-387.519 1262.58,-386.825 1378.5,-383.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1380.5,-383.218C1462.68,-373.433 1485.28,-256.263 1550.5,-307.218"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge39" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1380.5,-383.218C1411.9,-382.24 1446.58,-382.076 1476.39,-382.217"/>
+<polygon fill="#000000" stroke="#000000" points="1476.69,-385.719 1486.71,-382.279 1476.73,-378.719 1476.69,-385.719"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge29" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1020.64,-399.272C1096.87,-412.468 1218.89,-433.589 1298.87,-447.433"/>
+<polygon fill="#000000" stroke="#000000" points="1298.44,-450.912 1308.89,-449.169 1299.64,-444.014 1298.44,-450.912"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge64" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M749.96,-492.913C765.739,-466.079 806.865,-401.853 858,-366.218 901.477,-335.919 1256.06,-218.731 1308,-208.218 1413.84,-186.794 1442.78,-185.738 1550.5,-193.218"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge4" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M808.18,-517.241C829.04,-521.089 852.304,-525.38 873.818,-529.349"/>
+<polygon fill="#000000" stroke="#000000" points="873.422,-532.835 883.891,-531.207 874.692,-525.951 873.422,-532.835"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge13" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1176,-503.218C1267.57,-502.363 1288.19,-526.08 1378.5,-541.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1380.5,-541.218C1457.26,-554.083 1475.66,-561.856 1550.5,-583.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1552.5,-583.218C1608.46,-599.189 1665.81,-637.213 1696.91,-660.017"/>
+<polygon fill="#000000" stroke="#000000" points="1694.85,-662.849 1704.97,-666.014 1699.04,-657.234 1694.85,-662.849"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge37" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M822.207,-494.332C942.389,-477.91 1178.05,-446.077 1378.5,-421.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1380.5,-421.218C1416.94,-414.034 1457.53,-404.999 1489.91,-397.541"/>
+<polygon fill="#000000" stroke="#000000" points="1490.73,-400.944 1499.69,-395.281 1489.15,-394.124 1490.73,-400.944"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge47" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M762.625,-517.362C784.953,-530.677 822.882,-551.798 858,-564.218 896.952,-577.993 907.844,-579.577 949,-583.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M951,-583.218C992.775,-586.913 1039.12,-587.123 1078.7,-586.136"/>
+<polygon fill="#000000" stroke="#000000" points="1078.97,-589.629 1088.87,-585.852 1078.77,-582.632 1078.97,-589.629"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge56" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M754.932,-517.515C774.629,-537.137 815.969,-575.521 858,-597.218 866.042,-601.369 874.835,-604.937 883.685,-607.981"/>
+<polygon fill="#000000" stroke="#000000" points="882.685,-611.336 893.277,-611.082 884.838,-604.676 882.685,-611.336"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge28" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M822.042,-504.863C908.482,-504.472 1051.1,-503.818 1174,-503.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1176,-503.218C1230.56,-502.708 1291.7,-488.003 1332.39,-476.135"/>
+<polygon fill="#000000" stroke="#000000" points="1333.43,-479.476 1342.02,-473.267 1331.44,-472.767 1333.43,-479.476"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge66" class="edge"><title>sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1380.5,-583.218C1562.12,-594.109 1544.43,-765.359 1720.5,-811.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1722.5,-811.218C1759.86,-817.868 1803.15,-817.12 1834.22,-815.146"/>
+<polygon fill="#000000" stroke="#000000" points="1834.53,-818.633 1844.26,-814.439 1834.04,-811.65 1834.53,-818.633"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge19" class="edge"><title>sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1261.29,-580.169C1297.47,-580.214 1340.07,-580.913 1378.5,-583.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1380.5,-583.218C1455.92,-587.741 1477.46,-563.891 1550.5,-583.218"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge31" class="edge"><title>sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1246.82,-569.181C1255.86,-565.655 1264.54,-561.1 1272,-555.218 1298.23,-534.522 1282.98,-511.369 1308,-489.218 1313.1,-484.701 1319.02,-480.866 1325.22,-477.622"/>
+<polygon fill="#000000" stroke="#000000" points="1326.88,-480.709 1334.43,-473.282 1323.89,-474.376 1326.88,-480.709"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge67" class="edge"><title>sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1380.5,-811.218C1454.85,-797.789 1474.94,-811.218 1550.5,-811.218"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge11" class="edge"><title>sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1234.39,-839.159C1274.79,-830.944 1329.83,-820.007 1378.5,-811.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1380.5,-811.218C1458.92,-797.054 1473.6,-775.105 1550.5,-754.218"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge26" class="edge"><title>sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1183.87,-839.217C1201.9,-811.241 1246.6,-739.06 1272,-673.218 1296.05,-610.864 1274.21,-584.879 1308,-527.218 1319.16,-508.177 1337.48,-491.269 1352.65,-479.333"/>
+<polygon fill="#000000" stroke="#000000" points="1354.84,-482.066 1360.69,-473.232 1350.6,-476.491 1354.84,-482.066"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge68" class="edge"><title>sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1245.72,-68.4443C1285.61,-64.9091 1336,-64.9647 1378.5,-79.2175"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge18" class="edge"><title>sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1206.36,-91.2492C1258.66,-112.66 1368.13,-160.497 1451,-217.218 1500.21,-250.897 1505.1,-268.563 1550.5,-307.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1552.5,-307.218C1581.92,-330.205 1595.28,-331.155 1616,-362.218 1681.24,-460.036 1708.79,-601.997 1717.35,-656.127"/>
+<polygon fill="#000000" stroke="#000000" points="1713.89,-656.66 1718.85,-666.02 1720.81,-655.608 1713.89,-656.66"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge32" class="edge"><title>sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1206.81,-91.3684C1228.77,-101.726 1256.96,-118.839 1272,-143.218 1340.65,-254.507 1226.79,-332.731 1308,-435.218 1310.53,-438.405 1313.48,-441.201 1316.72,-443.655"/>
+<polygon fill="#000000" stroke="#000000" points="1314.98,-446.691 1325.3,-449.075 1318.72,-440.774 1314.98,-446.691"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge69" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M964.361,-635.261C986.374,-654.422 1032.38,-691.677 1078,-711.218 1203.35,-764.913 1244.87,-746.048 1378.5,-773.218"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge17" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1176,-621.218C1296.46,-597.94 1329.1,-611.103 1451,-597.218 1495.37,-592.163 1507.33,-571.794 1550.5,-583.218"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge49" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1014.9,-611.182C1041.5,-606.173 1072.54,-600.327 1100.1,-595.135"/>
+<polygon fill="#000000" stroke="#000000" points="1100.91,-598.545 1110.09,-593.255 1099.61,-591.666 1100.91,-598.545"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge23" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1035.11,-629.614C1077.18,-631.01 1128.67,-629.978 1174,-621.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1176,-621.218C1218.7,-612.965 1239.56,-631.186 1272,-602.218 1311.32,-567.111 1272.05,-527.764 1308,-489.218 1312.09,-484.837 1316.94,-481.129 1322.17,-477.993"/>
+<polygon fill="#000000" stroke="#000000" points="1324.02,-480.979 1331.25,-473.238 1320.77,-474.778 1324.02,-480.979"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node17" class="node"><title>sourcefile~wenoof_base_object.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node17"><a xlink:href="../sourcefile/wenoof_base_object.f90.html" xlink:title="wenoof_base_object.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="626,-517.218 497,-517.218 497,-493.218 626,-493.218 626,-517.218"/>
+<text text-anchor="middle" x="561.5" y="-502.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_base_object.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge2" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M576.268,-517.293C589.227,-528.726 609.113,-546.441 626,-562.218 642.306,-577.452 645.336,-582.375 662,-597.218 756.392,-681.295 875.094,-774.261 925.079,-812.862"/>
+<polygon fill="#000000" stroke="#000000" points="922.989,-815.67 933.046,-819.003 927.262,-810.126 922.989,-815.67"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge6" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M951,-271.218C1008.35,-273.762 1072.8,-286.408 1117.61,-296.81"/>
+<polygon fill="#000000" stroke="#000000" points="1116.89,-300.236 1127.42,-299.126 1118.49,-293.423 1116.89,-300.236"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge9" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M566.34,-493.015C580.686,-450.008 635.783,-306.192 741,-271.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-271.218C829.882,-242.338 857.534,-267.16 949,-271.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M951,-271.218C1093.78,-277.551 1129.93,-274.712 1272,-290.218 1319.65,-295.418 1330.6,-305.347 1378.5,-307.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1380.5,-307.218C1456.03,-309.063 1491.16,-260.45 1550.5,-307.218"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge22" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-79.2175C816.317,-43.7873 899.994,-132.739 933.725,-174.255"/>
+<polygon fill="#000000" stroke="#000000" points="931.003,-176.455 939.966,-182.104 936.482,-172.099 931.003,-176.455"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge35" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M562.543,-493.105C563.519,-432.113 577.106,-158.419 741,-79.2175"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-79.2175C825.435,-39.3811 857.534,-83.2746 949,-79.2175"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M951,-79.2175C1051.59,-74.7555 1080.21,-2.57809 1174,-39.2175"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1176,-39.2175C1216.51,-55.0439 1234.7,-35.8392 1272,-58.2175 1304.36,-77.6372 1461.51,-293.379 1487,-321.218 1500.7,-336.181 1517.11,-352.154 1529.81,-364.139"/>
+<polygon fill="#000000" stroke="#000000" points="1527.49,-366.763 1537.18,-371.042 1532.27,-361.653 1527.49,-366.763"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge42" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-271.218C819.404,-245.821 899.672,-327.456 933.021,-367.006"/>
+<polygon fill="#000000" stroke="#000000" points="930.702,-369.696 939.76,-375.192 936.107,-365.248 930.702,-369.696"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge44" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M626.187,-505.218C634.462,-505.218 643.058,-505.218 651.656,-505.218"/>
+<polygon fill="#000000" stroke="#000000" points="651.729,-508.718 661.729,-505.218 651.729,-501.718 651.729,-508.718"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge46" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M580.21,-517.375C611.148,-537.565 677.78,-576.466 741,-583.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M743,-583.218C834.038,-592.94 857.801,-575.15 949,-583.218"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge53" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M951,-79.2175C998.444,-77.113 1051.62,-77.0253 1094.14,-77.5049"/>
+<polygon fill="#000000" stroke="#000000" points="1094.11,-81.0047 1104.16,-77.6304 1094.2,-74.0052 1094.11,-81.0047"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge25" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1176,-39.2175C1216.51,-55.0439 1242.82,-25.961 1272,-58.2175 1328.45,-120.632 1256.64,-368.544 1308,-435.218 1310.48,-438.439 1313.4,-441.262 1316.62,-443.735"/>
+<polygon fill="#000000" stroke="#000000" points="1314.84,-446.751 1325.15,-449.189 1318.61,-440.854 1314.84,-446.751"/>
+</g>
+<!-- sourcefile~wenoof_objects_factory.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge36" class="edge"><title>sourcefile~wenoof_objects_factory.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1416,-449.132C1427.31,-445.015 1439.79,-440.189 1451,-435.218 1474.73,-424.691 1500.71,-411.041 1520.16,-400.367"/>
+<polygon fill="#000000" stroke="#000000" points="1522.1,-403.297 1529.15,-395.393 1518.71,-397.172 1522.1,-403.297"/>
+</g>
+<!-- sourcefile~penf_b_size.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node19" class="node"><title>sourcefile~penf_b_size.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node19"><a xlink:href="../sourcefile/penf_b_size.f90.html" xlink:title="penf_b_size.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="327,-595.218 235,-595.218 235,-571.218 327,-571.218 327,-595.218"/>
+<text text-anchor="middle" x="281" y="-580.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_b_size.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge73" class="edge"><title>sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M320.339,-595.283C333.697,-598.917 348.877,-602.417 363,-604.218 406.206,-609.727 417.68,-608.739 461,-604.218 482.038,-602.022 505.179,-597.281 523.845,-592.859"/>
+<polygon fill="#000000" stroke="#000000" points="524.827,-596.222 533.713,-590.453 523.169,-589.422 524.827,-596.222"/>
+</g>
+<!-- sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node21" class="node"><title>sourcefile~penf_stringify.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node21"><a xlink:href="../sourcefile/penf_stringify.f90.html" xlink:title="penf_stringify.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="461,-595.218 363,-595.218 363,-571.218 461,-571.218 461,-595.218"/>
+<text text-anchor="middle" x="412" y="-580.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_stringify.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge71" class="edge"><title>sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf_stringify.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M327.118,-583.218C335.279,-583.218 343.897,-583.218 352.378,-583.218"/>
+<polygon fill="#000000" stroke="#000000" points="352.615,-586.718 362.615,-583.218 352.615,-579.718 352.615,-586.718"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_node20" class="node"><title>sourcefile~penf_global_parameters_variables.f90</title>
+<g id="a_sourcefile~~sin_reconstruction.f90~~EfferentGraph_node20"><a xlink:href="../sourcefile/penf_global_parameters_variables.f90.html" xlink:title="penf_global_parameters_variables.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="199,-575.218 0,-575.218 0,-551.218 199,-551.218 199,-575.218"/>
+<text text-anchor="middle" x="99.5" y="-560.818" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_global_parameters_variables.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge74" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M169.778,-551.194C203.023,-546.528 243.478,-542.455 280,-543.218"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M282,-543.218C361.985,-544.888 381.98,-549.718 461,-562.218 481.893,-565.522 505.024,-570.334 523.722,-574.517"/>
+<polygon fill="#000000" stroke="#000000" points="523.084,-577.961 533.611,-576.763 524.634,-571.135 523.084,-577.961"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_b_size.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge70" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_b_size.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M199.177,-574.212C207.883,-575.182 216.477,-576.14 224.625,-577.048"/>
+<polygon fill="#000000" stroke="#000000" points="224.357,-580.539 234.683,-578.168 225.132,-573.582 224.357,-580.539"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge72" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_stringify.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M282,-543.218C315.467,-543.916 351.725,-556.275 377.253,-567.072"/>
+<polygon fill="#000000" stroke="#000000" points="375.919,-570.309 386.483,-571.106 378.722,-563.894 375.919,-570.309"/>
+</g>
+<!-- sourcefile~penf_stringify.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~sin_reconstruction.f90~~EfferentGraph_edge75" class="edge"><title>sourcefile~penf_stringify.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M461.297,-583.218C481.478,-583.218 504.557,-583.218 523.373,-583.218"/>
+<polygon fill="#000000" stroke="#000000" points="523.623,-586.718 533.623,-583.218 523.623,-579.718 523.623,-586.718"/>
+</g>
+</g>
+</svg>
+</div>
+                <script>var pansourcefilesin_reconstructionf90EfferentGraph = svgPanZoom('#sourcefilesin_reconstructionf90EfferentGraph', {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,});
+                    </script>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="190pt" height="32pt"
+ viewBox="0.00 0.00 190.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 186,-28 186,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node"><title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="67,-24 0,-24 0,-0 67,-0 67,-24"/>
+<text text-anchor="middle" x="33.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="182,-24 85,-24 85,-0 182,-0 182,-24"/>
+<text text-anchor="middle" x="133.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a file to a file which depends upon it. A file 
+    is dependent upon another if the latter must be compiled before the former
+    can be.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+    
+      
+      <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#progs-1">Programs</a></h3></div>
+  <div id="progs-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../program/sin_reconstruction.html">sin_reconstruction</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../sourcefile/sin_reconstruction.f90.html#src">sin_reconstruction.f90</a>
+  </div>
+</div>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
     <section>
-    <h2><a class="anchor" name="src"></a>Source Code</h2>
-    <div class="highlight"><pre><span class="k">program </span><span class="n">sin_reconstruction</span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="c">!&lt; Reconstruct sin function.</span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="k">use </span><span class="n">IR_Precision</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span> <span class="n">I_P</span><span class="p">,</span> <span class="n">R_P</span><span class="p">,</span> <span class="n">str</span>
-<span class="k">use </span><span class="n">wenoof</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span> <span class="n">weno_factory</span><span class="p">,</span> <span class="n">weno_constructor_upwind</span><span class="p">,</span> <span class="n">weno_interpolator</span>
-<span class="k">use </span><span class="n">pyplot_module</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span>  <span class="n">pyplot</span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">weno_factory</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">factory</span>                    <span class="c">!&lt; WENO factory.</span>
-<span class="k">class</span><span class="p">(</span><span class="n">weno_interpolator</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">interpolator</span>               <span class="c">!&lt; WENO interpolator.</span>
-<span class="kt">integer</span><span class="p">(</span><span class="n">I_P</span><span class="p">),</span> <span class="k">parameter</span>               <span class="kd">::</span> <span class="n">S</span> <span class="o">=</span> <span class="mi">3_I_P</span>                  <span class="c">!&lt; Stencils used.</span>
-<span class="kt">integer</span><span class="p">(</span><span class="n">I_P</span><span class="p">),</span> <span class="k">parameter</span>               <span class="kd">::</span> <span class="n">Nv</span> <span class="o">=</span> <span class="mi">30_I_P</span>                <span class="c">!&lt; Number of discretized values to be interpolated.</span>
-<span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">),</span>    <span class="k">parameter</span>               <span class="kd">::</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">4._R_P</span> <span class="o">*</span> <span class="nb">atan</span><span class="p">(</span><span class="mf">1._R_P</span><span class="p">)</span> <span class="c">!&lt; Extent of domain.</span>
-<span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">)</span>                             <span class="kd">::</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">S</span><span class="p">:</span><span class="n">Nv</span><span class="o">+</span><span class="n">S</span><span class="p">)</span>                <span class="c">!&lt; Whole domain.</span>
-<span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">)</span>                             <span class="kd">::</span> <span class="n">fx</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">S</span><span class="p">:</span><span class="n">Nv</span><span class="o">+</span><span class="n">S</span><span class="p">)</span>               <span class="c">!&lt; Discretized values to be interpolated.</span>
-<span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">)</span>                             <span class="kd">::</span> <span class="n">xi</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">)</span>                   <span class="c">!&lt; Domain of the interpolation.</span>
-<span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">)</span>                             <span class="kd">::</span> <span class="n">fx_ref</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">)</span>               <span class="c">!&lt; Reference values.</span>
-<span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">)</span>                             <span class="kd">::</span> <span class="n">interpolation</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">)</span>   <span class="c">!&lt; Interpolated values.</span>
-<span class="k">type</span><span class="p">(</span><span class="n">pyplot</span><span class="p">)</span>                          <span class="kd">::</span> <span class="n">plt</span>                        <span class="c">!&lt; Plotter handler.</span>
-<span class="kt">integer</span>                               <span class="kd">::</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">f</span>                    <span class="c">!&lt; Counters.</span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="c">! build the values used for the reconstruction of sin function: nodal values</span>
-<span class="n">x</span> <span class="o">=</span> <span class="mf">0.</span>
-<span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">S</span><span class="p">,</span> <span class="n">Nv</span> <span class="o">+</span> <span class="n">S</span>
-  <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">Nv</span>
-  <span class="n">fx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-<span class="n">enddo</span>
-<span class="c">! face values to which the reconstruction should tend</span>
-<span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Nv</span>
-  <span class="n">xi</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">Nv</span>
-  <span class="n">fx_ref</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="n">xi</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-<span class="n">enddo</span>
-
-<span class="c">! prepare the weno interpolator</span>
-<span class="k">call </span><span class="n">factory</span><span class="p">%</span><span class="n">create</span><span class="p">(</span><span class="n">constructor</span><span class="o">=</span><span class="n">weno_constructor_upwind</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mi">1</span><span class="mf">0._R_P</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">40</span><span class="p">)),</span> <span class="n">interpolator</span><span class="o">=</span><span class="n">interpolator</span><span class="p">)</span>
-
-<span class="c">! interpolate values</span>
-<span class="n">interpolation</span> <span class="o">=</span> <span class="mf">0.</span>
-<span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Nv</span> <span class="c">! interpolated values loop</span>
-  <span class="k">call </span><span class="n">interpolator</span><span class="p">%</span><span class="n">interpolate</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">S</span><span class="p">,</span>                                                      <span class="p">&amp;</span>
-                                <span class="n">stencil</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">fx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">S</span><span class="p">:</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="n">S</span><span class="p">),</span> <span class="nb">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="p">&amp;</span>
-                                <span class="n">location</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>                                         <span class="p">&amp;</span>
-                                <span class="n">interpolation</span><span class="o">=</span><span class="n">interpolation</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
-<span class="n">enddo</span>
-
-<span class="c">! print results</span>
-<span class="k">print</span> <span class="s2">&quot;(A)&quot;</span><span class="p">,</span> <span class="s1">&#39;# x, sin(x), weno_interpolation(x)&#39;</span>
-<span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Nv</span>
-  <span class="k">print</span> <span class="s2">&quot;(A)&quot;</span><span class="p">,</span> <span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">xi</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">//</span><span class="s1">&#39; &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">fx_ref</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">//</span><span class="s1">&#39; &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">interpolation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
-<span class="n">enddo</span>
-
-<span class="c">! plotting graph to image file</span>
-<span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;angle (rad)&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;WENO interpolation of $\sin(x)$&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
-<span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xi</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">),</span>        <span class="p">&amp;</span>
-                  <span class="n">y</span><span class="o">=</span><span class="n">fx_ref</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">),</span>    <span class="p">&amp;</span>
-                  <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$\sin(x)$&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
-                  <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;k-&#39;</span><span class="p">,</span>    <span class="p">&amp;</span>
-                  <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xi</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">),</span>                 <span class="p">&amp;</span>
-                  <span class="n">y</span><span class="o">=</span><span class="n">interpolation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">),</span>   <span class="p">&amp;</span>
-                  <span class="n">label</span><span class="o">=</span><span class="s1">&#39;WENO interpolation&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
-                  <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;ro&#39;</span><span class="p">,</span>             <span class="p">&amp;</span>
-                  <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
-<span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;sin_reconstruction.png&#39;</span><span class="p">)</span>
-<span class="k">stop</span>
-<span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="n">endprogram</span> <span class="n">sin_reconstruction</span>
+      <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl"><pre><span></span><a name="ln-1"></a><span class="c">!&lt; WenOOF test: reconstruction of sin function.</span>
+<a name="ln-2"></a><span class="k">program </span><span class="n">sin_reconstruction</span>
+<a name="ln-3"></a><span class="c">!&lt; WenOOF test: reconstruction of sin function.</span>
+<a name="ln-4"></a>
+<a name="ln-5"></a><span class="k">use </span><span class="n">penf</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span> <span class="n">I_P</span><span class="p">,</span> <span class="n">R_P</span><span class="p">,</span> <span class="n">str</span>
+<a name="ln-6"></a><span class="k">use </span><span class="n">wenoof</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span> <span class="n">interpolator</span><span class="p">,</span> <span class="n">wenoof_create</span>
+<a name="ln-7"></a><span class="k">use </span><span class="n">pyplot_module</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span>  <span class="n">pyplot</span>
+<a name="ln-8"></a>
+<a name="ln-9"></a><span class="k">implicit none</span>
+<a name="ln-10"></a><span class="k">class</span><span class="p">(</span><span class="n">interpolator</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">weno_interpolator</span>          <span class="c">!&lt; WENO interpolator.</span>
+<a name="ln-11"></a><span class="kt">integer</span><span class="p">(</span><span class="n">I_P</span><span class="p">),</span> <span class="k">parameter</span>          <span class="kd">::</span> <span class="n">S</span> <span class="o">=</span> <span class="mi">6_I_P</span>                  <span class="c">!&lt; Stencils used.</span>
+<a name="ln-12"></a><span class="kt">integer</span><span class="p">(</span><span class="n">I_P</span><span class="p">),</span> <span class="k">parameter</span>          <span class="kd">::</span> <span class="n">Nv</span> <span class="o">=</span> <span class="mi">30_I_P</span>                <span class="c">!&lt; Number of discretized values to be interpolated.</span>
+<a name="ln-13"></a><span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">),</span>    <span class="k">parameter</span>          <span class="kd">::</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">4._R_P</span> <span class="o">*</span> <span class="nb">atan</span><span class="p">(</span><span class="mf">1._R_P</span><span class="p">)</span> <span class="c">!&lt; Extent of domain.</span>
+<a name="ln-14"></a><span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">S</span><span class="p">:</span><span class="n">Nv</span><span class="o">+</span><span class="n">S</span><span class="p">)</span>                <span class="c">!&lt; Whole domain.</span>
+<a name="ln-15"></a><span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">fx</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">S</span><span class="p">:</span><span class="n">Nv</span><span class="o">+</span><span class="n">S</span><span class="p">)</span>               <span class="c">!&lt; Discretized values to be interpolated.</span>
+<a name="ln-16"></a><span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">xi</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">)</span>                   <span class="c">!&lt; Domain of the interpolation.</span>
+<a name="ln-17"></a><span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">fx_ref</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">)</span>               <span class="c">!&lt; Reference values.</span>
+<a name="ln-18"></a><span class="kt">real</span><span class="p">(</span><span class="n">R_P</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">interpolation</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">)</span>   <span class="c">!&lt; Interpolated values.</span>
+<a name="ln-19"></a><span class="k">type</span><span class="p">(</span><span class="n">pyplot</span><span class="p">)</span>                     <span class="kd">::</span> <span class="n">plt</span>                        <span class="c">!&lt; Plotter handler.</span>
+<a name="ln-20"></a><span class="kt">integer</span>                          <span class="kd">::</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">f</span>                    <span class="c">!&lt; Counters.</span>
+<a name="ln-21"></a>
+<a name="ln-22"></a><span class="c">! build the values used for the reconstruction of sin function: nodal values</span>
+<a name="ln-23"></a><span class="n">x</span> <span class="o">=</span> <span class="mf">0.</span>
+<a name="ln-24"></a><span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">S</span><span class="p">,</span> <span class="n">Nv</span> <span class="o">+</span> <span class="n">S</span>
+<a name="ln-25"></a>  <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">Nv</span>
+<a name="ln-26"></a>  <span class="n">fx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<a name="ln-27"></a><span class="n">enddo</span>
+<a name="ln-28"></a><span class="c">! face values to which the reconstruction should tend</span>
+<a name="ln-29"></a><span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Nv</span>
+<a name="ln-30"></a>  <span class="n">xi</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">Nv</span>
+<a name="ln-31"></a>  <span class="n">fx_ref</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="n">xi</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<a name="ln-32"></a><span class="n">enddo</span>
+<a name="ln-33"></a>
+<a name="ln-34"></a><span class="c">! create weno interpolator</span>
+<a name="ln-35"></a><span class="k">call </span><span class="n">wenoof_create</span><span class="p">(</span><span class="n">interpolator_type</span><span class="o">=</span><span class="s1">&#39;JS&#39;</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">wenoof_interpolator</span><span class="o">=</span><span class="n">weno_interpolator</span><span class="p">)</span>
+<a name="ln-36"></a>
+<a name="ln-37"></a><span class="c">! interpolate values</span>
+<a name="ln-38"></a><span class="n">interpolation</span> <span class="o">=</span> <span class="mf">0.</span>
+<a name="ln-39"></a><span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Nv</span> <span class="c">! interpolated values loop</span>
+<a name="ln-40"></a>  <span class="k">call </span><span class="n">weno_interpolator</span><span class="p">%</span><span class="n">interpolate</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">S</span><span class="p">,</span>                                                      <span class="p">&amp;</span>
+<a name="ln-41"></a>                                     <span class="n">stencil</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">fx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">S</span><span class="p">:</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="n">S</span><span class="p">),</span> <span class="nb">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="p">&amp;</span>
+<a name="ln-42"></a>                                     <span class="n">location</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>                                         <span class="p">&amp;</span>
+<a name="ln-43"></a>                                     <span class="n">interpolation</span><span class="o">=</span><span class="n">interpolation</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+<a name="ln-44"></a><span class="n">enddo</span>
+<a name="ln-45"></a>
+<a name="ln-46"></a><span class="c">! print results</span>
+<a name="ln-47"></a><span class="k">print</span> <span class="s2">&quot;(A)&quot;</span><span class="p">,</span> <span class="s1">&#39;# x, sin(x), weno_interpolation(x)&#39;</span>
+<a name="ln-48"></a><span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Nv</span>
+<a name="ln-49"></a>  <span class="k">print</span> <span class="s2">&quot;(A)&quot;</span><span class="p">,</span> <span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">xi</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">//</span><span class="s1">&#39; &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">fx_ref</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">//</span><span class="s1">&#39; &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">interpolation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+<a name="ln-50"></a><span class="n">enddo</span>
+<a name="ln-51"></a>
+<a name="ln-52"></a><span class="c">! plotting graph to image file</span>
+<a name="ln-53"></a><span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;angle (rad)&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;WENO interpolation of $\sin(x)$&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+<a name="ln-54"></a><span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xi</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">),</span>        <span class="p">&amp;</span>
+<a name="ln-55"></a>                  <span class="n">y</span><span class="o">=</span><span class="n">fx_ref</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">),</span>    <span class="p">&amp;</span>
+<a name="ln-56"></a>                  <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$\sin(x)$&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+<a name="ln-57"></a>                  <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;k-&#39;</span><span class="p">,</span>    <span class="p">&amp;</span>
+<a name="ln-58"></a>                  <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a name="ln-59"></a><span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xi</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">),</span>                 <span class="p">&amp;</span>
+<a name="ln-60"></a>                  <span class="n">y</span><span class="o">=</span><span class="n">interpolation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="n">Nv</span><span class="p">),</span>   <span class="p">&amp;</span>
+<a name="ln-61"></a>                  <span class="n">label</span><span class="o">=</span><span class="s1">&#39;WENO interpolation&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+<a name="ln-62"></a>                  <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;ro&#39;</span><span class="p">,</span>             <span class="p">&amp;</span>
+<a name="ln-63"></a>                  <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<a name="ln-64"></a><span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;sin_reconstruction.png&#39;</span><span class="p">)</span>
+<a name="ln-65"></a><span class="n">endprogram</span> <span class="n">sin_reconstruction</span>
 </pre></div>
 
     </section>
     </div>
   </div>
 
+  <section class="visible-xs visible-sm hidden-md">
     <hr>
-    <footer>
-        <div class="row">
-        <div class="col-md-6">&copy; 2015 WenOOF was written by Fortran-FOSS-Programmers Group. </div>
-        <div class="col-md-6"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a>.</span></div>
-        </div>
-        <br>
-    </footer>
-    </div> <!-- /container -->
+    
 
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allfiles-1">All Source Files</a></h3></div>
+  <div id="allfiles-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../sourcefile/compact_real.f90.html">compact_real.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf.f90.html">penf.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_b_size.f90.html">penf_b_size.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_global_parameters_variables.f90.html">penf_global_parameters_variables.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_stringify.f90.html">penf_stringify.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/pyplot_module.f90.html">pyplot_module.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/sin_reconstruction.f90.html">sin_reconstruction.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test.f90.html">test.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test_all.f90.html">test_all.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof.f90.html">wenoof.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients.f90.html">wenoof_alpha_coefficients.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_js.f90.html">wenoof_alpha_coefficients_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_m.f90.html">wenoof_alpha_coefficients_m.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_z.f90.html">wenoof_alpha_coefficients_z.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_base_object.f90.html">wenoof_base_object.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator.f90.html">wenoof_interpolator.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator_js.f90.html">wenoof_interpolator_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_objects_factory.f90.html">wenoof_objects_factory.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights.f90.html">wenoof_optimal_weights.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights_js.f90.html">wenoof_optimal_weights_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials.f90.html">wenoof_polynomials.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials_js.f90.html">wenoof_polynomials_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators.f90.html">wenoof_smoothness_indicators.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators_js.f90.html">wenoof_smoothness_indicators_js.f90</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+  
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> WenOOF was developed by Fortran-FOSS-Programmers</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -291,6 +1114,6 @@
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>

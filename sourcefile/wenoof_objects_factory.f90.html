@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	 
+	 <meta name="description" content="WENO interpolation Object Oriented Fortran library">
+    
+    <meta name="author" content="Fortran-FOSS-Programmers" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>wenoof_objects_factory.f90 &ndash; WenOOF</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">WenOOF </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+				
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+				
+				
+            <li><a href="../lists/modules.html">Modules</a></li>
+				
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+				
+				
+            <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
+								
+            <li><a href="../lists/types.html">Derived Types</a></li>
+				
+				
+            <li><a href="../lists/programs.html">Programs</a></li>
+				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>wenoof_objects_factory.f90
+    <small>Source File</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title=" 1.8% of total for source files.">95 statements</a>
+     </li> 
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/wenoof_objects_factory.f90"> Source File</a></li>
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+     <li class="active">wenoof_objects_factory.f90</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#mods-0">Modules</a></h3></div>
+  <div id="mods-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/wenoof_objects_factory.html">wenoof_objects_factory</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../sourcefile/wenoof_objects_factory.f90.html#src">wenoof_objects_factory.f90</a>
+  </div>
+</div>
+
+
+  <hr>
+  
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allfiles-0">All Source Files</a></h3></div>
+  <div id="allfiles-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../sourcefile/compact_real.f90.html">compact_real.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf.f90.html">penf.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_b_size.f90.html">penf_b_size.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_global_parameters_variables.f90.html">penf_global_parameters_variables.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_stringify.f90.html">penf_stringify.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/pyplot_module.f90.html">pyplot_module.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/sin_reconstruction.f90.html">sin_reconstruction.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test.f90.html">test.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test_all.f90.html">test_all.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof.f90.html">wenoof.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients.f90.html">wenoof_alpha_coefficients.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_js.f90.html">wenoof_alpha_coefficients_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_m.f90.html">wenoof_alpha_coefficients_m.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_z.f90.html">wenoof_alpha_coefficients_z.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_base_object.f90.html">wenoof_base_object.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator.f90.html">wenoof_interpolator.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator_js.f90.html">wenoof_interpolator_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_objects_factory.f90.html">wenoof_objects_factory.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights.f90.html">wenoof_optimal_weights.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights_js.f90.html">wenoof_optimal_weights_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials.f90.html">wenoof_polynomials.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials_js.f90.html">wenoof_polynomials_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators.f90.html">wenoof_smoothness_indicators.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators_js.f90.html">wenoof_smoothness_indicators_js.f90</a>
+      
+    </div>
+  </div>
+</div>
+
+
+</div>  
+
+    </div>
+    <div class="col-md-9" id='text'>
+    <p>Wenoof objects factory.</p>
+    
+    <h3>This File Depends On</h3>
+    
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: sourcefile~~wenoof_objects_factory.f90~~EfferentGraph Pages: 1 -->
+<svg id="sourcefilewenoof_objects_factoryf90EfferentGraph" width="641pt" height="186pt"
+ viewBox="0.00 0.00 641.00 186.08" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph" class="graph" transform="scale(0.435758 0.435758) rotate(0) translate(4 423.026)">
+<title>sourcefile~~wenoof_objects_factory.f90~~EfferentGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-423.026 1467,-423.026 1467,4 -4,4"/>
+<!-- sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node1" class="node"><title>sourcefile~wenoof_objects_factory.f90</title>
+<polygon fill="none" stroke="black" points="1463,-106 1320,-106 1320,-82 1463,-82 1463,-106"/>
+<text text-anchor="middle" x="1391.5" y="-91.6" font-family="Helvetica,sans-Serif" font-size="10.50">wenoof_objects_factory.f90</text>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node2" class="node"><title>sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node2"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_js.f90.html" xlink:title="wenoof_alpha_coefficients_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1064,-24 894,-24 894,-0 1064,-0 1064,-24"/>
+<text text-anchor="middle" x="979" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge32" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1035.53,-24.0652C1079.24,-33.2431 1141.79,-45.6718 1197,-54"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1199,-54C1243.39,-60.6969 1293,-71.1428 1330.6,-79.6805"/>
+<polygon fill="#000000" stroke="#000000" points="1329.85,-83.0995 1340.38,-81.9196 1331.41,-76.2761 1329.85,-83.0995"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node10" class="node"><title>sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node10"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_m.f90.html" xlink:title="wenoof_alpha_coefficients_m.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1284,-106 1112,-106 1112,-82 1284,-82 1284,-106"/>
+<text text-anchor="middle" x="1198" y="-91.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_m.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge26" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1054.86,-24.0383C1062.21,-26.4918 1069.39,-29.4451 1076,-33 1095.65,-43.5678 1092.79,-56.6404 1112,-68 1118.89,-72.0769 1126.49,-75.5694 1134.21,-78.5468"/>
+<polygon fill="#000000" stroke="#000000" points="1133.06,-81.8541 1143.66,-81.9279 1135.42,-75.2633 1133.06,-81.8541"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node3" class="node"><title>sourcefile~wenoof_optimal_weights.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node3"><a xlink:href="../sourcefile/wenoof_optimal_weights.f90.html" xlink:title="wenoof_optimal_weights.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="829.5,-204 678.5,-204 678.5,-180 829.5,-180 829.5,-204"/>
+<text text-anchor="middle" x="754" y="-189.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_optimal_weights.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge33" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M813.932,-204.066C858.757,-212.88 922.051,-224.546 978,-232"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M980,-232C986.076,-232.809 1191.28,-274.207 1197,-272"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node5" class="node"><title>sourcefile~wenoof_optimal_weights_js.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node5"><a xlink:href="../sourcefile/wenoof_optimal_weights_js.f90.html" xlink:title="wenoof_optimal_weights_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1059.5,-204 898.5,-204 898.5,-180 1059.5,-180 1059.5,-204"/>
+<text text-anchor="middle" x="979" y="-189.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_optimal_weights_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge12" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M829.566,-192C848.327,-192 868.661,-192 888.086,-192"/>
+<polygon fill="#000000" stroke="#000000" points="888.148,-195.5 898.148,-192 888.148,-188.5 888.148,-195.5"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node4" class="node"><title>sourcefile~wenoof_base_object.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node4"><a xlink:href="../sourcefile/wenoof_base_object.f90.html" xlink:title="wenoof_base_object.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="626,-246 497,-246 497,-222 626,-222 626,-246"/>
+<text text-anchor="middle" x="561.5" y="-231.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_base_object.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge34" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M755,-392C891.562,-434.141 943.138,-425.657 1076,-373 1141.12,-347.19 1131.65,-297.218 1197,-272"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge10" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M617.09,-221.964C639.409,-217.044 665.395,-211.315 688.631,-206.192"/>
+<polygon fill="#000000" stroke="#000000" points="689.39,-209.608 698.402,-204.037 687.883,-202.772 689.39,-209.608"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node6" class="node"><title>sourcefile~wenoof_polynomials.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node6"><a xlink:href="../sourcefile/wenoof_polynomials.f90.html" xlink:title="wenoof_polynomials.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="819.5,-246 688.5,-246 688.5,-222 819.5,-222 819.5,-246"/>
+<text text-anchor="middle" x="754" y="-231.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_polynomials.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge14" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M626.199,-234C642.926,-234 661.117,-234 678.361,-234"/>
+<polygon fill="#000000" stroke="#000000" points="678.387,-237.5 688.387,-234 678.386,-230.5 678.387,-237.5"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node7" class="node"><title>sourcefile~wenoof_alpha_coefficients.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node7"><a xlink:href="../sourcefile/wenoof_alpha_coefficients.f90.html" xlink:title="wenoof_alpha_coefficients.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="834,-86 674,-86 674,-62 834,-62 834,-86"/>
+<text text-anchor="middle" x="754" y="-71.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge16" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.935,-221.951C618.366,-219.5 622.489,-216.55 626,-213 663.066,-175.525 624.172,-136.706 662,-100 665.571,-96.5352 669.57,-93.5263 673.846,-90.9139"/>
+<polygon fill="#000000" stroke="#000000" points="675.763,-93.8598 682.965,-86.0895 672.489,-87.6724 675.763,-93.8598"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node8" class="node"><title>sourcefile~wenoof_smoothness_indicators.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node8"><a xlink:href="../sourcefile/wenoof_smoothness_indicators.f90.html" xlink:title="wenoof_smoothness_indicators.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="846,-364 662,-364 662,-340 846,-340 846,-364"/>
+<text text-anchor="middle" x="754" y="-349.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_smoothness_indicators.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge18" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M572.194,-246.063C588.615,-265.704 623.857,-304.55 662,-326 669.411,-330.168 677.545,-333.713 685.806,-336.717"/>
+<polygon fill="#000000" stroke="#000000" points="684.932,-340.116 695.527,-340 687.172,-333.484 684.932,-340.116"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node9" class="node"><title>sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node9"><a xlink:href="../sourcefile/wenoof_smoothness_indicators_js.f90.html" xlink:title="wenoof_smoothness_indicators_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1076,-364 882,-364 882,-340 1076,-340 1076,-364"/>
+<text text-anchor="middle" x="979" y="-349.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_smoothness_indicators_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge20" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M567.563,-246.391C579.516,-273.981 612.276,-340.587 662,-373 696.612,-395.562 713.52,-379.817 753,-392"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M755,-392C770.198,-396.69 855.212,-379.486 915.752,-366.181"/>
+<polygon fill="#000000" stroke="#000000" points="916.611,-369.576 925.619,-364 915.1,-362.741 916.611,-369.576"/>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge23" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M608.989,-221.933C614.957,-219.446 620.793,-216.493 626,-213 646.418,-199.306 641.048,-183.863 662,-171 785.191,-95.3707 833.588,-87.5943 978,-94"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node11" class="node"><title>sourcefile~wenoof_polynomials_js.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node11"><a xlink:href="../sourcefile/wenoof_polynomials_js.f90.html" xlink:title="wenoof_polynomials_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1049.5,-284 908.5,-284 908.5,-260 1049.5,-260 1049.5,-284"/>
+<text text-anchor="middle" x="979" y="-269.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_polynomials_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge28" class="edge"><title>sourcefile~wenoof_base_object.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M578.681,-246.114C597.537,-259.405 630.186,-279.924 662,-288 747.79,-309.779 850.772,-297.804 915.318,-285.937"/>
+<polygon fill="#000000" stroke="#000000" points="916.165,-289.338 925.338,-284.038 914.862,-282.461 916.165,-289.338"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge35" class="edge"><title>sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1030.28,-204.042C1045.15,-208.025 1061.36,-212.786 1076,-218 1131.48,-237.757 1142.13,-293.397 1197,-272"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge36" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M819.703,-228.619C864.375,-226.076 925.039,-224.944 978,-232"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge29" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M819.501,-244.991C844.03,-249.171 872.273,-253.984 898.061,-258.378"/>
+<polygon fill="#000000" stroke="#000000" points="897.741,-261.874 908.187,-260.104 898.917,-254.973 897.741,-261.874"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge37" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M798.307,-86.0431C880.06,-108.93 1051.18,-157.617 1076,-171 1137.66,-204.246 1131.74,-297.452 1197,-272"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1199,-272C1281.11,-240.317 1348.7,-154.515 1376.65,-114.75"/>
+<polygon fill="#000000" stroke="#000000" points="1379.66,-116.562 1382.46,-106.343 1373.9,-112.586 1379.66,-116.562"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge8" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M801.155,-61.9381C815.623,-57.8572 831.577,-53.0461 846,-48 862.361,-42.276 865.467,-38.2063 882,-33 889.578,-30.6137 897.575,-28.4007 905.589,-26.377"/>
+<polygon fill="#000000" stroke="#000000" points="906.455,-29.7683 915.345,-24.0033 904.801,-22.9667 906.455,-29.7683"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge24" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M834.094,-82.8438C876.674,-87.1625 930.139,-91.877 978,-94"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node12" class="node"><title>sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node12"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_z.f90.html" xlink:title="wenoof_alpha_coefficients_z.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1063,-66 895,-66 895,-42 1063,-42 1063,-66"/>
+<text text-anchor="middle" x="979" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_z.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge31" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M834.249,-66.8924C850.526,-65.4327 867.806,-63.8829 884.529,-62.383"/>
+<polygon fill="#000000" stroke="#000000" points="885.209,-65.8362 894.857,-61.4568 884.584,-58.8642 885.209,-65.8362"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge38" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M825.492,-339.956C945.854,-319.291 1179.77,-278.65 1197,-272"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge21" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M846.024,-352C854.507,-352 863.154,-352 871.759,-352"/>
+<polygon fill="#000000" stroke="#000000" points="871.829,-355.5 881.829,-352 871.829,-348.5 871.829,-355.5"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge39" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1030.28,-339.958C1045.15,-335.975 1061.36,-331.214 1076,-326 1131.48,-306.243 1142.13,-293.397 1197,-272"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge40" class="edge"><title>sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1284.11,-94C1292.63,-94 1301.27,-94 1309.74,-94"/>
+<polygon fill="#000000" stroke="#000000" points="1309.98,-97.5001 1319.98,-94 1309.98,-90.5001 1309.98,-97.5001"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge41" class="edge"><title>sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1044.94,-284.04C1089.29,-289.414 1148.56,-290.89 1197,-272"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge42" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1063.13,-48.2106C1103.71,-46.8531 1153.14,-47.383 1197,-54"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge25" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1045.11,-66.0013C1069.14,-70.4307 1096.57,-75.4868 1121.44,-80.0724"/>
+<polygon fill="#000000" stroke="#000000" points="1121.1,-83.5672 1131.56,-81.9381 1122.36,-76.6832 1121.1,-83.5672"/>
+</g>
+<!-- sourcefile~penf.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node13" class="node"><title>sourcefile~penf.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node13"><a xlink:href="../sourcefile/penf.f90.html" xlink:title="penf.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="589,-204 534,-204 534,-180 589,-180 589,-204"/>
+<text text-anchor="middle" x="561.5" y="-189.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge7" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M567.563,-179.609C579.516,-152.019 612.276,-85.4127 662,-53 696.612,-30.4377 713.538,-46.2408 753,-34"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M755,-34C796.105,-21.2496 843.326,-15.4106 883.702,-12.8908"/>
+<polygon fill="#000000" stroke="#000000" points="884.026,-16.3782 893.812,-12.3195 883.631,-9.38936 884.026,-16.3782"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge9" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M589.39,-192C609.942,-192 639.469,-192 667.797,-192"/>
+<polygon fill="#000000" stroke="#000000" points="668.161,-195.5 678.161,-192 668.161,-188.5 668.161,-195.5"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge11" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M589.287,-184.764C609.179,-179.779 637.066,-173.603 662,-171 743.336,-162.51 764.477,-164.556 846,-171 865.403,-172.534 886.263,-175.317 905.541,-178.366"/>
+<polygon fill="#000000" stroke="#000000" points="905.029,-181.829 915.462,-179.98 906.153,-174.92 905.029,-181.829"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge13" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M589.39,-197.928C615.06,-203.588 654.732,-212.335 688.581,-219.797"/>
+<polygon fill="#000000" stroke="#000000" points="687.896,-223.23 698.415,-221.966 689.403,-216.395 687.896,-223.23"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge15" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M572.194,-179.937C588.615,-160.296 623.857,-121.45 662,-100 669.411,-95.8322 677.545,-92.2869 685.806,-89.2829"/>
+<polygon fill="#000000" stroke="#000000" points="687.172,-92.5158 695.527,-86.0001 684.932,-85.8838 687.172,-92.5158"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge17" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M589.31,-195.915C601.658,-198.871 615.798,-204.028 626,-213 653.765,-237.417 638.104,-259.785 662,-288 678.305,-307.253 701.664,-323.521 720.632,-334.838"/>
+<polygon fill="#000000" stroke="#000000" points="719.132,-338.013 729.541,-339.987 722.634,-331.953 719.132,-338.013"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge19" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M755,-274C819.587,-292.923 892.996,-319.634 937.382,-336.374"/>
+<polygon fill="#000000" stroke="#000000" points="936.347,-339.725 946.939,-339.994 938.827,-333.179 936.347,-339.725"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge22" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M755,-34C794.462,-21.7592 807.588,-37.7826 846,-53 863.433,-59.9063 864.531,-68.1849 882,-75 922.52,-90.8081 934.548,-92.0726 978,-94"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M980,-94C1019.9,-95.77 1063.98,-96.0739 1101.92,-95.8225"/>
+<polygon fill="#000000" stroke="#000000" points="1101.97,-99.3223 1111.94,-95.7424 1101.91,-92.3225 1101.97,-99.3223"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge27" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M589.291,-197.41C601.212,-200.656 615.006,-205.627 626,-213 646.418,-226.694 640.837,-242.486 662,-255 697.564,-276.029 713.35,-262.383 753,-274"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M755,-274C801.093,-287.504 854.879,-287.451 898.08,-283.808"/>
+<polygon fill="#000000" stroke="#000000" points="898.621,-287.273 908.256,-282.868 897.977,-280.303 898.621,-287.273"/>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge30" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M755,-34C781.027,-25.9264 845.441,-32.6964 898.383,-40.4721"/>
+<polygon fill="#000000" stroke="#000000" points="898.055,-43.9619 908.463,-41.9843 899.093,-37.0394 898.055,-43.9619"/>
+</g>
+<!-- sourcefile~penf_b_size.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node14" class="node"><title>sourcefile~penf_b_size.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node14"><a xlink:href="../sourcefile/penf_b_size.f90.html" xlink:title="penf_b_size.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="327,-204 235,-204 235,-180 327,-180 327,-204"/>
+<text text-anchor="middle" x="281" y="-189.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_b_size.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge4" class="edge"><title>sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M320.339,-204.066C333.697,-207.7 348.877,-211.199 363,-213 406.206,-218.51 417.68,-217.522 461,-213 482.038,-210.804 505.179,-206.064 523.845,-201.642"/>
+<polygon fill="#000000" stroke="#000000" points="524.827,-205.005 533.713,-199.236 523.169,-198.204 524.827,-205.005"/>
+</g>
+<!-- sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node16" class="node"><title>sourcefile~penf_stringify.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node16"><a xlink:href="../sourcefile/penf_stringify.f90.html" xlink:title="penf_stringify.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="461,-204 363,-204 363,-180 461,-180 461,-204"/>
+<text text-anchor="middle" x="412" y="-189.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_stringify.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge2" class="edge"><title>sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf_stringify.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M327.118,-192C335.279,-192 343.897,-192 352.378,-192"/>
+<polygon fill="#000000" stroke="#000000" points="352.615,-195.5 362.615,-192 352.615,-188.5 352.615,-195.5"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node15" class="node"><title>sourcefile~penf_global_parameters_variables.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_node15"><a xlink:href="../sourcefile/penf_global_parameters_variables.f90.html" xlink:title="penf_global_parameters_variables.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="199,-184 0,-184 0,-160 199,-160 199,-184"/>
+<text text-anchor="middle" x="99.5" y="-169.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_global_parameters_variables.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge5" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M169.778,-159.977C203.023,-155.311 243.478,-151.237 280,-152"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M282,-152C361.985,-153.67 381.98,-158.501 461,-171 481.893,-174.305 505.024,-179.116 523.722,-183.3"/>
+<polygon fill="#000000" stroke="#000000" points="523.084,-186.744 533.611,-185.546 524.634,-179.918 523.084,-186.744"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_b_size.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge1" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_b_size.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M199.177,-182.995C207.883,-183.965 216.477,-184.922 224.625,-185.83"/>
+<polygon fill="#000000" stroke="#000000" points="224.357,-189.322 234.683,-186.951 225.132,-182.365 224.357,-189.322"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge3" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_stringify.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M282,-152C315.467,-152.699 351.725,-165.058 377.253,-175.855"/>
+<polygon fill="#000000" stroke="#000000" points="375.919,-179.091 386.483,-179.889 378.722,-172.677 375.919,-179.091"/>
+</g>
+<!-- sourcefile~penf_stringify.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~EfferentGraph_edge6" class="edge"><title>sourcefile~penf_stringify.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M461.297,-192C481.478,-192 504.557,-192 523.373,-192"/>
+<polygon fill="#000000" stroke="#000000" points="523.623,-195.5 533.623,-192 523.623,-188.5 523.623,-195.5"/>
+</g>
+</g>
+</svg>
+</div>
+                <script>var pansourcefilewenoof_objects_factoryf90EfferentGraph = svgPanZoom('#sourcefilewenoof_objects_factoryf90EfferentGraph', {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,});
+                    </script>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="190pt" height="32pt"
+ viewBox="0.00 0.00 190.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 186,-28 186,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node"><title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="67,-24 0,-24 0,-0 67,-0 67,-24"/>
+<text text-anchor="middle" x="33.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="182,-24 85,-24 85,-0 182,-0 182,-24"/>
+<text text-anchor="middle" x="133.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a file to a file which depends upon it. A file 
+    is dependent upon another if the latter must be compiled before the former
+    can be.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+    
+      
+      <h3>Files Dependent On This One</h3>
+      
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: sourcefile~~wenoof_objects_factory.f90~~AfferentGraph Pages: 1 -->
+<svg id="sourcefilewenoof_objects_factoryf90AfferentGraph" width="641pt" height="45pt"
+ viewBox="0.00 0.00 641.00 44.68" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~wenoof_objects_factory.f90~~AfferentGraph" class="graph" transform="scale(0.859249 0.859249) rotate(0) translate(4 48)">
+<title>sourcefile~~wenoof_objects_factory.f90~~AfferentGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-48 742,-48 742,4 -4,4"/>
+<!-- sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_node1" class="node"><title>sourcefile~wenoof_objects_factory.f90</title>
+<polygon fill="none" stroke="black" points="143,-24 0,-24 0,-0 143,-0 143,-24"/>
+<text text-anchor="middle" x="71.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">wenoof_objects_factory.f90</text>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_node2" class="node"><title>sourcefile~wenoof_interpolator.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/wenoof_interpolator.f90.html" xlink:title="wenoof_interpolator.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="308,-24 179,-24 179,-0 308,-0 308,-24"/>
+<text text-anchor="middle" x="243.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_objects_factory.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_edge5" class="edge"><title>sourcefile~wenoof_objects_factory.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M143.118,-12C151.55,-12 160.175,-12 168.65,-12"/>
+<polygon fill="#000000" stroke="#000000" points="168.89,-15.5001 178.89,-12 168.89,-8.5001 168.89,-15.5001"/>
+</g>
+<!-- sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_node3" class="node"><title>sourcefile~wenoof_interpolator_js.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_node3"><a xlink:href="../sourcefile/wenoof_interpolator_js.f90.html" xlink:title="wenoof_interpolator_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="483,-44 344,-44 344,-20 483,-20 483,-44"/>
+<text text-anchor="middle" x="413.5" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_edge3" class="edge"><title>sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M308.014,-19.5611C316.429,-20.5629 325.136,-21.5995 333.768,-22.6272"/>
+<polygon fill="#000000" stroke="#000000" points="333.502,-26.1202 343.846,-23.8269 334.33,-19.1692 333.502,-26.1202"/>
+</g>
+<!-- sourcefile~wenoof.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_node4" class="node"><title>sourcefile~wenoof.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_node4"><a xlink:href="../sourcefile/wenoof.f90.html" xlink:title="wenoof.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="584,-24 519,-24 519,-0 584,-0 584,-24"/>
+<text text-anchor="middle" x="551.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_edge4" class="edge"><title>sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M308.195,-11.2647C320.095,-11.1544 332.426,-11.0582 344,-11 405.777,-10.6896 421.224,-10.5424 483,-11 491.332,-11.0617 500.242,-11.1663 508.766,-11.2851"/>
+<polygon fill="#000000" stroke="#000000" points="508.858,-14.7868 518.908,-11.4353 508.961,-7.78753 508.858,-14.7868"/>
+</g>
+<!-- sourcefile~wenoof_interpolator_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_edge1" class="edge"><title>sourcefile~wenoof_interpolator_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M483.297,-21.8828C492.006,-20.6021 500.697,-19.3239 508.8,-18.1324"/>
+<polygon fill="#000000" stroke="#000000" points="509.321,-21.5935 518.705,-16.6757 508.302,-14.668 509.321,-21.5935"/>
+</g>
+<!-- sourcefile~sin_reconstruction.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_node5" class="node"><title>sourcefile~sin_reconstruction.f90</title>
+<g id="a_sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_node5"><a xlink:href="../sourcefile/sin_reconstruction.f90.html" xlink:title="sin_reconstruction.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="738,-24 620,-24 620,-0 738,-0 738,-24"/>
+<text text-anchor="middle" x="679" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sin_reconstruction.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof.f90&#45;&gt;sourcefile~sin_reconstruction.f90 -->
+<g id="sourcefile~~wenoof_objects_factory.f90~~AfferentGraph_edge2" class="edge"><title>sourcefile~wenoof.f90&#45;&gt;sourcefile~sin_reconstruction.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M584.169,-12C592.083,-12 600.879,-12 609.823,-12"/>
+<polygon fill="#000000" stroke="#000000" points="609.945,-15.5001 619.945,-12 609.945,-8.5001 609.945,-15.5001"/>
+</g>
+</g>
+</svg>
+</div>
+                <script>var pansourcefilewenoof_objects_factoryf90AfferentGraph = svgPanZoom('#sourcefilewenoof_objects_factoryf90AfferentGraph', {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,});
+                    </script>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="190pt" height="32pt"
+ viewBox="0.00 0.00 190.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 186,-28 186,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node"><title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="67,-24 0,-24 0,-0 67,-0 67,-24"/>
+<text text-anchor="middle" x="33.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="182,-24 85,-24 85,-0 182,-0 182,-24"/>
+<text text-anchor="middle" x="133.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a file to a file which depends upon it. A file 
+    is dependent upon another if the latter must be compiled before the former
+    can be.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+      
+      <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#mods-1">Modules</a></h3></div>
+  <div id="mods-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/wenoof_objects_factory.html">wenoof_objects_factory</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../sourcefile/wenoof_objects_factory.f90.html#src">wenoof_objects_factory.f90</a>
+  </div>
+</div>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    <section>
+      <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl"><pre><span></span><a name="ln-1"></a><span class="c">!&lt; Wenoof objects factory.</span>
+<a name="ln-2"></a><span class="k">module </span><span class="n">wenoof_objects_factory</span>
+<a name="ln-3"></a><span class="c">!&lt; Wenoof factory.</span>
+<a name="ln-4"></a>
+<a name="ln-5"></a><span class="k">use </span><span class="n">wenoof_alpha_coefficients</span>
+<a name="ln-6"></a><span class="k">use </span><span class="n">wenoof_alpha_coefficients_js</span>
+<a name="ln-7"></a><span class="k">use </span><span class="n">wenoof_alpha_coefficients_m</span>
+<a name="ln-8"></a><span class="k">use </span><span class="n">wenoof_alpha_coefficients_z</span>
+<a name="ln-9"></a><span class="k">use </span><span class="n">wenoof_base_object</span>
+<a name="ln-10"></a><span class="k">use </span><span class="n">wenoof_optimal_weights</span>
+<a name="ln-11"></a><span class="k">use </span><span class="n">wenoof_optimal_weights_js</span>
+<a name="ln-12"></a><span class="k">use </span><span class="n">wenoof_polynomials</span>
+<a name="ln-13"></a><span class="k">use </span><span class="n">wenoof_polynomials_js</span>
+<a name="ln-14"></a><span class="k">use </span><span class="n">wenoof_smoothness_indicators</span>
+<a name="ln-15"></a><span class="k">use </span><span class="n">wenoof_smoothness_indicators_js</span>
+<a name="ln-16"></a>
+<a name="ln-17"></a><span class="k">implicit none</span>
+<a name="ln-18"></a><span class="k">private</span>
+<a name="ln-19"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">objects_factory</span>
+<a name="ln-20"></a>
+<a name="ln-21"></a><span class="k">type</span> <span class="kd">::</span> <span class="n">objects_factory</span>
+<a name="ln-22"></a>  <span class="c">!&lt; Factory, create an instance of concrete extension of [[base_object]] given its constructor.</span>
+<a name="ln-23"></a>  <span class="k">contains</span>
+<a name="ln-24"></a>    <span class="c">! public methods</span>
+<a name="ln-25"></a>    <span class="k">generic</span> <span class="kd">::</span> <span class="n">create</span> <span class="o">=&gt;</span> <span class="n">create_alpha_coefficients</span><span class="p">,</span> <span class="p">&amp;</span>
+<a name="ln-26"></a>                         <span class="n">create_optimal_weights</span><span class="p">,</span>    <span class="p">&amp;</span>
+<a name="ln-27"></a>                         <span class="n">create_polynomials</span><span class="p">,</span>        <span class="p">&amp;</span>
+<a name="ln-28"></a>                         <span class="n">create_smoothness_indicators</span> <span class="c">!&lt; Create a concrete instance of [[alpha_coefficients]] or</span>
+<a name="ln-29"></a>                                                      <span class="c">!&lt; [[optimal_weights]] or [[polynomials]] or [[smoothness_indicators]].</span>
+<a name="ln-30"></a>    <span class="k">procedure</span><span class="p">,</span> <span class="k">nopass</span> <span class="kd">::</span> <span class="n">create_base_object</span>           <span class="c">!&lt; Create a concrete instance of [[base_object]].</span>
+<a name="ln-31"></a>    <span class="c">! private methods</span>
+<a name="ln-32"></a>    <span class="k">procedure</span><span class="p">,</span> <span class="k">nopass</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">create_alpha_coefficients</span>    <span class="c">!&lt; Create a concrete instance of [[alpha_coefficients]].</span>
+<a name="ln-33"></a>    <span class="k">procedure</span><span class="p">,</span> <span class="k">nopass</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">create_optimal_weights</span>       <span class="c">!&lt; Create a concrete instance of [[optimal_weights]].</span>
+<a name="ln-34"></a>    <span class="k">procedure</span><span class="p">,</span> <span class="k">nopass</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">create_polynomials</span>           <span class="c">!&lt; Create a concrete instance of [[polynomials]].</span>
+<a name="ln-35"></a>    <span class="k">procedure</span><span class="p">,</span> <span class="k">nopass</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">create_smoothness_indicators</span> <span class="c">!&lt; Create a concrete instance of [[smoothness_indicators]].</span>
+<a name="ln-36"></a><span class="n">endtype</span> <span class="n">objects_factory</span>
+<a name="ln-37"></a>
+<a name="ln-38"></a><span class="k">contains</span>
+<a name="ln-39"></a><span class="k">  subroutine </span><span class="n">create_base_object</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-40"></a>  <span class="c">!&lt; Create an instance of concrete extension of [[base_object]] given its constructor.</span>
+<a name="ln-41"></a>  <span class="k">class</span><span class="p">(</span><span class="n">base_object_constructor</span><span class="p">),</span>  <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">constructor</span> <span class="c">!&lt; Constructor.</span>
+<a name="ln-42"></a>  <span class="k">class</span><span class="p">(</span><span class="n">base_object</span><span class="p">),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">object</span>      <span class="c">!&lt; Object.</span>
+<a name="ln-43"></a>
+<a name="ln-44"></a>  <span class="k">select type</span><span class="p">(</span><span class="n">constructor</span><span class="p">)</span>
+<a name="ln-45"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">alpha_coefficients_js_constructor</span><span class="p">)</span>
+<a name="ln-46"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">alpha_coefficients_js</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-47"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">alpha_coefficients_m_constructor</span><span class="p">)</span>
+<a name="ln-48"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">alpha_coefficients_m</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-49"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">alpha_coefficients_z_constructor</span><span class="p">)</span>
+<a name="ln-50"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">alpha_coefficients_z</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-51"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">optimal_weights_js_constructor</span><span class="p">)</span>
+<a name="ln-52"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">optimal_weights_js</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-53"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">polynomials_js_constructor</span><span class="p">)</span>
+<a name="ln-54"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">polynomials_js</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-55"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">smoothness_indicators_js_constructor</span><span class="p">)</span>
+<a name="ln-56"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">smoothness_indicators_js</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-57"></a>  <span class="k">class </span><span class="n">default</span>
+<a name="ln-58"></a>    <span class="n">error</span> <span class="k">stop</span> <span class="s1">&#39;error: WenOOF object factory do NOT know the constructor given&#39;</span>
+<a name="ln-59"></a>  <span class="n">endselect</span>
+<a name="ln-60"></a>  <span class="k">call </span><span class="n">object</span><span class="p">%</span><span class="n">create</span><span class="p">(</span><span class="n">constructor</span><span class="o">=</span><span class="n">constructor</span><span class="p">)</span>
+<a name="ln-61"></a>  <span class="n">endsubroutine</span> <span class="n">create_base_object</span>
+<a name="ln-62"></a>
+<a name="ln-63"></a>  <span class="k">subroutine </span><span class="n">create_alpha_coefficients</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-64"></a>  <span class="c">!&lt; Create an instance of concrete extension of [[alpha_coefficients]] given its constructor.</span>
+<a name="ln-65"></a>  <span class="k">class</span><span class="p">(</span><span class="n">alpha_coefficients_constructor</span><span class="p">),</span>  <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">constructor</span> <span class="c">!&lt; Constructor.</span>
+<a name="ln-66"></a>  <span class="k">class</span><span class="p">(</span><span class="n">alpha_coefficients</span><span class="p">),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">object</span>      <span class="c">!&lt; Object.</span>
+<a name="ln-67"></a>
+<a name="ln-68"></a>  <span class="k">select type</span><span class="p">(</span><span class="n">constructor</span><span class="p">)</span>
+<a name="ln-69"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">alpha_coefficients_js_constructor</span><span class="p">)</span>
+<a name="ln-70"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">alpha_coefficients_js</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-71"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">alpha_coefficients_m_constructor</span><span class="p">)</span>
+<a name="ln-72"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">alpha_coefficients_m</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-73"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">alpha_coefficients_z_constructor</span><span class="p">)</span>
+<a name="ln-74"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">alpha_coefficients_z</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-75"></a>  <span class="k">class </span><span class="n">default</span>
+<a name="ln-76"></a>    <span class="n">error</span> <span class="k">stop</span> <span class="s1">&#39;error: WenOOF object factory do NOT know the constructor given&#39;</span>
+<a name="ln-77"></a>  <span class="n">endselect</span>
+<a name="ln-78"></a>  <span class="k">call </span><span class="n">object</span><span class="p">%</span><span class="n">create</span><span class="p">(</span><span class="n">constructor</span><span class="o">=</span><span class="n">constructor</span><span class="p">)</span>
+<a name="ln-79"></a>  <span class="n">endsubroutine</span> <span class="n">create_alpha_coefficients</span>
+<a name="ln-80"></a>
+<a name="ln-81"></a>  <span class="k">subroutine </span><span class="n">create_optimal_weights</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-82"></a>  <span class="c">!&lt; Create an instance of concrete extension of [[optimal_weights]] given its constructor.</span>
+<a name="ln-83"></a>  <span class="k">class</span><span class="p">(</span><span class="n">optimal_weights_constructor</span><span class="p">),</span>  <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">constructor</span> <span class="c">!&lt; Constructor.</span>
+<a name="ln-84"></a>  <span class="k">class</span><span class="p">(</span><span class="n">optimal_weights</span><span class="p">),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">object</span>      <span class="c">!&lt; Object.</span>
+<a name="ln-85"></a>
+<a name="ln-86"></a>  <span class="k">select type</span><span class="p">(</span><span class="n">constructor</span><span class="p">)</span>
+<a name="ln-87"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">optimal_weights_js_constructor</span><span class="p">)</span>
+<a name="ln-88"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">optimal_weights_js</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-89"></a>  <span class="k">class </span><span class="n">default</span>
+<a name="ln-90"></a>    <span class="n">error</span> <span class="k">stop</span> <span class="s1">&#39;error: WenOOF object factory do NOT know the constructor given&#39;</span>
+<a name="ln-91"></a>  <span class="n">endselect</span>
+<a name="ln-92"></a>  <span class="k">call </span><span class="n">object</span><span class="p">%</span><span class="n">create</span><span class="p">(</span><span class="n">constructor</span><span class="o">=</span><span class="n">constructor</span><span class="p">)</span>
+<a name="ln-93"></a>  <span class="n">endsubroutine</span> <span class="n">create_optimal_weights</span>
+<a name="ln-94"></a>
+<a name="ln-95"></a>  <span class="k">subroutine </span><span class="n">create_polynomials</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-96"></a>  <span class="c">!&lt; Create an instance of concrete extension of [[polynomials]] given its constructor.</span>
+<a name="ln-97"></a>  <span class="k">class</span><span class="p">(</span><span class="n">polynomials_constructor</span><span class="p">),</span>  <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">constructor</span> <span class="c">!&lt; Constructor.</span>
+<a name="ln-98"></a>  <span class="k">class</span><span class="p">(</span><span class="n">polynomials</span><span class="p">),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">object</span>      <span class="c">!&lt; Object.</span>
+<a name="ln-99"></a>
+<a name="ln-100"></a>  <span class="k">select type</span><span class="p">(</span><span class="n">constructor</span><span class="p">)</span>
+<a name="ln-101"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">polynomials_js_constructor</span><span class="p">)</span>
+<a name="ln-102"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">polynomials_js</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-103"></a>  <span class="k">class </span><span class="n">default</span>
+<a name="ln-104"></a>    <span class="n">error</span> <span class="k">stop</span> <span class="s1">&#39;error: WenOOF object factory do NOT know the constructor given&#39;</span>
+<a name="ln-105"></a>  <span class="n">endselect</span>
+<a name="ln-106"></a>  <span class="k">call </span><span class="n">object</span><span class="p">%</span><span class="n">create</span><span class="p">(</span><span class="n">constructor</span><span class="o">=</span><span class="n">constructor</span><span class="p">)</span>
+<a name="ln-107"></a>  <span class="n">endsubroutine</span> <span class="n">create_polynomials</span>
+<a name="ln-108"></a>
+<a name="ln-109"></a>  <span class="k">subroutine </span><span class="n">create_smoothness_indicators</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-110"></a>  <span class="c">!&lt; Create an instance of concrete extension of [[smoothness_indicators]] given its constructor.</span>
+<a name="ln-111"></a>  <span class="k">class</span><span class="p">(</span><span class="n">smoothness_indicators_constructor</span><span class="p">),</span>  <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">constructor</span> <span class="c">!&lt; Constructor.</span>
+<a name="ln-112"></a>  <span class="k">class</span><span class="p">(</span><span class="n">smoothness_indicators</span><span class="p">),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">object</span>      <span class="c">!&lt; Object.</span>
+<a name="ln-113"></a>
+<a name="ln-114"></a>  <span class="k">select type</span><span class="p">(</span><span class="n">constructor</span><span class="p">)</span>
+<a name="ln-115"></a>  <span class="k">type is</span><span class="p">(</span><span class="n">smoothness_indicators_js_constructor</span><span class="p">)</span>
+<a name="ln-116"></a>    <span class="k">allocate</span><span class="p">(</span><span class="n">smoothness_indicators_js</span> <span class="kd">::</span> <span class="n">object</span><span class="p">)</span>
+<a name="ln-117"></a>  <span class="k">class </span><span class="n">default</span>
+<a name="ln-118"></a>    <span class="n">error</span> <span class="k">stop</span> <span class="s1">&#39;error: WenOOF object factory do NOT know the constructor given&#39;</span>
+<a name="ln-119"></a>  <span class="n">endselect</span>
+<a name="ln-120"></a>  <span class="k">call </span><span class="n">object</span><span class="p">%</span><span class="n">create</span><span class="p">(</span><span class="n">constructor</span><span class="o">=</span><span class="n">constructor</span><span class="p">)</span>
+<a name="ln-121"></a>  <span class="n">endsubroutine</span> <span class="n">create_smoothness_indicators</span>
+<a name="ln-122"></a><span class="n">endmodule</span> <span class="n">wenoof_objects_factory</span>
+</pre></div>
+
+    </section>
+    </div>
+  </div>
+
+  <section class="visible-xs visible-sm hidden-md">
+    <hr>
+    
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allfiles-1">All Source Files</a></h3></div>
+  <div id="allfiles-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../sourcefile/compact_real.f90.html">compact_real.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf.f90.html">penf.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_b_size.f90.html">penf_b_size.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_global_parameters_variables.f90.html">penf_global_parameters_variables.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_stringify.f90.html">penf_stringify.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/pyplot_module.f90.html">pyplot_module.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/sin_reconstruction.f90.html">sin_reconstruction.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test.f90.html">test.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test_all.f90.html">test_all.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof.f90.html">wenoof.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients.f90.html">wenoof_alpha_coefficients.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_js.f90.html">wenoof_alpha_coefficients_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_m.f90.html">wenoof_alpha_coefficients_m.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_z.f90.html">wenoof_alpha_coefficients_z.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_base_object.f90.html">wenoof_base_object.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator.f90.html">wenoof_interpolator.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator_js.f90.html">wenoof_interpolator_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_objects_factory.f90.html">wenoof_objects_factory.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights.f90.html">wenoof_optimal_weights.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights_js.f90.html">wenoof_optimal_weights_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials.f90.html">wenoof_polynomials.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials_js.f90.html">wenoof_polynomials_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators.f90.html">wenoof_smoothness_indicators.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators_js.f90.html">wenoof_smoothness_indicators_js.f90</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+  
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> WenOOF was developed by Fortran-FOSS-Programmers</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
+        'HTML-CSS': { 
+           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
+        }
+      });
+    </script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </body>
+</html>

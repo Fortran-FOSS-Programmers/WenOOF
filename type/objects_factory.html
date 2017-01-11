@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	 
+	 <meta name="description" content="WENO interpolation Object Oriented Fortran library">
+    
+    <meta name="author" content="Fortran-FOSS-Programmers" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>objects_factory &ndash; WenOOF </title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">WenOOF </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+				
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+				
+				
+            <li><a href="../lists/modules.html">Modules</a></li>
+				
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+				
+				
+            <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
+								
+            <li><a href="../lists/types.html">Derived Types</a></li>
+				
+				
+            <li><a href="../lists/programs.html">Programs</a></li>
+				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>objects_factory
+    <small>Derived Type</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title="<p> 5.2% of total for derived types.</p>Including implementation: 126 statements,  3.2% of total for derived types.">9 statements</a>
+     </li> 
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/wenoof_objects_factory.f90"> Source File</a></li>
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+     <li><a href='../sourcefile/wenoof_objects_factory.f90.html'>wenoof_objects_factory.f90</a></li>
+  
+     <li><a href='../module/wenoof_objects_factory.html'>wenoof_objects_factory</a></li>
+  
+     <li class="active">objects_factory</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#boundprocs-0">Type-Bound Procedures</a></h3></div>
+  <div id="boundprocs-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create%7E4">create</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create_base_object">create_base_object</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create_alpha_coefficients">create_alpha_coefficients</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create_optimal_weights">create_optimal_weights</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create_polynomials">create_polynomials</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create_smoothness_indicators">create_smoothness_indicators</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../type/objects_factory.html#src">objects_factory</a>
+  </div>
+</div>
+
+
+  <hr>
+  
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#alltypes-0">All Derived Types</a></h3></div>
+  <div id="alltypes-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../type/alpha_coefficients.html">alpha_coefficients</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_constructor.html">alpha_coefficients_constructor</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_js.html">alpha_coefficients_js</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_js_constructor.html">alpha_coefficients_js_constructor</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_m.html">alpha_coefficients_m</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_m_constructor.html">alpha_coefficients_m_constructor</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_z.html">alpha_coefficients_z</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_z_constructor.html">alpha_coefficients_z_constructor</a>
+      
+      <a class="list-group-item" href="../type/base_object.html">base_object</a>
+      
+      <a class="list-group-item" href="../type/base_object_constructor.html">base_object_constructor</a>
+      
+      <a class="list-group-item" href="../type/interpolator.html">interpolator</a>
+      
+      <a class="list-group-item" href="../type/interpolator_constructor.html">interpolator_constructor</a>
+      
+      <a class="list-group-item" href="../type/interpolator_js.html">interpolator_js</a>
+      
+      <a class="list-group-item" href="../type/interpolator_js_constructor.html">interpolator_js_constructor</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html">objects_factory</a>
+      
+      <a class="list-group-item" href="../type/optimal_weights.html">optimal_weights</a>
+      
+      <a class="list-group-item" href="../type/optimal_weights_constructor.html">optimal_weights_constructor</a>
+      
+      <a class="list-group-item" href="../type/optimal_weights_js.html">optimal_weights_js</a>
+      
+      <a class="list-group-item" href="../type/optimal_weights_js_constructor.html">optimal_weights_js_constructor</a>
+      
+      <a class="list-group-item" href="../type/polynomials.html">polynomials</a>
+      
+      <a class="list-group-item" href="../type/polynomials_constructor.html">polynomials_constructor</a>
+      
+      <a class="list-group-item" href="../type/polynomials_js.html">polynomials_js</a>
+      
+      <a class="list-group-item" href="../type/polynomials_js_constructor.html">polynomials_js_constructor</a>
+      
+      <a class="list-group-item" href="../type/pyplot.html">pyplot</a>
+      
+      <a class="list-group-item" href="../type/smoothness_indicators.html">smoothness_indicators</a>
+      
+      <a class="list-group-item" href="../type/smoothness_indicators_constructor.html">smoothness_indicators_constructor</a>
+      
+      <a class="list-group-item" href="../type/smoothness_indicators_js.html">smoothness_indicators_js</a>
+      
+      <a class="list-group-item" href="../type/smoothness_indicators_js_constructor.html">smoothness_indicators_js_constructor</a>
+      
+    </div>
+  </div>
+</div>
+
+
+</div>  
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+      <h2>type, public :: objects_factory</h2>
+    
+    <p>Factory, create an instance of concrete extension of <a href="../type/base_object.html">base_object</a> given its constructor.</p>
+    <br>
+    
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#boundprocs-1">Type-Bound Procedures</a></h3></div>
+  <div id="boundprocs-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create%7E4">create</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create_base_object">create_base_object</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create_alpha_coefficients">create_alpha_coefficients</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create_optimal_weights">create_optimal_weights</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create_polynomials">create_polynomials</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html#boundprocedure-create_smoothness_indicators">create_smoothness_indicators</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../type/objects_factory.html#src">objects_factory</a>
+  </div>
+</div>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+    
+    
+    
+    
+    
+     
+    <section>
+    <h2>Type-Bound Procedures</h2>
+    
+	   
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-create%7E4"></span><h3>generic, public :: <strong>create</strong>  => <a href='../type/objects_factory.html#boundprocedure-create_alpha_coefficients'>create_alpha_coefficients</a>, <a href='../type/objects_factory.html#boundprocedure-create_optimal_weights'>create_optimal_weights</a>, <a href='../type/objects_factory.html#boundprocedure-create_polynomials'>create_polynomials</a>, <a href='../type/objects_factory.html#boundprocedure-create_smoothness_indicators'>create_smoothness_indicators</a> 
+    
+  </h3></div>
+  
+  <div class="panel-body">
+    
+
+
+    <p>Create a concrete instance of <a href="../type/alpha_coefficients.html">alpha_coefficients</a> or
+ <a href="../type/optimal_weights.html">optimal_weights</a> or <a href="../type/polynomials.html">polynomials</a> or <a href="../type/smoothness_indicators.html">smoothness_indicators</a>.</p>
+  </div>
+  
+  <ul class="list-group">
+    
+      <li class="list-group-item">
+      
+         
+            
+    
+    <h3>
+private subroutine <a href='../proc/create_alpha_coefficients.html'>create_alpha_coefficients</a>(constructor, object)
+    
+    
+	 
+</h3>
+    
+
+
+
+
+
+
+
+<p>Create an instance of concrete extension of <a href="../type/alpha_coefficients.html">alpha_coefficients</a> given its constructor.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/alpha_coefficients_constructor.html'>alpha_coefficients_constructor</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>constructor</strong></td><td><p>Constructor.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/alpha_coefficients.html'>alpha_coefficients</a>),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>allocatable</td><td>::</td>
+  <td><strong>object</strong></td><td><p>Object.</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+         
+      
+      </li>
+    
+      <li class="list-group-item">
+      
+         
+            
+    
+    <h3>
+private subroutine <a href='../proc/create_optimal_weights.html'>create_optimal_weights</a>(constructor, object)
+    
+    
+	 
+</h3>
+    
+
+
+
+
+
+
+
+<p>Create an instance of concrete extension of <a href="../type/optimal_weights.html">optimal_weights</a> given its constructor.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/optimal_weights_constructor.html'>optimal_weights_constructor</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>constructor</strong></td><td><p>Constructor.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/optimal_weights.html'>optimal_weights</a>),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>allocatable</td><td>::</td>
+  <td><strong>object</strong></td><td><p>Object.</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+         
+      
+      </li>
+    
+      <li class="list-group-item">
+      
+         
+            
+    
+    <h3>
+private subroutine <a href='../proc/create_polynomials.html'>create_polynomials</a>(constructor, object)
+    
+    
+	 
+</h3>
+    
+
+
+
+
+
+
+
+<p>Create an instance of concrete extension of <a href="../type/polynomials.html">polynomials</a> given its constructor.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/polynomials_constructor.html'>polynomials_constructor</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>constructor</strong></td><td><p>Constructor.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/polynomials.html'>polynomials</a>),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>allocatable</td><td>::</td>
+  <td><strong>object</strong></td><td><p>Object.</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+         
+      
+      </li>
+    
+      <li class="list-group-item">
+      
+         
+            
+    
+    <h3>
+private subroutine <a href='../proc/create_smoothness_indicators.html'>create_smoothness_indicators</a>(constructor, object)
+    
+    
+	 
+</h3>
+    
+
+
+
+
+
+
+
+<p>Create an instance of concrete extension of <a href="../type/smoothness_indicators.html">smoothness_indicators</a> given its constructor.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/smoothness_indicators_constructor.html'>smoothness_indicators_constructor</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>constructor</strong></td><td><p>Constructor.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/smoothness_indicators.html'>smoothness_indicators</a>),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>allocatable</td><td>::</td>
+  <td><strong>object</strong></td><td><p>Object.</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+         
+      
+      </li>
+    
+  </ul>
+</div>
+
+    
+	   
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-create_base_object"></span><h3>procedure, public, nopass :: <strong>create_base_object</strong>  
+    
+  </h3></div>
+  
+  <div class="panel-body">
+    
+
+
+    <p>Create a concrete instance of <a href="../type/base_object.html">base_object</a>.</p>
+  </div>
+  
+  <ul class="list-group">
+    
+      <li class="list-group-item">
+      
+         
+    
+    <h3>
+private subroutine <a href='../proc/create_base_object.html'>create_base_object</a>(constructor, object)
+    
+    
+	 
+</h3>
+    
+
+
+
+
+
+
+
+<p>Create an instance of concrete extension of <a href="../type/base_object.html">base_object</a> given its constructor.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/base_object_constructor.html'>base_object_constructor</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>constructor</strong></td><td><p>Constructor.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/base_object.html'>base_object</a>),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>allocatable</td><td>::</td>
+  <td><strong>object</strong></td><td><p>Object.</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+      
+      </li>
+    
+  </ul>
+</div>
+
+    
+	   
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-create_alpha_coefficients"></span><h3>procedure, private, nopass :: <strong>create_alpha_coefficients</strong>  
+    
+  </h3></div>
+  
+  <div class="panel-body">
+    
+
+
+    <p>Create a concrete instance of <a href="../type/alpha_coefficients.html">alpha_coefficients</a>.</p>
+  </div>
+  
+  <ul class="list-group">
+    
+      <li class="list-group-item">
+      
+         
+    
+    <h3>
+private subroutine <a href='../proc/create_alpha_coefficients.html'>create_alpha_coefficients</a>(constructor, object)
+    
+    
+	 
+</h3>
+    
+
+
+
+
+
+
+
+<p>Create an instance of concrete extension of <a href="../type/alpha_coefficients.html">alpha_coefficients</a> given its constructor.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/alpha_coefficients_constructor.html'>alpha_coefficients_constructor</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>constructor</strong></td><td><p>Constructor.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/alpha_coefficients.html'>alpha_coefficients</a>),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>allocatable</td><td>::</td>
+  <td><strong>object</strong></td><td><p>Object.</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+      
+      </li>
+    
+  </ul>
+</div>
+
+    
+	   
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-create_optimal_weights"></span><h3>procedure, private, nopass :: <strong>create_optimal_weights</strong>  
+    
+  </h3></div>
+  
+  <div class="panel-body">
+    
+
+
+    <p>Create a concrete instance of <a href="../type/optimal_weights.html">optimal_weights</a>.</p>
+  </div>
+  
+  <ul class="list-group">
+    
+      <li class="list-group-item">
+      
+         
+    
+    <h3>
+private subroutine <a href='../proc/create_optimal_weights.html'>create_optimal_weights</a>(constructor, object)
+    
+    
+	 
+</h3>
+    
+
+
+
+
+
+
+
+<p>Create an instance of concrete extension of <a href="../type/optimal_weights.html">optimal_weights</a> given its constructor.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/optimal_weights_constructor.html'>optimal_weights_constructor</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>constructor</strong></td><td><p>Constructor.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/optimal_weights.html'>optimal_weights</a>),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>allocatable</td><td>::</td>
+  <td><strong>object</strong></td><td><p>Object.</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+      
+      </li>
+    
+  </ul>
+</div>
+
+    
+	   
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-create_polynomials"></span><h3>procedure, private, nopass :: <strong>create_polynomials</strong>  
+    
+  </h3></div>
+  
+  <div class="panel-body">
+    
+
+
+    <p>Create a concrete instance of <a href="../type/polynomials.html">polynomials</a>.</p>
+  </div>
+  
+  <ul class="list-group">
+    
+      <li class="list-group-item">
+      
+         
+    
+    <h3>
+private subroutine <a href='../proc/create_polynomials.html'>create_polynomials</a>(constructor, object)
+    
+    
+	 
+</h3>
+    
+
+
+
+
+
+
+
+<p>Create an instance of concrete extension of <a href="../type/polynomials.html">polynomials</a> given its constructor.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/polynomials_constructor.html'>polynomials_constructor</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>constructor</strong></td><td><p>Constructor.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/polynomials.html'>polynomials</a>),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>allocatable</td><td>::</td>
+  <td><strong>object</strong></td><td><p>Object.</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+      
+      </li>
+    
+  </ul>
+</div>
+
+    
+	   
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-create_smoothness_indicators"></span><h3>procedure, private, nopass :: <strong>create_smoothness_indicators</strong>  
+    
+  </h3></div>
+  
+  <div class="panel-body">
+    
+
+
+    <p>Create a concrete instance of <a href="../type/smoothness_indicators.html">smoothness_indicators</a>.</p>
+  </div>
+  
+  <ul class="list-group">
+    
+      <li class="list-group-item">
+      
+         
+    
+    <h3>
+private subroutine <a href='../proc/create_smoothness_indicators.html'>create_smoothness_indicators</a>(constructor, object)
+    
+    
+	 
+</h3>
+    
+
+
+
+
+
+
+
+<p>Create an instance of concrete extension of <a href="../type/smoothness_indicators.html">smoothness_indicators</a> given its constructor.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/smoothness_indicators_constructor.html'>smoothness_indicators_constructor</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>constructor</strong></td><td><p>Constructor.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/smoothness_indicators.html'>smoothness_indicators</a>),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>allocatable</td><td>::</td>
+  <td><strong>object</strong></td><td><p>Object.</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+      
+      </li>
+    
+  </ul>
+</div>
+
+    
+    </section>
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span><span class="k">type</span> <span class="kd">::</span> <span class="n">objects_factory</span>
+  <span class="c">!&lt; Factory, create an instance of concrete extension of [[base_object]] given its constructor.</span>
+  <span class="k">contains</span>
+    <span class="c">! public methods</span>
+    <span class="k">generic</span> <span class="kd">::</span> <span class="n">create</span> <span class="o">=&gt;</span> <span class="n">create_alpha_coefficients</span><span class="p">,</span> <span class="p">&amp;</span>
+                         <span class="n">create_optimal_weights</span><span class="p">,</span>    <span class="p">&amp;</span>
+                         <span class="n">create_polynomials</span><span class="p">,</span>        <span class="p">&amp;</span>
+                         <span class="n">create_smoothness_indicators</span> <span class="c">!&lt; Create a concrete instance of [[alpha_coefficients]] or</span>
+                                                      <span class="c">!&lt; [[optimal_weights]] or [[polynomials]] or [[smoothness_indicators]].</span>
+    <span class="k">procedure</span><span class="p">,</span> <span class="k">nopass</span> <span class="kd">::</span> <span class="n">create_base_object</span>           <span class="c">!&lt; Create a concrete instance of [[base_object]].</span>
+    <span class="c">! private methods</span>
+    <span class="k">procedure</span><span class="p">,</span> <span class="k">nopass</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">create_alpha_coefficients</span>    <span class="c">!&lt; Create a concrete instance of [[alpha_coefficients]].</span>
+    <span class="k">procedure</span><span class="p">,</span> <span class="k">nopass</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">create_optimal_weights</span>       <span class="c">!&lt; Create a concrete instance of [[optimal_weights]].</span>
+    <span class="k">procedure</span><span class="p">,</span> <span class="k">nopass</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">create_polynomials</span>           <span class="c">!&lt; Create a concrete instance of [[polynomials]].</span>
+    <span class="k">procedure</span><span class="p">,</span> <span class="k">nopass</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">create_smoothness_indicators</span> <span class="c">!&lt; Create a concrete instance of [[smoothness_indicators]].</span>
+<span class="n">endtype</span> <span class="n">objects_factory</span>
+</pre></div>
+
+    </section>
+    
+    
+    </div>
+  </div>
+
+  <section class="visible-xs visible-sm hidden-md">
+    <hr>
+    
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#alltypes-1">All Derived Types</a></h3></div>
+  <div id="alltypes-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../type/alpha_coefficients.html">alpha_coefficients</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_constructor.html">alpha_coefficients_constructor</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_js.html">alpha_coefficients_js</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_js_constructor.html">alpha_coefficients_js_constructor</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_m.html">alpha_coefficients_m</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_m_constructor.html">alpha_coefficients_m_constructor</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_z.html">alpha_coefficients_z</a>
+      
+      <a class="list-group-item" href="../type/alpha_coefficients_z_constructor.html">alpha_coefficients_z_constructor</a>
+      
+      <a class="list-group-item" href="../type/base_object.html">base_object</a>
+      
+      <a class="list-group-item" href="../type/base_object_constructor.html">base_object_constructor</a>
+      
+      <a class="list-group-item" href="../type/interpolator.html">interpolator</a>
+      
+      <a class="list-group-item" href="../type/interpolator_constructor.html">interpolator_constructor</a>
+      
+      <a class="list-group-item" href="../type/interpolator_js.html">interpolator_js</a>
+      
+      <a class="list-group-item" href="../type/interpolator_js_constructor.html">interpolator_js_constructor</a>
+      
+      <a class="list-group-item" href="../type/objects_factory.html">objects_factory</a>
+      
+      <a class="list-group-item" href="../type/optimal_weights.html">optimal_weights</a>
+      
+      <a class="list-group-item" href="../type/optimal_weights_constructor.html">optimal_weights_constructor</a>
+      
+      <a class="list-group-item" href="../type/optimal_weights_js.html">optimal_weights_js</a>
+      
+      <a class="list-group-item" href="../type/optimal_weights_js_constructor.html">optimal_weights_js_constructor</a>
+      
+      <a class="list-group-item" href="../type/polynomials.html">polynomials</a>
+      
+      <a class="list-group-item" href="../type/polynomials_constructor.html">polynomials_constructor</a>
+      
+      <a class="list-group-item" href="../type/polynomials_js.html">polynomials_js</a>
+      
+      <a class="list-group-item" href="../type/polynomials_js_constructor.html">polynomials_js_constructor</a>
+      
+      <a class="list-group-item" href="../type/pyplot.html">pyplot</a>
+      
+      <a class="list-group-item" href="../type/smoothness_indicators.html">smoothness_indicators</a>
+      
+      <a class="list-group-item" href="../type/smoothness_indicators_constructor.html">smoothness_indicators_constructor</a>
+      
+      <a class="list-group-item" href="../type/smoothness_indicators_js.html">smoothness_indicators_js</a>
+      
+      <a class="list-group-item" href="../type/smoothness_indicators_js_constructor.html">smoothness_indicators_js_constructor</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> WenOOF was developed by Fortran-FOSS-Programmers</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
+        'HTML-CSS': { 
+           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
+        }
+      });
+    </script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </body>
+</html>

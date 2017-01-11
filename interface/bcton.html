@@ -7,7 +7,7 @@
 	 
 	 <meta name="description" content="WENO interpolation Object Oriented Fortran library">
     
-    <meta name="author" content="Chris MacMackin" >
+    <meta name="author" content="Fortran-FOSS-Programmers" >
     <link rel="icon" href="../favicon.png">
 
     <title>bcton &ndash; WenOOF</title>
@@ -25,12 +25,8 @@
     <![endif]-->
     
     <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
 
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
     
 
   </head>
@@ -38,7 +34,7 @@
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -52,13 +48,20 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 				
-                
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
             <li><a href="../lists/files.html">Source Files</a></li>
 				
 				
             <li><a href="../lists/modules.html">Modules</a></li>
 				
-				
+            
+                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
 				
 				
@@ -69,16 +72,27 @@
 				
             <li><a href="../lists/programs.html">Programs</a></li>
 				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
           </ul>
-        
-        <form action="../search.html" class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
-        </div>
-<!--
-        <button type="submit" class="btn btn-default">Submit</button>
--->
-        </form>
         
         </div><!--/.nav-collapse -->
       </div>
@@ -92,9 +106,9 @@
 	 <small>Interface</small>
     
     </h1>
-	 
+    
 <div class="row">
-<div class="col-lg-12">
+  <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
      
@@ -103,68 +117,95 @@
      
     
     
-    <li><i class="fa fa-code"></i><a href="../src/IR_Precision.f90"> Source File</a></li>
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title="<p> 0.1% of total for procedures.</p>Including implementation: 45 statements,  1.0% of total for procedures.">3 statements</a>
+     </li> 
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/penf_stringify.F90"> Source File</a></li>
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
-     <li><a href='../sourcefile/ir_precision.f90.html'>IR_Precision.f90</a></li>
+     <li><a href='../sourcefile/penf_stringify.f90.html'>penf_stringify.F90</a></li>
   
-     <li><a href='../module/ir_precision.html'>IR_Precision</a></li>
+     <li><a href='../module/penf_stringify.html'>penf_stringify</a></li>
   
      <li class="active">bcton</li>
   </ol>
-  </div>
 </div>
-    
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
   </div>
   
   <div class="row">
-    <div class="col-lg-3">
-    
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      
+<div id="sidebar">
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title">Module Procedures</h3></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#modprocs-0">Module Procedures</a></h3></div>
+  <div id="modprocs-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../interface/bcton.html#proc-bctor_R16P">bctor_R16P</a>
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctor_r8p">bctor_R8P</a>
       
-      <a class="list-group-item" href="../interface/bcton.html#proc-bctor_R8P">bctor_R8P</a>
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctor_r4p">bctor_R4P</a>
       
-      <a class="list-group-item" href="../interface/bcton.html#proc-bctor_R4P">bctor_R4P</a>
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctoi_i8p">bctoi_I8P</a>
       
-      <a class="list-group-item" href="../interface/bcton.html#proc-bctoi_I8P">bctoi_I8P</a>
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctoi_i4p">bctoi_I4P</a>
       
-      <a class="list-group-item" href="../interface/bcton.html#proc-bctoi_I4P">bctoi_I4P</a>
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctoi_i2p">bctoi_I2P</a>
       
-      <a class="list-group-item" href="../interface/bcton.html#proc-bctoi_I2P">bctoi_I2P</a>
-      
-      <a class="list-group-item" href="../interface/bcton.html#proc-bctoi_I1P">bctoi_I1P</a>
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctoi_i1p">bctoi_I1P</a>
       
     </div>
   </div>
-  
-  
+</div>
+
+
+
   <hr>
   
-  <div class="panel panel-default">
-    <div class="panel-heading text-left"><h3 class="panel-title">All Procedures</h3></div>
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-0">All Procedures</a></h3></div>
+  <div id="allprocs-0" class="panel-collapse collapse">
     <div class="list-group">
       
+      <a class="list-group-item" href="../proc/add_3d_plot.html">add_3d_plot</a>
+      
       <a class="list-group-item" href="../proc/add_bar.html">add_bar</a>
+      
+      <a class="list-group-item" href="../proc/add_contour.html">add_contour</a>
       
       <a class="list-group-item" href="../proc/add_plot.html">add_plot</a>
       
@@ -180,11 +221,15 @@
       
       <a class="list-group-item" href="../interface/bcton.html">bcton</a>
       
+      <a class="list-group-item" href="../proc/bctor_r16p.html">bctor_R16P</a>
+      
       <a class="list-group-item" href="../proc/bctor_r4p.html">bctor_R4P</a>
       
       <a class="list-group-item" href="../proc/bctor_r8p.html">bctor_R8P</a>
       
       <a class="list-group-item" href="../interface/bit_size.html">bit_size</a>
+      
+      <a class="list-group-item" href="../interface/bit_size%7E2.html">bit_size</a>
       
       <a class="list-group-item" href="../proc/bit_size_chr.html">bit_size_chr</a>
       
@@ -230,7 +275,71 @@
       
       <a class="list-group-item" href="../proc/check_endian.html">check_endian</a>
       
+      <a class="list-group-item" href="../proc/compact_real_string.html">compact_real_string</a>
+      
+      <a class="list-group-item" href="../proc/compute.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E2.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E3.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E4.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E5.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E6.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E7.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E8.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E9.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E10.html">compute</a>
+      
       <a class="list-group-item" href="../proc/create.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E2.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E3.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E4.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E5.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E6.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E7.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E8.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E9.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients.html">create_alpha_coefficients</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_js_constructor.html">create_alpha_coefficients_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_m_constructor.html">create_alpha_coefficients_m_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_z_constructor.html">create_alpha_coefficients_z_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_base_object.html">create_base_object</a>
+      
+      <a class="list-group-item" href="../proc/create_interpolator_constructor.html">create_interpolator_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_interpolator_js_constructor.html">create_interpolator_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_optimal_weights.html">create_optimal_weights</a>
+      
+      <a class="list-group-item" href="../proc/create_optimal_weights_js_constructor.html">create_optimal_weights_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_polynomials.html">create_polynomials</a>
+      
+      <a class="list-group-item" href="../proc/create_polynomials_js_constructor.html">create_polynomials_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_smoothness_indicators.html">create_smoothness_indicators</a>
+      
+      <a class="list-group-item" href="../proc/create_smoothness_indicators_js_constructor.html">create_smoothness_indicators_js_constructor</a>
       
       <a class="list-group-item" href="../proc/ctoi_i1p.html">ctoi_I1P</a>
       
@@ -248,7 +357,51 @@
       
       <a class="list-group-item" href="../proc/ctor_r8p.html">ctor_R8P</a>
       
+      <a class="list-group-item" href="../proc/description.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E2.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E3.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E4.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E5.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E6.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E7.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E8.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E9.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E10.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E11.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E12.html">description</a>
+      
       <a class="list-group-item" href="../proc/destroy.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E2.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E3.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E4.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E5.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E6.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E7.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E8.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E9.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E10.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy_interpolator_constructor.html">destroy_interpolator_constructor</a>
       
       <a class="list-group-item" href="../interface/digit.html">digit</a>
       
@@ -266,13 +419,17 @@
       
       <a class="list-group-item" href="../proc/integer_to_string.html">integer_to_string</a>
       
-      <a class="list-group-item" href="../proc/ir_init.html">IR_init</a>
+      <a class="list-group-item" href="../proc/interpolate.html">interpolate</a>
       
-      <a class="list-group-item" href="../proc/ir_print.html">IR_Print</a>
+      <a class="list-group-item" href="../proc/interpolate%7E2.html">interpolate</a>
       
-      <a class="list-group-item" href="../proc/is_little_endian.html">is_little_endian</a>
+      <a class="list-group-item" href="../proc/matrix_to_string.html">matrix_to_string</a>
       
       <a class="list-group-item" href="../proc/optional_int_to_string.html">optional_int_to_string</a>
+      
+      <a class="list-group-item" href="../proc/penf_init.html">penf_init</a>
+      
+      <a class="list-group-item" href="../proc/penf_print.html">penf_print</a>
       
       <a class="list-group-item" href="../proc/savefig.html">savefig</a>
       
@@ -332,19 +489,681 @@
       
       <a class="list-group-item" href="../proc/strz_i8p.html">strz_I8P</a>
       
+      <a class="list-group-item" href="../proc/tau.html">tau</a>
+      
       <a class="list-group-item" href="../proc/vec_to_string.html">vec_to_string</a>
+      
+      <a class="list-group-item" href="../proc/weno_exp.html">weno_exp</a>
+      
+      <a class="list-group-item" href="../proc/weno_odd.html">weno_odd</a>
+      
+      <a class="list-group-item" href="../proc/wenoof_create.html">wenoof_create</a>
       
     </div>
   </div>
-  
-  
+</div>
+
+
+</div>  
+
     </div>
     
-    <div class="col-lg-9" id='text'>
-    <h2>public interface bcton</h2>
-	 <p>Procedure for converting bit-string to number, real or initeger, (bit-string to number type casting).</p>
+    <div class="col-md-9" id='text'>
+      <h2>public interface bcton</h2>
+	 <p>Convert bit-string to number (real and integer, bit-string to number type casting).</p>
+     
+     <h3>Calls</h3>
+     
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: interface~~bcton~~CallsGraph Pages: 1 -->
+<svg id="interfacebctonCallsGraph" width="585pt" height="764pt"
+ viewBox="0.00 0.00 585.00 764.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="interface~~bcton~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 760)">
+<title>interface~~bcton~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-760 581,-760 581,4 -4,4"/>
+<!-- interface~bcton -->
+<g id="interface~~bcton~~CallsGraph_node1" class="node"><title>interface~bcton</title>
+<polygon fill="none" stroke="black" points="54,-390 0,-390 0,-366 54,-366 54,-390"/>
+<text text-anchor="middle" x="27" y="-375.6" font-family="Helvetica,sans-Serif" font-size="10.50">bcton</text>
+</g>
+<!-- proc~bctoi_i2p -->
+<g id="interface~~bcton~~CallsGraph_node2" class="node"><title>proc~bctoi_i2p</title>
+<g id="a_interface~~bcton~~CallsGraph_node2"><a xlink:href="../proc/bctoi_i2p.html" xlink:title="bctoi_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="150,-495 93,-495 93,-471 150,-471 150,-495"/>
+<text text-anchor="middle" x="121.5" y="-480.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I2P</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i2p -->
+<g id="interface~~bcton~~CallsGraph_edge34" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M35.125,-390.103C45.662,-407.359 66.6844,-439.438 90,-462 90.9096,-462.88 91.8596,-463.749 92.8385,-464.603"/>
+<polygon fill="#000000" stroke="#000000" points="90.6942,-467.37 100.716,-470.808 95.0255,-461.871 90.6942,-467.37"/>
+</g>
+<!-- proc~bctoi_i8p -->
+<g id="interface~~bcton~~CallsGraph_node3" class="node"><title>proc~bctoi_i8p</title>
+<g id="a_interface~~bcton~~CallsGraph_node3"><a xlink:href="../proc/bctoi_i8p.html" xlink:title="bctoi_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="150,-453 93,-453 93,-429 150,-429 150,-453"/>
+<text text-anchor="middle" x="121.5" y="-438.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I8P</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i8p -->
+<g id="interface~~bcton~~CallsGraph_edge35" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M45.8349,-390.147C59.5273,-399.473 78.6446,-412.493 94.1069,-423.024"/>
+<polygon fill="#000000" stroke="#000000" points="92.4845,-426.154 102.72,-428.89 96.4249,-420.368 92.4845,-426.154"/>
+</g>
+<!-- proc~bctor_r8p -->
+<g id="interface~~bcton~~CallsGraph_node4" class="node"><title>proc~bctor_r8p</title>
+<g id="a_interface~~bcton~~CallsGraph_node4"><a xlink:href="../proc/bctor_r8p.html" xlink:title="bctor_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="153,-411 90,-411 90,-387 153,-387 153,-411"/>
+<text text-anchor="middle" x="121.5" y="-396.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctor_R8P</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctor_r8p -->
+<g id="interface~~bcton~~CallsGraph_edge36" class="edge"><title>interface~bcton&#45;&gt;proc~bctor_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M54.2594,-383.962C62.2445,-385.774 71.2141,-387.811 79.9124,-389.786"/>
+<polygon fill="#000000" stroke="#000000" points="79.3969,-393.257 89.9236,-392.058 80.9467,-386.431 79.3969,-393.257"/>
+</g>
+<!-- proc~bctoi_i4p -->
+<g id="interface~~bcton~~CallsGraph_node5" class="node"><title>proc~bctoi_i4p</title>
+<g id="a_interface~~bcton~~CallsGraph_node5"><a xlink:href="../proc/bctoi_i4p.html" xlink:title="bctoi_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="150,-369 93,-369 93,-345 150,-345 150,-369"/>
+<text text-anchor="middle" x="121.5" y="-354.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I4P</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i4p -->
+<g id="interface~~bcton~~CallsGraph_edge37" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M54.2594,-372.038C63.2184,-370.004 73.4167,-367.689 83.0808,-365.495"/>
+<polygon fill="#000000" stroke="#000000" points="83.907,-368.897 92.884,-363.27 82.3572,-362.07 83.907,-368.897"/>
+</g>
+<!-- proc~bctor_r4p -->
+<g id="interface~~bcton~~CallsGraph_node6" class="node"><title>proc~bctor_r4p</title>
+<g id="a_interface~~bcton~~CallsGraph_node6"><a xlink:href="../proc/bctor_r4p.html" xlink:title="bctor_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="153,-327 90,-327 90,-303 153,-303 153,-327"/>
+<text text-anchor="middle" x="121.5" y="-312.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctor_R4P</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctor_r4p -->
+<g id="interface~~bcton~~CallsGraph_edge38" class="edge"><title>interface~bcton&#45;&gt;proc~bctor_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M45.8349,-365.853C59.5273,-356.527 78.6446,-343.507 94.1069,-332.976"/>
+<polygon fill="#000000" stroke="#000000" points="96.4249,-335.632 102.72,-327.11 92.4845,-329.846 96.4249,-335.632"/>
+</g>
+<!-- proc~bctoi_i1p -->
+<g id="interface~~bcton~~CallsGraph_node7" class="node"><title>proc~bctoi_i1p</title>
+<g id="a_interface~~bcton~~CallsGraph_node7"><a xlink:href="../proc/bctoi_i1p.html" xlink:title="bctoi_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="150,-285 93,-285 93,-261 150,-261 150,-285"/>
+<text text-anchor="middle" x="121.5" y="-270.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I1P</text>
+</a>
+</g>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i1p -->
+<g id="interface~~bcton~~CallsGraph_edge39" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M35.125,-365.897C45.662,-348.641 66.6844,-316.562 90,-294 90.9096,-293.12 91.8596,-292.251 92.8385,-291.397"/>
+<polygon fill="#000000" stroke="#000000" points="95.0255,-294.129 100.716,-285.192 90.6942,-288.63 95.0255,-294.129"/>
+</g>
+<!-- interface~str -->
+<g id="interface~~bcton~~CallsGraph_node8" class="node"><title>interface~str</title>
+<g id="a_interface~~bcton~~CallsGraph_node8"><a xlink:href="../interface/str.html" xlink:title="str">
+<polygon fill="#a7506f" stroke="#a7506f" points="243,-390 189,-390 189,-366 243,-366 243,-390"/>
+<text text-anchor="middle" x="216" y="-375.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str</text>
+</a>
+</g>
+</g>
+<!-- proc~bctoi_i2p&#45;&gt;interface~str -->
+<g id="interface~~bcton~~CallsGraph_edge28" class="edge"><title>proc~bctoi_i2p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M142.284,-470.808C146.02,-468.118 149.766,-465.129 153,-462 172.855,-442.787 191.046,-416.673 202.516,-398.688"/>
+<polygon fill="#000000" stroke="#000000" points="205.549,-400.44 207.875,-390.103 199.611,-396.733 205.549,-400.44"/>
+</g>
+<!-- proc~bctoi_i8p&#45;&gt;interface~str -->
+<g id="interface~~bcton~~CallsGraph_edge29" class="edge"><title>proc~bctoi_i8p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M140.335,-428.853C154.027,-419.527 173.145,-406.507 188.607,-395.976"/>
+<polygon fill="#000000" stroke="#000000" points="190.925,-398.632 197.22,-390.11 186.984,-392.846 190.925,-398.632"/>
+</g>
+<!-- proc~bctor_r8p&#45;&gt;interface~str -->
+<g id="interface~~bcton~~CallsGraph_edge30" class="edge"><title>proc~bctor_r8p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M153.044,-392.066C161.365,-390.177 170.456,-388.113 179.047,-386.162"/>
+<polygon fill="#000000" stroke="#000000" points="179.851,-389.569 188.827,-383.942 178.301,-382.743 179.851,-389.569"/>
+</g>
+<!-- proc~bctoi_i4p&#45;&gt;interface~str -->
+<g id="interface~~bcton~~CallsGraph_edge31" class="edge"><title>proc~bctoi_i4p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M150.003,-363.244C158.998,-365.286 169.132,-367.587 178.674,-369.753"/>
+<polygon fill="#000000" stroke="#000000" points="178.188,-373.232 188.715,-372.032 179.738,-366.405 178.188,-373.232"/>
+</g>
+<!-- proc~bctor_r4p&#45;&gt;interface~str -->
+<g id="interface~~bcton~~CallsGraph_edge32" class="edge"><title>proc~bctor_r4p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M140.335,-327.147C154.027,-336.473 173.145,-349.493 188.607,-360.024"/>
+<polygon fill="#000000" stroke="#000000" points="186.984,-363.154 197.22,-365.89 190.925,-357.368 186.984,-363.154"/>
+</g>
+<!-- proc~bctoi_i1p&#45;&gt;interface~str -->
+<g id="interface~~bcton~~CallsGraph_edge33" class="edge"><title>proc~bctoi_i1p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M142.284,-285.192C146.02,-287.882 149.766,-290.871 153,-294 172.855,-313.213 191.046,-339.327 202.516,-357.312"/>
+<polygon fill="#000000" stroke="#000000" points="199.611,-359.267 207.875,-365.897 205.549,-355.56 199.611,-359.267"/>
+</g>
+<!-- proc~strf_i2p -->
+<g id="interface~~bcton~~CallsGraph_node9" class="node"><title>proc~strf_i2p</title>
+<g id="a_interface~~bcton~~CallsGraph_node9"><a xlink:href="../proc/strf_i2p.html" xlink:title="strf_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="337.5,-756 283.5,-756 283.5,-732 337.5,-732 337.5,-756"/>
+<text text-anchor="middle" x="310.5" y="-741.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_I2P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_i2p -->
+<g id="interface~~bcton~~CallsGraph_edge9" class="edge"><title>interface~str&#45;&gt;proc~strf_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M217.932,-390.139C222.296,-444.54 242.059,-665.721 279,-723 279.338,-723.523 279.693,-724.037 280.065,-724.542"/>
+<polygon fill="#000000" stroke="#000000" points="277.731,-727.161 287.222,-731.87 282.739,-722.27 277.731,-727.161"/>
+</g>
+<!-- proc~strf_i4p -->
+<g id="interface~~bcton~~CallsGraph_node10" class="node"><title>proc~strf_i4p</title>
+<g id="a_interface~~bcton~~CallsGraph_node10"><a xlink:href="../proc/strf_i4p.html" xlink:title="strf_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="337.5,-714 283.5,-714 283.5,-690 337.5,-690 337.5,-714"/>
+<text text-anchor="middle" x="310.5" y="-699.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_I4P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_i4p -->
+<g id="interface~~bcton~~CallsGraph_edge10" class="edge"><title>interface~str&#45;&gt;proc~strf_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M216.807,-390.065C216.657,-432.494 220.67,-577.579 279,-676 280.366,-678.305 282.011,-680.504 283.82,-682.578"/>
+<polygon fill="#000000" stroke="#000000" points="281.756,-685.453 291.368,-689.91 286.634,-680.432 281.756,-685.453"/>
+</g>
+<!-- proc~str_a_i2p -->
+<g id="interface~~bcton~~CallsGraph_node11" class="node"><title>proc~str_a_i2p</title>
+<g id="a_interface~~bcton~~CallsGraph_node11"><a xlink:href="../proc/str_a_i2p.html" xlink:title="str_a_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="339.5,-634 281.5,-634 281.5,-610 339.5,-610 339.5,-634"/>
+<text text-anchor="middle" x="310.5" y="-619.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_I2P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_i2p -->
+<g id="interface~~bcton~~CallsGraph_edge11" class="edge"><title>interface~str&#45;&gt;proc~str_a_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M217.525,-390.103C219.622,-425.745 229.887,-532.132 279,-601 279.448,-601.628 279.921,-602.243 280.416,-602.846"/>
+<polygon fill="#000000" stroke="#000000" points="278.16,-605.532 287.797,-609.934 283.008,-600.483 278.16,-605.532"/>
+</g>
+<!-- proc~str_i8p -->
+<g id="interface~~bcton~~CallsGraph_node12" class="node"><title>proc~str_i8p</title>
+<g id="a_interface~~bcton~~CallsGraph_node12"><a xlink:href="../proc/str_i8p.html" xlink:title="str_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="432,-511 378,-511 378,-487 432,-487 432,-511"/>
+<text text-anchor="middle" x="405" y="-496.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_I8P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_i8p -->
+<g id="interface~~bcton~~CallsGraph_edge12" class="edge"><title>interface~str&#45;&gt;proc~str_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M218.013,-390.4C221.12,-419.312 233.304,-491.006 279,-521 307.383,-539.63 346.881,-527.865 373.833,-515.544"/>
+<polygon fill="#000000" stroke="#000000" points="375.674,-518.541 383.151,-511.035 372.625,-512.24 375.674,-518.541"/>
+</g>
+<!-- proc~strf_i1p -->
+<g id="interface~~bcton~~CallsGraph_node13" class="node"><title>proc~strf_i1p</title>
+<g id="a_interface~~bcton~~CallsGraph_node13"><a xlink:href="../proc/strf_i1p.html" xlink:title="strf_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="337.5,-592 283.5,-592 283.5,-568 337.5,-568 337.5,-592"/>
+<text text-anchor="middle" x="310.5" y="-577.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_I1P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_i1p -->
+<g id="interface~~bcton~~CallsGraph_edge13" class="edge"><title>interface~str&#45;&gt;proc~strf_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M219.004,-390.092C224.43,-420.107 241.587,-499.522 279,-554 280.662,-556.42 282.604,-558.748 284.69,-560.949"/>
+<polygon fill="#000000" stroke="#000000" points="282.431,-563.629 292.13,-567.893 287.207,-558.511 282.431,-563.629"/>
+</g>
+<!-- proc~str_a_i1p -->
+<g id="interface~~bcton~~CallsGraph_node14" class="node"><title>proc~str_a_i1p</title>
+<g id="a_interface~~bcton~~CallsGraph_node14"><a xlink:href="../proc/str_a_i1p.html" xlink:title="str_a_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="339.5,-390 281.5,-390 281.5,-366 339.5,-366 339.5,-390"/>
+<text text-anchor="middle" x="310.5" y="-375.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_I1P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_i1p -->
+<g id="interface~~bcton~~CallsGraph_edge14" class="edge"><title>interface~str&#45;&gt;proc~str_a_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M243.259,-378C251.875,-378 261.636,-378 270.966,-378"/>
+<polygon fill="#000000" stroke="#000000" points="271.233,-381.5 281.233,-378 271.232,-374.5 271.233,-381.5"/>
+</g>
+<!-- proc~strf_r4p -->
+<g id="interface~~bcton~~CallsGraph_node15" class="node"><title>proc~strf_r4p</title>
+<g id="a_interface~~bcton~~CallsGraph_node15"><a xlink:href="../proc/strf_r4p.html" xlink:title="strf_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="337.5,-512 283.5,-512 283.5,-488 337.5,-488 337.5,-512"/>
+<text text-anchor="middle" x="310.5" y="-497.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_R4P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_r4p -->
+<g id="interface~~bcton~~CallsGraph_edge15" class="edge"><title>interface~str&#45;&gt;proc~strf_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M222.463,-390.298C231.865,-410.501 252.658,-451.239 279,-479 279.752,-479.793 280.539,-480.573 281.353,-481.339"/>
+<polygon fill="#000000" stroke="#000000" points="279.238,-484.131 289.181,-487.789 283.689,-478.728 279.238,-484.131"/>
+</g>
+<!-- proc~str_a_i4p -->
+<g id="interface~~bcton~~CallsGraph_node16" class="node"><title>proc~str_a_i4p</title>
+<g id="a_interface~~bcton~~CallsGraph_node16"><a xlink:href="../proc/str_a_i4p.html" xlink:title="str_a_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="339.5,-310 281.5,-310 281.5,-286 339.5,-286 339.5,-310"/>
+<text text-anchor="middle" x="310.5" y="-295.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_I4P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_i4p -->
+<g id="interface~~bcton~~CallsGraph_edge16" class="edge"><title>interface~str&#45;&gt;proc~str_a_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M230.754,-365.947C243.293,-354.976 262.347,-338.349 279,-324 281.718,-321.658 284.578,-319.205 287.413,-316.78"/>
+<polygon fill="#000000" stroke="#000000" points="289.863,-319.291 295.198,-310.138 285.319,-313.966 289.863,-319.291"/>
+</g>
+<!-- proc~str_i1p -->
+<g id="interface~~bcton~~CallsGraph_node17" class="node"><title>proc~str_i1p</title>
+<g id="a_interface~~bcton~~CallsGraph_node17"><a xlink:href="../proc/str_i1p.html" xlink:title="str_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="432,-410 378,-410 378,-386 432,-386 432,-410"/>
+<text text-anchor="middle" x="405" y="-395.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_I1P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_i1p -->
+<g id="interface~~bcton~~CallsGraph_edge17" class="edge"><title>interface~str&#45;&gt;proc~str_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M243.064,-388.94C253.963,-392.955 266.89,-397.005 279,-399 308.604,-403.877 342.689,-403.195 367.781,-401.536"/>
+<polygon fill="#000000" stroke="#000000" points="368.233,-405.012 377.945,-400.778 367.712,-398.031 368.233,-405.012"/>
+</g>
+<!-- proc~str_i2p -->
+<g id="interface~~bcton~~CallsGraph_node18" class="node"><title>proc~str_i2p</title>
+<g id="a_interface~~bcton~~CallsGraph_node18"><a xlink:href="../proc/str_i2p.html" xlink:title="str_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="432,-654 378,-654 378,-630 432,-630 432,-654"/>
+<text text-anchor="middle" x="405" y="-639.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_I2P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_i2p -->
+<g id="interface~~bcton~~CallsGraph_edge18" class="edge"><title>interface~str&#45;&gt;proc~str_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M217.891,-390.007C221.683,-437.423 238.185,-610.632 279,-643 303.728,-662.61 340.698,-659.618 368.022,-653.375"/>
+<polygon fill="#000000" stroke="#000000" points="369.137,-656.703 377.977,-650.863 367.424,-649.916 369.137,-656.703"/>
+</g>
+<!-- proc~str_a_i8p -->
+<g id="interface~~bcton~~CallsGraph_node19" class="node"><title>proc~str_a_i8p</title>
+<g id="a_interface~~bcton~~CallsGraph_node19"><a xlink:href="../proc/str_a_i8p.html" xlink:title="str_a_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="339.5,-470 281.5,-470 281.5,-446 339.5,-446 339.5,-470"/>
+<text text-anchor="middle" x="310.5" y="-455.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_I8P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_i8p -->
+<g id="interface~~bcton~~CallsGraph_edge19" class="edge"><title>interface~str&#45;&gt;proc~str_a_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M230.754,-390.053C243.293,-401.024 262.347,-417.651 279,-432 281.718,-434.342 284.578,-436.795 287.413,-439.22"/>
+<polygon fill="#000000" stroke="#000000" points="285.319,-442.034 295.198,-445.862 289.863,-436.709 285.319,-442.034"/>
+</g>
+<!-- proc~str_r4p -->
+<g id="interface~~bcton~~CallsGraph_node20" class="node"><title>proc~str_r4p</title>
+<g id="a_interface~~bcton~~CallsGraph_node20"><a xlink:href="../proc/str_r4p.html" xlink:title="str_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="432,-188 378,-188 378,-164 432,-164 432,-188"/>
+<text text-anchor="middle" x="405" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_R4P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_r4p -->
+<g id="interface~~bcton~~CallsGraph_edge20" class="edge"><title>interface~str&#45;&gt;proc~str_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M219.28,-365.642C224.852,-338.634 241.536,-273.679 279,-235 292.126,-221.449 336.283,-202.287 368.401,-189.518"/>
+<polygon fill="#000000" stroke="#000000" points="369.906,-192.687 377.934,-185.774 367.347,-186.172 369.906,-192.687"/>
+</g>
+<!-- proc~strf_i8p -->
+<g id="interface~~bcton~~CallsGraph_node21" class="node"><title>proc~strf_i8p</title>
+<g id="a_interface~~bcton~~CallsGraph_node21"><a xlink:href="../proc/strf_i8p.html" xlink:title="strf_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="337.5,-268 283.5,-268 283.5,-244 337.5,-244 337.5,-268"/>
+<text text-anchor="middle" x="310.5" y="-253.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_I8P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_i8p -->
+<g id="interface~~bcton~~CallsGraph_edge21" class="edge"><title>interface~str&#45;&gt;proc~strf_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M222.463,-365.702C231.865,-345.499 252.658,-304.761 279,-277 279.752,-276.207 280.539,-275.427 281.353,-274.661"/>
+<polygon fill="#000000" stroke="#000000" points="283.689,-277.272 289.181,-268.211 279.238,-271.869 283.689,-277.272"/>
+</g>
+<!-- proc~str_a_r8p -->
+<g id="interface~~bcton~~CallsGraph_node22" class="node"><title>proc~str_a_r8p</title>
+<g id="a_interface~~bcton~~CallsGraph_node22"><a xlink:href="../proc/str_a_r8p.html" xlink:title="str_a_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="342,-104 279,-104 279,-80 342,-80 342,-104"/>
+<text text-anchor="middle" x="310.5" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_R8P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_r8p -->
+<g id="interface~~bcton~~CallsGraph_edge22" class="edge"><title>interface~str&#45;&gt;proc~str_a_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M216.856,-365.966C216.95,-326.188 221.872,-196.715 279,-113 279.351,-112.486 279.719,-111.98 280.103,-111.483"/>
+<polygon fill="#000000" stroke="#000000" points="282.766,-113.771 287.371,-104.229 277.821,-108.816 282.766,-113.771"/>
+</g>
+<!-- proc~str_i4p -->
+<g id="interface~~bcton~~CallsGraph_node23" class="node"><title>proc~str_i4p</title>
+<g id="a_interface~~bcton~~CallsGraph_node23"><a xlink:href="../proc/str_i4p.html" xlink:title="str_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="432,-330 378,-330 378,-306 432,-306 432,-330"/>
+<text text-anchor="middle" x="405" y="-315.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_I4P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_i4p -->
+<g id="interface~~bcton~~CallsGraph_edge23" class="edge"><title>interface~str&#45;&gt;proc~str_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M243.199,-368.97C254.232,-365.208 267.22,-360.832 279,-357 308.83,-347.296 342.82,-336.722 367.818,-329.036"/>
+<polygon fill="#000000" stroke="#000000" points="369.071,-332.312 377.604,-326.033 367.017,-325.62 369.071,-332.312"/>
+</g>
+<!-- proc~str_bol -->
+<g id="interface~~bcton~~CallsGraph_node24" class="node"><title>proc~str_bol</title>
+<g id="a_interface~~bcton~~CallsGraph_node24"><a xlink:href="../proc/str_bol.html" xlink:title="str_bol">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="337.5,-146 283.5,-146 283.5,-122 337.5,-122 337.5,-146"/>
+<text text-anchor="middle" x="310.5" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_bol</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_bol -->
+<g id="interface~~bcton~~CallsGraph_edge24" class="edge"><title>interface~str&#45;&gt;proc~str_bol</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M217.525,-365.897C219.622,-330.255 229.887,-223.868 279,-155 279.448,-154.372 279.921,-153.757 280.416,-153.154"/>
+<polygon fill="#000000" stroke="#000000" points="283.008,-155.517 287.797,-146.066 278.16,-150.468 283.008,-155.517"/>
+</g>
+<!-- proc~str_a_r4p -->
+<g id="interface~~bcton~~CallsGraph_node25" class="node"><title>proc~str_a_r4p</title>
+<g id="a_interface~~bcton~~CallsGraph_node25"><a xlink:href="../proc/str_a_r4p.html" xlink:title="str_a_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="342,-188 279,-188 279,-164 342,-164 342,-188"/>
+<text text-anchor="middle" x="310.5" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_a_R4P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_a_r4p -->
+<g id="interface~~bcton~~CallsGraph_edge25" class="edge"><title>interface~str&#45;&gt;proc~str_a_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M219.004,-365.908C224.43,-335.893 241.587,-256.478 279,-202 280.662,-199.58 282.604,-197.252 284.69,-195.051"/>
+<polygon fill="#000000" stroke="#000000" points="287.207,-197.489 292.13,-188.107 282.431,-192.371 287.207,-197.489"/>
+</g>
+<!-- proc~str_r8p -->
+<g id="interface~~bcton~~CallsGraph_node26" class="node"><title>proc~str_r8p</title>
+<g id="a_interface~~bcton~~CallsGraph_node26"><a xlink:href="../proc/str_r8p.html" xlink:title="str_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="432,-104 378,-104 378,-80 432,-80 432,-104"/>
+<text text-anchor="middle" x="405" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str_R8P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~str_r8p -->
+<g id="interface~~bcton~~CallsGraph_edge26" class="edge"><title>interface~str&#45;&gt;proc~str_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M217.486,-365.925C219.857,-313.851 232.078,-109.393 279,-71 305.813,-49.0607 346.923,-62.0488 374.604,-75.302"/>
+<polygon fill="#000000" stroke="#000000" points="373.286,-78.5574 383.79,-79.944 376.443,-72.3098 373.286,-78.5574"/>
+</g>
+<!-- proc~strf_r8p -->
+<g id="interface~~bcton~~CallsGraph_node27" class="node"><title>proc~strf_r8p</title>
+<g id="a_interface~~bcton~~CallsGraph_node27"><a xlink:href="../proc/strf_r8p.html" xlink:title="strf_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="337.5,-24 283.5,-24 283.5,-0 337.5,-0 337.5,-24"/>
+<text text-anchor="middle" x="310.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">strf_R8P</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_r8p -->
+<g id="interface~~bcton~~CallsGraph_edge27" class="edge"><title>interface~str&#45;&gt;proc~strf_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M218.126,-365.761C223.245,-311.904 245.531,-96.1008 279,-38 280.337,-35.6788 281.962,-33.4677 283.758,-31.3861"/>
+<polygon fill="#000000" stroke="#000000" points="286.572,-33.5302 291.283,-24.0405 281.682,-28.5209 286.572,-33.5302"/>
+</g>
+<!-- proc~str_a_i2p&#45;&gt;proc~str_i2p -->
+<g id="interface~~bcton~~CallsGraph_edge1" class="edge"><title>proc~str_a_i2p&#45;&gt;proc~str_i2p</title>
+<path fill="none" stroke="#000000" d="M339.504,-628.055C348.486,-629.997 358.56,-632.175 368.029,-634.223"/>
+<polygon fill="#000000" stroke="#000000" points="367.473,-637.683 377.986,-636.375 368.952,-630.841 367.473,-637.683"/>
+</g>
+<!-- proc~str_a_i1p&#45;&gt;proc~str_i1p -->
+<g id="interface~~bcton~~CallsGraph_edge2" class="edge"><title>proc~str_a_i1p&#45;&gt;proc~str_i1p</title>
+<path fill="none" stroke="#000000" d="M339.504,-384.055C348.486,-385.997 358.56,-388.175 368.029,-390.223"/>
+<polygon fill="#000000" stroke="#000000" points="367.473,-393.683 377.986,-392.375 368.952,-386.841 367.473,-393.683"/>
+</g>
+<!-- proc~str_a_i4p&#45;&gt;proc~str_i4p -->
+<g id="interface~~bcton~~CallsGraph_edge3" class="edge"><title>proc~str_a_i4p&#45;&gt;proc~str_i4p</title>
+<path fill="none" stroke="#000000" d="M339.504,-304.055C348.486,-305.997 358.56,-308.175 368.029,-310.223"/>
+<polygon fill="#000000" stroke="#000000" points="367.473,-313.683 377.986,-312.375 368.952,-306.841 367.473,-313.683"/>
+</g>
+<!-- proc~str_a_i8p&#45;&gt;proc~str_i8p -->
+<g id="interface~~bcton~~CallsGraph_edge4" class="edge"><title>proc~str_a_i8p&#45;&gt;proc~str_i8p</title>
+<path fill="none" stroke="#000000" d="M338.753,-470.08C348.122,-474.232 358.75,-478.943 368.668,-483.339"/>
+<polygon fill="#000000" stroke="#000000" points="367.334,-486.577 377.895,-487.429 370.171,-480.177 367.334,-486.577"/>
+</g>
+<!-- proc~compact_real_string -->
+<g id="interface~~bcton~~CallsGraph_node28" class="node"><title>proc~compact_real_string</title>
+<g id="a_interface~~bcton~~CallsGraph_node28"><a xlink:href="../proc/compact_real_string.html" xlink:title="compact_real_string">
+<polygon fill="#d9534f" stroke="#d9534f" points="577,-146 468,-146 468,-122 577,-122 577,-146"/>
+<text text-anchor="middle" x="522.5" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compact_real_string</text>
+</a>
+</g>
+</g>
+<!-- proc~str_r4p&#45;&gt;proc~compact_real_string -->
+<g id="interface~~bcton~~CallsGraph_edge5" class="edge"><title>proc~str_r4p&#45;&gt;proc~compact_real_string</title>
+<path fill="none" stroke="#000000" d="M432.209,-166.47C445.988,-161.459 463.224,-155.191 478.867,-149.503"/>
+<polygon fill="#000000" stroke="#000000" points="480.155,-152.759 488.356,-146.052 477.762,-146.18 480.155,-152.759"/>
+</g>
+<!-- proc~str_a_r8p&#45;&gt;proc~str_r8p -->
+<g id="interface~~bcton~~CallsGraph_edge6" class="edge"><title>proc~str_a_r8p&#45;&gt;proc~str_r8p</title>
+<path fill="none" stroke="#000000" d="M342.044,-92C350.275,-92 359.259,-92 367.767,-92"/>
+<polygon fill="#000000" stroke="#000000" points="367.828,-95.5001 377.827,-92 367.827,-88.5001 367.828,-95.5001"/>
+</g>
+<!-- proc~str_a_r4p&#45;&gt;proc~str_r4p -->
+<g id="interface~~bcton~~CallsGraph_edge7" class="edge"><title>proc~str_a_r4p&#45;&gt;proc~str_r4p</title>
+<path fill="none" stroke="#000000" d="M342.044,-176C350.275,-176 359.259,-176 367.767,-176"/>
+<polygon fill="#000000" stroke="#000000" points="367.828,-179.5 377.827,-176 367.827,-172.5 367.828,-179.5"/>
+</g>
+<!-- proc~str_r8p&#45;&gt;proc~compact_real_string -->
+<g id="interface~~bcton~~CallsGraph_edge8" class="edge"><title>proc~str_r8p&#45;&gt;proc~compact_real_string</title>
+<path fill="none" stroke="#000000" d="M432.209,-101.53C445.988,-106.541 463.224,-112.809 478.867,-118.497"/>
+<polygon fill="#000000" stroke="#000000" points="477.762,-121.82 488.356,-121.948 480.155,-115.241 477.762,-121.82"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="560pt" height="32pt"
+ viewBox="0.00 0.00 559.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 555.5,-28 555.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,-0 64,-0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,-0 136,-0 136,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="209.5,-24 154.5,-24 154.5,-0 209.5,-0 209.5,-24"/>
+<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,-0 364,-0 364,-24"/>
+<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,-0 436,-0 436,-24"/>
+<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="551.5,-24 454.5,-24 454.5,-0 551.5,-0 551.5,-24"/>
+<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+     
+     
+     <h3>Called By</h3>
+     
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: interface~~bcton~~CalledByGraph Pages: 1 -->
+<svg id="interfacebctonCalledByGraph" width="152pt" height="32pt"
+ viewBox="0.00 0.00 152.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="interface~~bcton~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>interface~~bcton~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 148,-28 148,4 -4,4"/>
+<!-- interface~bcton -->
+<g id="interface~~bcton~~CalledByGraph_node1" class="node"><title>interface~bcton</title>
+<polygon fill="none" stroke="black" points="144,-24 90,-24 90,-0 144,-0 144,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">bcton</text>
+</g>
+<!-- program~test_all -->
+<g id="interface~~bcton~~CalledByGraph_node2" class="node"><title>program~test_all</title>
+<g id="a_interface~~bcton~~CalledByGraph_node2"><a xlink:href="../program/test_all.html" xlink:title="test_all">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="54,-24 0,-24 0,-0 54,-0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">test_all</text>
+</a>
+</g>
+</g>
+<!-- program~test_all&#45;&gt;interface~bcton -->
+<g id="interface~~bcton~~CalledByGraph_edge1" class="edge"><title>program~test_all&#45;&gt;interface~bcton</title>
+<path fill="none" stroke="#000000" d="M54.4029,-12C62.3932,-12 71.3106,-12 79.8241,-12"/>
+<polygon fill="#000000" stroke="#000000" points="79.919,-15.5001 89.919,-12 79.919,-8.5001 79.919,-15.5001"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="560pt" height="32pt"
+ viewBox="0.00 0.00 559.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 555.5,-28 555.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,-0 64,-0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,-0 136,-0 136,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="209.5,-24 154.5,-24 154.5,-0 209.5,-0 209.5,-24"/>
+<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,-0 364,-0 364,-24"/>
+<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,-0 436,-0 436,-24"/>
+<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="551.5,-24 454.5,-24 454.5,-0 551.5,-0 551.5,-24"/>
+<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+     
     <br>
-	
+
+     <section class="visible-xs visible-sm hidden-md">
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#modprocs-1">Module Procedures</a></h3></div>
+  <div id="modprocs-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctor_r8p">bctor_R8P</a>
+      
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctor_r4p">bctor_R4P</a>
+      
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctoi_i8p">bctoi_I8P</a>
+      
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctoi_i4p">bctoi_I4P</a>
+      
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctoi_i2p">bctoi_I2P</a>
+      
+      <a class="list-group-item" href="../interface/bcton.html#moduleprocedure-bctoi_i1p">bctoi_I1P</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+     </section>
+     <br class="visible-xs visible-sm hidden-md">
+     
 	
 
 	
@@ -354,30 +1173,23 @@
 	 
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><a class="anchor" name="proc-"></a><h3>
-  None()
+  <div class="panel-heading codesum"><span class="anchor" id="proc-bctor_r8p"></span><h3>
+private elemental function <a href='../proc/bctor_r8p.html'>bctor_R8P</a>(bstr, knd) result(n)
+    
+    
+	 
 </h3></div>
   <div class="panel-body">
        
     
-    <h4>Arguments</h4>
-    
-      <em>None</em>
-    
-    
-        
 
-  </div>
-  </div>
 
- 	 
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><a class="anchor" name="proc-bctor_R8P"></a><h3>
-private elemental function <a href='../proc/bctor_r8p.html'>bctor_R8P</a>(bstr, knd)
-</h3></div>
-  <div class="panel-body">
-       
+
+
+
+
+
+<p>Convert bit-string to real.</p>
     
     <h4>Arguments</h4>
     
@@ -398,7 +1210,7 @@ private elemental function <a href='../proc/bctor_r8p.html'>bctor_R8P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-bstr"></a>character(len=*),</td>
+  <td><span class="anchor" ></span>character(len=*),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -413,7 +1225,7 @@ private elemental function <a href='../proc/bctor_r8p.html'>bctor_R8P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-knd"></a>real(kind=R8P),</td>
+  <td><span class="anchor" ></span>real(kind=R8P),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -433,15 +1245,10 @@ private elemental function <a href='../proc/bctor_r8p.html'>bctor_R8P</a>(bstr, 
   
   
   
-     <h4>Return Value <small><a class="anchor" name="var-n"></a>real(kind=R8P)
+     <h4>Return Value <small>real(kind=R8P)
   </small></h4>
   <p>Number returned.</p>
     
-    
-    <h4>Description</h4>
-       
-       <p>Procedure for converting bit-string to real. This function achieves casting of bit-string to real.</p>
-        
 
   </div>
   </div>
@@ -449,11 +1256,23 @@ private elemental function <a href='../proc/bctor_r8p.html'>bctor_R8P</a>(bstr, 
  	 
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><a class="anchor" name="proc-bctor_R4P"></a><h3>
-private elemental function <a href='../proc/bctor_r4p.html'>bctor_R4P</a>(bstr, knd)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-bctor_r4p"></span><h3>
+private elemental function <a href='../proc/bctor_r4p.html'>bctor_R4P</a>(bstr, knd) result(n)
+    
+    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+
+
+<p>Convert bit-string to real.</p>
     
     <h4>Arguments</h4>
     
@@ -474,7 +1293,7 @@ private elemental function <a href='../proc/bctor_r4p.html'>bctor_R4P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-bstr"></a>character(len=*),</td>
+  <td><span class="anchor" ></span>character(len=*),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -489,7 +1308,7 @@ private elemental function <a href='../proc/bctor_r4p.html'>bctor_R4P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-knd"></a>real(kind=R4P),</td>
+  <td><span class="anchor" ></span>real(kind=R4P),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -509,15 +1328,10 @@ private elemental function <a href='../proc/bctor_r4p.html'>bctor_R4P</a>(bstr, 
   
   
   
-     <h4>Return Value <small><a class="anchor" name="var-n"></a>real(kind=R4P)
+     <h4>Return Value <small>real(kind=R4P)
   </small></h4>
   <p>Number returned.</p>
     
-    
-    <h4>Description</h4>
-       
-       <p>Procedure for converting bit-string to real. This function achieves casting of bit-string to real.</p>
-        
 
   </div>
   </div>
@@ -525,11 +1339,23 @@ private elemental function <a href='../proc/bctor_r4p.html'>bctor_R4P</a>(bstr, 
  	 
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><a class="anchor" name="proc-bctoi_I8P"></a><h3>
-private elemental function <a href='../proc/bctoi_i8p.html'>bctoi_I8P</a>(bstr, knd)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-bctoi_i8p"></span><h3>
+private elemental function <a href='../proc/bctoi_i8p.html'>bctoi_I8P</a>(bstr, knd) result(n)
+    
+    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+
+
+<p>Convert bit-string to integer.</p>
     
     <h4>Arguments</h4>
     
@@ -550,7 +1376,7 @@ private elemental function <a href='../proc/bctoi_i8p.html'>bctoi_I8P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-bstr"></a>character(len=*),</td>
+  <td><span class="anchor" ></span>character(len=*),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -565,7 +1391,7 @@ private elemental function <a href='../proc/bctoi_i8p.html'>bctoi_I8P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-knd"></a>integer(kind=I8P),</td>
+  <td><span class="anchor" ></span>integer(kind=I8P),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -585,15 +1411,10 @@ private elemental function <a href='../proc/bctoi_i8p.html'>bctoi_I8P</a>(bstr, 
   
   
   
-     <h4>Return Value <small><a class="anchor" name="var-n"></a>integer(kind=I8P)
+     <h4>Return Value <small>integer(kind=I8P)
   </small></h4>
   <p>Number returned.</p>
     
-    
-    <h4>Description</h4>
-       
-       <p>Procedure for converting bit-string to integer. This function achieves casting of bit-string to integer.</p>
-        
 
   </div>
   </div>
@@ -601,11 +1422,23 @@ private elemental function <a href='../proc/bctoi_i8p.html'>bctoi_I8P</a>(bstr, 
  	 
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><a class="anchor" name="proc-bctoi_I4P"></a><h3>
-private elemental function <a href='../proc/bctoi_i4p.html'>bctoi_I4P</a>(bstr, knd)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-bctoi_i4p"></span><h3>
+private elemental function <a href='../proc/bctoi_i4p.html'>bctoi_I4P</a>(bstr, knd) result(n)
+    
+    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+
+
+<p>Convert bit-string to integer.</p>
     
     <h4>Arguments</h4>
     
@@ -626,7 +1459,7 @@ private elemental function <a href='../proc/bctoi_i4p.html'>bctoi_I4P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-bstr"></a>character(len=*),</td>
+  <td><span class="anchor" ></span>character(len=*),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -641,7 +1474,7 @@ private elemental function <a href='../proc/bctoi_i4p.html'>bctoi_I4P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-knd"></a>integer(kind=I4P),</td>
+  <td><span class="anchor" ></span>integer(kind=I4P),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -661,15 +1494,10 @@ private elemental function <a href='../proc/bctoi_i4p.html'>bctoi_I4P</a>(bstr, 
   
   
   
-     <h4>Return Value <small><a class="anchor" name="var-n"></a>integer(kind=I4P)
+     <h4>Return Value <small>integer(kind=I4P)
   </small></h4>
   <p>Number returned.</p>
     
-    
-    <h4>Description</h4>
-       
-       <p>Procedure for converting bit-string to integer. This function achieves casting of bit-string to integer.</p>
-        
 
   </div>
   </div>
@@ -677,11 +1505,23 @@ private elemental function <a href='../proc/bctoi_i4p.html'>bctoi_I4P</a>(bstr, 
  	 
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><a class="anchor" name="proc-bctoi_I2P"></a><h3>
-private elemental function <a href='../proc/bctoi_i2p.html'>bctoi_I2P</a>(bstr, knd)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-bctoi_i2p"></span><h3>
+private elemental function <a href='../proc/bctoi_i2p.html'>bctoi_I2P</a>(bstr, knd) result(n)
+    
+    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+
+
+<p>Convert bit-string to integer.</p>
     
     <h4>Arguments</h4>
     
@@ -702,7 +1542,7 @@ private elemental function <a href='../proc/bctoi_i2p.html'>bctoi_I2P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-bstr"></a>character(len=*),</td>
+  <td><span class="anchor" ></span>character(len=*),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -717,7 +1557,7 @@ private elemental function <a href='../proc/bctoi_i2p.html'>bctoi_I2P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-knd"></a>integer(kind=I2P),</td>
+  <td><span class="anchor" ></span>integer(kind=I2P),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -737,15 +1577,10 @@ private elemental function <a href='../proc/bctoi_i2p.html'>bctoi_I2P</a>(bstr, 
   
   
   
-     <h4>Return Value <small><a class="anchor" name="var-n"></a>integer(kind=I2P)
+     <h4>Return Value <small>integer(kind=I2P)
   </small></h4>
   <p>Number returned.</p>
     
-    
-    <h4>Description</h4>
-       
-       <p>Procedure for converting bit-string to integer. This function achieves casting of bit-string to integer.</p>
-        
 
   </div>
   </div>
@@ -753,11 +1588,23 @@ private elemental function <a href='../proc/bctoi_i2p.html'>bctoi_I2P</a>(bstr, 
  	 
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><a class="anchor" name="proc-bctoi_I1P"></a><h3>
-private elemental function <a href='../proc/bctoi_i1p.html'>bctoi_I1P</a>(bstr, knd)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-bctoi_i1p"></span><h3>
+private elemental function <a href='../proc/bctoi_i1p.html'>bctoi_I1P</a>(bstr, knd) result(n)
+    
+    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+
+
+<p>Convert bit-string to integer.</p>
     
     <h4>Arguments</h4>
     
@@ -778,7 +1625,7 @@ private elemental function <a href='../proc/bctoi_i1p.html'>bctoi_I1P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-bstr"></a>character(len=*),</td>
+  <td><span class="anchor" ></span>character(len=*),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -793,7 +1640,7 @@ private elemental function <a href='../proc/bctoi_i1p.html'>bctoi_I1P</a>(bstr, 
   
 <tr>
   
-  <td><a class="anchor" name="var-knd"></a>integer(kind=I1P),</td>
+  <td><span class="anchor" ></span>integer(kind=I1P),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -813,15 +1660,10 @@ private elemental function <a href='../proc/bctoi_i1p.html'>bctoi_I1P</a>(bstr, 
   
   
   
-     <h4>Return Value <small><a class="anchor" name="var-n"></a>integer(kind=I1P)
+     <h4>Return Value <small>integer(kind=I1P)
   </small></h4>
   <p>Number returned.</p>
     
-    
-    <h4>Description</h4>
-       
-       <p>Procedure for converting bit-string to integer. This function achieves casting of bit-string to integer.</p>
-        
 
   </div>
   </div>
@@ -832,16 +1674,338 @@ private elemental function <a href='../proc/bctoi_i1p.html'>bctoi_I1P</a>(bstr, 
  </div>
 </div>
 
+  <section class="visible-xs visible-sm hidden-md">
     <hr>
-    <footer>
-        <div class="row">
-        <div class="col-md-6">&copy; 2015 WenOOF was written by Fortran-FOSS-Programmers Group. </div>
-        <div class="col-md-6"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a>.</span></div>
-        </div>
-        <br>
-    </footer>
-    </div> <!-- /container -->
+    
 
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-1">All Procedures</a></h3></div>
+  <div id="allprocs-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/add_3d_plot.html">add_3d_plot</a>
+      
+      <a class="list-group-item" href="../proc/add_bar.html">add_bar</a>
+      
+      <a class="list-group-item" href="../proc/add_contour.html">add_contour</a>
+      
+      <a class="list-group-item" href="../proc/add_plot.html">add_plot</a>
+      
+      <a class="list-group-item" href="../proc/add_str.html">add_str</a>
+      
+      <a class="list-group-item" href="../proc/bctoi_i1p.html">bctoi_I1P</a>
+      
+      <a class="list-group-item" href="../proc/bctoi_i2p.html">bctoi_I2P</a>
+      
+      <a class="list-group-item" href="../proc/bctoi_i4p.html">bctoi_I4P</a>
+      
+      <a class="list-group-item" href="../proc/bctoi_i8p.html">bctoi_I8P</a>
+      
+      <a class="list-group-item" href="../interface/bcton.html">bcton</a>
+      
+      <a class="list-group-item" href="../proc/bctor_r16p.html">bctor_R16P</a>
+      
+      <a class="list-group-item" href="../proc/bctor_r4p.html">bctor_R4P</a>
+      
+      <a class="list-group-item" href="../proc/bctor_r8p.html">bctor_R8P</a>
+      
+      <a class="list-group-item" href="../interface/bit_size.html">bit_size</a>
+      
+      <a class="list-group-item" href="../interface/bit_size%7E2.html">bit_size</a>
+      
+      <a class="list-group-item" href="../proc/bit_size_chr.html">bit_size_chr</a>
+      
+      <a class="list-group-item" href="../proc/bit_size_r16p.html">bit_size_R16P</a>
+      
+      <a class="list-group-item" href="../proc/bit_size_r4p.html">bit_size_R4P</a>
+      
+      <a class="list-group-item" href="../proc/bit_size_r8p.html">bit_size_R8P</a>
+      
+      <a class="list-group-item" href="../interface/bstr.html">bstr</a>
+      
+      <a class="list-group-item" href="../proc/bstr_i1p.html">bstr_I1P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_i2p.html">bstr_I2P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_i4p.html">bstr_I4P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_i8p.html">bstr_I8P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_r16p.html">bstr_R16P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_r4p.html">bstr_R4P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_r8p.html">bstr_R8P</a>
+      
+      <a class="list-group-item" href="../interface/byte_size.html">byte_size</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_chr.html">byte_size_chr</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_i1p.html">byte_size_I1P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_i2p.html">byte_size_I2P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_i4p.html">byte_size_I4P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_i8p.html">byte_size_I8P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_r16p.html">byte_size_R16P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_r4p.html">byte_size_R4P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_r8p.html">byte_size_R8P</a>
+      
+      <a class="list-group-item" href="../proc/check_endian.html">check_endian</a>
+      
+      <a class="list-group-item" href="../proc/compact_real_string.html">compact_real_string</a>
+      
+      <a class="list-group-item" href="../proc/compute.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E2.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E3.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E4.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E5.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E6.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E7.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E8.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E9.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E10.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/create.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E2.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E3.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E4.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E5.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E6.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E7.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E8.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E9.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients.html">create_alpha_coefficients</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_js_constructor.html">create_alpha_coefficients_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_m_constructor.html">create_alpha_coefficients_m_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_z_constructor.html">create_alpha_coefficients_z_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_base_object.html">create_base_object</a>
+      
+      <a class="list-group-item" href="../proc/create_interpolator_constructor.html">create_interpolator_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_interpolator_js_constructor.html">create_interpolator_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_optimal_weights.html">create_optimal_weights</a>
+      
+      <a class="list-group-item" href="../proc/create_optimal_weights_js_constructor.html">create_optimal_weights_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_polynomials.html">create_polynomials</a>
+      
+      <a class="list-group-item" href="../proc/create_polynomials_js_constructor.html">create_polynomials_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_smoothness_indicators.html">create_smoothness_indicators</a>
+      
+      <a class="list-group-item" href="../proc/create_smoothness_indicators_js_constructor.html">create_smoothness_indicators_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/ctoi_i1p.html">ctoi_I1P</a>
+      
+      <a class="list-group-item" href="../proc/ctoi_i2p.html">ctoi_I2P</a>
+      
+      <a class="list-group-item" href="../proc/ctoi_i4p.html">ctoi_I4P</a>
+      
+      <a class="list-group-item" href="../proc/ctoi_i8p.html">ctoi_I8P</a>
+      
+      <a class="list-group-item" href="../interface/cton.html">cton</a>
+      
+      <a class="list-group-item" href="../proc/ctor_r16p.html">ctor_R16P</a>
+      
+      <a class="list-group-item" href="../proc/ctor_r4p.html">ctor_R4P</a>
+      
+      <a class="list-group-item" href="../proc/ctor_r8p.html">ctor_R8P</a>
+      
+      <a class="list-group-item" href="../proc/description.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E2.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E3.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E4.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E5.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E6.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E7.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E8.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E9.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E10.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E11.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E12.html">description</a>
+      
+      <a class="list-group-item" href="../proc/destroy.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E2.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E3.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E4.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E5.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E6.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E7.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E8.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E9.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E10.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy_interpolator_constructor.html">destroy_interpolator_constructor</a>
+      
+      <a class="list-group-item" href="../interface/digit.html">digit</a>
+      
+      <a class="list-group-item" href="../proc/digit_i1.html">digit_I1</a>
+      
+      <a class="list-group-item" href="../proc/digit_i2.html">digit_I2</a>
+      
+      <a class="list-group-item" href="../proc/digit_i4.html">digit_I4</a>
+      
+      <a class="list-group-item" href="../proc/digit_i8.html">digit_I8</a>
+      
+      <a class="list-group-item" href="../proc/execute.html">execute</a>
+      
+      <a class="list-group-item" href="../proc/initialize.html">initialize</a>
+      
+      <a class="list-group-item" href="../proc/integer_to_string.html">integer_to_string</a>
+      
+      <a class="list-group-item" href="../proc/interpolate.html">interpolate</a>
+      
+      <a class="list-group-item" href="../proc/interpolate%7E2.html">interpolate</a>
+      
+      <a class="list-group-item" href="../proc/matrix_to_string.html">matrix_to_string</a>
+      
+      <a class="list-group-item" href="../proc/optional_int_to_string.html">optional_int_to_string</a>
+      
+      <a class="list-group-item" href="../proc/penf_init.html">penf_init</a>
+      
+      <a class="list-group-item" href="../proc/penf_print.html">penf_print</a>
+      
+      <a class="list-group-item" href="../proc/savefig.html">savefig</a>
+      
+      <a class="list-group-item" href="../interface/str.html">str</a>
+      
+      <a class="list-group-item" href="../proc/str_a_i1p.html">str_a_I1P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_i2p.html">str_a_I2P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_i4p.html">str_a_I4P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_i8p.html">str_a_I8P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_r16p.html">str_a_R16P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_r4p.html">str_a_R4P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_r8p.html">str_a_R8P</a>
+      
+      <a class="list-group-item" href="../proc/str_bol.html">str_bol</a>
+      
+      <a class="list-group-item" href="../proc/str_i1p.html">str_I1P</a>
+      
+      <a class="list-group-item" href="../proc/str_i2p.html">str_I2P</a>
+      
+      <a class="list-group-item" href="../proc/str_i4p.html">str_I4P</a>
+      
+      <a class="list-group-item" href="../proc/str_i8p.html">str_I8P</a>
+      
+      <a class="list-group-item" href="../proc/str_r16p.html">str_R16P</a>
+      
+      <a class="list-group-item" href="../proc/str_r4p.html">str_R4P</a>
+      
+      <a class="list-group-item" href="../proc/str_r8p.html">str_R8P</a>
+      
+      <a class="list-group-item" href="../proc/strf_i1p.html">strf_I1P</a>
+      
+      <a class="list-group-item" href="../proc/strf_i2p.html">strf_I2P</a>
+      
+      <a class="list-group-item" href="../proc/strf_i4p.html">strf_I4P</a>
+      
+      <a class="list-group-item" href="../proc/strf_i8p.html">strf_I8P</a>
+      
+      <a class="list-group-item" href="../proc/strf_r16p.html">strf_R16P</a>
+      
+      <a class="list-group-item" href="../proc/strf_r4p.html">strf_R4P</a>
+      
+      <a class="list-group-item" href="../proc/strf_r8p.html">strf_R8P</a>
+      
+      <a class="list-group-item" href="../interface/strz.html">strz</a>
+      
+      <a class="list-group-item" href="../proc/strz_i1p.html">strz_I1P</a>
+      
+      <a class="list-group-item" href="../proc/strz_i2p.html">strz_I2P</a>
+      
+      <a class="list-group-item" href="../proc/strz_i4p.html">strz_I4P</a>
+      
+      <a class="list-group-item" href="../proc/strz_i8p.html">strz_I8P</a>
+      
+      <a class="list-group-item" href="../proc/tau.html">tau</a>
+      
+      <a class="list-group-item" href="../proc/vec_to_string.html">vec_to_string</a>
+      
+      <a class="list-group-item" href="../proc/weno_exp.html">weno_exp</a>
+      
+      <a class="list-group-item" href="../proc/weno_odd.html">weno_odd</a>
+      
+      <a class="list-group-item" href="../proc/wenoof_create.html">wenoof_create</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> WenOOF was developed by Fortran-FOSS-Programmers</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -866,6 +2030,6 @@ private elemental function <a href='../proc/bctoi_i1p.html'>bctoi_I1P</a>(bstr, 
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>

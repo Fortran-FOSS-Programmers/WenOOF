@@ -7,7 +7,7 @@
 	 
 	 <meta name="description" content="WENO interpolation Object Oriented Fortran library">
     
-    <meta name="author" content="Chris MacMackin" >
+    <meta name="author" content="Fortran-FOSS-Programmers" >
     <link rel="icon" href="../favicon.png">
 
     <title>
@@ -27,12 +27,8 @@ All Types &ndash; WenOOF
     <![endif]-->
     
     <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
 
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
     
 
   </head>
@@ -40,7 +36,7 @@ All Types &ndash; WenOOF
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -54,13 +50,20 @@ All Types &ndash; WenOOF
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 				
-                
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
             <li><a href="../lists/files.html">Source Files</a></li>
 				
 				
             <li><a href="../lists/modules.html">Modules</a></li>
 				
-				
+            
+                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
 				
 				
@@ -71,16 +74,27 @@ All Types &ndash; WenOOF
 				
             <li><a href="../lists/programs.html">Programs</a></li>
 				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
           </ul>
-        
-        <form action="../search.html" class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
-        </div>
-<!--
-        <button type="submit" class="btn btn-default">Submit</button>
--->
-        </form>
         
         </div><!--/.nav-collapse -->
       </div>
@@ -96,29 +110,594 @@ All Types &ndash; WenOOF
 			 <tr><th>Type</th><th>Location</th><th>Extends</th><th>Description</th></tr>
 			 </thead><tbody>
 			 
+			   <tr><td><a href='../type/alpha_coefficients.html'>alpha_coefficients</a></td><td><a href='../module/wenoof_alpha_coefficients.html'>wenoof_alpha_coefficients</a></td><td><a href='../type/base_object.html'>base_object</a></td><td><p>Abstract alpha coefficients object.</p></td></tr>
+			 
+			   <tr><td><a href='../type/alpha_coefficients_constructor.html'>alpha_coefficients_constructor</a></td><td><a href='../module/wenoof_alpha_coefficients.html'>wenoof_alpha_coefficients</a></td><td><a href='../type/base_object_constructor.html'>base_object_constructor</a></td><td><p>Abstract alpha coefficients object constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../type/alpha_coefficients_js.html'>alpha_coefficients_js</a></td><td><a href='../module/wenoof_alpha_coefficients_js.html'>wenoof_alpha_coefficients_js</a></td><td><a href='../type/alpha_coefficients.html'>alpha_coefficients</a></td><td><p>Jiang-Shu alpha coefficient object.</p></td></tr>
+			 
+			   <tr><td><a href='../type/alpha_coefficients_js_constructor.html'>alpha_coefficients_js_constructor</a></td><td><a href='../module/wenoof_alpha_coefficients_js.html'>wenoof_alpha_coefficients_js</a></td><td><a href='../type/alpha_coefficients_constructor.html'>alpha_coefficients_constructor</a></td><td><p>Jiang-Shu alpha coefficient object constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../type/alpha_coefficients_m.html'>alpha_coefficients_m</a></td><td><a href='../module/wenoof_alpha_coefficients_m.html'>wenoof_alpha_coefficients_m</a></td><td><a href='../type/alpha_coefficients.html'>alpha_coefficients</a></td><td><p>Henrick alpha coefficients object.</p></td></tr>
+			 
+			   <tr><td><a href='../type/alpha_coefficients_m_constructor.html'>alpha_coefficients_m_constructor</a></td><td><a href='../module/wenoof_alpha_coefficients_m.html'>wenoof_alpha_coefficients_m</a></td><td><a href='../type/alpha_coefficients_constructor.html'>alpha_coefficients_constructor</a></td><td><p>Henrick alpha coefficients object constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../type/alpha_coefficients_z.html'>alpha_coefficients_z</a></td><td><a href='../module/wenoof_alpha_coefficients_z.html'>wenoof_alpha_coefficients_z</a></td><td><a href='../type/alpha_coefficients.html'>alpha_coefficients</a></td><td><p>Borges WENO alpha coefficients object.</p></td></tr>
+			 
+			   <tr><td><a href='../type/alpha_coefficients_z_constructor.html'>alpha_coefficients_z_constructor</a></td><td><a href='../module/wenoof_alpha_coefficients_z.html'>wenoof_alpha_coefficients_z</a></td><td><a href='../type/alpha_coefficients_constructor.html'>alpha_coefficients_constructor</a></td><td><p>Borges WENO alpha coefficients object constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../type/base_object.html'>base_object</a></td><td><a href='../module/wenoof_base_object.html'>wenoof_base_object</a></td><td>None</td><td><p>Abstract base object, the ancestor of all.</p></td></tr>
+			 
+			   <tr><td><a href='../type/base_object_constructor.html'>base_object_constructor</a></td><td><a href='../module/wenoof_base_object.html'>wenoof_base_object</a></td><td>None</td><td><p>Abstract base object constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../type/interpolator.html'>interpolator</a></td><td><a href='../module/wenoof_interpolator.html'>wenoof_interpolator</a></td><td><a href='../type/base_object.html'>base_object</a></td><td><p>Abstract interpolator object.</p></td></tr>
+			 
+			   <tr><td><a href='../type/interpolator_constructor.html'>interpolator_constructor</a></td><td><a href='../module/wenoof_interpolator.html'>wenoof_interpolator</a></td><td><a href='../type/base_object_constructor.html'>base_object_constructor</a></td><td><p>Abstract interpolator object constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../type/interpolator_js.html'>interpolator_js</a></td><td><a href='../module/wenoof_interpolator_js.html'>wenoof_interpolator_js</a></td><td><a href='../type/interpolator.html'>interpolator</a></td><td><p>Jiang-Shu (upwind) interpolator object.</p></td></tr>
+			 
+			   <tr><td><a href='../type/interpolator_js_constructor.html'>interpolator_js_constructor</a></td><td><a href='../module/wenoof_interpolator_js.html'>wenoof_interpolator_js</a></td><td><a href='../type/interpolator_constructor.html'>interpolator_constructor</a></td><td><p>Jiang-Shu (upwind) interpolator object constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../type/objects_factory.html'>objects_factory</a></td><td><a href='../module/wenoof_objects_factory.html'>wenoof_objects_factory</a></td><td>None</td><td><p>Factory, create an instance of concrete extension of <a href="../type/base_object.html">base_object</a> given its constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../type/optimal_weights.html'>optimal_weights</a></td><td><a href='../module/wenoof_optimal_weights.html'>wenoof_optimal_weights</a></td><td><a href='../type/base_object.html'>base_object</a></td><td><p>Optimal weights object.</p></td></tr>
+			 
+			   <tr><td><a href='../type/optimal_weights_constructor.html'>optimal_weights_constructor</a></td><td><a href='../module/wenoof_optimal_weights.html'>wenoof_optimal_weights</a></td><td><a href='../type/base_object_constructor.html'>base_object_constructor</a></td><td><p>Abstract optimal weights object constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../type/optimal_weights_js.html'>optimal_weights_js</a></td><td><a href='../module/wenoof_optimal_weights_js.html'>wenoof_optimal_weights_js</a></td><td><a href='../type/optimal_weights.html'>optimal_weights</a></td><td><p>Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights object.</p></td></tr>
+			 
+			   <tr><td><a href='../type/optimal_weights_js_constructor.html'>optimal_weights_js_constructor</a></td><td><a href='../module/wenoof_optimal_weights_js.html'>wenoof_optimal_weights_js</a></td><td><a href='../type/optimal_weights_constructor.html'>optimal_weights_constructor</a></td><td><p>Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights object constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../type/polynomials.html'>polynomials</a></td><td><a href='../module/wenoof_polynomials.html'>wenoof_polynomials</a></td><td><a href='../type/base_object.html'>base_object</a></td><td><p>Abstract polynomials object.</p></td></tr>
+			 
+			   <tr><td><a href='../type/polynomials_constructor.html'>polynomials_constructor</a></td><td><a href='../module/wenoof_polynomials.html'>wenoof_polynomials</a></td><td><a href='../type/base_object_constructor.html'>base_object_constructor</a></td><td><p>Abstract polynomials object constructor.</p></td></tr>
+			 
+			   <tr><td><a href='../type/polynomials_js.html'>polynomials_js</a></td><td><a href='../module/wenoof_polynomials_js.html'>wenoof_polynomials_js</a></td><td><a href='../type/polynomials.html'>polynomials</a></td><td><p>Jiang-Shu (Lagrange) polynomials object.</p></td></tr>
+			 
+			   <tr><td><a href='../type/polynomials_js_constructor.html'>polynomials_js_constructor</a></td><td><a href='../module/wenoof_polynomials_js.html'>wenoof_polynomials_js</a></td><td><a href='../type/polynomials_constructor.html'>polynomials_constructor</a></td><td><p>Jiang-Shu (Lagrange) polynomials object constructor.</p></td></tr>
+			 
 			   <tr><td><a href='../type/pyplot.html'>pyplot</a></td><td><a href='../module/pyplot_module.html'>pyplot_module</a></td><td>None</td><td></td></tr>
 			 
-			   <tr><td><a href='../type/weno_constructor.html'>weno_constructor</a></td><td><a href='../module/type_weno_interpolator.html'>type_weno_interpolator</a></td><td>None</td><td><p>Abstract type used for create new concrete WENO interpolators.</p></td></tr>
+			   <tr><td><a href='../type/smoothness_indicators.html'>smoothness_indicators</a></td><td><a href='../module/wenoof_smoothness_indicators.html'>wenoof_smoothness_indicators</a></td><td><a href='../type/base_object.html'>base_object</a></td><td><p>Abstract smoothness indicator object.</p></td></tr>
 			 
-			   <tr><td><a href='../type/weno_factory.html'>weno_factory</a></td><td><a href='../module/wenoof.html'>wenoof</a></td><td>None</td><td><p>WENO factory aimed to create and return a concrete WENO interpolator to the client code without exposing the concrete
- interpolators classes.</p></td></tr>
+			   <tr><td><a href='../type/smoothness_indicators_constructor.html'>smoothness_indicators_constructor</a></td><td><a href='../module/wenoof_smoothness_indicators.html'>wenoof_smoothness_indicators</a></td><td><a href='../type/base_object_constructor.html'>base_object_constructor</a></td><td><p>Abstract smoothness indicators object constructor.</p></td></tr>
 			 
-			   <tr><td><a href='../type/weno_interpolator.html'>weno_interpolator</a></td><td><a href='../module/type_weno_interpolator.html'>type_weno_interpolator</a></td><td>None</td><td><p>WENO interpolator object.</p></td></tr>
+			   <tr><td><a href='../type/smoothness_indicators_js.html'>smoothness_indicators_js</a></td><td><a href='../module/wenoof_smoothness_indicators_js.html'>wenoof_smoothness_indicators_js</a></td><td><a href='../type/smoothness_indicators.html'>smoothness_indicators</a></td><td><p>Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object.</p></td></tr>
+			 
+			   <tr><td><a href='../type/smoothness_indicators_js_constructor.html'>smoothness_indicators_js_constructor</a></td><td><a href='../module/wenoof_smoothness_indicators_js.html'>wenoof_smoothness_indicators_js</a></td><td><a href='../type/smoothness_indicators_constructor.html'>smoothness_indicators_constructor</a></td><td><p>Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object constructor.</p></td></tr>
 			 
 			 </tbody></table>
+             
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: type~~graph~~TypeGraph Pages: 1 -->
+<svg id="typegraphTypeGraph" width="813pt" height="946pt"
+ viewBox="0.00 0.00 813.00 946.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="type~~graph~~TypeGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 942)">
+<title>type~~graph~~TypeGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-942 809,-942 809,4 -4,4"/>
+<!-- type~smoothness_indicators_js_constructor -->
+<g id="type~~graph~~TypeGraph_node1" class="node"><title>type~smoothness_indicators_js_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node1"><a xlink:href="../type/smoothness_indicators_js_constructor.html" xlink:title="smoothness_indicators_js_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="629,-158 434,-158 434,-134 629,-134 629,-158"/>
+<text text-anchor="middle" x="531.5" y="-143.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">smoothness_indicators_js_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients_constructor -->
+<g id="type~~graph~~TypeGraph_node2" class="node"><title>type~alpha_coefficients_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node2"><a xlink:href="../type/alpha_coefficients_constructor.html" xlink:title="alpha_coefficients_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="336,-319 179,-319 179,-295 336,-295 336,-319"/>
+<text text-anchor="middle" x="257.5" y="-304.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">alpha_coefficients_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients_m_constructor -->
+<g id="type~~graph~~TypeGraph_node4" class="node"><title>type~alpha_coefficients_m_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node4"><a xlink:href="../type/alpha_coefficients_m_constructor.html" xlink:title="alpha_coefficients_m_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="617.5,-460 445.5,-460 445.5,-436 617.5,-436 617.5,-460"/>
+<text text-anchor="middle" x="531.5" y="-445.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">alpha_coefficients_m_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients_constructor&#45;&gt;type~alpha_coefficients_m_constructor -->
+<g id="type~~graph~~TypeGraph_edge4" class="edge"><title>type~alpha_coefficients_constructor&#45;&gt;type~alpha_coefficients_m_constructor</title>
+<path fill="none" stroke="#000000" d="M392,-366C423.692,-374.892 406.668,-408.658 434,-427 436.469,-428.657 439.047,-430.186 441.707,-431.596"/>
+<polygon fill="#000000" stroke="#000000" points="440.488,-434.89 451.03,-435.95 443.45,-428.548 440.488,-434.89"/>
+</g>
+<!-- type~alpha_coefficients_js_constructor -->
+<g id="type~~graph~~TypeGraph_node7" class="node"><title>type~alpha_coefficients_js_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node7"><a xlink:href="../type/alpha_coefficients_js_constructor.html" xlink:title="alpha_coefficients_js_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="617,-418 446,-418 446,-394 617,-394 617,-418"/>
+<text text-anchor="middle" x="531.5" y="-403.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">alpha_coefficients_js_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients_constructor&#45;&gt;type~alpha_coefficients_js_constructor -->
+<g id="type~~graph~~TypeGraph_edge8" class="edge"><title>type~alpha_coefficients_constructor&#45;&gt;type~alpha_coefficients_js_constructor</title>
+<path fill="none" stroke="#000000" d="M392,-366C410.945,-371.315 415.159,-374.327 434,-380 446.842,-383.867 460.727,-387.769 473.854,-391.332"/>
+<polygon fill="#000000" stroke="#000000" points="473.149,-394.767 483.715,-393.985 474.967,-388.007 473.149,-394.767"/>
+</g>
+<!-- type~interpolator_js_constructor -->
+<g id="type~~graph~~TypeGraph_node10" class="node"><title>type~interpolator_js_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node10"><a xlink:href="../type/interpolator_js_constructor.html" xlink:title="interpolator_js_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="805,-200 666,-200 666,-176 805,-176 805,-200"/>
+<text text-anchor="middle" x="735.5" y="-185.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">interpolator_js_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients_constructor&#45;&gt;type~interpolator_js_constructor -->
+<g id="type~~graph~~TypeGraph_edge13" class="edge"><title>type~alpha_coefficients_constructor&#45;&gt;type~interpolator_js_constructor</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M392,-366C443.037,-380.319 591.421,-376.384 629,-339 652.958,-315.167 613.288,-190.343 647,-188"/>
+<text text-anchor="middle" x="531.5" y="-376.4" font-family="Helvetica,sans-Serif" font-size="9.50">alpha</text>
+</g>
+<!-- type~alpha_coefficients_z_constructor -->
+<g id="type~~graph~~TypeGraph_node23" class="node"><title>type~alpha_coefficients_z_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node23"><a xlink:href="../type/alpha_coefficients_z_constructor.html" xlink:title="alpha_coefficients_z_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="616,-330 447,-330 447,-306 616,-306 616,-330"/>
+<text text-anchor="middle" x="531.5" y="-315.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">alpha_coefficients_z_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients_constructor&#45;&gt;type~alpha_coefficients_z_constructor -->
+<g id="type~~graph~~TypeGraph_edge28" class="edge"><title>type~alpha_coefficients_constructor&#45;&gt;type~alpha_coefficients_z_constructor</title>
+<path fill="none" stroke="#000000" d="M280.085,-319.097C305.541,-332.784 349.525,-354.644 390,-366"/>
+<path fill="none" stroke="#000000" d="M392,-366C412.289,-371.692 414.375,-351.676 434,-344 444.686,-339.82 456.29,-336.065 467.625,-332.794"/>
+<polygon fill="#000000" stroke="#000000" points="468.794,-336.102 477.487,-330.046 466.915,-329.359 468.794,-336.102"/>
+</g>
+<!-- type~interpolator_constructor -->
+<g id="type~~graph~~TypeGraph_node28" class="node"><title>type~interpolator_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node28"><a xlink:href="../type/interpolator_constructor.html" xlink:title="interpolator_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="594.5,-200 468.5,-200 468.5,-176 594.5,-176 594.5,-200"/>
+<text text-anchor="middle" x="531.5" y="-185.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">interpolator_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients_constructor&#45;&gt;type~interpolator_constructor -->
+<g id="type~~graph~~TypeGraph_edge40" class="edge"><title>type~alpha_coefficients_constructor&#45;&gt;type~interpolator_constructor</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M336.209,-315.737C364.427,-314.741 394.6,-308.214 416,-289 443.118,-264.652 408.139,-234.679 434,-209 440.908,-202.141 449.498,-197.291 458.685,-193.897"/>
+<polygon fill="#000000" stroke="#000000" points="459.921,-197.178 468.429,-190.864 457.841,-190.494 459.921,-197.178"/>
+<text text-anchor="middle" x="391" y="-315.4" font-family="Helvetica,sans-Serif" font-size="9.50">alpha</text>
+</g>
+<!-- type~alpha_coefficients -->
+<g id="type~~graph~~TypeGraph_node3" class="node"><title>type~alpha_coefficients</title>
+<g id="a_type~~graph~~TypeGraph_node3"><a xlink:href="../type/alpha_coefficients.html" xlink:title="alpha_coefficients">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="306.5,-801 208.5,-801 208.5,-777 306.5,-777 306.5,-801"/>
+<text text-anchor="middle" x="257.5" y="-786.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">alpha_coefficients</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients_m -->
+<g id="type~~graph~~TypeGraph_node5" class="node"><title>type~alpha_coefficients_m</title>
+<g id="a_type~~graph~~TypeGraph_node5"><a xlink:href="../type/alpha_coefficients_m.html" xlink:title="alpha_coefficients_m">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="588,-854 475,-854 475,-830 588,-830 588,-854"/>
+<text text-anchor="middle" x="531.5" y="-839.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">alpha_coefficients_m</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients&#45;&gt;type~alpha_coefficients_m -->
+<g id="type~~graph~~TypeGraph_edge5" class="edge"><title>type~alpha_coefficients&#45;&gt;type~alpha_coefficients_m</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M302.753,-801.061C322.082,-806.083 345.072,-811.727 366,-816 398.324,-822.6 434.513,-828.482 464.7,-832.974"/>
+<polygon fill="#000000" stroke="#000000" points="464.29,-836.452 474.693,-834.444 465.308,-829.526 464.29,-836.452"/>
+<text text-anchor="middle" x="391" y="-827.4" font-family="Helvetica,sans-Serif" font-size="9.50">alpha_base</text>
+</g>
+<!-- type~alpha_coefficients&#45;&gt;type~alpha_coefficients_m -->
+<g id="type~~graph~~TypeGraph_edge6" class="edge"><title>type~alpha_coefficients&#45;&gt;type~alpha_coefficients_m</title>
+<path fill="none" stroke="#000000" d="M269.717,-801.097C290.778,-822.804 338.758,-867.629 390,-884"/>
+<path fill="none" stroke="#000000" d="M392,-884C411.88,-890.351 414.318,-869.939 434,-863 443.864,-859.522 454.507,-856.509 464.997,-853.937"/>
+<polygon fill="#000000" stroke="#000000" points="466.036,-857.289 474.978,-851.606 464.444,-850.473 466.036,-857.289"/>
+</g>
+<!-- type~alpha_coefficients_js -->
+<g id="type~~graph~~TypeGraph_node12" class="node"><title>type~alpha_coefficients_js</title>
+<g id="a_type~~graph~~TypeGraph_node12"><a xlink:href="../type/alpha_coefficients_js.html" xlink:title="alpha_coefficients_js">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="587.5,-938 475.5,-938 475.5,-914 587.5,-914 587.5,-938"/>
+<text text-anchor="middle" x="531.5" y="-923.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">alpha_coefficients_js</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients&#45;&gt;type~alpha_coefficients_js -->
+<g id="type~~graph~~TypeGraph_edge16" class="edge"><title>type~alpha_coefficients&#45;&gt;type~alpha_coefficients_js</title>
+<path fill="none" stroke="#000000" d="M392,-884C411.88,-890.351 414.318,-898.061 434,-905 444.09,-908.557 454.994,-911.628 465.716,-914.238"/>
+<polygon fill="#000000" stroke="#000000" points="464.951,-917.654 475.484,-916.507 466.535,-910.835 464.951,-917.654"/>
+</g>
+<!-- type~alpha_coefficients_z -->
+<g id="type~~graph~~TypeGraph_node14" class="node"><title>type~alpha_coefficients_z</title>
+<g id="a_type~~graph~~TypeGraph_node14"><a xlink:href="../type/alpha_coefficients_z.html" xlink:title="alpha_coefficients_z">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="586,-896 477,-896 477,-872 586,-872 586,-896"/>
+<text text-anchor="middle" x="531.5" y="-881.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">alpha_coefficients_z</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients&#45;&gt;type~alpha_coefficients_z -->
+<g id="type~~graph~~TypeGraph_edge18" class="edge"><title>type~alpha_coefficients&#45;&gt;type~alpha_coefficients_z</title>
+<path fill="none" stroke="#000000" d="M392,-884C415.649,-891.556 442.751,-893.016 466.674,-892.07"/>
+<polygon fill="#000000" stroke="#000000" points="466.916,-895.562 476.713,-891.528 466.539,-888.572 466.916,-895.562"/>
+</g>
+<!-- type~interpolator -->
+<g id="type~~graph~~TypeGraph_node16" class="node"><title>type~interpolator</title>
+<g id="a_type~~graph~~TypeGraph_node16"><a xlink:href="../type/interpolator.html" xlink:title="interpolator">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="565,-678 498,-678 498,-654 565,-654 565,-678"/>
+<text text-anchor="middle" x="531.5" y="-663.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">interpolator</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients&#45;&gt;type~interpolator -->
+<g id="type~~graph~~TypeGraph_edge21" class="edge"><title>type~alpha_coefficients&#45;&gt;type~interpolator</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M306.561,-784.144C346.939,-779.097 400.472,-769.827 416,-755 438.611,-733.41 411.407,-708.609 434,-687 448.218,-673.401 469.079,-667.774 487.77,-665.704"/>
+<polygon fill="#000000" stroke="#000000" points="488.188,-669.182 497.875,-664.893 487.627,-662.205 488.188,-669.182"/>
+<text text-anchor="middle" x="391" y="-776.4" font-family="Helvetica,sans-Serif" font-size="9.50">alpha</text>
+</g>
+<!-- type~interpolator_js -->
+<g id="type~~graph~~TypeGraph_node25" class="node"><title>type~interpolator_js</title>
+<g id="a_type~~graph~~TypeGraph_node25"><a xlink:href="../type/interpolator_js.html" xlink:title="interpolator_js">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="775.5,-678 695.5,-678 695.5,-654 775.5,-654 775.5,-678"/>
+<text text-anchor="middle" x="735.5" y="-663.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">interpolator_js</text>
+</a>
+</g>
+</g>
+<!-- type~alpha_coefficients&#45;&gt;type~interpolator_js -->
+<g id="type~~graph~~TypeGraph_edge32" class="edge"><title>type~alpha_coefficients&#45;&gt;type~interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M306.716,-794.746C396.141,-804.26 582.815,-818.399 629,-777 647.607,-760.32 622.074,-667.774 647,-666"/>
+<text text-anchor="middle" x="531.5" y="-806.4" font-family="Helvetica,sans-Serif" font-size="9.50">alpha</text>
+</g>
+<!-- type~polynomials -->
+<g id="type~~graph~~TypeGraph_node6" class="node"><title>type~polynomials</title>
+<g id="a_type~~graph~~TypeGraph_node6"><a xlink:href="../type/polynomials.html" xlink:title="polynomials">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="292,-737 223,-737 223,-713 292,-713 292,-737"/>
+<text text-anchor="middle" x="257.5" y="-722.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">polynomials</text>
+</a>
+</g>
+</g>
+<!-- type~polynomials_js -->
+<g id="type~~graph~~TypeGraph_node8" class="node"><title>type~polynomials_js</title>
+<g id="a_type~~graph~~TypeGraph_node8"><a xlink:href="../type/polynomials_js.html" xlink:title="polynomials_js">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="572.5,-720 490.5,-720 490.5,-696 572.5,-696 572.5,-720"/>
+<text text-anchor="middle" x="531.5" y="-705.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">polynomials_js</text>
+</a>
+</g>
+</g>
+<!-- type~polynomials&#45;&gt;type~polynomials_js -->
+<g id="type~~graph~~TypeGraph_edge9" class="edge"><title>type~polynomials&#45;&gt;type~polynomials_js</title>
+<path fill="none" stroke="#000000" d="M292.098,-732.037C318.559,-737.049 356.451,-743.058 390,-744"/>
+<path fill="none" stroke="#000000" d="M392,-744C394.33,-744.065 441.534,-731.68 480.193,-721.421"/>
+<polygon fill="#000000" stroke="#000000" points="481.548,-724.682 490.314,-718.732 479.751,-717.917 481.548,-724.682"/>
+</g>
+<!-- type~polynomials&#45;&gt;type~interpolator -->
+<g id="type~~graph~~TypeGraph_edge20" class="edge"><title>type~polynomials&#45;&gt;type~interpolator</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M292.203,-722.261C324.668,-718.872 374.785,-711.65 416,-697 424.623,-693.935 425.437,-690.23 434,-687 451.005,-680.586 470.472,-675.883 487.448,-672.574"/>
+<polygon fill="#000000" stroke="#000000" points="488.452,-675.948 497.651,-670.691 487.181,-669.064 488.452,-675.948"/>
+<text text-anchor="middle" x="391" y="-712.4" font-family="Helvetica,sans-Serif" font-size="9.50">polynom</text>
+</g>
+<!-- type~polynomials&#45;&gt;type~interpolator_js -->
+<g id="type~~graph~~TypeGraph_edge31" class="edge"><title>type~polynomials&#45;&gt;type~interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M392,-744C497.502,-746.964 546.789,-795.189 629,-729 651.683,-710.738 617.928,-667.674 647,-666"/>
+<text text-anchor="middle" x="531.5" y="-765.4" font-family="Helvetica,sans-Serif" font-size="9.50">polynom</text>
+</g>
+<!-- type~objects_factory -->
+<g id="type~~graph~~TypeGraph_node9" class="node"><title>type~objects_factory</title>
+<g id="a_type~~graph~~TypeGraph_node9"><a xlink:href="../type/objects_factory.html" xlink:title="objects_factory">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="107.5,-739 22.5,-739 22.5,-715 107.5,-715 107.5,-739"/>
+<text text-anchor="middle" x="65" y="-724.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">objects_factory</text>
+</a>
+</g>
+</g>
+<!-- type~optimal_weights_constructor -->
+<g id="type~~graph~~TypeGraph_node11" class="node"><title>type~optimal_weights_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node11"><a xlink:href="../type/optimal_weights_constructor.html" xlink:title="optimal_weights_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="331.5,-272 183.5,-272 183.5,-248 331.5,-248 331.5,-272"/>
+<text text-anchor="middle" x="257.5" y="-257.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">optimal_weights_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~optimal_weights_constructor&#45;&gt;type~interpolator_js_constructor -->
+<g id="type~~graph~~TypeGraph_edge12" class="edge"><title>type~optimal_weights_constructor&#45;&gt;type~interpolator_js_constructor</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M392,-278C444.999,-277.068 588.559,-285.268 629,-251 651.217,-232.174 617.948,-189.994 647,-188"/>
+<text text-anchor="middle" x="531.5" y="-281.4" font-family="Helvetica,sans-Serif" font-size="9.50">weights</text>
+</g>
+<!-- type~optimal_weights_js_constructor -->
+<g id="type~~graph~~TypeGraph_node21" class="node"><title>type~optimal_weights_js_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node21"><a xlink:href="../type/optimal_weights_js_constructor.html" xlink:title="optimal_weights_js_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="612.5,-242 450.5,-242 450.5,-218 612.5,-218 612.5,-242"/>
+<text text-anchor="middle" x="531.5" y="-227.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">optimal_weights_js_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~optimal_weights_constructor&#45;&gt;type~optimal_weights_js_constructor -->
+<g id="type~~graph~~TypeGraph_edge27" class="edge"><title>type~optimal_weights_constructor&#45;&gt;type~optimal_weights_js_constructor</title>
+<path fill="none" stroke="#000000" d="M317.839,-272.05C340.348,-275.585 366.27,-278.417 390,-278"/>
+<path fill="none" stroke="#000000" d="M392,-278C413.069,-277.63 414.375,-263.676 434,-256 444.686,-251.82 456.29,-248.065 467.625,-244.794"/>
+<polygon fill="#000000" stroke="#000000" points="468.794,-248.102 477.487,-242.046 466.915,-241.359 468.794,-248.102"/>
+</g>
+<!-- type~optimal_weights_constructor&#45;&gt;type~interpolator_constructor -->
+<g id="type~~graph~~TypeGraph_edge39" class="edge"><title>type~optimal_weights_constructor&#45;&gt;type~interpolator_constructor</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M331.615,-257.185C359.557,-253.467 390.745,-245.919 416,-231 426.877,-224.574 423.227,-215.6 434,-209 441.542,-204.379 449.963,-200.768 458.602,-197.947"/>
+<polygon fill="#000000" stroke="#000000" points="459.793,-201.246 468.414,-195.087 457.834,-194.526 459.793,-201.246"/>
+<text text-anchor="middle" x="391" y="-253.4" font-family="Helvetica,sans-Serif" font-size="9.50">weights</text>
+</g>
+<!-- type~smoothness_indicators -->
+<g id="type~~graph~~TypeGraph_node13" class="node"><title>type~smoothness_indicators</title>
+<g id="a_type~~graph~~TypeGraph_node13"><a xlink:href="../type/smoothness_indicators.html" xlink:title="smoothness_indicators">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="318.5,-657 196.5,-657 196.5,-633 318.5,-633 318.5,-657"/>
+<text text-anchor="middle" x="257.5" y="-642.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">smoothness_indicators</text>
+</a>
+</g>
+</g>
+<!-- type~smoothness_indicators&#45;&gt;type~interpolator -->
+<g id="type~~graph~~TypeGraph_edge19" class="edge"><title>type~smoothness_indicators&#45;&gt;type~interpolator</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M318.528,-649.635C369.763,-653.59 442.179,-659.181 487.717,-662.697"/>
+<polygon fill="#000000" stroke="#000000" points="487.607,-666.199 497.847,-663.479 488.146,-659.22 487.607,-666.199"/>
+<text text-anchor="middle" x="391" y="-658.4" font-family="Helvetica,sans-Serif" font-size="9.50">is</text>
+</g>
+<!-- type~smoothness_indicators_js -->
+<g id="type~~graph~~TypeGraph_node19" class="node"><title>type~smoothness_indicators_js</title>
+<g id="a_type~~graph~~TypeGraph_node19"><a xlink:href="../type/smoothness_indicators_js.html" xlink:title="smoothness_indicators_js">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="599.5,-590 463.5,-590 463.5,-566 599.5,-566 599.5,-590"/>
+<text text-anchor="middle" x="531.5" y="-575.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">smoothness_indicators_js</text>
+</a>
+</g>
+</g>
+<!-- type~smoothness_indicators&#45;&gt;type~smoothness_indicators_js -->
+<g id="type~~graph~~TypeGraph_edge25" class="edge"><title>type~smoothness_indicators&#45;&gt;type~smoothness_indicators_js</title>
+<path fill="none" stroke="#000000" d="M307.741,-632.903C320.827,-629.686 334.949,-626.213 348,-623 389.418,-612.803 436.119,-601.288 471.91,-592.458"/>
+<polygon fill="#000000" stroke="#000000" points="472.832,-595.836 481.702,-590.042 471.155,-589.04 472.832,-595.836"/>
+</g>
+<!-- type~smoothness_indicators&#45;&gt;type~interpolator_js -->
+<g id="type~~graph~~TypeGraph_edge30" class="edge"><title>type~smoothness_indicators&#45;&gt;type~interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M318.571,-640.729C352.447,-638.534 395.563,-636.094 434,-635 520.632,-632.534 553.891,-591.759 629,-635 642.807,-642.949 631.088,-666.794 647,-666"/>
+<text text-anchor="middle" x="531.5" y="-637.4" font-family="Helvetica,sans-Serif" font-size="9.50">is</text>
+</g>
+<!-- type~pyplot -->
+<g id="type~~graph~~TypeGraph_node15" class="node"><title>type~pyplot</title>
+<g id="a_type~~graph~~TypeGraph_node15"><a xlink:href="../type/pyplot.html" xlink:title="pyplot">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="92,-781 38,-781 38,-757 92,-757 92,-781"/>
+<text text-anchor="middle" x="65" y="-766.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">pyplot</text>
+</a>
+</g>
+</g>
+<!-- type~interpolator&#45;&gt;type~interpolator_js -->
+<g id="type~~graph~~TypeGraph_edge34" class="edge"><title>type~interpolator&#45;&gt;type~interpolator_js</title>
+<path fill="none" stroke="#000000" d="M565.095,-666.863C588.018,-667.258 619.403,-667.376 647,-666"/>
+</g>
+<!-- type~base_object -->
+<g id="type~~graph~~TypeGraph_node17" class="node"><title>type~base_object</title>
+<g id="a_type~~graph~~TypeGraph_node17"><a xlink:href="../type/base_object.html" xlink:title="base_object">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="100,-697 30,-697 30,-673 100,-673 100,-697"/>
+<text text-anchor="middle" x="65" y="-682.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">base_object</text>
+</a>
+</g>
+</g>
+<!-- type~base_object&#45;&gt;type~alpha_coefficients -->
+<g id="type~~graph~~TypeGraph_edge3" class="edge"><title>type~base_object&#45;&gt;type~alpha_coefficients</title>
+<path fill="none" stroke="#000000" d="M149,-685C177.262,-685.544 148.684,-724.47 167,-746 176.893,-757.628 190.652,-766.357 204.419,-772.801"/>
+<polygon fill="#000000" stroke="#000000" points="203.335,-776.146 213.903,-776.905 206.115,-769.722 203.335,-776.146"/>
+</g>
+<!-- type~base_object&#45;&gt;type~polynomials -->
+<g id="type~~graph~~TypeGraph_edge7" class="edge"><title>type~base_object&#45;&gt;type~polynomials</title>
+<path fill="none" stroke="#000000" d="M149,-685C159.133,-685.195 157.973,-694.393 167,-699 181.169,-706.231 197.655,-711.743 212.588,-715.789"/>
+<polygon fill="#000000" stroke="#000000" points="212.076,-719.271 222.632,-718.359 213.812,-712.489 212.076,-719.271"/>
+</g>
+<!-- type~base_object&#45;&gt;type~smoothness_indicators -->
+<g id="type~~graph~~TypeGraph_edge17" class="edge"><title>type~base_object&#45;&gt;type~smoothness_indicators</title>
+<path fill="none" stroke="#000000" d="M149,-685C159.133,-685.195 157.973,-675.607 167,-671 175.15,-666.841 184.066,-663.251 193.012,-660.181"/>
+<polygon fill="#000000" stroke="#000000" points="194.257,-663.457 202.697,-657.052 192.105,-656.796 194.257,-663.457"/>
+</g>
+<!-- type~base_object&#45;&gt;type~interpolator -->
+<g id="type~~graph~~TypeGraph_edge23" class="edge"><title>type~base_object&#45;&gt;type~interpolator</title>
+<path fill="none" stroke="#000000" d="M149,-685C271.977,-687.368 417.017,-676.331 487.595,-670.07"/>
+<polygon fill="#000000" stroke="#000000" points="488.217,-673.529 497.863,-669.146 487.589,-666.557 488.217,-673.529"/>
+</g>
+<!-- type~optimal_weights -->
+<g id="type~~graph~~TypeGraph_node27" class="node"><title>type~optimal_weights</title>
+<g id="a_type~~graph~~TypeGraph_node27"><a xlink:href="../type/optimal_weights.html" xlink:title="optimal_weights">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="302,-614 213,-614 213,-590 302,-590 302,-614"/>
+<text text-anchor="middle" x="257.5" y="-599.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">optimal_weights</text>
+</a>
+</g>
+</g>
+<!-- type~base_object&#45;&gt;type~optimal_weights -->
+<g id="type~~graph~~TypeGraph_edge36" class="edge"><title>type~base_object&#45;&gt;type~optimal_weights</title>
+<path fill="none" stroke="#000000" d="M100.314,-684.706C115.002,-684.656 132.343,-684.698 148,-685"/>
+<path fill="none" stroke="#000000" d="M149,-685C177.262,-685.544 146.559,-643.524 167,-624 176.774,-614.665 189.842,-609.095 202.966,-605.822"/>
+<polygon fill="#000000" stroke="#000000" points="203.882,-609.206 212.959,-603.742 202.456,-602.353 203.882,-609.206"/>
+</g>
+<!-- type~smoothness_indicators_constructor -->
+<g id="type~~graph~~TypeGraph_node18" class="node"><title>type~smoothness_indicators_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node18"><a xlink:href="../type/smoothness_indicators_constructor.html" xlink:title="smoothness_indicators_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="348,-192 167,-192 167,-168 348,-168 348,-192"/>
+<text text-anchor="middle" x="257.5" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">smoothness_indicators_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~smoothness_indicators_constructor&#45;&gt;type~smoothness_indicators_js_constructor -->
+<g id="type~~graph~~TypeGraph_edge1" class="edge"><title>type~smoothness_indicators_constructor&#45;&gt;type~smoothness_indicators_js_constructor</title>
+<path fill="none" stroke="#000000" d="M348.317,-168.773C372.525,-165.747 398.949,-162.444 423.975,-159.316"/>
+<polygon fill="#000000" stroke="#000000" points="424.741,-162.747 434.229,-158.034 423.872,-155.801 424.741,-162.747"/>
+</g>
+<!-- type~smoothness_indicators_constructor&#45;&gt;type~interpolator_js_constructor -->
+<g id="type~~graph~~TypeGraph_edge11" class="edge"><title>type~smoothness_indicators_constructor&#45;&gt;type~interpolator_js_constructor</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M315.888,-167.907C326.686,-165.067 337.788,-161.755 348,-158 388.109,-143.253 392.409,-124.818 434,-115 518.348,-95.0881 560.775,-61.5542 629,-115 655.306,-135.607 613.625,-189.665 647,-188"/>
+<text text-anchor="middle" x="531.5" y="-117.4" font-family="Helvetica,sans-Serif" font-size="9.50">is</text>
+</g>
+<!-- type~smoothness_indicators_constructor&#45;&gt;type~interpolator_constructor -->
+<g id="type~~graph~~TypeGraph_edge38" class="edge"><title>type~smoothness_indicators_constructor&#45;&gt;type~interpolator_constructor</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M348.317,-182.642C383.936,-183.689 424.352,-184.878 458.051,-185.869"/>
+<polygon fill="#000000" stroke="#000000" points="458.183,-189.374 468.282,-186.17 458.389,-182.377 458.183,-189.374"/>
+<text text-anchor="middle" x="391" y="-187.4" font-family="Helvetica,sans-Serif" font-size="9.50">is</text>
+</g>
+<!-- type~polynomials_js_constructor -->
+<g id="type~~graph~~TypeGraph_node20" class="node"><title>type~polynomials_js_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node20"><a xlink:href="../type/polynomials_js_constructor.html" xlink:title="polynomials_js_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="602.5,-24 460.5,-24 460.5,-0 602.5,-0 602.5,-24"/>
+<text text-anchor="middle" x="531.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">polynomials_js_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~base_object_constructor -->
+<g id="type~~graph~~TypeGraph_node22" class="node"><title>type~base_object_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node22"><a xlink:href="../type/base_object_constructor.html" xlink:title="base_object_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="130,-232 0,-232 0,-208 130,-208 130,-232"/>
+<text text-anchor="middle" x="65" y="-217.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">base_object_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~base_object_constructor&#45;&gt;type~alpha_coefficients_constructor -->
+<g id="type~~graph~~TypeGraph_edge2" class="edge"><title>type~base_object_constructor&#45;&gt;type~alpha_coefficients_constructor</title>
+<path fill="none" stroke="#000000" d="M149,-220C177.267,-220.104 146.97,-261.055 167,-281 170.472,-284.457 174.375,-287.46 178.558,-290.069"/>
+<polygon fill="#000000" stroke="#000000" points="177.027,-293.219 187.49,-294.886 180.35,-287.058 177.027,-293.219"/>
+</g>
+<!-- type~base_object_constructor&#45;&gt;type~optimal_weights_constructor -->
+<g id="type~~graph~~TypeGraph_edge15" class="edge"><title>type~base_object_constructor&#45;&gt;type~optimal_weights_constructor</title>
+<path fill="none" stroke="#000000" d="M149,-220C159.135,-220.037 157.973,-229.393 167,-234 175.15,-238.159 184.066,-241.749 193.012,-244.819"/>
+<polygon fill="#000000" stroke="#000000" points="192.105,-248.204 202.697,-247.948 194.257,-241.543 192.105,-248.204"/>
+</g>
+<!-- type~base_object_constructor&#45;&gt;type~smoothness_indicators_constructor -->
+<g id="type~~graph~~TypeGraph_edge24" class="edge"><title>type~base_object_constructor&#45;&gt;type~smoothness_indicators_constructor</title>
+<path fill="none" stroke="#000000" d="M149,-220C159.135,-220.037 157.973,-210.607 167,-206 175.15,-201.841 184.066,-198.251 193.012,-195.181"/>
+<polygon fill="#000000" stroke="#000000" points="194.257,-198.457 202.697,-192.052 192.105,-191.796 194.257,-198.457"/>
+</g>
+<!-- type~polynomials_constructor -->
+<g id="type~~graph~~TypeGraph_node26" class="node"><title>type~polynomials_constructor</title>
+<g id="a_type~~graph~~TypeGraph_node26"><a xlink:href="../type/polynomials_constructor.html" xlink:title="polynomials_constructor">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="321.5,-149 193.5,-149 193.5,-125 321.5,-125 321.5,-149"/>
+<text text-anchor="middle" x="257.5" y="-134.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">polynomials_constructor</text>
+</a>
+</g>
+</g>
+<!-- type~base_object_constructor&#45;&gt;type~polynomials_constructor -->
+<g id="type~~graph~~TypeGraph_edge35" class="edge"><title>type~base_object_constructor&#45;&gt;type~polynomials_constructor</title>
+<path fill="none" stroke="#000000" d="M130.013,-219.955C136.093,-219.964 142.163,-219.979 148,-220"/>
+<path fill="none" stroke="#000000" d="M149,-220C177.267,-220.104 146.559,-178.524 167,-159 171.976,-154.248 177.805,-150.471 184.06,-147.477"/>
+<polygon fill="#000000" stroke="#000000" points="185.548,-150.65 193.481,-143.627 182.9,-144.17 185.548,-150.65"/>
+</g>
+<!-- type~base_object_constructor&#45;&gt;type~interpolator_constructor -->
+<g id="type~~graph~~TypeGraph_edge41" class="edge"><title>type~base_object_constructor&#45;&gt;type~interpolator_constructor</title>
+<path fill="none" stroke="#000000" d="M149,-220C256.976,-220.396 381.544,-207.403 458.162,-197.854"/>
+<polygon fill="#000000" stroke="#000000" points="458.703,-201.314 468.187,-196.59 457.827,-194.369 458.703,-201.314"/>
+</g>
+<!-- type~optimal_weights_js -->
+<g id="type~~graph~~TypeGraph_node24" class="node"><title>type~optimal_weights_js</title>
+<g id="a_type~~graph~~TypeGraph_node24"><a xlink:href="../type/optimal_weights_js.html" xlink:title="optimal_weights_js">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="583,-502 480,-502 480,-478 583,-478 583,-502"/>
+<text text-anchor="middle" x="531.5" y="-487.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">optimal_weights_js</text>
+</a>
+</g>
+</g>
+<!-- type~polynomials_constructor&#45;&gt;type~interpolator_js_constructor -->
+<g id="type~~graph~~TypeGraph_edge10" class="edge"><title>type~polynomials_constructor&#45;&gt;type~interpolator_js_constructor</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M392,-60C441.617,-42.1031 589.877,-37.6228 629,-73 648.186,-90.3491 621.176,-189.487 647,-188"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M648,-188C650.402,-187.835 652.842,-187.691 655.306,-187.565"/>
+<polygon fill="#000000" stroke="#000000" points="655.688,-191.053 665.537,-187.15 655.404,-184.059 655.688,-191.053"/>
+<text text-anchor="middle" x="531.5" y="-75.4" font-family="Helvetica,sans-Serif" font-size="9.50">polynom</text>
+</g>
+<!-- type~polynomials_constructor&#45;&gt;type~polynomials_js_constructor -->
+<g id="type~~graph~~TypeGraph_edge26" class="edge"><title>type~polynomials_constructor&#45;&gt;type~polynomials_js_constructor</title>
+<path fill="none" stroke="#000000" d="M274.544,-124.942C298.391,-107.661 345.205,-76.1578 390,-60"/>
+<path fill="none" stroke="#000000" d="M392,-60C411.822,-52.85 414.375,-45.676 434,-38 444.686,-33.8204 456.29,-30.0652 467.625,-26.7941"/>
+<polygon fill="#000000" stroke="#000000" points="468.794,-30.1017 477.487,-24.0455 466.915,-23.3587 468.794,-30.1017"/>
+</g>
+<!-- type~polynomials_constructor&#45;&gt;type~interpolator_constructor -->
+<g id="type~~graph~~TypeGraph_edge37" class="edge"><title>type~polynomials_constructor&#45;&gt;type~interpolator_constructor</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M321.586,-148.829C362.412,-156.484 415.685,-166.472 458.216,-174.447"/>
+<polygon fill="#000000" stroke="#000000" points="457.752,-177.921 468.226,-176.324 459.042,-171.041 457.752,-177.921"/>
+<text text-anchor="middle" x="391" y="-168.4" font-family="Helvetica,sans-Serif" font-size="9.50">polynom</text>
+</g>
+<!-- type~optimal_weights&#45;&gt;type~interpolator -->
+<g id="type~~graph~~TypeGraph_edge22" class="edge"><title>type~optimal_weights&#45;&gt;type~interpolator</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M302.293,-612.277C333.896,-619.697 377.586,-629.959 416,-639 439.856,-644.615 466.505,-650.898 488.087,-655.99"/>
+<polygon fill="#000000" stroke="#000000" points="487.391,-659.422 497.928,-658.312 488.999,-652.609 487.391,-659.422"/>
+<text text-anchor="middle" x="391" y="-641.4" font-family="Helvetica,sans-Serif" font-size="9.50">weights</text>
+</g>
+<!-- type~optimal_weights&#45;&gt;type~optimal_weights_js -->
+<g id="type~~graph~~TypeGraph_edge29" class="edge"><title>type~optimal_weights&#45;&gt;type~optimal_weights_js</title>
+<path fill="none" stroke="#000000" d="M278.681,-589.873C303.853,-575.299 348.627,-551.167 390,-538"/>
+<path fill="none" stroke="#000000" d="M392,-538C412.08,-531.61 414.375,-523.676 434,-516 445.362,-511.556 457.762,-507.592 469.773,-504.179"/>
+<polygon fill="#000000" stroke="#000000" points="471.023,-507.466 479.74,-501.444 469.17,-500.715 471.023,-507.466"/>
+</g>
+<!-- type~optimal_weights&#45;&gt;type~interpolator_js -->
+<g id="type~~graph~~TypeGraph_edge33" class="edge"><title>type~optimal_weights&#45;&gt;type~interpolator_js</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M392,-538C442.223,-522.017 589.702,-511.88 629,-547 648.942,-564.822 620.309,-667.696 647,-666"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M648,-666C660.054,-665.142 673.076,-664.823 685.268,-664.79"/>
+<polygon fill="#000000" stroke="#000000" points="685.262,-668.29 695.273,-664.823 685.285,-661.29 685.262,-668.29"/>
+<text text-anchor="middle" x="531.5" y="-549.4" font-family="Helvetica,sans-Serif" font-size="9.50">weights</text>
+</g>
+<!-- type~interpolator_constructor&#45;&gt;type~interpolator_js_constructor -->
+<g id="type~~graph~~TypeGraph_edge14" class="edge"><title>type~interpolator_constructor&#45;&gt;type~interpolator_js_constructor</title>
+<path fill="none" stroke="#000000" d="M594.626,-189.127C611.617,-189.128 630.025,-188.847 647,-188"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="178pt" height="32pt"
+ viewBox="0.00 0.00 177.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 173.5,-28 173.5,4 -4,4"/>
+<!-- Type -->
+<g id="node1" class="node"><title>Type</title>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="54,-24 0,-24 0,-0 54,-0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="169.5,-24 72.5,-24 72.5,-0 169.5,-0 169.5,-24"/>
+<text text-anchor="middle" x="121" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from one derived type to another which extends
+    (inherits from) it. Dashed arrows point from a derived type to another
+    type containing it as a components, with a label listing the name(s) of
+    said component(s).
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
         </div>
       </div>
 
-    <hr>
-    <footer>
-        <div class="row">
-        <div class="col-md-6">&copy; 2015 WenOOF was written by Fortran-FOSS-Programmers Group. </div>
-        <div class="col-md-6"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a>.</span></div>
-        </div>
-        <br>
-    </footer>
+    <hr>    
     </div> <!-- /container -->
-
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> WenOOF was developed by Fortran-FOSS-Programmers</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -143,6 +722,6 @@ All Types &ndash; WenOOF
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>

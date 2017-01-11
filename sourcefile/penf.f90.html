@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	 
+	 <meta name="description" content="WENO interpolation Object Oriented Fortran library">
+    
+    <meta name="author" content="Fortran-FOSS-Programmers" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>penf.F90 &ndash; WenOOF</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+    
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">WenOOF </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+				
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+				
+				
+            <li><a href="../lists/modules.html">Modules</a></li>
+				
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+				
+				
+            <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
+								
+            <li><a href="../lists/types.html">Derived Types</a></li>
+				
+				
+            <li><a href="../lists/programs.html">Programs</a></li>
+				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>penf.F90
+    <small>Source File</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title=" 2.8% of total for source files.">145 statements</a>
+     </li> 
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/penf.F90"> Source File</a></li>
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+     <li class="active">penf.F90</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#mods-0">Modules</a></h3></div>
+  <div id="mods-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/penf.html">penf</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../sourcefile/penf.f90.html#src">penf.F90</a>
+  </div>
+</div>
+
+
+  <hr>
+  
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allfiles-0">All Source Files</a></h3></div>
+  <div id="allfiles-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../sourcefile/compact_real.f90.html">compact_real.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf.f90.html">penf.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_b_size.f90.html">penf_b_size.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_global_parameters_variables.f90.html">penf_global_parameters_variables.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_stringify.f90.html">penf_stringify.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/pyplot_module.f90.html">pyplot_module.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/sin_reconstruction.f90.html">sin_reconstruction.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test.f90.html">test.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test_all.f90.html">test_all.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof.f90.html">wenoof.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients.f90.html">wenoof_alpha_coefficients.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_js.f90.html">wenoof_alpha_coefficients_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_m.f90.html">wenoof_alpha_coefficients_m.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_z.f90.html">wenoof_alpha_coefficients_z.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_base_object.f90.html">wenoof_base_object.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator.f90.html">wenoof_interpolator.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator_js.f90.html">wenoof_interpolator_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_objects_factory.f90.html">wenoof_objects_factory.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights.f90.html">wenoof_optimal_weights.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights_js.f90.html">wenoof_optimal_weights_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials.f90.html">wenoof_polynomials.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials_js.f90.html">wenoof_polynomials_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators.f90.html">wenoof_smoothness_indicators.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators_js.f90.html">wenoof_smoothness_indicators_js.f90</a>
+      
+    </div>
+  </div>
+</div>
+
+
+</div>  
+
+    </div>
+    <div class="col-md-9" id='text'>
+    <p>Portability Environment for Fortran poor people.</p>
+    
+    <h3>This File Depends On</h3>
+    
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: sourcefile~~penf.f90~~EfferentGraph Pages: 1 -->
+<svg id="sourcefilepenff90EfferentGraph" width="560pt" height="72pt"
+ viewBox="0.00 0.00 560.00 72.12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~penf.f90~~EfferentGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 68.1249)">
+<title>sourcefile~~penf.f90~~EfferentGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-68.1249 556,-68.1249 556,4 -4,4"/>
+<!-- sourcefile~penf.f90 -->
+<g id="sourcefile~~penf.f90~~EfferentGraph_node1" class="node"><title>sourcefile~penf.f90</title>
+<polygon fill="none" stroke="black" points="552,-55.8514 497,-55.8514 497,-31.8514 552,-31.8514 552,-55.8514"/>
+<text text-anchor="middle" x="524.5" y="-41.4514" font-family="Helvetica,sans-Serif" font-size="10.50">penf.F90</text>
+</g>
+<!-- sourcefile~penf_b_size.f90 -->
+<g id="sourcefile~~penf.f90~~EfferentGraph_node2" class="node"><title>sourcefile~penf_b_size.f90</title>
+<g id="a_sourcefile~~penf.f90~~EfferentGraph_node2"><a xlink:href="../sourcefile/penf_b_size.f90.html" xlink:title="penf_b_size.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="327,-35.8514 235,-35.8514 235,-11.8514 327,-11.8514 327,-35.8514"/>
+<text text-anchor="middle" x="281" y="-21.4514" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_b_size.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~penf.f90~~EfferentGraph_edge4" class="edge"><title>sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M305.573,-36.0376C330.935,-47.9742 372.783,-64.3184 411,-63.8514"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M413,-63.8514C437.962,-63.5464 465.598,-58.5428 486.988,-53.6173"/>
+<polygon fill="#000000" stroke="#000000" points="488.041,-56.964 496.948,-51.2265 486.407,-50.1574 488.041,-56.964"/>
+</g>
+<!-- sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~penf.f90~~EfferentGraph_node4" class="node"><title>sourcefile~penf_stringify.f90</title>
+<g id="a_sourcefile~~penf.f90~~EfferentGraph_node4"><a xlink:href="../sourcefile/penf_stringify.f90.html" xlink:title="penf_stringify.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="461,-35.8514 363,-35.8514 363,-11.8514 461,-11.8514 461,-35.8514"/>
+<text text-anchor="middle" x="412" y="-21.4514" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_stringify.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~penf.f90~~EfferentGraph_edge2" class="edge"><title>sourcefile~penf_b_size.f90&#45;&gt;sourcefile~penf_stringify.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M327.118,-23.8514C335.279,-23.8514 343.897,-23.8514 352.378,-23.8514"/>
+<polygon fill="#000000" stroke="#000000" points="352.615,-27.3515 362.615,-23.8514 352.615,-20.3515 352.615,-27.3515"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90 -->
+<g id="sourcefile~~penf.f90~~EfferentGraph_node3" class="node"><title>sourcefile~penf_global_parameters_variables.f90</title>
+<g id="a_sourcefile~~penf.f90~~EfferentGraph_node3"><a xlink:href="../sourcefile/penf_global_parameters_variables.f90.html" xlink:title="penf_global_parameters_variables.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="199,-35.8514 0,-35.8514 0,-11.8514 199,-11.8514 199,-35.8514"/>
+<text text-anchor="middle" x="99.5" y="-21.4514" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">penf_global_parameters_variables.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~penf.f90~~EfferentGraph_edge5" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M156.598,-35.8918C218.572,-48.0649 321.462,-64.9455 411,-63.8514"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_b_size.f90 -->
+<g id="sourcefile~~penf.f90~~EfferentGraph_edge1" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_b_size.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M199.177,-23.8514C207.883,-23.8514 216.477,-23.8514 224.625,-23.8514"/>
+<polygon fill="#000000" stroke="#000000" points="224.683,-27.3515 234.683,-23.8514 224.683,-20.3515 224.683,-27.3515"/>
+</g>
+<!-- sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_stringify.f90 -->
+<g id="sourcefile~~penf.f90~~EfferentGraph_edge3" class="edge"><title>sourcefile~penf_global_parameters_variables.f90&#45;&gt;sourcefile~penf_stringify.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M157.383,-11.8144C203.252,-3.73547 269.382,4.24168 327,-2.85138 338.194,-4.22946 350.043,-6.60369 361.2,-9.27175"/>
+<polygon fill="#000000" stroke="#000000" points="360.662,-12.7453 371.213,-11.7845 362.366,-5.95578 360.662,-12.7453"/>
+</g>
+<!-- sourcefile~penf_stringify.f90&#45;&gt;sourcefile~penf.f90 -->
+<g id="sourcefile~~penf.f90~~EfferentGraph_edge6" class="edge"><title>sourcefile~penf_stringify.f90&#45;&gt;sourcefile~penf.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M461.145,-32.5655C469.733,-34.1198 478.553,-35.7163 486.758,-37.2013"/>
+<polygon fill="#000000" stroke="#000000" points="486.294,-40.6741 496.758,-39.0111 487.541,-33.786 486.294,-40.6741"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="190pt" height="32pt"
+ viewBox="0.00 0.00 190.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 186,-28 186,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node"><title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="67,-24 0,-24 0,-0 67,-0 67,-24"/>
+<text text-anchor="middle" x="33.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="182,-24 85,-24 85,-0 182,-0 182,-24"/>
+<text text-anchor="middle" x="133.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a file to a file which depends upon it. A file 
+    is dependent upon another if the latter must be compiled before the former
+    can be.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+    
+      
+      <h3>Files Dependent On This One</h3>
+      
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: sourcefile~~penf.f90~~AfferentGraph Pages: 1 -->
+<svg id="sourcefilepenff90AfferentGraph" width="641pt" height="329pt"
+ viewBox="0.00 0.00 641.00 329.24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~penf.f90~~AfferentGraph" class="graph" transform="scale(0.432232 0.432232) rotate(0) translate(4 757.72)">
+<title>sourcefile~~penf.f90~~AfferentGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-757.72 1479,-757.72 1479,4 -4,4"/>
+<!-- sourcefile~penf.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node1" class="node"><title>sourcefile~penf.f90</title>
+<polygon fill="none" stroke="black" points="55,-408.865 0,-408.865 0,-384.865 55,-384.865 55,-408.865"/>
+<text text-anchor="middle" x="27.5" y="-394.465" font-family="Helvetica,sans-Serif" font-size="10.50">penf.F90</text>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node2" class="node"><title>sourcefile~wenoof_optimal_weights.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/wenoof_optimal_weights.f90.html" xlink:title="wenoof_optimal_weights.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="454.5,-636.865 303.5,-636.865 303.5,-612.865 454.5,-612.865 454.5,-636.865"/>
+<text text-anchor="middle" x="379" y="-622.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_optimal_weights.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge48" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M172,-518.865C205.839,-531.475 218.002,-523.195 251,-537.865 291.196,-555.735 332.203,-586.59 356.363,-606.346"/>
+<polygon fill="#000000" stroke="#000000" points="354.246,-609.138 364.177,-612.831 358.717,-603.751 354.246,-609.138"/>
+</g>
+<!-- sourcefile~test_all.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node3" class="node"><title>sourcefile~test_all.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node3"><a xlink:href="../sourcefile/test_all.f90.html" xlink:title="test_all.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="205,-570.865 137,-570.865 137,-546.865 205,-546.865 205,-570.865"/>
+<text text-anchor="middle" x="171" y="-556.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">test_all.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~test_all.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge49" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~test_all.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M30.6795,-408.967C36.0587,-435.347 52.4319,-498.42 91,-532.865 101.027,-541.82 114.211,-547.701 126.929,-551.558"/>
+<polygon fill="#000000" stroke="#000000" points="126.394,-555.038 136.959,-554.239 128.201,-548.276 126.394,-555.038"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node4" class="node"><title>sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node4"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_z.f90.html" xlink:title="wenoof_alpha_coefficients_z.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="463,-182.865 295,-182.865 295,-158.865 463,-158.865 463,-182.865"/>
+<text text-anchor="middle" x="379" y="-168.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_z.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge50" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M172,-130.865C184.373,-122.246 266.9,-141.505 323.667,-156.188"/>
+<polygon fill="#000000" stroke="#000000" points="323.033,-159.64 333.593,-158.776 324.8,-152.866 323.033,-159.64"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node5" class="node"><title>sourcefile~wenoof_optimal_weights_js.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node5"><a xlink:href="../sourcefile/wenoof_optimal_weights_js.f90.html" xlink:title="wenoof_optimal_weights_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="684.5,-676.865 523.5,-676.865 523.5,-652.865 684.5,-652.865 684.5,-676.865"/>
+<text text-anchor="middle" x="604" y="-662.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_optimal_weights_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge51" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M172,-518.865C205.783,-531.624 224.394,-513.448 251,-537.865 288.277,-572.076 256.032,-605.853 287,-645.865 316.502,-683.983 332.253,-689.681 378,-704.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M380,-704.865C395.117,-709.883 480.385,-692.536 540.976,-679.118"/>
+<polygon fill="#000000" stroke="#000000" points="541.851,-682.509 550.85,-676.918 540.328,-675.677 541.851,-682.509"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node6" class="node"><title>sourcefile~wenoof_polynomials.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node6"><a xlink:href="../sourcefile/wenoof_polynomials.f90.html" xlink:title="wenoof_polynomials.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="444.5,-448.865 313.5,-448.865 313.5,-424.865 444.5,-424.865 444.5,-448.865"/>
+<text text-anchor="middle" x="379" y="-434.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_polynomials.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge52" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M172,-518.865C226.214,-539.068 232.797,-478.097 287,-457.865 292.981,-455.633 299.275,-453.59 305.644,-451.732"/>
+<polygon fill="#000000" stroke="#000000" points="306.972,-454.996 315.681,-448.963 305.11,-448.249 306.972,-454.996"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node7" class="node"><title>sourcefile~wenoof_interpolator.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node7"><a xlink:href="../sourcefile/wenoof_interpolator.f90.html" xlink:title="wenoof_interpolator.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1045,-499.865 916,-499.865 916,-475.865 1045,-475.865 1045,-499.865"/>
+<text text-anchor="middle" x="980.5" y="-485.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge53" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M380,-704.865C447.82,-727.376 633.367,-708.932 701,-685.865 792.123,-654.787 804.542,-623.659 880,-563.865 897.012,-550.385 898.968,-544.32 916,-530.865 927.212,-522.008 940.182,-513.021 951.466,-505.569"/>
+<polygon fill="#000000" stroke="#000000" points="953.619,-508.344 960.089,-499.953 949.799,-502.478 953.619,-508.344"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node8" class="node"><title>sourcefile~wenoof_smoothness_indicators.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node8"><a xlink:href="../sourcefile/wenoof_smoothness_indicators.f90.html" xlink:title="wenoof_smoothness_indicators.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="471,-490.865 287,-490.865 287,-466.865 471,-466.865 471,-490.865"/>
+<text text-anchor="middle" x="379" y="-476.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_smoothness_indicators.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge54" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M172,-518.865C185.768,-523.996 263.981,-506.777 319.954,-493.339"/>
+<polygon fill="#000000" stroke="#000000" points="320.879,-496.716 329.777,-490.965 319.234,-489.912 320.879,-496.716"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node9" class="node"><title>sourcefile~wenoof_alpha_coefficients.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node9"><a xlink:href="../sourcefile/wenoof_alpha_coefficients.f90.html" xlink:title="wenoof_alpha_coefficients.F90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="251,-182.865 91,-182.865 91,-158.865 251,-158.865 251,-182.865"/>
+<text text-anchor="middle" x="171" y="-168.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients.F90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge55" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M32.8323,-384.831C41.804,-360.659 63.8628,-304.927 91,-262.865 108.42,-235.865 133.149,-208.358 150.279,-190.546"/>
+<polygon fill="#000000" stroke="#000000" points="153.084,-192.683 157.562,-183.081 148.074,-187.795 153.084,-192.683"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node10" class="node"><title>sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node10"><a xlink:href="../sourcefile/wenoof_smoothness_indicators_js.f90.html" xlink:title="wenoof_smoothness_indicators_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="701,-528.865 507,-528.865 507,-504.865 701,-504.865 701,-528.865"/>
+<text text-anchor="middle" x="604" y="-514.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_smoothness_indicators_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge56" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M172,-518.865C229.143,-540.159 388.236,-533.527 496.295,-525.897"/>
+<polygon fill="#000000" stroke="#000000" points="496.865,-529.366 506.588,-525.157 496.363,-522.384 496.865,-529.366"/>
+</g>
+<!-- sourcefile~compact_real.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node11" class="node"><title>sourcefile~compact_real.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node11"><a xlink:href="../sourcefile/compact_real.f90.html" xlink:title="compact_real.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="218.5,-408.865 123.5,-408.865 123.5,-384.865 218.5,-384.865 218.5,-408.865"/>
+<text text-anchor="middle" x="171" y="-394.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compact_real.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~compact_real.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge57" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~compact_real.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M55.1151,-396.865C71.5517,-396.865 93.2799,-396.865 113.413,-396.865"/>
+<polygon fill="#000000" stroke="#000000" points="113.447,-400.365 123.447,-396.865 113.447,-393.365 113.447,-400.365"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node12" class="node"><title>sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node12"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_js.f90.html" xlink:title="wenoof_alpha_coefficients_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="464,-102.865 294,-102.865 294,-78.8651 464,-78.8651 464,-102.865"/>
+<text text-anchor="middle" x="379" y="-88.4651" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge58" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M172,-130.865C204.449,-108.259 246.417,-97.6326 283.998,-92.8904"/>
+<polygon fill="#000000" stroke="#000000" points="284.419,-96.3652 293.958,-91.7557 283.626,-89.4102 284.419,-96.3652"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node13" class="node"><title>sourcefile~wenoof_polynomials_js.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node13"><a xlink:href="../sourcefile/wenoof_polynomials_js.f90.html" xlink:title="wenoof_polynomials_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="674.5,-258.865 533.5,-258.865 533.5,-234.865 674.5,-234.865 674.5,-258.865"/>
+<text text-anchor="middle" x="604" y="-244.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_polynomials_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge59" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M55.1206,-387.415C66.1607,-383.628 79.1378,-379.347 91,-375.865 251.131,-328.867 442.448,-283.473 539.608,-261.172"/>
+<polygon fill="#000000" stroke="#000000" points="540.598,-264.536 549.564,-258.892 539.035,-257.712 540.598,-264.536"/>
+</g>
+<!-- sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node14" class="node"><title>sourcefile~wenoof_interpolator_js.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node14"><a xlink:href="../sourcefile/wenoof_interpolator_js.f90.html" xlink:title="wenoof_interpolator_js.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1220,-256.865 1081,-256.865 1081,-232.865 1220,-232.865 1220,-256.865"/>
+<text text-anchor="middle" x="1150.5" y="-242.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_interpolator_js.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge60" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M37.4402,-408.925C57.6066,-434.989 109.615,-496.059 170,-518.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M172,-518.865C236.189,-543.108 227.218,-449.542 287,-415.865 495.029,-298.677 571.238,-317.352 807.5,-282.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M809.5,-282.865C913.849,-269.441 940.515,-271.185 1045,-258.865 1053.36,-257.879 1062.09,-256.795 1070.79,-255.681"/>
+<polygon fill="#000000" stroke="#000000" points="1071.49,-259.119 1080.96,-254.363 1070.59,-252.177 1071.49,-259.119"/>
+</g>
+<!-- sourcefile~sin_reconstruction.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node15" class="node"><title>sourcefile~sin_reconstruction.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node15"><a xlink:href="../sourcefile/sin_reconstruction.f90.html" xlink:title="sin_reconstruction.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1475,-120.865 1357,-120.865 1357,-96.8651 1475,-96.8651 1475,-120.865"/>
+<text text-anchor="middle" x="1416" y="-106.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sin_reconstruction.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~sin_reconstruction.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge61" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~sin_reconstruction.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M29.9178,-384.704C35.3995,-339.754 56.6278,-183.834 91,-149.865 116.686,-124.481 140.369,-151.508 170,-130.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M172,-130.865C228.057,-91.8127 223.761,-54.7175 287,-28.8651 417.167,24.3483 462.376,-12.8651 603,-12.8651 603,-12.8651 603,-12.8651 1151.5,-12.8651 1242.33,-12.8651 1340.72,-63.8498 1387.41,-91.5081"/>
+<polygon fill="#000000" stroke="#000000" points="1385.67,-94.5452 1396.04,-96.7067 1389.28,-88.5489 1385.67,-94.5452"/>
+</g>
+<!-- sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node16" class="node"><title>sourcefile~wenoof.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node16"><a xlink:href="../sourcefile/wenoof.f90.html" xlink:title="wenoof.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1321,-216.865 1256,-216.865 1256,-192.865 1321,-192.865 1321,-216.865"/>
+<text text-anchor="middle" x="1288.5" y="-202.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge62" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M30.0495,-409.195C34.5121,-440.546 49.8147,-524.724 91,-579.865 154.907,-665.427 186.548,-682.614 287,-718.865 419.486,-766.676 463.443,-723.83 603,-742.865"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node17" class="node"><title>sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node17"><a xlink:href="../sourcefile/wenoof_alpha_coefficients_m.f90.html" xlink:title="wenoof_alpha_coefficients_m.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="690,-140.865 518,-140.865 518,-116.865 690,-116.865 690,-140.865"/>
+<text text-anchor="middle" x="604" y="-126.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_alpha_coefficients_m.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge63" class="edge"><title>sourcefile~penf.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M172,-130.865C247.123,-78.5301 286.57,-135.658 378,-130.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M380,-130.865C421.881,-128.67 468.245,-127.974 507.8,-127.902"/>
+<polygon fill="#000000" stroke="#000000" points="507.97,-131.402 517.968,-127.897 507.966,-124.402 507.97,-131.402"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge6" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_optimal_weights_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M446.907,-636.866C471.711,-641.316 500.04,-646.397 525.694,-650.999"/>
+<polygon fill="#000000" stroke="#000000" points="525.294,-654.483 535.755,-652.803 526.53,-647.593 525.294,-654.483"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge5" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-624.865C607.143,-624.436 839.214,-539.334 936.914,-503.491"/>
+<polygon fill="#000000" stroke="#000000" points="938.307,-506.708 946.49,-499.978 935.896,-500.137 938.307,-506.708"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge4" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-624.865C771.816,-591.096 850.237,-655.585 979.5,-544.865"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge2" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.712,-636.999C443.956,-665.963 558.798,-737.166 603,-742.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-742.865C850.217,-774.481 925.948,-734.485 1149.5,-628.865"/>
+</g>
+<!-- sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_node18" class="node"><title>sourcefile~wenoof_objects_factory.f90</title>
+<g id="a_sourcefile~~penf.f90~~AfferentGraph_node18"><a xlink:href="../sourcefile/wenoof_objects_factory.f90.html" xlink:title="wenoof_objects_factory.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="880,-410.865 737,-410.865 737,-386.865 880,-386.865 880,-410.865"/>
+<text text-anchor="middle" x="808.5" y="-396.465" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wenoof_objects_factory.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge3" class="edge"><title>sourcefile~wenoof_optimal_weights.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M454.547,-632.135C498.224,-634.596 554.22,-634.634 603,-624.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-624.865C661.46,-613.558 666.565,-584.015 701,-537.865 723.112,-508.231 714.901,-492.509 737,-462.865 749.884,-445.582 767.936,-429.3 782.547,-417.483"/>
+<polygon fill="#000000" stroke="#000000" points="785,-420.007 790.687,-411.068 780.667,-414.509 785,-420.007"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge8" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M809.5,-168.865C886.557,-172.441 904.244,-186.919 979.5,-203.865"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge9" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M463.206,-167.966C549.393,-165.551 687.95,-163.317 807.5,-168.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M809.5,-168.865C960.418,-176.609 999.753,-145.56 1149.5,-165.865"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge10" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M443.903,-158.83C470.496,-153.821 501.536,-147.975 529.103,-142.783"/>
+<polygon fill="#000000" stroke="#000000" points="529.908,-146.193 539.088,-140.902 528.613,-139.314 529.908,-146.193"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge7" class="edge"><title>sourcefile~wenoof_alpha_coefficients_z.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M429.127,-182.943C443.735,-188.241 459.02,-195.652 471,-205.865 495.248,-226.537 483.047,-246.852 507,-267.865 577.238,-329.484 615.579,-311.002 701,-348.865 725.452,-359.704 752.754,-372.536 773.593,-382.487"/>
+<polygon fill="#000000" stroke="#000000" points="772.148,-385.676 782.679,-386.839 775.172,-379.362 772.148,-385.676"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge13" class="edge"><title>sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M684.784,-676.107C701.972,-678.088 720.064,-679.842 737,-680.865 800.44,-684.696 819.885,-701.491 880,-680.865 899.173,-674.287 898.322,-662.782 916,-652.865 942.314,-638.105 955.14,-646.666 979.5,-628.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M981.5,-628.865C1110.39,-543.854 1141.04,-335.957 1147.75,-267.287"/>
+<polygon fill="#000000" stroke="#000000" points="1151.25,-267.432 1148.66,-257.158 1144.28,-266.804 1151.25,-267.432"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge12" class="edge"><title>sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M981.5,-628.865C1043.83,-587.756 1081.36,-659.4 1149.5,-628.865"/>
+</g>
+<!-- sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge11" class="edge"><title>sourcefile~wenoof_optimal_weights_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M681.838,-652.77C688.979,-649.204 695.562,-644.655 701,-638.865 755.659,-580.666 697.486,-532.243 737,-462.865 747.464,-444.493 765.069,-428.504 780.068,-417.103"/>
+<polygon fill="#000000" stroke="#000000" points="782.507,-419.656 788.525,-410.936 778.382,-414 782.507,-419.656"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge17" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-438.865C696.571,-439.048 716.209,-469.707 807.5,-476.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M809.5,-476.865C840.887,-479.326 875.565,-481.643 905.37,-483.509"/>
+<polygon fill="#000000" stroke="#000000" points="905.498,-487.024 915.696,-484.15 905.932,-480.037 905.498,-487.024"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge18" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_polynomials_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M394.289,-424.691C432.207,-392.384 535.577,-304.311 581.043,-265.573"/>
+<polygon fill="#000000" stroke="#000000" points="583.488,-268.088 588.83,-258.938 578.948,-262.759 583.488,-268.088"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge16" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M412.13,-424.843C455.139,-409.065 534.017,-381.227 603,-362.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-362.865C647.5,-351.552 659.91,-354.545 701,-338.865 750.964,-319.799 754.583,-290.589 807.5,-282.865"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge14" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-362.865C799.182,-311.176 897.463,-330.442 1045,-466.865 1107.91,-525.035 1071.31,-663.904 1149.5,-628.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1151.5,-628.865C1227.85,-592.794 1272.93,-309.524 1284.51,-227.218"/>
+<polygon fill="#000000" stroke="#000000" points="1287.99,-227.571 1285.89,-217.186 1281.06,-226.614 1287.99,-227.571"/>
+</g>
+<!-- sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge15" class="edge"><title>sourcefile~wenoof_polynomials.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M444.89,-437.686C489.383,-438.19 549.764,-438.759 603,-438.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-438.865C658.963,-438.973 719.507,-425.114 760.219,-413.682"/>
+<polygon fill="#000000" stroke="#000000" points="761.223,-417.035 769.87,-410.913 759.292,-410.306 761.223,-417.035"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge19" class="edge"><title>sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1011.82,-475.799C1023.27,-470.132 1035.75,-462.479 1045,-452.865 1098.77,-397.004 1130.64,-308.048 1143.23,-266.976"/>
+<polygon fill="#000000" stroke="#000000" points="1146.65,-267.753 1146.15,-257.17 1139.94,-265.757 1146.65,-267.753"/>
+</g>
+<!-- sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge20" class="edge"><title>sourcefile~wenoof_interpolator.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M991.194,-500.102C1021.15,-537.23 1112.44,-645.103 1149.5,-628.865"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge24" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-476.865C694.569,-468.07 717.775,-469.829 807.5,-476.865"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge25" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_smoothness_indicators_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M450.559,-490.889C473.447,-494.789 499.009,-499.145 522.561,-503.158"/>
+<polygon fill="#000000" stroke="#000000" points="522.072,-506.625 532.518,-504.855 523.248,-499.725 522.072,-506.625"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge23" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-476.865C667.111,-470.766 822.28,-443.601 880,-419.865 980.092,-378.704 1083.25,-299.431 1127.35,-263.446"/>
+<polygon fill="#000000" stroke="#000000" points="1129.62,-266.106 1135.12,-257.049 1125.17,-260.701 1129.62,-266.106"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge21" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M401.333,-490.883C426.025,-504.287 468.27,-525.683 507,-537.865 636.368,-578.556 673.277,-571.473 807.5,-590.865"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge22" class="edge"><title>sourcefile~wenoof_smoothness_indicators.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M471.063,-481.699C511.552,-482.019 559.748,-481.112 603,-476.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-476.865C648.769,-472.567 661.456,-472.114 701,-452.865 719.225,-443.994 719.282,-434.71 737,-424.865 743.815,-421.078 751.291,-417.642 758.747,-414.6"/>
+<polygon fill="#000000" stroke="#000000" points="760.072,-417.84 768.13,-410.96 757.541,-411.314 760.072,-417.84"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge26" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_z.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M251.056,-170.865C262.001,-170.865 273.329,-170.865 284.506,-170.865"/>
+<polygon fill="#000000" stroke="#000000" points="284.713,-174.365 294.713,-170.865 284.713,-167.365 284.713,-174.365"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge28" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-206.865C648.245,-211.513 666.334,-199.596 701,-225.865 729.198,-247.233 712.566,-271.278 737,-296.865 787.445,-349.691 822.994,-332.196 880,-377.865 913.859,-404.99 946.246,-444.055 964.435,-467.596"/>
+<polygon fill="#000000" stroke="#000000" points="961.84,-469.966 970.684,-475.801 967.409,-465.725 961.84,-469.966"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge32" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M217.807,-158.736C228.979,-154.986 240.678,-150.364 251,-144.865 268.89,-135.335 268.925,-126.039 287,-116.865 295.177,-112.715 304.115,-109.138 313.092,-106.083"/>
+<polygon fill="#000000" stroke="#000000" points="314.358,-109.352 322.814,-102.969 312.223,-102.686 314.358,-109.352"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge27" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M230.157,-182.942C271.664,-191.986 328.646,-205.273 378,-219.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M380,-219.865C475.205,-248.014 504.495,-194.486 603,-206.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-206.865C770.151,-227.62 817.116,-167.299 979.5,-203.865"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge31" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M228.161,-158.707C236.432,-155.195 244.382,-150.677 251,-144.865 278.783,-120.468 255.705,-89.5567 287,-69.8651 417.303,12.1262 828.967,-57.5957 979.5,-89.8651"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M981.5,-89.8651C1010.49,-95.7865 1017.73,-98.3826 1045,-109.865 1093.56,-130.314 1097.3,-158.683 1149.5,-165.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1151.5,-165.865C1183.97,-170.333 1219.55,-180.741 1246.17,-189.682"/>
+<polygon fill="#000000" stroke="#000000" points="1245.31,-193.088 1255.9,-193.021 1247.58,-186.466 1245.31,-193.088"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge30" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M215.364,-158.787C256.753,-148.134 321.062,-133.85 378,-130.865"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge29" class="edge"><title>sourcefile~wenoof_alpha_coefficients.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M380,-219.865C465.89,-245.902 427.47,-335.273 507,-376.865 574.73,-412.286 663.039,-414.44 726.37,-409.763"/>
+<polygon fill="#000000" stroke="#000000" points="727.024,-413.222 736.707,-408.923 726.457,-406.245 727.024,-413.222"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge35" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M656.356,-528.887C746.984,-548.801 930.375,-582.857 979.5,-544.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M981.5,-544.865C1006.14,-523.761 1023.71,-533.341 1045,-508.865 1109.38,-434.858 1136.82,-316.385 1145.84,-267.295"/>
+<polygon fill="#000000" stroke="#000000" points="1149.34,-267.595 1147.62,-257.14 1142.45,-266.384 1149.34,-267.595"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge34" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M626.595,-528.969C662.697,-548.219 738.189,-584.315 807.5,-590.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M809.5,-590.865C914.242,-600.764 940.515,-602.545 1045,-614.865 1091.54,-620.352 1106.58,-647.672 1149.5,-628.865"/>
+</g>
+<!-- sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge33" class="edge"><title>sourcefile~wenoof_smoothness_indicators_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M665.729,-504.845C677.797,-501.245 690.098,-496.659 701,-490.865 710.573,-485.778 758.061,-443.525 786.291,-418.085"/>
+<polygon fill="#000000" stroke="#000000" points="788.956,-420.394 794.033,-411.094 784.265,-415.198 788.956,-420.394"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge37" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M809.5,-89.8651C938.641,-97.2931 1072.88,-187.187 1125.93,-226.574"/>
+<polygon fill="#000000" stroke="#000000" points="1123.92,-229.445 1134.02,-232.66 1128.13,-223.851 1123.92,-229.445"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge38" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M449.618,-78.8512C494.533,-73.8394 553.579,-72.454 603,-88.8651"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-88.8651C690.415,-117.229 717.779,-82.7733 807.5,-89.8651"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M809.5,-89.8651C884.821,-95.8187 905.623,-74.0283 979.5,-89.8651"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge39" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_alpha_coefficients_m.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M450.559,-102.889C473.447,-106.789 499.009,-111.145 522.561,-115.158"/>
+<polygon fill="#000000" stroke="#000000" points="522.072,-118.625 532.518,-116.855 523.248,-111.725 522.072,-118.625"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge36" class="edge"><title>sourcefile~wenoof_alpha_coefficients_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605,-88.8651C646.278,-102.572 670.355,-77 701,-107.865 761.248,-168.546 703.977,-217.989 737,-296.865 750.035,-327.999 773.55,-359.259 789.817,-378.811"/>
+<polygon fill="#000000" stroke="#000000" points="787.363,-381.329 796.505,-386.684 792.698,-376.797 787.363,-381.329"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge42" class="edge"><title>sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M981.5,-244.865C1010.4,-241.551 1042.29,-240.82 1070.45,-241.162"/>
+<polygon fill="#000000" stroke="#000000" points="1070.58,-244.664 1080.64,-241.333 1070.7,-237.665 1070.58,-244.664"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge41" class="edge"><title>sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M674.637,-250.997C750.041,-254.423 873.725,-256.992 979.5,-244.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M981.5,-244.865C1063.23,-233.565 1067.74,-154.779 1149.5,-165.865"/>
+</g>
+<!-- sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge40" class="edge"><title>sourcefile~wenoof_polynomials_js.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M674.688,-258.709C684.102,-262.26 693.192,-266.873 701,-272.865 726.277,-292.265 716.967,-310.086 737,-334.865 750.727,-351.844 769.055,-368.339 783.583,-380.329"/>
+<polygon fill="#000000" stroke="#000000" points="781.658,-383.273 791.635,-386.839 786.059,-377.83 781.658,-383.273"/>
+</g>
+<!-- sourcefile~wenoof_interpolator_js.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge43" class="edge"><title>sourcefile~wenoof_interpolator_js.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1192.3,-232.864C1209.31,-227.862 1229.03,-222.062 1246.1,-217.042"/>
+<polygon fill="#000000" stroke="#000000" points="1247.2,-220.368 1255.8,-214.188 1245.22,-213.652 1247.2,-220.368"/>
+</g>
+<!-- sourcefile~wenoof.f90&#45;&gt;sourcefile~sin_reconstruction.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge44" class="edge"><title>sourcefile~wenoof.f90&#45;&gt;sourcefile~sin_reconstruction.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1305.39,-192.707C1327.08,-176.116 1366.12,-146.253 1391.28,-127.009"/>
+<polygon fill="#000000" stroke="#000000" points="1393.42,-129.781 1399.23,-120.925 1389.17,-124.221 1393.42,-129.781"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge47" class="edge"><title>sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_interpolator_js.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M809.5,-127.865C892.148,-132.213 898.76,-185.684 979.5,-203.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M981.5,-203.865C1018.53,-212.203 1059.96,-222.305 1092.41,-230.395"/>
+<polygon fill="#000000" stroke="#000000" points="1091.62,-233.807 1102.17,-232.837 1093.32,-227.016 1091.62,-233.807"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge46" class="edge"><title>sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M690.279,-126.27C726.452,-125.733 769.057,-125.843 807.5,-127.865"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M809.5,-127.865C886.813,-131.933 903.8,-73.6374 979.5,-89.8651"/>
+</g>
+<!-- sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge45" class="edge"><title>sourcefile~wenoof_alpha_coefficients_m.f90&#45;&gt;sourcefile~wenoof_objects_factory.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M632.161,-140.902C653.617,-151.684 682.87,-169.409 701,-192.865 730.913,-231.565 714.891,-253.234 737,-296.865 752.341,-327.141 775.528,-358.814 791.076,-378.679"/>
+<polygon fill="#000000" stroke="#000000" points="788.469,-381.024 797.427,-386.68 793.951,-376.672 788.469,-381.024"/>
+</g>
+<!-- sourcefile~wenoof_objects_factory.f90&#45;&gt;sourcefile~wenoof_interpolator.f90 -->
+<g id="sourcefile~~penf.f90~~AfferentGraph_edge1" class="edge"><title>sourcefile~wenoof_objects_factory.f90&#45;&gt;sourcefile~wenoof_interpolator.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M832.427,-410.868C862.084,-426.395 913.909,-453.526 947.451,-471.087"/>
+<polygon fill="#000000" stroke="#000000" points="945.911,-474.231 956.393,-475.768 949.157,-468.029 945.911,-474.231"/>
+</g>
+</g>
+</svg>
+</div>
+                <script>var pansourcefilepenff90AfferentGraph = svgPanZoom('#sourcefilepenff90AfferentGraph', {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,});
+                    </script>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="190pt" height="32pt"
+ viewBox="0.00 0.00 190.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 186,-28 186,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node"><title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="67,-24 0,-24 0,-0 67,-0 67,-24"/>
+<text text-anchor="middle" x="33.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="182,-24 85,-24 85,-0 182,-0 182,-24"/>
+<text text-anchor="middle" x="133.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a file to a file which depends upon it. A file 
+    is dependent upon another if the latter must be compiled before the former
+    can be.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+      
+      <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#mods-1">Modules</a></h3></div>
+  <div id="mods-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/penf.html">penf</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../sourcefile/penf.f90.html#src">penf.F90</a>
+  </div>
+</div>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    <section>
+      <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl"><pre><span></span><a name="ln-1"></a><span class="c">!&lt; Portability Environment for Fortran poor people.</span>
+<a name="ln-2"></a><span class="k">module </span><span class="n">penf</span>
+<a name="ln-3"></a><span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-4"></a><span class="c">!&lt; Portability Environment for Fortran poor people.</span>
+<a name="ln-5"></a><span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-6"></a><span class="k">use </span><span class="n">penf_global_parameters_variables</span>
+<a name="ln-7"></a><span class="cp">#ifdef __GFORTRAN__</span>
+<a name="ln-8"></a><span class="k">use </span><span class="n">penf_b_size</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span> <span class="nb">bit_size</span><span class="p">,</span> <span class="n">byte_size</span>
+<a name="ln-9"></a><span class="cp">#else</span>
+<a name="ln-10"></a><span class="k">use </span><span class="n">penf_b_size</span>
+<a name="ln-11"></a><span class="cp">#endif</span>
+<a name="ln-12"></a><span class="k">use </span><span class="n">penf_stringify</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span> <span class="n">str</span><span class="p">,</span> <span class="n">strz</span><span class="p">,</span> <span class="n">cton</span><span class="p">,</span> <span class="n">bstr</span><span class="p">,</span> <span class="n">bcton</span>
+<a name="ln-13"></a><span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-14"></a>
+<a name="ln-15"></a><span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-16"></a><span class="k">implicit none</span>
+<a name="ln-17"></a><span class="k">private</span>
+<a name="ln-18"></a><span class="k">save</span>
+<a name="ln-19"></a><span class="c">! Global parameters and variables</span>
+<a name="ln-20"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">endianL</span><span class="p">,</span> <span class="n">endianB</span><span class="p">,</span> <span class="n">endian</span><span class="p">,</span> <span class="n">is_initialized</span>
+<a name="ln-21"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">R16P</span><span class="p">,</span> <span class="n">FR16P</span><span class="p">,</span> <span class="n">DR16P</span><span class="p">,</span> <span class="n">MinR16P</span><span class="p">,</span> <span class="n">MaxR16P</span><span class="p">,</span> <span class="n">BIR16P</span><span class="p">,</span> <span class="n">BYR16P</span><span class="p">,</span> <span class="n">smallR16P</span><span class="p">,</span> <span class="n">ZeroR16</span>
+<a name="ln-22"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">R8P</span><span class="p">,</span>  <span class="n">FR8P</span><span class="p">,</span>  <span class="n">DR8P</span><span class="p">,</span>  <span class="n">MinR8P</span><span class="p">,</span>  <span class="n">MaxR8P</span><span class="p">,</span>  <span class="n">BIR8P</span><span class="p">,</span>  <span class="n">BYR8P</span><span class="p">,</span>  <span class="n">smallR8P</span><span class="p">,</span>  <span class="n">ZeroR8</span>
+<a name="ln-23"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">R4P</span><span class="p">,</span>  <span class="n">FR4P</span><span class="p">,</span>  <span class="n">DR4P</span><span class="p">,</span>  <span class="n">MinR4P</span><span class="p">,</span>  <span class="n">MaxR4P</span><span class="p">,</span>  <span class="n">BIR4P</span><span class="p">,</span>  <span class="n">BYR4P</span><span class="p">,</span>  <span class="n">smallR4P</span><span class="p">,</span>  <span class="n">ZeroR4</span>
+<a name="ln-24"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">R_P</span><span class="p">,</span>  <span class="n">FR_P</span><span class="p">,</span>  <span class="n">DR_P</span><span class="p">,</span>  <span class="n">MinR_P</span><span class="p">,</span>  <span class="n">MaxR_P</span><span class="p">,</span>  <span class="n">BIR_P</span><span class="p">,</span>  <span class="n">BYR_P</span><span class="p">,</span>  <span class="n">smallR_P</span><span class="p">,</span>  <span class="n">Zero</span>
+<a name="ln-25"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">I8P</span><span class="p">,</span>  <span class="n">FI8P</span><span class="p">,</span>  <span class="n">DI8P</span><span class="p">,</span>  <span class="n">MinI8P</span><span class="p">,</span>  <span class="n">MaxI8P</span><span class="p">,</span>  <span class="n">BII8P</span><span class="p">,</span>  <span class="n">BYI8P</span>
+<a name="ln-26"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">I4P</span><span class="p">,</span>  <span class="n">FI4P</span><span class="p">,</span>  <span class="n">DI4P</span><span class="p">,</span>  <span class="n">MinI4P</span><span class="p">,</span>  <span class="n">MaxI4P</span><span class="p">,</span>  <span class="n">BII4P</span><span class="p">,</span>  <span class="n">BYI4P</span>
+<a name="ln-27"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">I2P</span><span class="p">,</span>  <span class="n">FI2P</span><span class="p">,</span>  <span class="n">DI2P</span><span class="p">,</span>  <span class="n">MinI2P</span><span class="p">,</span>  <span class="n">MaxI2P</span><span class="p">,</span>  <span class="n">BII2P</span><span class="p">,</span>  <span class="n">BYI2P</span>
+<a name="ln-28"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">I1P</span><span class="p">,</span>  <span class="n">FI1P</span><span class="p">,</span>  <span class="n">DI1P</span><span class="p">,</span>  <span class="n">MinI1P</span><span class="p">,</span>  <span class="n">MaxI1P</span><span class="p">,</span>  <span class="n">BII1P</span><span class="p">,</span>  <span class="n">BYI1P</span>
+<a name="ln-29"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">I_P</span><span class="p">,</span>  <span class="n">FI_P</span><span class="p">,</span>  <span class="n">DI_P</span><span class="p">,</span>  <span class="n">MinI_P</span><span class="p">,</span>  <span class="n">MaxI_P</span><span class="p">,</span>  <span class="n">BII_P</span><span class="p">,</span>  <span class="n">BYI_P</span>
+<a name="ln-30"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">REAL_KINDS_LIST</span><span class="p">,</span> <span class="n">REAL_FORMATS_LIST</span>
+<a name="ln-31"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">INTEGER_KINDS_LIST</span><span class="p">,</span> <span class="n">INTEGER_FORMATS_LIST</span>
+<a name="ln-32"></a><span class="c">! Bit/byte size functions</span>
+<a name="ln-33"></a><span class="k">public</span> <span class="kd">::</span> <span class="nb">bit_size</span><span class="p">,</span> <span class="n">byte_size</span>
+<a name="ln-34"></a><span class="c">! Stringify facility</span>
+<a name="ln-35"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">str</span><span class="p">,</span> <span class="n">strz</span><span class="p">,</span> <span class="n">cton</span>
+<a name="ln-36"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">bstr</span><span class="p">,</span> <span class="n">bcton</span>
+<a name="ln-37"></a><span class="c">! Miscellanea facility</span>
+<a name="ln-38"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">check_endian</span>
+<a name="ln-39"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">digit</span>
+<a name="ln-40"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">penf_Init</span>
+<a name="ln-41"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">penf_print</span>
+<a name="ln-42"></a><span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-43"></a>
+<a name="ln-44"></a><span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-45"></a><span class="cp">#ifdef __GFORTRAN__</span>
+<a name="ln-46"></a><span class="c">! work-around for strange gfortran bug...</span>
+<a name="ln-47"></a><span class="k">interface </span><span class="nb">bit_size</span>
+<a name="ln-48"></a>  <span class="c">!&lt; Overloading of the intrinsic *bit_size* function for computing the number of bits of (also) real and character variables.</span>
+<a name="ln-49"></a><span class="n">endinterface</span>
+<a name="ln-50"></a><span class="cp">#endif</span>
+<a name="ln-51"></a><span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-52"></a>
+<a name="ln-53"></a><span class="k">interface </span><span class="n">digit</span>
+<a name="ln-54"></a>  <span class="c">!&lt; Compute the number of digits in decimal base of the input integer.</span>
+<a name="ln-55"></a>  <span class="k">module procedure </span><span class="n">digit_I8</span><span class="p">,</span> <span class="n">digit_I4</span><span class="p">,</span> <span class="n">digit_I2</span><span class="p">,</span> <span class="n">digit_I1</span>
+<a name="ln-56"></a><span class="n">endinterface</span>
+<a name="ln-57"></a><span class="c">!-----------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-58"></a><span class="k">contains</span>
+<a name="ln-59"></a><span class="k">  subroutine </span><span class="n">check_endian</span><span class="p">()</span>
+<a name="ln-60"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-61"></a>  <span class="c">!&lt; Check the type of bit ordering (big or little endian) of the running architecture.</span>
+<a name="ln-62"></a>  <span class="c">!&lt;</span>
+<a name="ln-63"></a>  <span class="c">!&gt; @note The result is stored into the *endian* global variable.</span>
+<a name="ln-64"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-65"></a>
+<a name="ln-66"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-67"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">is_little_endian</span><span class="p">())</span> <span class="k">then</span>
+<a name="ln-68"></a><span class="k">    </span><span class="n">endian</span> <span class="o">=</span> <span class="n">endianL</span>
+<a name="ln-69"></a>  <span class="k">else</span>
+<a name="ln-70"></a><span class="k">    </span><span class="n">endian</span> <span class="o">=</span> <span class="n">endianB</span>
+<a name="ln-71"></a>  <span class="n">endif</span>
+<a name="ln-72"></a>  <span class="k">return</span>
+<a name="ln-73"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-74"></a>  <span class="k">contains</span>
+<a name="ln-75"></a><span class="k">    pure function </span><span class="n">is_little_endian</span><span class="p">()</span> <span class="k">result</span><span class="p">(</span><span class="n">is_little</span><span class="p">)</span>
+<a name="ln-76"></a>    <span class="c">!-------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-77"></a>    <span class="c">!&lt; Check if the type of the bit ordering of the running architecture is little endian.</span>
+<a name="ln-78"></a>    <span class="c">!-------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-79"></a>    <span class="kt">logical</span>      <span class="kd">::</span> <span class="n">is_little</span> <span class="c">!&lt; Logical output: true is the running architecture uses little endian ordering, false otherwise.</span>
+<a name="ln-80"></a>    <span class="kt">integer</span><span class="p">(</span><span class="n">I1P</span><span class="p">)</span> <span class="kd">::</span> <span class="n">int1</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">)</span> <span class="c">!&lt; One byte integer array for casting 4 bytes integer.</span>
+<a name="ln-81"></a>    <span class="c">!-------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-82"></a>
+<a name="ln-83"></a>    <span class="c">!-------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-84"></a>    <span class="n">int1</span> <span class="o">=</span> <span class="nb">transfer</span><span class="p">(</span><span class="mi">1_I4P</span><span class="p">,</span> <span class="n">int1</span><span class="p">)</span>
+<a name="ln-85"></a>    <span class="n">is_little</span> <span class="o">=</span> <span class="p">(</span><span class="n">int1</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">==</span><span class="mi">1_I1P</span><span class="p">)</span>
+<a name="ln-86"></a>    <span class="k">return</span>
+<a name="ln-87"></a>    <span class="c">!-------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-88"></a>    <span class="n">endfunction</span> <span class="n">is_little_endian</span>
+<a name="ln-89"></a>  <span class="n">endsubroutine</span> <span class="n">check_endian</span>
+<a name="ln-90"></a>
+<a name="ln-91"></a>  <span class="k">elemental function </span><span class="n">digit_I8</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">digit</span><span class="p">)</span>
+<a name="ln-92"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-93"></a>  <span class="c">!&lt; Compute the number of digits in decimal base of the input integer.</span>
+<a name="ln-94"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-95"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I8P</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">n</span>     <span class="c">!&lt; Input integer.</span>
+<a name="ln-96"></a>  <span class="kt">character</span><span class="p">(</span><span class="n">DI8P</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">str</span>   <span class="c">!&lt; Returned string containing input number plus padding zeros.</span>
+<a name="ln-97"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I4P</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">digit</span> <span class="c">!&lt; Number of digits.</span>
+<a name="ln-98"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-99"></a>
+<a name="ln-100"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-101"></a>  <span class="k">write</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">FI8P</span><span class="p">)</span> <span class="nb">abs</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>        <span class="c">! Casting of n to string.</span>
+<a name="ln-102"></a>  <span class="n">digit</span> <span class="o">=</span> <span class="nb">len_trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">str</span><span class="p">))</span> <span class="c">! Calculating the digits number of n.</span>
+<a name="ln-103"></a>  <span class="k">return</span>
+<a name="ln-104"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-105"></a>  <span class="n">endfunction</span> <span class="n">digit_I8</span>
+<a name="ln-106"></a>
+<a name="ln-107"></a>  <span class="k">elemental function </span><span class="n">digit_I4</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">digit</span><span class="p">)</span>
+<a name="ln-108"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-109"></a>  <span class="c">!&lt; Compute the number of digits in decimal base of the input integer.</span>
+<a name="ln-110"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-111"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I4P</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">n</span>     <span class="c">!&lt; Input integer.</span>
+<a name="ln-112"></a>  <span class="kt">character</span><span class="p">(</span><span class="n">DI4P</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">str</span>   <span class="c">!&lt; Returned string containing input number plus padding zeros.</span>
+<a name="ln-113"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I4P</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">digit</span> <span class="c">!&lt; Number of digits.</span>
+<a name="ln-114"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-115"></a>
+<a name="ln-116"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-117"></a>  <span class="k">write</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">FI4P</span><span class="p">)</span> <span class="nb">abs</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>        <span class="c">! Casting of n to string.</span>
+<a name="ln-118"></a>  <span class="n">digit</span> <span class="o">=</span> <span class="nb">len_trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">str</span><span class="p">))</span> <span class="c">! Calculating the digits number of n.</span>
+<a name="ln-119"></a>  <span class="k">return</span>
+<a name="ln-120"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-121"></a>  <span class="n">endfunction</span> <span class="n">digit_I4</span>
+<a name="ln-122"></a>
+<a name="ln-123"></a>  <span class="k">elemental function </span><span class="n">digit_I2</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">digit</span><span class="p">)</span>
+<a name="ln-124"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-125"></a>  <span class="c">!&lt; Compute the number of digits in decimal base of the input integer.</span>
+<a name="ln-126"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-127"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I2P</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">n</span>     <span class="c">!&lt; Input integer.</span>
+<a name="ln-128"></a>  <span class="kt">character</span><span class="p">(</span><span class="n">DI2P</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">str</span>   <span class="c">!&lt; Returned string containing input number plus padding zeros.</span>
+<a name="ln-129"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I4P</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">digit</span> <span class="c">!&lt; Number of digits.</span>
+<a name="ln-130"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-131"></a>
+<a name="ln-132"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-133"></a>  <span class="k">write</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">FI2P</span><span class="p">)</span> <span class="nb">abs</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>        <span class="c">! Casting of n to string.</span>
+<a name="ln-134"></a>  <span class="n">digit</span> <span class="o">=</span> <span class="nb">len_trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">str</span><span class="p">))</span> <span class="c">! Calculating the digits number of n.</span>
+<a name="ln-135"></a>  <span class="k">return</span>
+<a name="ln-136"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-137"></a>  <span class="n">endfunction</span> <span class="n">digit_I2</span>
+<a name="ln-138"></a>
+<a name="ln-139"></a>  <span class="k">elemental function </span><span class="n">digit_I1</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">digit</span><span class="p">)</span>
+<a name="ln-140"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-141"></a>  <span class="c">!&lt; Compute the number of digits in decimal base of the input integer.</span>
+<a name="ln-142"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-143"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I1P</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">n</span>     <span class="c">!&lt; Input integer.</span>
+<a name="ln-144"></a>  <span class="kt">character</span><span class="p">(</span><span class="n">DI1P</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">str</span>   <span class="c">!&lt; Returned string containing input number plus padding zeros.</span>
+<a name="ln-145"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I4P</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">digit</span> <span class="c">!&lt; Number of digits.</span>
+<a name="ln-146"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-147"></a>
+<a name="ln-148"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-149"></a>  <span class="k">write</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">FI1P</span><span class="p">)</span> <span class="nb">abs</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>        <span class="c">! Casting of n to string.</span>
+<a name="ln-150"></a>  <span class="n">digit</span> <span class="o">=</span> <span class="nb">len_trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">str</span><span class="p">))</span> <span class="c">! Calculating the digits number of n.</span>
+<a name="ln-151"></a>  <span class="k">return</span>
+<a name="ln-152"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-153"></a>  <span class="n">endfunction</span> <span class="n">digit_I1</span>
+<a name="ln-154"></a>
+<a name="ln-155"></a>  <span class="k">subroutine </span><span class="n">penf_init</span><span class="p">()</span>
+<a name="ln-156"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-157"></a>  <span class="c">!&lt; Initialize PENF&#39;s variables that are not initialized into the definition specification.</span>
+<a name="ln-158"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-159"></a>
+<a name="ln-160"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-161"></a>  <span class="k">call </span><span class="n">check_endian</span>
+<a name="ln-162"></a>  <span class="n">BIR8P</span>  <span class="o">=</span> <span class="nb">bit_size</span><span class="p">(</span><span class="n">MaxR8P</span><span class="p">)</span>     <span class="p">;</span> <span class="n">BYR8P</span>  <span class="o">=</span> <span class="n">BIR8P</span><span class="o">/</span><span class="mi">8_I1P</span>
+<a name="ln-163"></a>  <span class="n">BIR4P</span>  <span class="o">=</span> <span class="nb">bit_size</span><span class="p">(</span><span class="n">MaxR4P</span><span class="p">)</span>     <span class="p">;</span> <span class="n">BYR4P</span>  <span class="o">=</span> <span class="n">BIR4P</span><span class="o">/</span><span class="mi">8_I1P</span>
+<a name="ln-164"></a>  <span class="n">BIR_P</span>  <span class="o">=</span> <span class="nb">bit_size</span><span class="p">(</span><span class="n">MaxR_P</span><span class="p">)</span>     <span class="p">;</span> <span class="n">BYR_P</span>  <span class="o">=</span> <span class="n">BIR_P</span><span class="o">/</span><span class="mi">8_I1P</span>
+<a name="ln-165"></a><span class="cp">#ifdef r16p</span>
+<a name="ln-166"></a>  <span class="n">BIR16P</span> <span class="o">=</span> <span class="nb">bit_size</span><span class="p">(</span><span class="n">MaxR16P</span><span class="p">)</span>    <span class="p">;</span> <span class="n">BYR16P</span> <span class="o">=</span> <span class="n">BIR16P</span><span class="o">/</span><span class="mi">8_I2P</span>
+<a name="ln-167"></a><span class="cp">#else</span>
+<a name="ln-168"></a>  <span class="n">BIR16P</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">BIR8P</span><span class="p">,</span> <span class="nb">kind</span><span class="o">=</span><span class="n">I2P</span><span class="p">)</span> <span class="p">;</span> <span class="n">BYR16P</span> <span class="o">=</span> <span class="n">BIR16P</span><span class="o">/</span><span class="mi">8_I2P</span>
+<a name="ln-169"></a><span class="cp">#endif</span>
+<a name="ln-170"></a>  <span class="n">is_initialized</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<a name="ln-171"></a>  <span class="k">return</span>
+<a name="ln-172"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-173"></a>  <span class="n">endsubroutine</span> <span class="n">penf_init</span>
+<a name="ln-174"></a>
+<a name="ln-175"></a>  <span class="k">subroutine </span><span class="n">penf_print</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">pref</span><span class="p">,</span> <span class="n">iostat</span><span class="p">,</span> <span class="n">iomsg</span><span class="p">)</span>
+<a name="ln-176"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-177"></a>  <span class="c">!&lt; Print to the specified unit the PENF&#39;s environment data.</span>
+<a name="ln-178"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-179"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I4P</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>            <span class="kd">::</span> <span class="n">unit</span>    <span class="c">!&lt; Logic unit.</span>
+<a name="ln-180"></a>  <span class="kt">character</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span>  <span class="k">optional</span> <span class="kd">::</span> <span class="n">pref</span>    <span class="c">!&lt; Prefixing string.</span>
+<a name="ln-181"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I4P</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">),</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">iostat</span>  <span class="c">!&lt; IO error.</span>
+<a name="ln-182"></a>  <span class="kt">character</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">),</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">iomsg</span>   <span class="c">!&lt; IO error message.</span>
+<a name="ln-183"></a>  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span>       <span class="kd">::</span> <span class="n">prefd</span>   <span class="c">!&lt; Prefixing string.</span>
+<a name="ln-184"></a>  <span class="kt">integer</span><span class="p">(</span><span class="n">I4P</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">iostatd</span> <span class="c">!&lt; IO error.</span>
+<a name="ln-185"></a>  <span class="kt">character</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>                      <span class="kd">::</span> <span class="n">iomsgd</span>  <span class="c">!&lt; Temporary variable for IO error message.</span>
+<a name="ln-186"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-187"></a>
+<a name="ln-188"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-189"></a>  <span class="k">if</span> <span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="n">is_initialized</span><span class="p">)</span> <span class="k">call </span><span class="n">penf_init</span>
+<a name="ln-190"></a>  <span class="n">prefd</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="p">;</span> <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">pref</span><span class="p">))</span> <span class="n">prefd</span> <span class="o">=</span> <span class="n">pref</span>
+<a name="ln-191"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">endian</span><span class="o">==</span><span class="n">endianL</span><span class="p">)</span> <span class="k">then</span>
+<a name="ln-192"></a><span class="k">    write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span><span class="n">prefd</span><span class="o">//</span><span class="s1">&#39; This architecture has LITTLE Endian bit ordering&#39;</span>
+<a name="ln-193"></a>  <span class="k">else</span>
+<a name="ln-194"></a><span class="k">    write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span><span class="n">prefd</span><span class="o">//</span><span class="s1">&#39; This architecture has BIG Endian bit ordering&#39;</span>
+<a name="ln-195"></a>  <span class="n">endif</span>
+<a name="ln-196"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39; Reals kind, format and characters number:&#39;</span>
+<a name="ln-197"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   R16P: &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">R16P</span><span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">FR16P</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DR16P</span><span class="p">)</span>
+<a name="ln-198"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   R8P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">R8P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">FR8P</span> <span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DR8P</span> <span class="p">)</span>
+<a name="ln-199"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   R4P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">R4P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">FR4P</span> <span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DR4P</span> <span class="p">)</span>
+<a name="ln-200"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39; Integers kind, format and characters number:&#39;</span>
+<a name="ln-201"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I8P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">I8P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">FI8P</span> <span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DI8P</span> <span class="p">)</span>
+<a name="ln-202"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I4P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">I4P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">FI4P</span> <span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DI4P</span> <span class="p">)</span>
+<a name="ln-203"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I2P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">I2P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">FI2P</span> <span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DI2P</span> <span class="p">)</span>
+<a name="ln-204"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I1P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">I1P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">FI1P</span> <span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DI1P</span> <span class="p">)</span>
+<a name="ln-205"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39; Reals minimum and maximum values:&#39;</span>
+<a name="ln-206"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   R16P: &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MinR16P</span><span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MaxR16P</span><span class="p">)</span>
+<a name="ln-207"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   R8P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MinR8P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MaxR8P</span> <span class="p">)</span>
+<a name="ln-208"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   R4P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MinR4P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MaxR4P</span> <span class="p">)</span>
+<a name="ln-209"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39; Integergs minimum and maximum values:&#39;</span>
+<a name="ln-210"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I8P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MinI8P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MaxI8P</span> <span class="p">)</span>
+<a name="ln-211"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I4P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MinI4P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MaxI4P</span> <span class="p">)</span>
+<a name="ln-212"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I2P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MinI2P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MaxI2P</span> <span class="p">)</span>
+<a name="ln-213"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I1P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MinI1P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;,&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MaxI1P</span> <span class="p">)</span>
+<a name="ln-214"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39; Reals bits/bytes sizes:&#39;</span>
+<a name="ln-215"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   R16P: &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BIR16P</span><span class="p">)</span><span class="o">//</span><span class="s1">&#39;/&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BYR16P</span><span class="p">)</span>
+<a name="ln-216"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   R8P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BIR8P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;/&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BYR8P</span> <span class="p">)</span>
+<a name="ln-217"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   R4P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BIR4P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;/&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BYR4P</span> <span class="p">)</span>
+<a name="ln-218"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39; Integers bits/bytes sizes:&#39;</span>
+<a name="ln-219"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I8P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BII8P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;/&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BYI8P</span> <span class="p">)</span>
+<a name="ln-220"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I4P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BII4P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;/&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BYI4P</span> <span class="p">)</span>
+<a name="ln-221"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I2P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BII2P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;/&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BYI2P</span> <span class="p">)</span>
+<a name="ln-222"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   I1P:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BII1P</span> <span class="p">)</span><span class="o">//</span><span class="s1">&#39;/&#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BYI1P</span> <span class="p">)</span>
+<a name="ln-223"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39; Machine precisions&#39;</span>
+<a name="ln-224"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   ZeroR16: &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">ZeroR16</span><span class="p">,.</span><span class="n">true</span><span class="p">.)</span>
+<a name="ln-225"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   ZeroR8:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">ZeroR8</span> <span class="p">,.</span><span class="n">true</span><span class="p">.)</span>
+<a name="ln-226"></a>  <span class="k">write</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;(A)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">iostatd</span><span class="p">,</span><span class="n">iomsg</span><span class="o">=</span><span class="n">iomsgd</span><span class="p">)</span>  <span class="n">prefd</span><span class="o">//</span><span class="s1">&#39;   ZeroR4:  &#39;</span><span class="o">//</span><span class="n">str</span><span class="p">(</span><span class="n">ZeroR4</span> <span class="p">,.</span><span class="n">true</span><span class="p">.)</span>
+<a name="ln-227"></a>  <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">iostat</span><span class="p">))</span> <span class="n">iostat</span> <span class="o">=</span> <span class="n">iostatd</span>
+<a name="ln-228"></a>  <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">iomsg</span><span class="p">))</span>  <span class="n">iomsg</span>  <span class="o">=</span> <span class="n">iomsgd</span>
+<a name="ln-229"></a>  <span class="k">return</span>
+<a name="ln-230"></a>  <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
+<a name="ln-231"></a>  <span class="n">endsubroutine</span> <span class="n">penf_print</span>
+<a name="ln-232"></a><span class="n">endmodule</span> <span class="n">penf</span>
+</pre></div>
+
+    </section>
+    </div>
+  </div>
+
+  <section class="visible-xs visible-sm hidden-md">
+    <hr>
+    
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allfiles-1">All Source Files</a></h3></div>
+  <div id="allfiles-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../sourcefile/compact_real.f90.html">compact_real.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf.f90.html">penf.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_b_size.f90.html">penf_b_size.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_global_parameters_variables.f90.html">penf_global_parameters_variables.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/penf_stringify.f90.html">penf_stringify.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/pyplot_module.f90.html">pyplot_module.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/sin_reconstruction.f90.html">sin_reconstruction.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test.f90.html">test.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/test_all.f90.html">test_all.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof.f90.html">wenoof.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients.f90.html">wenoof_alpha_coefficients.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_js.f90.html">wenoof_alpha_coefficients_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_m.f90.html">wenoof_alpha_coefficients_m.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_alpha_coefficients_z.f90.html">wenoof_alpha_coefficients_z.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_base_object.f90.html">wenoof_base_object.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator.f90.html">wenoof_interpolator.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_interpolator_js.f90.html">wenoof_interpolator_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_objects_factory.f90.html">wenoof_objects_factory.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights.f90.html">wenoof_optimal_weights.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_optimal_weights_js.f90.html">wenoof_optimal_weights_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials.f90.html">wenoof_polynomials.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_polynomials_js.f90.html">wenoof_polynomials_js.f90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators.f90.html">wenoof_smoothness_indicators.F90</a>
+      
+      <a class="list-group-item" href="../sourcefile/wenoof_smoothness_indicators_js.f90.html">wenoof_smoothness_indicators_js.f90</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+  
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> WenOOF was developed by Fortran-FOSS-Programmers</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
+        'HTML-CSS': { 
+           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
+        }
+      });
+    </script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </body>
+</html>

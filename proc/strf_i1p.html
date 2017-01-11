@@ -7,7 +7,7 @@
 	 
 	 <meta name="description" content="WENO interpolation Object Oriented Fortran library">
     
-    <meta name="author" content="Chris MacMackin" >
+    <meta name="author" content="Fortran-FOSS-Programmers" >
     <link rel="icon" href="../favicon.png">
 
     <title>strf_I1P &ndash; WenOOF</title>
@@ -25,12 +25,8 @@
     <![endif]-->
     
     <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
 
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
     
 
   </head>
@@ -38,7 +34,7 @@
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -52,13 +48,20 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 				
-                
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
             <li><a href="../lists/files.html">Source Files</a></li>
 				
 				
             <li><a href="../lists/modules.html">Modules</a></li>
 				
-				
+            
+                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
 				
 				
@@ -69,16 +72,27 @@
 				
             <li><a href="../lists/programs.html">Programs</a></li>
 				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
           </ul>
-        
-        <form action="../search.html" class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
-        </div>
-<!--
-        <button type="submit" class="btn btn-default">Submit</button>
--->
-        </form>
         
         </div><!--/.nav-collapse -->
       </div>
@@ -89,12 +103,12 @@
   
   <div class="row">
     <h1>strf_I1P
-    <small>Function</small>
+      <small>Function</small>
     
     </h1>
-	 
+    
 <div class="row">
-<div class="col-lg-12">
+  <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
      
@@ -103,54 +117,81 @@
      
     
     
-    <li><i class="fa fa-code"></i><a href="../src/IR_Precision.f90"> Source File</a></li>
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title=" 0.2% of total for procedures.">7 statements</a>
+     </li> 
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/penf_stringify.F90"> Source File</a></li>
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
-     <li><a href='../sourcefile/ir_precision.f90.html'>IR_Precision.f90</a></li>
+     <li><a href='../sourcefile/penf_stringify.f90.html'>penf_stringify.F90</a></li>
   
-     <li><a href='../module/ir_precision.html'>IR_Precision</a></li>
+     <li><a href='../module/penf_stringify.html'>penf_stringify</a></li>
   
      <li class="active">strf_I1P</li>
   </ol>
-  </div>
 </div>
-    
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
   </div>
   
   <div class="row">
-    <div class="col-lg-3">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
     
+<div id="sidebar">
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-    <div class="list-group">
-      <a class="list-group-item" href="../proc/strf_i1p.html#src">strf_I1P</a>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/strf_i1p.html#src">strf_I1P</a>
   </div>
-  
+</div>
+
+
   <hr>
   
-  <div class="panel panel-default">
-    <div class="panel-heading text-left"><h3 class="panel-title">All Procedures</h3></div>
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-0">All Procedures</a></h3></div>
+  <div id="allprocs-0" class="panel-collapse collapse">
     <div class="list-group">
       
+      <a class="list-group-item" href="../proc/add_3d_plot.html">add_3d_plot</a>
+      
       <a class="list-group-item" href="../proc/add_bar.html">add_bar</a>
+      
+      <a class="list-group-item" href="../proc/add_contour.html">add_contour</a>
       
       <a class="list-group-item" href="../proc/add_plot.html">add_plot</a>
       
@@ -166,11 +207,15 @@
       
       <a class="list-group-item" href="../interface/bcton.html">bcton</a>
       
+      <a class="list-group-item" href="../proc/bctor_r16p.html">bctor_R16P</a>
+      
       <a class="list-group-item" href="../proc/bctor_r4p.html">bctor_R4P</a>
       
       <a class="list-group-item" href="../proc/bctor_r8p.html">bctor_R8P</a>
       
       <a class="list-group-item" href="../interface/bit_size.html">bit_size</a>
+      
+      <a class="list-group-item" href="../interface/bit_size%7E2.html">bit_size</a>
       
       <a class="list-group-item" href="../proc/bit_size_chr.html">bit_size_chr</a>
       
@@ -216,7 +261,71 @@
       
       <a class="list-group-item" href="../proc/check_endian.html">check_endian</a>
       
+      <a class="list-group-item" href="../proc/compact_real_string.html">compact_real_string</a>
+      
+      <a class="list-group-item" href="../proc/compute.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E2.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E3.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E4.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E5.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E6.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E7.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E8.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E9.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E10.html">compute</a>
+      
       <a class="list-group-item" href="../proc/create.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E2.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E3.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E4.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E5.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E6.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E7.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E8.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E9.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients.html">create_alpha_coefficients</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_js_constructor.html">create_alpha_coefficients_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_m_constructor.html">create_alpha_coefficients_m_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_z_constructor.html">create_alpha_coefficients_z_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_base_object.html">create_base_object</a>
+      
+      <a class="list-group-item" href="../proc/create_interpolator_constructor.html">create_interpolator_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_interpolator_js_constructor.html">create_interpolator_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_optimal_weights.html">create_optimal_weights</a>
+      
+      <a class="list-group-item" href="../proc/create_optimal_weights_js_constructor.html">create_optimal_weights_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_polynomials.html">create_polynomials</a>
+      
+      <a class="list-group-item" href="../proc/create_polynomials_js_constructor.html">create_polynomials_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_smoothness_indicators.html">create_smoothness_indicators</a>
+      
+      <a class="list-group-item" href="../proc/create_smoothness_indicators_js_constructor.html">create_smoothness_indicators_js_constructor</a>
       
       <a class="list-group-item" href="../proc/ctoi_i1p.html">ctoi_I1P</a>
       
@@ -234,7 +343,51 @@
       
       <a class="list-group-item" href="../proc/ctor_r8p.html">ctor_R8P</a>
       
+      <a class="list-group-item" href="../proc/description.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E2.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E3.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E4.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E5.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E6.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E7.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E8.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E9.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E10.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E11.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E12.html">description</a>
+      
       <a class="list-group-item" href="../proc/destroy.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E2.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E3.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E4.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E5.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E6.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E7.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E8.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E9.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E10.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy_interpolator_constructor.html">destroy_interpolator_constructor</a>
       
       <a class="list-group-item" href="../interface/digit.html">digit</a>
       
@@ -252,13 +405,17 @@
       
       <a class="list-group-item" href="../proc/integer_to_string.html">integer_to_string</a>
       
-      <a class="list-group-item" href="../proc/ir_init.html">IR_init</a>
+      <a class="list-group-item" href="../proc/interpolate.html">interpolate</a>
       
-      <a class="list-group-item" href="../proc/ir_print.html">IR_Print</a>
+      <a class="list-group-item" href="../proc/interpolate%7E2.html">interpolate</a>
       
-      <a class="list-group-item" href="../proc/is_little_endian.html">is_little_endian</a>
+      <a class="list-group-item" href="../proc/matrix_to_string.html">matrix_to_string</a>
       
       <a class="list-group-item" href="../proc/optional_int_to_string.html">optional_int_to_string</a>
+      
+      <a class="list-group-item" href="../proc/penf_init.html">penf_init</a>
+      
+      <a class="list-group-item" href="../proc/penf_print.html">penf_print</a>
       
       <a class="list-group-item" href="../proc/savefig.html">savefig</a>
       
@@ -318,22 +475,39 @@
       
       <a class="list-group-item" href="../proc/strz_i8p.html">strz_I8P</a>
       
+      <a class="list-group-item" href="../proc/tau.html">tau</a>
+      
       <a class="list-group-item" href="../proc/vec_to_string.html">vec_to_string</a>
+      
+      <a class="list-group-item" href="../proc/weno_exp.html">weno_exp</a>
+      
+      <a class="list-group-item" href="../proc/weno_odd.html">weno_odd</a>
+      
+      <a class="list-group-item" href="../proc/wenoof_create.html">wenoof_create</a>
       
     </div>
   </div>
-  
-  
+</div>
+
+
+</div>  
+
     </div>
     
-    <div class="col-lg-9" id='text'>
+    <div class="col-md-9" id='text'>
     <h2>
-private elemental function strf_I1P(fm, n)
+private elemental function strf_I1P(fm, n) result(str)
+    
+    
+	 
 </h2>
     
   
 
 
+    
+    <p>Convert integer to string.</p>
+    
 
     <h3>Arguments</h3>
     
@@ -353,7 +527,7 @@ private elemental function strf_I1P(fm, n)
   
 <tr>
   
-  <td><a class="anchor" name="var-fm"></a>character(len=*),</td>
+  <td><span class="anchor" id="variable-fm%7E7"></span>character(len=*),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -368,7 +542,7 @@ private elemental function strf_I1P(fm, n)
   
 <tr>
   
-  <td><a class="anchor" name="var-n"></a>integer(kind=I1P),</td>
+  <td><span class="anchor" id="variable-n%7E11"></span>integer(kind=I1P),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -387,15 +561,326 @@ private elemental function strf_I1P(fm, n)
     
     
     
-	 <h3>Return Value <small><a class="anchor" name="var-str"></a>character(len=DI1P)
-    </small></h3>
+	 <h3>Return Value <small><span class="anchor" id="variable-str%7E11"></span>character(len=DI1P)
+  </small></h3>
     <p>Returned string containing input number.</p>
     
     
-    <h3>Description</h3>
-    <p>Procedure for converting integer to string. This function achieves casting of integer to string.</p>
+     
+     <h3>Called By</h3>
+     
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: proc~~strf_i1p~~CalledByGraph Pages: 1 -->
+<svg id="procstrf_i1pCalledByGraph" width="468pt" height="398pt"
+ viewBox="0.00 0.00 468.00 398.16" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~strf_i1p~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 394.165)">
+<title>proc~~strf_i1p~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-394.165 464,-394.165 464,4 -4,4"/>
+<!-- proc~strf_i1p -->
+<g id="proc~~strf_i1p~~CalledByGraph_node1" class="node"><title>proc~strf_i1p</title>
+<polygon fill="none" stroke="black" points="460,-213 406,-213 406,-189 460,-189 460,-213"/>
+<text text-anchor="middle" x="433" y="-198.6" font-family="Helvetica,sans-Serif" font-size="10.50">strf_I1P</text>
+</g>
+<!-- interface~str -->
+<g id="proc~~strf_i1p~~CalledByGraph_node2" class="node"><title>interface~str</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node2"><a xlink:href="../interface/str.html" xlink:title="str">
+<polygon fill="#a7506f" stroke="#a7506f" points="370,-213 316,-213 316,-189 370,-189 370,-213"/>
+<text text-anchor="middle" x="343" y="-198.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">str</text>
+</a>
+</g>
+</g>
+<!-- interface~str&#45;&gt;proc~strf_i1p -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge18" class="edge"><title>interface~str&#45;&gt;proc~strf_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M370.403,-201C378.393,-201 387.311,-201 395.824,-201"/>
+<polygon fill="#000000" stroke="#000000" points="395.919,-204.5 405.919,-201 395.919,-197.5 395.919,-204.5"/>
+</g>
+<!-- proc~bctoi_i2p -->
+<g id="proc~~strf_i1p~~CalledByGraph_node3" class="node"><title>proc~bctoi_i2p</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node3"><a xlink:href="../proc/bctoi_i2p.html" xlink:title="bctoi_I2P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="258.5,-360 201.5,-360 201.5,-336 258.5,-336 258.5,-360"/>
+<text text-anchor="middle" x="230" y="-345.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I2P</text>
+</a>
+</g>
+</g>
+<!-- proc~bctoi_i2p&#45;&gt;interface~str -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge8" class="edge"><title>proc~bctoi_i2p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M258.723,-340.088C266.282,-336.936 274.025,-332.67 280,-327 310.6,-297.962 328.159,-250.615 336.327,-222.976"/>
+<polygon fill="#000000" stroke="#000000" points="339.766,-223.673 339.091,-213.099 333.025,-221.786 339.766,-223.673"/>
+</g>
+<!-- proc~bctoi_i8p -->
+<g id="proc~~strf_i1p~~CalledByGraph_node4" class="node"><title>proc~bctoi_i8p</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node4"><a xlink:href="../proc/bctoi_i8p.html" xlink:title="bctoi_I8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="258.5,-318 201.5,-318 201.5,-294 258.5,-294 258.5,-318"/>
+<text text-anchor="middle" x="230" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I8P</text>
+</a>
+</g>
+</g>
+<!-- proc~bctoi_i8p&#45;&gt;interface~str -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge9" class="edge"><title>proc~bctoi_i8p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M258.617,-297.164C266.007,-294.027 273.688,-290 280,-285 301.899,-267.653 319.903,-240.744 330.764,-222.076"/>
+<polygon fill="#000000" stroke="#000000" points="333.927,-223.592 335.775,-213.16 327.825,-220.162 333.927,-223.592"/>
+</g>
+<!-- program~compact_real -->
+<g id="proc~~strf_i1p~~CalledByGraph_node5" class="node"><title>program~compact_real</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node5"><a xlink:href="../program/compact_real.html" xlink:title="compact_real">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="268.5,-108 191.5,-108 191.5,-84 268.5,-84 268.5,-108"/>
+<text text-anchor="middle" x="230" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compact_real</text>
+</a>
+</g>
+</g>
+<!-- program~compact_real&#45;&gt;interface~str -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge10" class="edge"><title>program~compact_real&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M265.532,-108.016C270.643,-110.567 275.647,-113.552 280,-117 301.899,-134.347 319.903,-161.256 330.764,-179.924"/>
+<polygon fill="#000000" stroke="#000000" points="327.825,-181.838 335.775,-188.84 333.927,-178.408 327.825,-181.838"/>
+</g>
+<!-- proc~bctor_r8p -->
+<g id="proc~~strf_i1p~~CalledByGraph_node6" class="node"><title>proc~bctor_r8p</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node6"><a xlink:href="../proc/bctor_r8p.html" xlink:title="bctor_R8P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="261.5,-276 198.5,-276 198.5,-252 261.5,-252 261.5,-276"/>
+<text text-anchor="middle" x="230" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctor_R8P</text>
+</a>
+</g>
+</g>
+<!-- proc~bctor_r8p&#45;&gt;interface~str -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge11" class="edge"><title>proc~bctor_r8p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M261.749,-251.887C267.897,-249.17 274.234,-246.151 280,-243 292.873,-235.965 306.443,-226.972 317.595,-219.114"/>
+<polygon fill="#000000" stroke="#000000" points="319.874,-221.786 325.96,-213.114 315.794,-216.098 319.874,-221.786"/>
+</g>
+<!-- proc~bctoi_i4p -->
+<g id="proc~~strf_i1p~~CalledByGraph_node7" class="node"><title>proc~bctoi_i4p</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node7"><a xlink:href="../proc/bctoi_i4p.html" xlink:title="bctoi_I4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="258.5,-234 201.5,-234 201.5,-210 258.5,-210 258.5,-234"/>
+<text text-anchor="middle" x="230" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I4P</text>
+</a>
+</g>
+</g>
+<!-- proc~bctoi_i4p&#45;&gt;interface~str -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge12" class="edge"><title>proc~bctoi_i4p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M258.724,-216.755C272.915,-214.07 290.371,-210.768 305.629,-207.881"/>
+<polygon fill="#000000" stroke="#000000" points="306.599,-211.26 315.774,-205.962 305.297,-204.382 306.599,-211.26"/>
+</g>
+<!-- proc~bctor_r4p -->
+<g id="proc~~strf_i1p~~CalledByGraph_node8" class="node"><title>proc~bctor_r4p</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node8"><a xlink:href="../proc/bctor_r4p.html" xlink:title="bctor_R4P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="261.5,-192 198.5,-192 198.5,-168 261.5,-168 261.5,-192"/>
+<text text-anchor="middle" x="230" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctor_R4P</text>
+</a>
+</g>
+</g>
+<!-- proc~bctor_r4p&#45;&gt;interface~str -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge13" class="edge"><title>proc~bctor_r4p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M261.625,-185.794C275.361,-188.393 291.659,-191.476 305.977,-194.185"/>
+<polygon fill="#000000" stroke="#000000" points="305.511,-197.659 315.987,-196.079 306.812,-190.781 305.511,-197.659"/>
+</g>
+<!-- program~sin_reconstruction -->
+<g id="proc~~strf_i1p~~CalledByGraph_node9" class="node"><title>program~sin_reconstruction</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node9"><a xlink:href="../program/sin_reconstruction.html" xlink:title="sin_reconstruction">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="280,-66 180,-66 180,-42 280,-42 280,-66"/>
+<text text-anchor="middle" x="230" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sin_reconstruction</text>
+</a>
+</g>
+</g>
+<!-- program~sin_reconstruction&#45;&gt;interface~str -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge14" class="edge"><title>program~sin_reconstruction&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M267.607,-66.1651C272.098,-68.6365 276.375,-71.5598 280,-75 310.6,-104.038 328.159,-151.385 336.327,-179.024"/>
+<polygon fill="#000000" stroke="#000000" points="333.025,-180.214 339.091,-188.901 339.766,-178.327 333.025,-180.214"/>
+</g>
+<!-- proc~bctor_r16p -->
+<g id="proc~~strf_i1p~~CalledByGraph_node10" class="node"><title>proc~bctor_r16p</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node10"><a xlink:href="../proc/bctor_r16p.html" xlink:title="bctor_R16P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="264.5,-24 195.5,-24 195.5,-0 264.5,-0 264.5,-24"/>
+<text text-anchor="middle" x="230" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctor_R16P</text>
+</a>
+</g>
+</g>
+<!-- proc~bctor_r16p&#45;&gt;interface~str -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge15" class="edge"><title>proc~bctor_r16p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M264.704,-22.086C270.338,-24.9231 275.729,-28.5041 280,-33 319.415,-74.4925 334.203,-143.177 339.402,-178.495"/>
+<polygon fill="#000000" stroke="#000000" points="335.974,-179.267 340.772,-188.713 342.912,-178.336 335.974,-179.267"/>
+</g>
+<!-- proc~bctoi_i1p -->
+<g id="proc~~strf_i1p~~CalledByGraph_node11" class="node"><title>proc~bctoi_i1p</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node11"><a xlink:href="../proc/bctoi_i1p.html" xlink:title="bctoi_I1P">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="258.5,-150 201.5,-150 201.5,-126 258.5,-126 258.5,-150"/>
+<text text-anchor="middle" x="230" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bctoi_I1P</text>
+</a>
+</g>
+</g>
+<!-- proc~bctoi_i1p&#45;&gt;interface~str -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge16" class="edge"><title>proc~bctoi_i1p&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M258.652,-148.762C265.738,-151.813 273.259,-155.316 280,-159 292.873,-166.035 306.443,-175.028 317.595,-182.886"/>
+<polygon fill="#000000" stroke="#000000" points="315.794,-185.902 325.96,-188.886 319.874,-180.214 315.794,-185.902"/>
+</g>
+<!-- program~test_all -->
+<g id="proc~~strf_i1p~~CalledByGraph_node12" class="node"><title>program~test_all</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node12"><a xlink:href="../program/test_all.html" xlink:title="test_all">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="54,-338 0,-338 0,-314 54,-314 54,-338"/>
+<text text-anchor="middle" x="27" y="-323.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">test_all</text>
+</a>
+</g>
+</g>
+<!-- program~test_all&#45;&gt;interface~str -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge17" class="edge"><title>program~test_all&#45;&gt;interface~str</title>
+<path fill="none" stroke="#000000" d="M47.7625,-338.164C93.2008,-364.408 206.81,-420.004 280,-369 327.849,-335.655 338.864,-260.967 341.335,-223.433"/>
+<polygon fill="#000000" stroke="#000000" points="344.849,-223.228 341.858,-213.064 337.858,-222.875 344.849,-223.228"/>
+</g>
+<!-- interface~bcton -->
+<g id="proc~~strf_i1p~~CalledByGraph_node13" class="node"><title>interface~bcton</title>
+<g id="a_proc~~strf_i1p~~CalledByGraph_node13"><a xlink:href="../interface/bcton.html" xlink:title="bcton">
+<polygon fill="#a7506f" stroke="#a7506f" points="144,-276 90,-276 90,-252 144,-252 144,-276"/>
+<text text-anchor="middle" x="117" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bcton</text>
+</a>
+</g>
+</g>
+<!-- program~test_all&#45;&gt;interface~bcton -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge1" class="edge"><title>program~test_all&#45;&gt;interface~bcton</title>
+<path fill="none" stroke="#000000" d="M45.386,-313.751C58.2449,-304.691 75.9616,-292.209 90.4318,-282.014"/>
+<polygon fill="#000000" stroke="#000000" points="92.7906,-284.634 98.9496,-276.013 88.7589,-278.911 92.7906,-284.634"/>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i2p -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge2" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i2p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M127.395,-276.061C138.662,-289.873 158.71,-312.461 180,-327 183.756,-329.565 187.875,-331.919 192.08,-334.048"/>
+<polygon fill="#000000" stroke="#000000" points="190.772,-337.3 201.315,-338.346 193.726,-330.953 190.772,-337.3"/>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i8p -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge3" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M144.025,-273.847C158.246,-279.228 176.105,-285.986 191.776,-291.915"/>
+<polygon fill="#000000" stroke="#000000" points="190.607,-295.215 201.198,-295.48 193.084,-288.668 190.607,-295.215"/>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctor_r8p -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge4" class="edge"><title>interface~bcton&#45;&gt;proc~bctor_r8p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M144.025,-264C157.122,-264 173.304,-264 188.021,-264"/>
+<polygon fill="#000000" stroke="#000000" points="188.413,-267.5 198.413,-264 188.413,-260.5 188.413,-267.5"/>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i4p -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge5" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M144.025,-254.153C158.246,-248.772 176.105,-242.014 191.776,-236.085"/>
+<polygon fill="#000000" stroke="#000000" points="193.084,-239.332 201.198,-232.52 190.607,-232.785 193.084,-239.332"/>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctor_r4p -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge6" class="edge"><title>interface~bcton&#45;&gt;proc~bctor_r4p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M127.395,-251.939C138.662,-238.127 158.71,-215.539 180,-201 182.916,-199.008 186.052,-197.144 189.277,-195.413"/>
+<polygon fill="#000000" stroke="#000000" points="191.055,-198.439 198.492,-190.894 187.972,-192.155 191.055,-198.439"/>
+</g>
+<!-- interface~bcton&#45;&gt;proc~bctoi_i1p -->
+<g id="proc~~strf_i1p~~CalledByGraph_edge7" class="edge"><title>interface~bcton&#45;&gt;proc~bctoi_i1p</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M122.214,-251.957C130.271,-230.532 149.791,-185.557 180,-159 183.632,-155.807 187.823,-153.043 192.192,-150.665"/>
+<polygon fill="#000000" stroke="#000000" points="193.781,-153.785 201.293,-146.314 190.761,-147.47 193.781,-153.785"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="560pt" height="32pt"
+ viewBox="0.00 0.00 559.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 555.5,-28 555.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,-0 64,-0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,-0 136,-0 136,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="209.5,-24 154.5,-24 154.5,-0 209.5,-0 209.5,-24"/>
+<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,-0 364,-0 364,-24"/>
+<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,-0 436,-0 436,-24"/>
+<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="551.5,-24 454.5,-24 454.5,-0 551.5,-0 551.5,-24"/>
+<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
     
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+     
     <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/strf_i1p.html#src">strf_I1P</a>
+  </div>
+</div>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    
     
     
     
@@ -411,40 +896,362 @@ private elemental function strf_I1P(fm, n)
     
     
     <section>
-    <h2><a class="anchor" name="src"></a>Source Code</h2>
-    <div class="highlight"><pre>  <span class="k">elemental function </span><span class="n">strf_I1P</span><span class="p">(</span><span class="n">fm</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span>  <span class="k">elemental function </span><span class="n">strf_I1P</span><span class="p">(</span><span class="n">fm</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
   <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
-  <span class="c">!&lt; Procedure for converting integer to string. This function achieves casting of integer to string.</span>
+  <span class="c">!&lt; Convert integer to string.</span>
   <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
-  <span class="k">implicit none</span>
-<span class="k">  </span><span class="kt">character</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">IN</span><span class="p">)</span><span class="kd">::</span> <span class="n">fm</span>  <span class="c">!&lt; Format different from the standard for the kind.</span>
-  <span class="kt">integer</span><span class="p">(</span><span class="n">I1P</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">IN</span><span class="p">)</span><span class="kd">::</span> <span class="n">n</span>   <span class="c">!&lt; Integer to be converted.</span>
-  <span class="kt">character</span><span class="p">(</span><span class="n">DI1P</span><span class="p">)</span><span class="kd">::</span>          <span class="n">str</span> <span class="c">!&lt; Returned string containing input number.</span>
+  <span class="kt">character</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">fm</span>  <span class="c">!&lt; Format different from the standard for the kind.</span>
+  <span class="kt">integer</span><span class="p">(</span><span class="n">I1P</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">n</span>   <span class="c">!&lt; Integer to be converted.</span>
+  <span class="kt">character</span><span class="p">(</span><span class="n">DI1P</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">str</span> <span class="c">!&lt; Returned string containing input number.</span>
   <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
 
   <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
-  <span class="k">write</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="nb">trim</span><span class="p">(</span><span class="n">fm</span><span class="p">))</span> <span class="n">n</span> <span class="c">! Casting of n to string.</span>
+  <span class="k">write</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="n">fm</span><span class="p">))</span> <span class="n">n</span>
   <span class="k">return</span>
   <span class="c">!---------------------------------------------------------------------------------------------------------------------------------</span>
   <span class="n">endfunction</span> <span class="n">strf_I1P</span>
 </pre></div>
 
     </section>
+    <br>
     
     
     </div>
   </div>
 
+  <section class="visible-xs visible-sm hidden-md">
     <hr>
-    <footer>
-        <div class="row">
-        <div class="col-md-6">&copy; 2015 WenOOF was written by Fortran-FOSS-Programmers Group. </div>
-        <div class="col-md-6"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a>.</span></div>
-        </div>
-        <br>
-    </footer>
-    </div> <!-- /container -->
+    
 
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-1">All Procedures</a></h3></div>
+  <div id="allprocs-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/add_3d_plot.html">add_3d_plot</a>
+      
+      <a class="list-group-item" href="../proc/add_bar.html">add_bar</a>
+      
+      <a class="list-group-item" href="../proc/add_contour.html">add_contour</a>
+      
+      <a class="list-group-item" href="../proc/add_plot.html">add_plot</a>
+      
+      <a class="list-group-item" href="../proc/add_str.html">add_str</a>
+      
+      <a class="list-group-item" href="../proc/bctoi_i1p.html">bctoi_I1P</a>
+      
+      <a class="list-group-item" href="../proc/bctoi_i2p.html">bctoi_I2P</a>
+      
+      <a class="list-group-item" href="../proc/bctoi_i4p.html">bctoi_I4P</a>
+      
+      <a class="list-group-item" href="../proc/bctoi_i8p.html">bctoi_I8P</a>
+      
+      <a class="list-group-item" href="../interface/bcton.html">bcton</a>
+      
+      <a class="list-group-item" href="../proc/bctor_r16p.html">bctor_R16P</a>
+      
+      <a class="list-group-item" href="../proc/bctor_r4p.html">bctor_R4P</a>
+      
+      <a class="list-group-item" href="../proc/bctor_r8p.html">bctor_R8P</a>
+      
+      <a class="list-group-item" href="../interface/bit_size.html">bit_size</a>
+      
+      <a class="list-group-item" href="../interface/bit_size%7E2.html">bit_size</a>
+      
+      <a class="list-group-item" href="../proc/bit_size_chr.html">bit_size_chr</a>
+      
+      <a class="list-group-item" href="../proc/bit_size_r16p.html">bit_size_R16P</a>
+      
+      <a class="list-group-item" href="../proc/bit_size_r4p.html">bit_size_R4P</a>
+      
+      <a class="list-group-item" href="../proc/bit_size_r8p.html">bit_size_R8P</a>
+      
+      <a class="list-group-item" href="../interface/bstr.html">bstr</a>
+      
+      <a class="list-group-item" href="../proc/bstr_i1p.html">bstr_I1P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_i2p.html">bstr_I2P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_i4p.html">bstr_I4P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_i8p.html">bstr_I8P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_r16p.html">bstr_R16P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_r4p.html">bstr_R4P</a>
+      
+      <a class="list-group-item" href="../proc/bstr_r8p.html">bstr_R8P</a>
+      
+      <a class="list-group-item" href="../interface/byte_size.html">byte_size</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_chr.html">byte_size_chr</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_i1p.html">byte_size_I1P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_i2p.html">byte_size_I2P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_i4p.html">byte_size_I4P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_i8p.html">byte_size_I8P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_r16p.html">byte_size_R16P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_r4p.html">byte_size_R4P</a>
+      
+      <a class="list-group-item" href="../proc/byte_size_r8p.html">byte_size_R8P</a>
+      
+      <a class="list-group-item" href="../proc/check_endian.html">check_endian</a>
+      
+      <a class="list-group-item" href="../proc/compact_real_string.html">compact_real_string</a>
+      
+      <a class="list-group-item" href="../proc/compute.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E2.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E3.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E4.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E5.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E6.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E7.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E8.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E9.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/compute%7E10.html">compute</a>
+      
+      <a class="list-group-item" href="../proc/create.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E2.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E3.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E4.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E5.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E6.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E7.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E8.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create%7E9.html">create</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients.html">create_alpha_coefficients</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_js_constructor.html">create_alpha_coefficients_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_m_constructor.html">create_alpha_coefficients_m_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_alpha_coefficients_z_constructor.html">create_alpha_coefficients_z_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_base_object.html">create_base_object</a>
+      
+      <a class="list-group-item" href="../proc/create_interpolator_constructor.html">create_interpolator_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_interpolator_js_constructor.html">create_interpolator_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_optimal_weights.html">create_optimal_weights</a>
+      
+      <a class="list-group-item" href="../proc/create_optimal_weights_js_constructor.html">create_optimal_weights_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_polynomials.html">create_polynomials</a>
+      
+      <a class="list-group-item" href="../proc/create_polynomials_js_constructor.html">create_polynomials_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/create_smoothness_indicators.html">create_smoothness_indicators</a>
+      
+      <a class="list-group-item" href="../proc/create_smoothness_indicators_js_constructor.html">create_smoothness_indicators_js_constructor</a>
+      
+      <a class="list-group-item" href="../proc/ctoi_i1p.html">ctoi_I1P</a>
+      
+      <a class="list-group-item" href="../proc/ctoi_i2p.html">ctoi_I2P</a>
+      
+      <a class="list-group-item" href="../proc/ctoi_i4p.html">ctoi_I4P</a>
+      
+      <a class="list-group-item" href="../proc/ctoi_i8p.html">ctoi_I8P</a>
+      
+      <a class="list-group-item" href="../interface/cton.html">cton</a>
+      
+      <a class="list-group-item" href="../proc/ctor_r16p.html">ctor_R16P</a>
+      
+      <a class="list-group-item" href="../proc/ctor_r4p.html">ctor_R4P</a>
+      
+      <a class="list-group-item" href="../proc/ctor_r8p.html">ctor_R8P</a>
+      
+      <a class="list-group-item" href="../proc/description.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E2.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E3.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E4.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E5.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E6.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E7.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E8.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E9.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E10.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E11.html">description</a>
+      
+      <a class="list-group-item" href="../proc/description%7E12.html">description</a>
+      
+      <a class="list-group-item" href="../proc/destroy.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E2.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E3.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E4.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E5.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E6.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E7.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E8.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E9.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy%7E10.html">destroy</a>
+      
+      <a class="list-group-item" href="../proc/destroy_interpolator_constructor.html">destroy_interpolator_constructor</a>
+      
+      <a class="list-group-item" href="../interface/digit.html">digit</a>
+      
+      <a class="list-group-item" href="../proc/digit_i1.html">digit_I1</a>
+      
+      <a class="list-group-item" href="../proc/digit_i2.html">digit_I2</a>
+      
+      <a class="list-group-item" href="../proc/digit_i4.html">digit_I4</a>
+      
+      <a class="list-group-item" href="../proc/digit_i8.html">digit_I8</a>
+      
+      <a class="list-group-item" href="../proc/execute.html">execute</a>
+      
+      <a class="list-group-item" href="../proc/initialize.html">initialize</a>
+      
+      <a class="list-group-item" href="../proc/integer_to_string.html">integer_to_string</a>
+      
+      <a class="list-group-item" href="../proc/interpolate.html">interpolate</a>
+      
+      <a class="list-group-item" href="../proc/interpolate%7E2.html">interpolate</a>
+      
+      <a class="list-group-item" href="../proc/matrix_to_string.html">matrix_to_string</a>
+      
+      <a class="list-group-item" href="../proc/optional_int_to_string.html">optional_int_to_string</a>
+      
+      <a class="list-group-item" href="../proc/penf_init.html">penf_init</a>
+      
+      <a class="list-group-item" href="../proc/penf_print.html">penf_print</a>
+      
+      <a class="list-group-item" href="../proc/savefig.html">savefig</a>
+      
+      <a class="list-group-item" href="../interface/str.html">str</a>
+      
+      <a class="list-group-item" href="../proc/str_a_i1p.html">str_a_I1P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_i2p.html">str_a_I2P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_i4p.html">str_a_I4P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_i8p.html">str_a_I8P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_r16p.html">str_a_R16P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_r4p.html">str_a_R4P</a>
+      
+      <a class="list-group-item" href="../proc/str_a_r8p.html">str_a_R8P</a>
+      
+      <a class="list-group-item" href="../proc/str_bol.html">str_bol</a>
+      
+      <a class="list-group-item" href="../proc/str_i1p.html">str_I1P</a>
+      
+      <a class="list-group-item" href="../proc/str_i2p.html">str_I2P</a>
+      
+      <a class="list-group-item" href="../proc/str_i4p.html">str_I4P</a>
+      
+      <a class="list-group-item" href="../proc/str_i8p.html">str_I8P</a>
+      
+      <a class="list-group-item" href="../proc/str_r16p.html">str_R16P</a>
+      
+      <a class="list-group-item" href="../proc/str_r4p.html">str_R4P</a>
+      
+      <a class="list-group-item" href="../proc/str_r8p.html">str_R8P</a>
+      
+      <a class="list-group-item" href="../proc/strf_i1p.html">strf_I1P</a>
+      
+      <a class="list-group-item" href="../proc/strf_i2p.html">strf_I2P</a>
+      
+      <a class="list-group-item" href="../proc/strf_i4p.html">strf_I4P</a>
+      
+      <a class="list-group-item" href="../proc/strf_i8p.html">strf_I8P</a>
+      
+      <a class="list-group-item" href="../proc/strf_r16p.html">strf_R16P</a>
+      
+      <a class="list-group-item" href="../proc/strf_r4p.html">strf_R4P</a>
+      
+      <a class="list-group-item" href="../proc/strf_r8p.html">strf_R8P</a>
+      
+      <a class="list-group-item" href="../interface/strz.html">strz</a>
+      
+      <a class="list-group-item" href="../proc/strz_i1p.html">strz_I1P</a>
+      
+      <a class="list-group-item" href="../proc/strz_i2p.html">strz_I2P</a>
+      
+      <a class="list-group-item" href="../proc/strz_i4p.html">strz_I4P</a>
+      
+      <a class="list-group-item" href="../proc/strz_i8p.html">strz_I8P</a>
+      
+      <a class="list-group-item" href="../proc/tau.html">tau</a>
+      
+      <a class="list-group-item" href="../proc/vec_to_string.html">vec_to_string</a>
+      
+      <a class="list-group-item" href="../proc/weno_exp.html">weno_exp</a>
+      
+      <a class="list-group-item" href="../proc/weno_odd.html">weno_odd</a>
+      
+      <a class="list-group-item" href="../proc/wenoof_create.html">wenoof_create</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> WenOOF was developed by Fortran-FOSS-Programmers</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -469,6 +1276,6 @@ private elemental function strf_I1P(fm, n)
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>
