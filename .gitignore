@@ -1,4 +1,35 @@
-references/
-doc/html/
-tests/
+# compiled object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# compiled dynamic libraries
+*.so
+
+# fortran module files
+*.mod
+
+# compiled static libraries
+*.la
+*.a
+*.lib
+
+# executables
+*.exe
+*.out
+*.a
+*.app
+
+# log files
 *.log
+
+# special directories
+doc/html/
+exe/
+forks/
+get_automatic_changelog.sh
+references/
+shared/
+static/
+wiki/

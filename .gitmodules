@@ -1,6 +1,8 @@
 [submodule "external/pyplot-fortran"]
-	path = src/third_party/pyplot-fortran
-	url = https://github.com/jacobwilliams/pyplot-fortran
+  path = src/third_party/pyplot-fortran
+  url = https://github.com/jacobwilliams/pyplot-fortran
+  branch = master
 [submodule "src/third_party/PENF"]
-	path = src/third_party/PENF
-	url = https://github.com/szaghi/PENF
+  path = src/third_party/PENF
+  url = https://github.com/szaghi/PENF
+  branch = master

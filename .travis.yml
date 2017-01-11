@@ -1,7 +1,4 @@
-language: python
-
-python:
-  - 2.7
+language: generic
 
 sudo: false
 
@@ -17,14 +14,17 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - gfortran-4.9
+      - gfortran-6
       - binutils
       - python-pip
-      - graphviz      
+      - graphviz
 
 env:
   global:
-    - SCRIPT="FoBiS.py rule -ex makecoverage"
+    - MAKECOVERAGE="FoBiS.py rule -ex makecoverage"
+    - MAKEDOC="./scripts/makedoc.sh Fortran-FOSS-Programmers/WenOOF"
+    - CLEAN="FoBiS.py rule -ex clean"
+    - MAKETAR="FoBiS.py rule -ex maketar"
 
 before_install:
   - git submodule update --init --recursive
@@ -35,20 +35,32 @@ install:
       mkdir "$HOME/.local/bin"
     fi
   - export PATH="$HOME/.local/bin:$PATH"
-  - export FC=/usr/bin/gfortran-4.9
-  - ln -fs /usr/bin/gfortran-4.9 "$HOME/.local/bin/gfortran" && gfortran --version
-  - ls -l /usr/bin/gfortran-4.9
-  - ln -fs /usr/bin/gcov-4.9 "$HOME/.local/bin/gcov" && gcov --version
-  - pip install --upgrade pygooglechart
-  - pip install --upgrade graphviz
-  - pip install --upgrade FoBiS.py
-  - pip install --upgrade markdown-checklist 
-  - pip install --upgrade ford
+  - export FC=/usr/bin/gfortran-6
+  - ln -fs /usr/bin/gfortran-6 "$HOME/.local/bin/gfortran" && gfortran --version
+  - ls -l /usr/bin/gfortran-6
+  - ln -fs /usr/bin/gcov-6 "$HOME/.local/bin/gcov" && gcov --version
+  - pip install --user --upgrade pygooglechart
+  - pip install --user --upgrade graphviz
+  - pip install --user --upgrade FoBiS.py
+  - pip install --user --upgrade markdown-checklist 
+  - pip install --user --upgrade ford
 
 script:
-  - $SCRIPT
+  - $MAKECOVERAGE
 
 after_success:
-  - cd $TRAVIS_BUILD_DIR
+  - find . -name '*.gcno' -print
   - bash <(curl -s https://codecov.io/bash)
-  - ./makedoc.sh Fortran-FOSS-Programmers/WenOOF
+  - $MAKEDOC
+
+deploy:
+  provider: releases
+  api_key:
+    secure: gpkufaCbypzFjTtrnFZYz9OyBgViuAyLuPwLYs0awLKUiMhyD+ABsir9wbaOzZ9+Po10qJUcFBkIA8DQCP8va0CasOnOVS2t+vJSuTAHno53eJr93DHvNeS1mCifkuMlKbtefEb7bp7lzr2Yjx2MPkiQdXsLYfckR9MVR5AkFrBmAvGUI4eZdf1xj5OY795DE/zv7RZEDBqH2jCMkebxok77oAq0n5NUWoZaHdTE9TI+m9672zjzYASmnpulbZ19RKvgBiLMVr/W08fdswiJApF5AhkIjI0CkqZASqnfzypDjg8zGK/ZnYKDsKSD3fc9jcOA+eDPYrClql2PVIVqKa/cWTIa0U2Hr4CQoChQ4Y2YI/5mtenGLAuLSmAMkxljWROkx7UMTpSLpuHo/ij8MYdFGOK9EgZzcwcV6bllNztLXtBl0u0rLDwuvuofukQw5SWFkmSrmgVeE3Xob32oG4kxj3cxgE2Lb5B8Ns72KO6DfV9AvsitCjF98wZb88ZXVghS8THwAu9dMFqdUn1vL0pcSQPM8rhHteiieqR1wQG61FAzAUe2WmXT6r1IpWkBlLp5v5ITf+/BAoyLKDyDvCh+KScf6Yu/nBtE3GRR7RUMwENd34bEQXM8ZsWKgUdMeg/fhYED67Gw4N0ZedNFzJykR0jw4i/L9tzjMtGax1A=
+  file: 
+    - WenOOF-$TRAVIS_TAG.tar.gz
+    - ./scripts/install.sh
+  skip_cleanup: true
+  overwrite: true
+  on:
+    tags: true
