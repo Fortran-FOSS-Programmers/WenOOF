@@ -26,9 +26,10 @@
 
 # special directories
 doc/html/
-get_automatic_changelog.sh
 exe/
+forks/
+get_automatic_changelog.sh
 references/
-wiki/
 shared/
 static/
+wiki/
