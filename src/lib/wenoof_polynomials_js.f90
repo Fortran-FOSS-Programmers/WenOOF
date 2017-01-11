@@ -15,14 +15,11 @@ implicit none
 private
 public :: polynomials_js
 public :: polynomials_js_constructor
+public :: create_polynomials_js_constructor
 
 type, extends(polynomials_constructor) :: polynomials_js_constructor
   !< Jiang-Shu (Lagrange) polynomials object constructor.
 endtype polynomials_js_constructor
-
-interface  polynomials_js_constructor
-  procedure polynomials_js_constructor_
-endinterface
 
 type, extends(polynomials) :: polynomials_js
   !< Jiang-Shu (Lagrange) polynomials object.
@@ -43,15 +40,15 @@ type, extends(polynomials) :: polynomials_js
 endtype polynomials_js
 
 contains
-  ! function-constructor
-  function polynomials_js_constructor_(S) result(constructor)
-  !< Return an instance of [polynomials_js_constructor].
-  integer(I_P), intent(in)                    :: S           !< Maximum stencils dimension.
-  class(polynomials_constructor), allocatable :: constructor !< Polynomials constructor.
+  ! public non TBP
+  subroutine create_polynomials_js_constructor(S, constructor)
+  !< Create polynomials constructor.
+  integer(I_P),                                intent(in)  :: S           !< Stencils dimension.
+  class(polynomials_constructor), allocatable, intent(out) :: constructor !< Polynomials constructor.
 
   allocate(polynomials_js_constructor :: constructor)
   constructor%S = S
-  endfunction polynomials_js_constructor_
+  endsubroutine create_polynomials_js_constructor
 
   ! deferred public methods
   pure subroutine compute(self, S, stencil, f1, f2, ff)

@@ -16,15 +16,12 @@ implicit none
 private
 public :: alpha_coefficients_m
 public :: alpha_coefficients_m_constructor
+public :: create_alpha_coefficients_m_constructor
 
 type, extends(alpha_coefficients_constructor) :: alpha_coefficients_m_constructor
   !< Henrick alpha coefficients object constructor.
   character(len=:), allocatable :: base_type !< Base alpha coefficient type.
 endtype alpha_coefficients_m_constructor
-
-interface  alpha_coefficients_m_constructor
-  procedure alpha_coefficients_m_constructor_
-endinterface
 
 type, extends(alpha_coefficients) :: alpha_coefficients_m
   !< Henrick alpha coefficients object.
@@ -43,16 +40,17 @@ type, extends(alpha_coefficients) :: alpha_coefficients_m
 endtype alpha_coefficients_m
 
 contains
-  ! function-constructor
-  elemental function alpha_coefficients_m_constructor_(S, base_type) result(constructor)
-  !< Return an instance of [alpha_coefficients_m_constructor].
-  integer(I_P), intent(in)               :: S           !< Maximum stencils dimension.
-  character(*), intent(in), optional     :: base_type   !< Base alpha coefficients type.
-  type(alpha_coefficients_m_constructor) :: constructor !< Alpha coefficients constructor.
+  ! public non TBP
+  subroutine create_alpha_coefficients_m_constructor(S, constructor)
+  !< Create alpha coefficients constructor.
+  !<
+  !< #TODO add actual M support (this is a copy of simple JS).
+  integer(I_P),                                       intent(in)  :: S           !< Stencils dimension.
+  class(alpha_coefficients_constructor), allocatable, intent(out) :: constructor !< Alpha coefficients constructor.
 
+  allocate(alpha_coefficients_m_constructor :: constructor)
   constructor%S = S
-  if (present(base_type)) constructor%base_type = base_type
-  endfunction alpha_coefficients_m_constructor_
+  endsubroutine create_alpha_coefficients_m_constructor
 
   ! deferred public methods
   pure subroutine compute(self, S, weight_opt, IS, eps, f1, f2)

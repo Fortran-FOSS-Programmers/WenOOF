@@ -14,14 +14,11 @@ implicit none
 private
 public :: optimal_weights_js
 public :: optimal_weights_js_constructor
+public :: create_optimal_weights_js_constructor
 
 type, extends(optimal_weights_constructor) :: optimal_weights_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights object constructor.
 endtype optimal_weights_js_constructor
-
-interface  optimal_weights_js_constructor
-  procedure optimal_weights_js_constructor_
-endinterface
 
 type, extends(optimal_weights):: optimal_weights_js
   !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights object.
@@ -37,15 +34,15 @@ type, extends(optimal_weights):: optimal_weights_js
 endtype optimal_weights_js
 
 contains
-  ! function-constructor
-  function optimal_weights_js_constructor_(S) result(constructor)
-  !< Return an instance of [optimal_weights_js_constructor].
-  integer(I_P), intent(in)                        :: S           !< Maximum stencils dimension.
-  class(optimal_weights_constructor), allocatable :: constructor !< Optimal weights constructor.
+  ! public non TBP
+  subroutine create_optimal_weights_js_constructor(S, constructor)
+  !< Create optimal weights constructor.
+  integer(I_P),                                    intent(in)  :: S           !< Stencils dimension.
+  class(optimal_weights_constructor), allocatable, intent(out) :: constructor !< Optimal weights constructor.
 
   allocate(optimal_weights_js_constructor :: constructor)
   constructor%S = S
-  endfunction optimal_weights_js_constructor_
+  endsubroutine create_optimal_weights_js_constructor
 
   ! deferred public methods
   pure subroutine compute(self, S)

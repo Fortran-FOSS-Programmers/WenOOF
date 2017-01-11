@@ -19,10 +19,10 @@ type, extends(base_object_constructor) :: interpolator_constructor
   !< Abstract interpolator object constructor.
   !<
   !< @note Every concrete WENO interpolator implementations must define their own constructor type.
-  class(base_object_constructor), allocatable :: is      !< Smoothness indicators constructor.
-  class(base_object_constructor), allocatable :: alpha   !< Alpha coefficients constructor.
-  class(base_object_constructor), allocatable :: weights !< Optimal weights constructor.
-  class(base_object_constructor), allocatable :: polynom !< Polynomilas constructor.
+  class(smoothness_indicators_constructor), allocatable :: is      !< Smoothness indicators constructor.
+  class(alpha_coefficients_constructor),    allocatable :: alpha   !< Alpha coefficients constructor.
+  class(optimal_weights_constructor),       allocatable :: weights !< Optimal weights constructor.
+  class(polynomials_constructor),           allocatable :: polynom !< Polynomilas constructor.
   contains
     ! public methods
     procedure, pass(self) :: create  => create_interpolator_constructor  !< Create interpolator constructor.
@@ -33,10 +33,10 @@ type, extends(base_object) :: interpolator
   !< Abstract interpolator object.
   !<
   !< @note Do not implement any actual interpolator: provide the interface for the different interpolators implemented.
-  class(base_object), allocatable :: is      !< Smoothness indicators.
-  class(base_object), allocatable :: alpha   !< Alpha coefficients.
-  class(base_object), allocatable :: weights !< Optimal weights.
-  class(base_object), allocatable :: polynom !< Polynomilas.
+  class(smoothness_indicators), allocatable :: is      !< Smoothness indicators.
+  class(alpha_coefficients),    allocatable :: alpha   !< Alpha coefficients.
+  class(optimal_weights),       allocatable :: weights !< Optimal weights.
+  class(polynomials),           allocatable :: polynom !< Polynomilas.
   contains
     ! public deferred methods
     procedure, nopass     :: description !< Return interpolator string-description.
@@ -52,11 +52,11 @@ contains
   ! public methods
   subroutine create_interpolator_constructor(self, is, alpha, weights, polynom)
   !< Create interpolator constructor.
-  class(interpolator_constructor), intent(inout) :: self    !< Interpolator constructor.
-  class(base_object_constructor),  intent(in)    :: is      !< Smoothness indicators constructor.
-  class(base_object_constructor),  intent(in)    :: alpha   !< Alpha coefficients constructor.
-  class(base_object_constructor),  intent(in)    :: weights !< Optimal weights constructor.
-  class(base_object_constructor),  intent(in)    :: polynom !< Polynomilas constructor.
+  class(interpolator_constructor),          intent(inout) :: self    !< Interpolator constructor.
+  class(smoothness_indicators_constructor), intent(in)    :: is      !< Smoothness indicators constructor.
+  class(alpha_coefficients_constructor),    intent(in)    :: alpha   !< Alpha coefficients constructor.
+  class(optimal_weights_constructor),       intent(in)    :: weights !< Optimal weights constructor.
+  class(polynomials_constructor),           intent(in)    :: polynom !< Polynomilas constructor.
 
   call self%destroy
   allocate(self%is,      source=is     )

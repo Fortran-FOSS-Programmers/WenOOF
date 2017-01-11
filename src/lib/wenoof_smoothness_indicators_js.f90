@@ -15,14 +15,11 @@ implicit none
 private
 public :: smoothness_indicators_js
 public :: smoothness_indicators_js_constructor
+public :: create_smoothness_indicators_js_constructor
 
 type, extends(smoothness_indicators_constructor) :: smoothness_indicators_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object constructor.
 endtype smoothness_indicators_js_constructor
-
-interface  smoothness_indicators_js_constructor
-  procedure smoothness_indicators_js_constructor_
-endinterface
 
 type, extends(smoothness_indicators) :: smoothness_indicators_js
   !< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object.
@@ -43,15 +40,15 @@ type, extends(smoothness_indicators) :: smoothness_indicators_js
 endtype smoothness_indicators_js
 
 contains
-  ! function-constructor
-  function smoothness_indicators_js_constructor_(S) result(constructor)
-  !< Return an instance of [smoothness_indicators_js_constructor].
-  integer(I_P), intent(in)                              :: S           !< Maximum stencils dimension.
-  class(smoothness_indicators_constructor), allocatable :: constructor !< Smoothness indicators constructor.
+  ! public non TBP
+  subroutine create_smoothness_indicators_js_constructor(S, constructor)
+  !< Create smoothness indicators constructor.
+  integer(I_P),                                          intent(in)  :: S           !< Stencils dimension.
+  class(smoothness_indicators_constructor), allocatable, intent(out) :: constructor !< Smoothness indicators constructor.
 
   allocate(smoothness_indicators_js_constructor :: constructor)
   constructor%S = S
-  endfunction smoothness_indicators_js_constructor_
+  endsubroutine create_smoothness_indicators_js_constructor
 
   ! deferred public methods
   pure subroutine compute(self, S, stencil, f1, f2, ff)
@@ -97,7 +94,7 @@ contains
   pure subroutine create(self, constructor)
   !< Create smoothness indicators.
   class(smoothness_indicators_js), intent(inout) :: self        !< Smoothness indicators.
-  class(base_object_constructor),  intent(in)    :: constructor !< Polynomials constructor.
+  class(base_object_constructor),  intent(in)    :: constructor !< Smoothness indicators constructor.
   integer(I_P)                                   :: S           !< Stencils dimension.
 
   call self%destroy

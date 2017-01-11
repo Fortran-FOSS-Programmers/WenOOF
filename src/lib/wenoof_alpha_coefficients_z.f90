@@ -13,6 +13,7 @@ implicit none
 private
 public :: alpha_coefficients_z
 public :: alpha_coefficients_z_constructor
+public :: create_alpha_coefficients_z_constructor
 
 type, extends(alpha_coefficients_constructor) :: alpha_coefficients_z_constructor
   !< Borges WENO alpha coefficients object constructor.
@@ -30,6 +31,18 @@ type, extends(alpha_coefficients) :: alpha_coefficients_z
     procedure, nopass     :: description !< Return string-description of coefficients.
 endtype alpha_coefficients_z
 contains
+  ! public non TBP
+  subroutine create_alpha_coefficients_z_constructor(S, constructor)
+  !< Create alpha coefficients constructor.
+  !<
+  !< #TODO add actual Z support (this is a copy of simple JS).
+  integer(I_P),                                       intent(in)  :: S           !< Stencils dimension.
+  class(alpha_coefficients_constructor), allocatable, intent(out) :: constructor !< Alpha coefficients constructor.
+
+  allocate(alpha_coefficients_z_constructor :: constructor)
+  constructor%S = S
+  endsubroutine create_alpha_coefficients_z_constructor
+
   ! deferred public methods
   pure subroutine compute(self, S, weight_opt, IS, eps, f1, f2)
   !< Compute alpha coefficients.

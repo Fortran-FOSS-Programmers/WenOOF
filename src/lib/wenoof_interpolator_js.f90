@@ -21,6 +21,7 @@ implicit none
 private
 public :: interpolator_js
 public :: interpolator_js_constructor
+public :: create_interpolator_js_constructor
 
 type, extends(interpolator_constructor) :: interpolator_js_constructor
   !< Jiang-Shu (upwind) interpolator object constructor.
@@ -31,10 +32,6 @@ type, extends(interpolator_constructor) :: interpolator_js_constructor
   integer(I_P) :: S = 0               !< Stencils dimension.
   real(R_P)    :: eps = 10._R_P**(-6) !< Parameter for avoiding division by zero.
 endtype interpolator_js_constructor
-
-interface interpolator_js_constructor
-  procedure interpolator_js_constructor_
-endinterface
 
 type, extends(interpolator) :: interpolator_js
   !< Jiang-Shu (upwind) interpolator object.
@@ -57,16 +54,16 @@ type, extends(interpolator) :: interpolator_js
 endtype interpolator_js
 
 contains
-  ! function-constructor
-  function interpolator_js_constructor_(is, alpha, weights, polynom, S, eps) result(constructor)
+  ! public non TBP
+  subroutine create_interpolator_js_constructor(is, alpha, weights, polynom, S, constructor, eps)
   !< Return an instance of [interpolator_js_constructor].
-  class(base_object_constructor), intent(in)           :: is          !< Smoothness indicators constructor.
-  class(base_object_constructor), intent(in)           :: alpha       !< Alpha coefficients constructor.
-  class(base_object_constructor), intent(in)           :: weights     !< Optimal weights constructor.
-  class(base_object_constructor), intent(in)           :: polynom     !< Polynomilas constructor.
-  integer(I_P),                   intent(in)           :: S           !< Stencil dimension.
-  real(R_P),                      intent(in), optional :: eps         !< Parameter for avoiding division by zero.
-  class(interpolator_constructor), allocatable         :: constructor !< Interpolator constructor.
+  class(smoothness_indicators_constructor),     intent(in)           :: is          !< Smoothness indicators constructor.
+  class(alpha_coefficients_constructor),        intent(in)           :: alpha       !< Alpha coefficients constructor.
+  class(optimal_weights_constructor),           intent(in)           :: weights     !< Optimal weights constructor.
+  class(polynomials_constructor),               intent(in)           :: polynom     !< Polynomilas constructor.
+  integer(I_P),                                 intent(in)           :: S           !< Stencil dimension.
+  class(interpolator_constructor), allocatable, intent(out)          :: constructor !< Interpolator constructor.
+  real(R_P),                                    intent(in), optional :: eps         !< Parameter for avoiding division by zero.
 
   allocate(interpolator_js_constructor :: constructor)
   call constructor%create(is=is, alpha=alpha, weights=weights, polynom=polynom)
@@ -75,7 +72,7 @@ contains
     constructor%S = S
     if (present(eps)) constructor%eps = eps
   endselect
-  endfunction interpolator_js_constructor_
+  endsubroutine create_interpolator_js_constructor
 
   ! public deferred methods
   pure function description() result(string)

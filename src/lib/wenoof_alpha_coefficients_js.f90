@@ -12,14 +12,11 @@ implicit none
 private
 public :: alpha_coefficients_js
 public :: alpha_coefficients_js_constructor
+public :: create_alpha_coefficients_js_constructor
 
 type, extends(alpha_coefficients_constructor) :: alpha_coefficients_js_constructor
   !< Jiang-Shu alpha coefficient object constructor.
 endtype alpha_coefficients_js_constructor
-
-interface  alpha_coefficients_js_constructor
-  procedure alpha_coefficients_js_constructor_
-endinterface
 
 type, extends(alpha_coefficients) :: alpha_coefficients_js
   !< Jiang-Shu alpha coefficient object.
@@ -34,15 +31,15 @@ type, extends(alpha_coefficients) :: alpha_coefficients_js
 endtype alpha_coefficients_js
 
 contains
-  ! function-constructor
-  function alpha_coefficients_js_constructor_(S) result(constructor)
-  !< Return an instance of [alpha_coefficients_js_constructor].
-  integer(I_P), intent(in)                           :: S           !< Maximum stencils dimension.
-  class(alpha_coefficients_constructor), allocatable :: constructor !< Alpha coefficients constructor.
+  ! public non TBP
+  subroutine create_alpha_coefficients_js_constructor(S, constructor)
+  !< Create alpha coefficients constructor.
+  integer(I_P),                                       intent(in)  :: S           !< Stencils dimension.
+  class(alpha_coefficients_constructor), allocatable, intent(out) :: constructor !< Alpha coefficients constructor.
 
   allocate(alpha_coefficients_js_constructor :: constructor)
   constructor%S = S
-  endfunction alpha_coefficients_js_constructor_
+  endsubroutine create_alpha_coefficients_js_constructor
 
   ! deferred public methods
   pure subroutine compute(self, S, weight_opt, IS, eps, f1, f2)
