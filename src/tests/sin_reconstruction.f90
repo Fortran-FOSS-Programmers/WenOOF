@@ -45,6 +45,7 @@ type :: test
   integer(I_P), allocatable        :: S(:)                    !< Stencils used.
   type(solution_data), allocatable :: solution(:,:)           !< Solution [1:pn_number, 1:S_number].
   real(R_P), allocatable           :: accuracy(:,:)           !< Accuracy (measured) [1:pn_number-1, 1:S_number].
+  logical                          :: output_dir=.false.      !< Flag for activating output directory creation.
   logical                          :: errors_analysis=.false. !< Flag for activating errors analysis.
   logical                          :: plots=.false.           !< Flag for activating plots saving.
   logical                          :: results=.false.         !< Flag for activating results saving.
@@ -166,6 +167,7 @@ contains
                    required=.false., act='store', def='50')
       call cli%add(switch='--stencils', switch_ab='-s', nargs='+', help='Stencils dimensions (and number)', &
                    required=.false., act='store', def='2', choices='2, 3, 4, 5, 6, 7, 8, 9')
+      call cli%add(switch='--output_dir', help='Create an output directory', required=.false., act='store_true', def='.false.')
       call cli%add(switch='--results', switch_ab='-r', help='Save results', required=.false., act='store_true', def='.false.')
       call cli%add(switch='--plots', switch_ab='-p', help='Save plots', required=.false., act='store_true', def='.false.')
       call cli%add(switch='--output', help='Output files basename', required=.false., act='store', def='sin_reconstruction')
@@ -181,6 +183,7 @@ contains
     call self%cli%get(switch='-i', val=self%interpolator_type, error=self%error) ; if (self%error/=0) stop
     call self%cli%get_varying(switch='-pn', val=self%points_number, error=self%error) ; if (self%error/=0) stop
     call self%cli%get_varying(switch='-s', val=self%S, error=self%error) ; if (self%error/=0) stop
+    call self%cli%get(switch='--output_dir', val=self%output_dir, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='-r', val=self%results, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='-p', val=self%plots, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='--output', val=self%output_bname, error=self%error) ; if (self%error/=0) stop
@@ -245,17 +248,24 @@ contains
   endsubroutine perform
 
   subroutine save_results_and_plots(self)
-  !< Save results (and plots).
-  class(test), intent(inout)    :: self      !< Test.
-  type(pyplot)                  :: plt       !< Plot handler.
-  character(len=:), allocatable :: title     !< Plot title
-  integer(I_P)                  :: file_unit !< File unit.
-  integer(I_P)                  :: s         !< Counter.
-  integer(I_P)                  :: pn        !< Counter.
-  integer(I_P)                  :: i         !< Counter.
+  !< Save results and plots.
+  class(test), intent(inout)    :: self       !< Test.
+  type(pyplot)                  :: plt        !< Plot handler.
+  character(len=:), allocatable :: title      !< Plot title
+  character(len=:), allocatable :: output_dir !< Output directory.
+  integer(I_P)                  :: file_unit  !< File unit.
+  integer(I_P)                  :: s          !< Counter.
+  integer(I_P)                  :: pn         !< Counter.
+  integer(I_P)                  :: i          !< Counter.
+
+  output_dir = ''
+  if ((self%results.or.self%plots).and.self%output_dir) then
+    output_dir = trim(self%output_bname)//'_output/'
+    call execute_command_line('mkdir -p '//output_dir)
+  endif
 
   if (self%results) then
-    open(newunit=file_unit, file=trim(self%output_bname)//'.dat')
+    open(newunit=file_unit, file=output_dir//trim(self%output_bname)//'.dat')
     write(file_unit, "(A)") 'VARIABLES = "x" "sin(x)" "weno_interpolation"'
     do s=1, self%S_number
       do pn=1, self%pn_number
@@ -271,7 +281,7 @@ contains
     close(file_unit)
 
     if (self%errors_analysis.and.self%pn_number>1) then
-      open(newunit=file_unit, file=trim(self%output_bname)//'-accuracy.dat')
+      open(newunit=file_unit, file=output_dir//trim(self%output_bname)//'-accuracy.dat')
       write(file_unit, "(A)") 'VARIABLES = "S" "Np" "error (L2)" "observed order"'
       do s=1, self%S_number
         do pn=1, self%pn_number - 1
@@ -284,6 +294,7 @@ contains
       close(file_unit)
     endif
   endif
+
   if (self%plots) then
     do s=1, self%S_number
       do pn=1, self%pn_number
@@ -302,7 +313,7 @@ contains
                           linestyle='ro',                          &
                           markersize=6,                            &
                           ylim=[-1.1_R_P, 1.1_R_P])
-        call plt%savefig('sin_reconstruction'//&
+        call plt%savefig(output_dir//'sin_reconstruction'//&
                          '-S_'//trim(str(self%S(s), .true.))//'-Np_'//trim(str(self%points_number(pn), .true.))//'.png')
       enddo
     enddo
