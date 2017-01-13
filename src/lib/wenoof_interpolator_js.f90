@@ -138,7 +138,7 @@ contains
   enddo
 
   ! computing the convolution
-  interpolation = 0.
+  interpolation = 0._R_P
   do k = 0, S - 1 ! stencils loop
     do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
       interpolation(f + ff) = interpolation(f + ff) + weights(f, k) * self%polynom%poly(f, k)
