@@ -39,11 +39,13 @@ type, extends(base_object) :: interpolator
   class(polynomials),           allocatable :: polynom !< Polynomilas.
   contains
     ! public deferred methods
-    procedure, nopass     :: description !< Return interpolator string-description.
-    procedure, pass(self) :: interpolate !< Interpolate values.
+    procedure, nopass     :: description          !< Return interpolator string-description.
+    procedure, pass(self) :: interpolate_standard !< Interpolate values (without providing debug values).
+    procedure, pass(self) :: interpolate_debug    !< Interpolate values (providing also debug values).
     ! public methods
-    procedure, pass(self) :: create  !< Create interpolator.
-    procedure, pass(self) :: destroy !< Destroy interpolator.
+    generic               :: interpolate => interpolate_standard, interpolate_debug !< Interpolate values.
+    procedure, pass(self) :: create                                                 !< Create interpolator.
+    procedure, pass(self) :: destroy                                                !< Destroy interpolator.
 endtype interpolator
 
 contains
@@ -88,8 +90,8 @@ contains
 #endif
   endfunction description
 
-  pure subroutine interpolate(self, S, stencil, location, interpolation)
-  !< Interpolate values.
+  pure subroutine interpolate_standard(self, S, stencil, location, interpolation)
+  !< Interpolate values (without providing debug values).
   class(interpolator), intent(inout) :: self                  !< Interpolator.
   integer(I_P),        intent(in)    :: S                     !< Number of stencils actually used.
   real(R_P),           intent(in)    :: stencil(1:, 1 - S:)   !< Stencil of the interpolation [1:2, 1-S:-1+S].
@@ -100,7 +102,22 @@ contains
   ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
   error stop 'interpolator%interpolate to be implemented by your concrete interpolator object'
 #endif
-  endsubroutine interpolate
+  endsubroutine interpolate_standard
+
+  pure subroutine interpolate_debug(self, S, stencil, location, interpolation, si)
+  !< Interpolate values (without providing debug values).
+  class(interpolator), intent(inout) :: self                !< Interpolator.
+  integer(I_P),        intent(in)    :: S                   !< Number of stencils actually used.
+  real(R_P),           intent(in)    :: stencil(1:, 1 - S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
+  character(*),        intent(in)    :: location            !< Location of interpolation: left, right, both.
+  real(R_P),           intent(out)   :: interpolation(1:)   !< Result of the interpolation, [1:2].
+  real(R_P),           intent(out)   :: si(1:, 0:)          !< Computed values of smoothness indicators [1:2, 0:S-1].
+
+#ifndef DEBUG
+  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
+  error stop 'interpolator%interpolate to be implemented by your concrete interpolator object'
+#endif
+  endsubroutine interpolate_debug
 
   ! public methods
   subroutine create(self, constructor)

@@ -25,6 +25,7 @@ type :: solution_data
   real(R_P), allocatable :: x_face(:)        !< Face domain [1:points_number].
   real(R_P), allocatable :: fx_face(:)       !< Face reference values [1:points_number].
   real(R_P), allocatable :: interpolation(:) !< Interpolated values [1:points_number].
+  real(R_P), allocatable :: si(:,:)          !< Computed smoothness indicators [1:points_number,0:S-1].
   real(R_P)              :: error_L2         !< L2 norm of the numerical error.
 endtype solution_data
 
@@ -98,16 +99,18 @@ contains
   endif
   do s=1, self%S_number
     do pn=1, self%pn_number
-      allocate(self%solution(pn, s)%x_cell( 1-self%S(s):self%points_number(pn)+self%S(s)))
-      allocate(self%solution(pn, s)%fx_cell(1-self%S(s):self%points_number(pn)+self%S(s)))
-      allocate(self%solution(pn, s)%x_face(           1:self%points_number(pn)          ))
-      allocate(self%solution(pn, s)%fx_face(          1:self%points_number(pn)          ))
-      allocate(self%solution(pn, s)%interpolation(    1:self%points_number(pn)          ))
+      allocate(self%solution(pn, s)%x_cell( 1-self%S(s):self%points_number(pn)+self%S(s)              ))
+      allocate(self%solution(pn, s)%fx_cell(1-self%S(s):self%points_number(pn)+self%S(s)              ))
+      allocate(self%solution(pn, s)%x_face(           1:self%points_number(pn)                        ))
+      allocate(self%solution(pn, s)%fx_face(          1:self%points_number(pn)                        ))
+      allocate(self%solution(pn, s)%interpolation(    1:self%points_number(pn)                        ))
+      allocate(self%solution(pn, s)%si(               1:self%points_number(pn),          0:self%S(s)-1))
       self%solution(pn, s)%x_cell        = 0._R_P
       self%solution(pn, s)%fx_cell       = 0._R_P
       self%solution(pn, s)%x_face        = 0._R_P
       self%solution(pn, s)%fx_face       = 0._R_P
       self%solution(pn, s)%interpolation = 0._R_P
+      self%solution(pn, s)%si            = 0._R_P
     enddo
   enddo
   endsubroutine allocate_solution_data
@@ -245,7 +248,8 @@ contains
                                            stencil=reshape(source=self%solution(pn, s)%fx_cell(i+1-self%S(s):i-1+self%S(s)), &
                                                            shape=[1,2*self%S(s)-1]),                                         &
                                            location='right',                                                                 &
-                                           interpolation=self%solution(pn, s)%interpolation(i:i))
+                                           interpolation=self%solution(pn, s)%interpolation(i:i),                            &
+                                           si=self%solution(pn, s)%si(i:i, 0:self%S(s)-1))
       enddo
     enddo
   enddo
@@ -257,33 +261,40 @@ contains
   !< Save results and plots.
   class(test), intent(inout)    :: self       !< Test.
   type(pyplot)                  :: plt        !< Plot handler.
-  character(len=:), allocatable :: title      !< Plot title
+  character(len=:), allocatable :: buffer     !< Buffer string.
   character(len=:), allocatable :: output_dir !< Output directory.
   character(len=:), allocatable :: file_bname !< File base name.
   integer(I_P)                  :: file_unit  !< File unit.
   integer(I_P)                  :: s          !< Counter.
   integer(I_P)                  :: pn         !< Counter.
   integer(I_P)                  :: i          !< Counter.
+  integer(I_P)                  :: ss         !< Counter.
 
   output_dir = trim(adjustl(self%output_dir))//'/'
   if (self%results.or.self%plots) call execute_command_line('mkdir -p '//output_dir)
   file_bname = output_dir//trim(adjustl(self%output_bname))//'-'//trim(adjustl(self%interpolator_type))
 
   if (self%results) then
-    open(newunit=file_unit, file=file_bname//'.dat')
-    write(file_unit, "(A)") 'VARIABLES = "x" "sin(x)" "weno_interpolation"'
     do s=1, self%S_number
+      open(newunit=file_unit, file=file_bname//'-S_'//trim(str(self%S(s), .true.))//'.dat')
+      buffer = 'VARIABLES = "x" "sin(x)" "weno_interpolation"'
+      do ss=0, self%S(s)-1
+        buffer = buffer//' "si-'//trim(str(ss, .true.))//'"'
+      enddo
+      write(file_unit, "(A)") buffer
       do pn=1, self%pn_number
         write(file_unit, "(A)") 'ZONE T = "'//'S_'//trim(str(self%S(s), .true.))//&
                                               '-Np_'//trim(str(self%points_number(pn), .true.))//'"'
         do i = 1, self%points_number(pn)
-          write(file_unit, "(3("//FR_P//",1X))") self%solution(pn, s)%x_face(i),  &
-                                                 self%solution(pn, s)%fx_face(i), &
-                                                 self%solution(pn, s)%interpolation(i)
+          write(file_unit, "("//trim(str(3+self%S(s), .true.))//"("//FR_P//",1X))") &
+             self%solution(pn, s)%x_face(i),        &
+             self%solution(pn, s)%fx_face(i),       &
+             self%solution(pn, s)%interpolation(i), &
+            (self%solution(pn, s)%si(i, ss), ss=0, self%S(s)-1)
         enddo
       enddo
+      close(file_unit)
     enddo
-    close(file_unit)
 
     if (self%errors_analysis.and.self%pn_number>1) then
       open(newunit=file_unit, file=file_bname//'-accuracy.dat')
@@ -303,9 +314,9 @@ contains
   if (self%plots) then
     do s=1, self%S_number
       do pn=1, self%pn_number
-        title = 'WENO interpolation of $\sin(x)$; '//&
-                'S='//trim(str(self%S(s), .true.))//'Np='//trim(str(self%points_number(pn), .true.))
-        call plt%initialize(grid=.true., xlabel='angle (rad)', title=title, legend=.true.)
+        buffer = 'WENO interpolation of $\sin(x)$; '//&
+                 'S='//trim(str(self%S(s), .true.))//'Np='//trim(str(self%points_number(pn), .true.))
+        call plt%initialize(grid=.true., xlabel='angle (rad)', title=buffer, legend=.true.)
         call plt%add_plot(x=self%solution(pn, s)%x_face(:),  &
                           y=self%solution(pn, s)%fx_face(:), &
                           label='$\sin(x)$',                 &

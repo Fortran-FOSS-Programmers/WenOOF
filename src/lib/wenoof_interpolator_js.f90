@@ -46,8 +46,9 @@ type, extends(interpolator) :: interpolator_js
   real(R_P)    :: eps = 0._R_P !< Parameter for avoiding divisiion by zero.
   contains
     ! public deferred methods
-    procedure, nopass     :: description !< Return interpolator string-description.
-    procedure, pass(self) :: interpolate !< Interpolate values.
+    procedure, nopass     :: description          !< Return interpolator string-description.
+    procedure, pass(self) :: interpolate_standard !< Interpolate values (without providing debug values).
+    procedure, pass(self) :: interpolate_debug    !< Interpolate values (providing also debug values).
     ! public methods
     procedure, pass(self) :: create  !< Create interpolator.
     procedure, pass(self) :: destroy !< Destroy interpolator.
@@ -104,8 +105,8 @@ contains
   ! string = string//self%weights%description()
   endfunction description
 
-  pure subroutine interpolate(self, S, stencil, location, interpolation)
-  !< Interpolate values.
+  pure subroutine interpolate_standard(self, S, stencil, location, interpolation)
+  !< Interpolate values (without providing debug values).
   class(interpolator_js), intent(inout) :: self                  !< Interpolator.
   integer(I_P),           intent(in)    :: S                     !< Number of stencils actually used.
   real(R_P),              intent(in)    :: stencil(1:, 1 - S:)   !< Stencil of the interpolation [1:2, 1-S:-1+S].
@@ -144,7 +145,38 @@ contains
       interpolation(f + ff) = interpolation(f + ff) + weights(f, k) * self%polynom%poly(f, k)
     enddo
   enddo
-  endsubroutine interpolate
+  endsubroutine interpolate_standard
+
+  pure subroutine interpolate_debug(self, S, stencil, location, interpolation, si)
+  !< Interpolate values (without providing debug values).
+  class(interpolator_js), intent(inout) :: self                !< Interpolator.
+  integer(I_P),           intent(in)    :: S                   !< Number of stencils actually used.
+  real(R_P),              intent(in)    :: stencil(1:, 1 - S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
+  character(*),           intent(in)    :: location            !< Location of interpolation: left, right, both.
+  real(R_P),              intent(out)   :: interpolation(1:)   !< Result of the interpolation, [1:2].
+  real(R_P),              intent(out)   :: si(1:, 0:)          !< Computed values of smoothness indicators [1:2, 0:S-1].
+  integer(I_P)                          :: f1, f2, ff          !< Faces to be computed.
+  integer(I_P)                          :: f                   !< Counter.
+
+  select case(location)
+  case('both', 'b')
+    f1=1_I_P; f2=2_I_P; ff=0_I_P
+  case('left', 'l')
+    f1=1_I_P; f2=1_I_P; ff=0_I_P
+  case('right', 'r')
+    f1=2_I_P; f2=2_I_P; ff=-1_I_P
+  endselect
+
+  call self%interpolate_standard(S=S, stencil=stencil, location=location, interpolation=interpolation)
+  associate(is => self%is)
+    select type(is)
+    class is(smoothness_indicators)
+      do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+        si(f + ff, :) = is%si(f, :)
+      enddo
+    endselect
+  endassociate
+  endsubroutine interpolate_debug
 
   ! overridden methods
   subroutine create(self, constructor)
