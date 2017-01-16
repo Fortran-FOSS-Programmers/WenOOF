@@ -39,13 +39,14 @@ type :: test
   integer(I_P)                     :: error=0                 !< Error handler.
   character(99)                    :: interpolator_type='JS'  !< Interpolator used.
   character(99)                    :: output_bname='unset'    !< Output files basename.
+  character(99)                    :: output_dir=''           !< Output directory.
   integer(I_P)                     :: pn_number               !< Number of different points-number tested.
   integer(I_P), allocatable        :: points_number(:)        !< Points number used to discretize the domain.
   integer(I_P)                     :: S_number                !< Number of different stencils tested.
   integer(I_P), allocatable        :: S(:)                    !< Stencils used.
+  real(R_P)                        :: eps                     !< Smal episol to avoid zero-division.
   type(solution_data), allocatable :: solution(:,:)           !< Solution [1:pn_number, 1:S_number].
   real(R_P), allocatable           :: accuracy(:,:)           !< Accuracy (measured) [1:pn_number-1, 1:S_number].
-  logical                          :: output_dir=.false.      !< Flag for activating output directory creation.
   logical                          :: errors_analysis=.false. !< Flag for activating errors analysis.
   logical                          :: plots=.false.           !< Flag for activating plots saving.
   logical                          :: results=.false.         !< Flag for activating results saving.
@@ -92,7 +93,7 @@ contains
   self%S_number = size(self%S, dim=1)
   allocate(self%solution(1:self%pn_number, 1:self%S_number))
   if (self%pn_number>1) then
-    allocate(self%accuracy(1:self%pn_number-1, 1:self%S_number))
+    allocate(self%accuracy(1:self%pn_number, 1:self%S_number))
     self%accuracy = 0._R_P
   endif
   do s=1, self%S_number
@@ -167,7 +168,8 @@ contains
                    required=.false., act='store', def='50')
       call cli%add(switch='--stencils', switch_ab='-s', nargs='+', help='Stencils dimensions (and number)', &
                    required=.false., act='store', def='2', choices='2, 3, 4, 5, 6, 7, 8, 9')
-      call cli%add(switch='--output_dir', help='Create an output directory', required=.false., act='store_true', def='.false.')
+      call cli%add(switch='--eps', help='Small epsilon to avoid zero-division', required=.false., act='store', def='1.e-6')
+      call cli%add(switch='--output_dir', help='Output directory', required=.false., act='store', def='./')
       call cli%add(switch='--results', switch_ab='-r', help='Save results', required=.false., act='store_true', def='.false.')
       call cli%add(switch='--plots', switch_ab='-p', help='Save plots', required=.false., act='store_true', def='.false.')
       call cli%add(switch='--output', help='Output files basename', required=.false., act='store', def='sin_reconstruction')
@@ -183,6 +185,7 @@ contains
     call self%cli%get(switch='-i', val=self%interpolator_type, error=self%error) ; if (self%error/=0) stop
     call self%cli%get_varying(switch='-pn', val=self%points_number, error=self%error) ; if (self%error/=0) stop
     call self%cli%get_varying(switch='-s', val=self%S, error=self%error) ; if (self%error/=0) stop
+    call self%cli%get(switch='--eps', val=self%eps, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='--output_dir', val=self%output_dir, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='-r', val=self%results, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='-p', val=self%plots, error=self%error) ; if (self%error/=0) stop
@@ -232,7 +235,10 @@ contains
 
   call self%compute_reference_solution
   do s=1, self%S_number
-    call wenoof_create(interpolator_type=trim(adjustl(self%interpolator_type)), S=self%S(s), wenoof_interpolator=weno_interpolator)
+    call wenoof_create(interpolator_type=trim(adjustl(self%interpolator_type)), &
+                       S=self%S(s),                                             &
+                       eps=self%eps,                                            &
+                       wenoof_interpolator=weno_interpolator)
     do pn=1, self%pn_number
       do i=1, self%points_number(pn)
         call weno_interpolator%interpolate(S=self%S(s),                                                                      &
@@ -253,42 +259,41 @@ contains
   type(pyplot)                  :: plt        !< Plot handler.
   character(len=:), allocatable :: title      !< Plot title
   character(len=:), allocatable :: output_dir !< Output directory.
+  character(len=:), allocatable :: file_bname !< File base name.
   integer(I_P)                  :: file_unit  !< File unit.
   integer(I_P)                  :: s          !< Counter.
   integer(I_P)                  :: pn         !< Counter.
   integer(I_P)                  :: i          !< Counter.
 
-  output_dir = ''
-  if ((self%results.or.self%plots).and.self%output_dir) then
-    output_dir = trim(self%output_bname)//'_output/'
-    call execute_command_line('mkdir -p '//output_dir)
-  endif
+  output_dir = trim(adjustl(self%output_dir))//'/'
+  if (self%results.or.self%plots) call execute_command_line('mkdir -p '//output_dir)
+  file_bname = output_dir//trim(adjustl(self%output_bname))//'-'//trim(adjustl(self%interpolator_type))
 
   if (self%results) then
-    open(newunit=file_unit, file=output_dir//trim(self%output_bname)//'.dat')
+    open(newunit=file_unit, file=file_bname//'.dat')
     write(file_unit, "(A)") 'VARIABLES = "x" "sin(x)" "weno_interpolation"'
     do s=1, self%S_number
       do pn=1, self%pn_number
         write(file_unit, "(A)") 'ZONE T = "'//'S_'//trim(str(self%S(s), .true.))//&
                                               '-Np_'//trim(str(self%points_number(pn), .true.))//'"'
         do i = 1, self%points_number(pn)
-          write(file_unit, "(A)") str(n=self%solution(pn, s)%x_face(i))//' '// &
-                                  str(n=self%solution(pn, s)%fx_face(i))//' '//&
-                                  str(n=self%solution(pn, s)%interpolation(i))
+          write(file_unit, "(3("//FR_P//",1X))") self%solution(pn, s)%x_face(i),  &
+                                                 self%solution(pn, s)%fx_face(i), &
+                                                 self%solution(pn, s)%interpolation(i)
         enddo
       enddo
     enddo
     close(file_unit)
 
     if (self%errors_analysis.and.self%pn_number>1) then
-      open(newunit=file_unit, file=output_dir//trim(self%output_bname)//'-accuracy.dat')
+      open(newunit=file_unit, file=file_bname//'-accuracy.dat')
       write(file_unit, "(A)") 'VARIABLES = "S" "Np" "error (L2)" "observed order"'
       do s=1, self%S_number
-        do pn=1, self%pn_number - 1
-          write(file_unit, "(A)") trim(str(self%S(s), .true.))//' '//&
-                                  trim(str(self%points_number(pn+1), .true.))//' '//&
-                                  trim(str(self%solution(pn+1, s)%error_L2))//' '//&
-                                  trim(str(self%accuracy(pn, s)))
+        do pn=1, self%pn_number
+          write(file_unit, "(2(I5,1X),2("//FR_P//",1X))") self%S(s),                     &
+                                                          self%points_number(pn),        &
+                                                          self%solution(pn, s)%error_L2, &
+                                                          self%accuracy(pn, s)
         enddo
       enddo
       close(file_unit)
@@ -313,7 +318,7 @@ contains
                           linestyle='ro',                          &
                           markersize=6,                            &
                           ylim=[-1.1_R_P, 1.1_R_P])
-        call plt%savefig(output_dir//'sin_reconstruction'//&
+        call plt%savefig(file_bname//&
                          '-S_'//trim(str(self%S(s), .true.))//'-Np_'//trim(str(self%points_number(pn), .true.))//'.png')
       enddo
     enddo
@@ -343,9 +348,9 @@ contains
     enddo
     if (self%pn_number>1) then
       do s=1, self%S_number
-        do pn=1, self%pn_number-1
-          self%accuracy(pn, s) = log(self%solution(pn, s)%error_L2 / self%solution(pn + 1, s)%error_L2) / &
-                                 log((1._R_P*self%points_number(pn)) / self%points_number(pn + 1))
+        do pn=2, self%pn_number
+          self%accuracy(pn, s) = log(self%solution(pn - 1, s)%error_L2 / self%solution(pn, s)%error_L2) / &
+                                 log((1._R_P*self%points_number(pn)) / self%points_number(pn - 1))
         enddo
       enddo
     endif
