@@ -276,13 +276,14 @@ contains
 
   if (self%results) then
     do s=1, self%S_number
-      open(newunit=file_unit, file=file_bname//'-S_'//trim(str(self%S(s), .true.))//'.dat')
-      buffer = 'VARIABLES = "x" "sin(x)" "weno_interpolation"'
-      do ss=0, self%S(s)-1
-        buffer = buffer//' "si-'//trim(str(ss, .true.))//'"'
-      enddo
-      write(file_unit, "(A)") buffer
       do pn=1, self%pn_number
+        open(newunit=file_unit, file=file_bname//'-S_'//trim(str(self%S(s), .true.))//&
+                                     '-Np_'//trim(str(self%points_number(pn), .true.))//'.dat')
+        buffer = 'VARIABLES = "x" "sin(x)" "weno_interpolation"'
+        do ss=0, self%S(s)-1
+          buffer = buffer//' "si-'//trim(str(ss, .true.))//'"'
+        enddo
+        write(file_unit, "(A)") buffer
         write(file_unit, "(A)") 'ZONE T = "'//'S_'//trim(str(self%S(s), .true.))//&
                                               '-Np_'//trim(str(self%points_number(pn), .true.))//'"'
         do i = 1, self%points_number(pn)
@@ -292,8 +293,8 @@ contains
              self%solution(pn, s)%interpolation(i), &
             (self%solution(pn, s)%si(i, ss), ss=0, self%S(s)-1)
         enddo
+        close(file_unit)
       enddo
-      close(file_unit)
     enddo
 
     if (self%errors_analysis.and.self%pn_number>1) then
