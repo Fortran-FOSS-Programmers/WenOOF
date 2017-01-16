@@ -52,6 +52,9 @@ type, extends(interpolator) :: interpolator_js
     ! public methods
     procedure, pass(self) :: create  !< Create interpolator.
     procedure, pass(self) :: destroy !< Destroy interpolator.
+    ! private methods
+    procedure, pass(self), private :: compute_convolution !< Compute convolution.
+    procedure, pass(self), private :: compute_weights     !< Compute weights.
 endtype interpolator_js
 
 contains
@@ -116,58 +119,43 @@ contains
   integer(I_P)                          :: f1, f2, ff            !< Faces to be computed.
   integer(I_P)                          :: f, k                  !< Counters.
 
-  select case(location)
-  case('both', 'b')
-    f1=1_I_P; f2=2_I_P; ff=0_I_P
-  case('left', 'l')
-    f1=1_I_P; f2=1_I_P; ff=0_I_P
-  case('right', 'r')
-    f1=2_I_P; f2=2_I_P; ff=-1_I_P
-  endselect
+  call compute_faces_indexes(location=location, f1=f1, f2=f2, ff=ff)
 
   call self%polynom%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
 
   call self%is%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
 
-  call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS = self%IS%si, eps = self%eps, f1=f1, f2=f2)
+  call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS=self%IS%si, eps=self%eps, f1=f1, f2=f2)
 
-  ! computing the weights
-  do k = 0, S - 1 ! stencils loop
-    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      weights(f, k) = self%alpha%alpha_coef(f, k) / self%alpha%alpha_tot(f)
-    enddo
-  enddo
+  call self%compute_weights(S=S, f1=f1, f2=f2, ff=ff, weights=weights)
 
-  ! computing the convolution
-  interpolation = 0._R_P
-  do k = 0, S - 1 ! stencils loop
-    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      interpolation(f + ff) = interpolation(f + ff) + weights(f, k) * self%polynom%poly(f, k)
-    enddo
-  enddo
+  call self%compute_convolution(S=S, f1=f1, f2=f2, ff=ff, weights=weights, interpolation=interpolation)
   endsubroutine interpolate_standard
 
-  pure subroutine interpolate_debug(self, S, stencil, location, interpolation, si)
-  !< Interpolate values (without providing debug values).
+  pure subroutine interpolate_debug(self, S, stencil, location, interpolation, si, weights)
+  !< Interpolate values (providing also debug values).
   class(interpolator_js), intent(inout) :: self                !< Interpolator.
   integer(I_P),           intent(in)    :: S                   !< Number of stencils actually used.
   real(R_P),              intent(in)    :: stencil(1:, 1 - S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
   character(*),           intent(in)    :: location            !< Location of interpolation: left, right, both.
   real(R_P),              intent(out)   :: interpolation(1:)   !< Result of the interpolation, [1:2].
   real(R_P),              intent(out)   :: si(1:, 0:)          !< Computed values of smoothness indicators [1:2, 0:S-1].
+  real(R_P),              intent(out)   :: weights(1:, 0:)     !< Weights of the stencils, [1:2, 0:S-1].
   integer(I_P)                          :: f1, f2, ff          !< Faces to be computed.
-  integer(I_P)                          :: f                   !< Counter.
+  integer(I_P)                          :: f, k                !< Counters.
 
-  select case(location)
-  case('both', 'b')
-    f1=1_I_P; f2=2_I_P; ff=0_I_P
-  case('left', 'l')
-    f1=1_I_P; f2=1_I_P; ff=0_I_P
-  case('right', 'r')
-    f1=2_I_P; f2=2_I_P; ff=-1_I_P
-  endselect
+  call compute_faces_indexes(location=location, f1=f1, f2=f2, ff=ff)
 
-  call self%interpolate_standard(S=S, stencil=stencil, location=location, interpolation=interpolation)
+  call self%polynom%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
+
+  call self%is%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
+
+  call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS=self%IS%si, eps=self%eps, f1=f1, f2=f2)
+
+  call self%compute_weights(S=S, f1=f1, f2=f2, ff=ff, weights=weights)
+
+  call self%compute_convolution(S=S, f1=f1, f2=f2, ff=ff, weights=weights, interpolation=interpolation)
+
   associate(is => self%is)
     select type(is)
     class is(smoothness_indicators)
@@ -201,4 +189,53 @@ contains
   self%S = 0_I_P
   self%eps = 0._R_P
   endsubroutine destroy
+
+  ! private methods
+  pure subroutine compute_convolution(self, S, f1, f2, ff, weights, interpolation)
+  !< Compute convolution.
+  class(interpolator_js), intent(in)  :: self              !< Interpolator.
+  integer(I_P),           intent(in)  :: S                 !< Number of stencils actually used.
+  integer(I_P),           intent(in)  :: f1, f2, ff        !< Faces to be computed.
+  real(R_P),              intent(in)  :: weights(1:, 0:)   !< Weights of the stencils, [1:2, 0:S-1].
+  real(R_P),              intent(out) :: interpolation(1:) !< Result of the interpolation, [1:2].
+  integer(I_P)                        :: f, k              !< Counters.
+
+  interpolation = 0._R_P
+  do k = 0, S - 1 ! stencils loop
+    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      interpolation(f + ff) = interpolation(f + ff) + weights(f + ff, k) * self%polynom%poly(f, k)
+    enddo
+  enddo
+  endsubroutine compute_convolution
+
+  pure subroutine compute_weights(self, S, f1, f2, ff, weights)
+  !< Compute weights.
+  class(interpolator_js), intent(in)  :: self            !< Interpolator.
+  integer(I_P),           intent(in)  :: S               !< Number of stencils actually used.
+  integer(I_P),           intent(in)  :: f1, f2, ff      !< Faces to be computed.
+  real(R_P),              intent(out) :: weights(1:, 0:) !< Weights of the stencils, [1:2, 0:S-1].
+  integer(I_P)                        :: f, k            !< Counters.
+
+  do k = 0, S - 1 ! stencils loop
+    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      weights(f + ff, k) = self%alpha%alpha_coef(f, k) / self%alpha%alpha_tot(f)
+    enddo
+  enddo
+  endsubroutine compute_weights
+
+  ! private non TBP
+  pure subroutine compute_faces_indexes(location, f1, f2, ff)
+  !< Compute faces indexes given the queried location.
+  character(*), intent(in)  :: location   !< Location of interpolation: left, right, both.
+  integer(I_P), intent(out) :: f1, f2, ff !< Faces to be computed.
+
+  select case(location)
+  case('both', 'b')
+    f1=1_I_P; f2=2_I_P; ff=0_I_P
+  case('left', 'l')
+    f1=1_I_P; f2=1_I_P; ff=0_I_P
+  case('right', 'r')
+    f1=2_I_P; f2=2_I_P; ff=-1_I_P
+  endselect
+  endsubroutine compute_faces_indexes
 endmodule wenoof_interpolator_js

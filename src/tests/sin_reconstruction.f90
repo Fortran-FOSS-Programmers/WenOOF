@@ -26,6 +26,7 @@ type :: solution_data
   real(R_P), allocatable :: fx_face(:)       !< Face reference values [1:points_number].
   real(R_P), allocatable :: interpolation(:) !< Interpolated values [1:points_number].
   real(R_P), allocatable :: si(:,:)          !< Computed smoothness indicators [1:points_number,0:S-1].
+  real(R_P), allocatable :: weights(:,:)     !< Computed weights [1:points_number,0:S-1].
   real(R_P)              :: error_L2         !< L2 norm of the numerical error.
 endtype solution_data
 
@@ -105,12 +106,14 @@ contains
       allocate(self%solution(pn, s)%fx_face(          1:self%points_number(pn)                        ))
       allocate(self%solution(pn, s)%interpolation(    1:self%points_number(pn)                        ))
       allocate(self%solution(pn, s)%si(               1:self%points_number(pn),          0:self%S(s)-1))
+      allocate(self%solution(pn, s)%weights(          1:self%points_number(pn),          0:self%S(s)-1))
       self%solution(pn, s)%x_cell        = 0._R_P
       self%solution(pn, s)%fx_cell       = 0._R_P
       self%solution(pn, s)%x_face        = 0._R_P
       self%solution(pn, s)%fx_face       = 0._R_P
       self%solution(pn, s)%interpolation = 0._R_P
       self%solution(pn, s)%si            = 0._R_P
+      self%solution(pn, s)%weights       = 0._R_P
     enddo
   enddo
   endsubroutine allocate_solution_data
@@ -249,7 +252,8 @@ contains
                                                            shape=[1,2*self%S(s)-1]),                                         &
                                            location='right',                                                                 &
                                            interpolation=self%solution(pn, s)%interpolation(i:i),                            &
-                                           si=self%solution(pn, s)%si(i:i, 0:self%S(s)-1))
+                                           si=self%solution(pn, s)%si(i:i, 0:self%S(s)-1),                                   &
+                                           weights=self%solution(pn, s)%weights(i:i, 0:self%S(s)-1))
       enddo
     enddo
   enddo
@@ -283,15 +287,19 @@ contains
         do ss=0, self%S(s)-1
           buffer = buffer//' "si-'//trim(str(ss, .true.))//'"'
         enddo
+        do ss=0, self%S(s)-1
+          buffer = buffer//' "W-'//trim(str(ss, .true.))//'"'
+        enddo
         write(file_unit, "(A)") buffer
         write(file_unit, "(A)") 'ZONE T = "'//'S_'//trim(str(self%S(s), .true.))//&
                                               '-Np_'//trim(str(self%points_number(pn), .true.))//'"'
         do i = 1, self%points_number(pn)
-          write(file_unit, "("//trim(str(3+self%S(s), .true.))//"("//FR_P//",1X))") &
-             self%solution(pn, s)%x_face(i),        &
-             self%solution(pn, s)%fx_face(i),       &
-             self%solution(pn, s)%interpolation(i), &
-            (self%solution(pn, s)%si(i, ss), ss=0, self%S(s)-1)
+          write(file_unit, "("//trim(str(3+2*self%S(s), .true.))//"("//FR_P//",1X))") &
+             self%solution(pn, s)%x_face(i),                     &
+             self%solution(pn, s)%fx_face(i),                    &
+             self%solution(pn, s)%interpolation(i),              &
+            (self%solution(pn, s)%si(i, ss), ss=0, self%S(s)-1), &
+            (self%solution(pn, s)%weights(i, ss), ss=0, self%S(s)-1)
         enddo
         close(file_unit)
       enddo

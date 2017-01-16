@@ -104,14 +104,15 @@ contains
 #endif
   endsubroutine interpolate_standard
 
-  pure subroutine interpolate_debug(self, S, stencil, location, interpolation, si)
-  !< Interpolate values (without providing debug values).
+  pure subroutine interpolate_debug(self, S, stencil, location, interpolation, si, weights)
+  !< Interpolate values (providing also debug values).
   class(interpolator), intent(inout) :: self                !< Interpolator.
   integer(I_P),        intent(in)    :: S                   !< Number of stencils actually used.
   real(R_P),           intent(in)    :: stencil(1:, 1 - S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
   character(*),        intent(in)    :: location            !< Location of interpolation: left, right, both.
   real(R_P),           intent(out)   :: interpolation(1:)   !< Result of the interpolation, [1:2].
   real(R_P),           intent(out)   :: si(1:, 0:)          !< Computed values of smoothness indicators [1:2, 0:S-1].
+  real(R_P),           intent(out)   :: weights(1:, 0:)     !< Weights of the stencils, [1:2, 0:S-1].
 
 #ifndef DEBUG
   ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
