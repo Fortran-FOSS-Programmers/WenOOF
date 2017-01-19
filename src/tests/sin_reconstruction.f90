@@ -12,10 +12,10 @@ implicit none
 private
 public :: test
 
-character(99), parameter :: interpolators(1:4) = ["all ", &
-                                                  "JS  ", &
-                                                  "JS-Z", &
-                                                  "JS-M"] !< List of available interpolators.
+character(99), parameter :: interpolators(1:4) = ["all             ", &
+                                                  "reconstructor-JS", &
+                                                  "JS-Z            ", &
+                                                  "JS-M            "] !< List of available interpolators.
 real(R_P), parameter     :: pi = 4._R_P * atan(1._R_P)  !< Pi greek.
 
 type :: solution_data
@@ -180,7 +180,8 @@ contains
                                    "sin_reconstruction --interpolator JS-Z -r     ",    &
                                    "sin_reconstruction --interpolator JS-M        ",    &
                                    "sin_reconstruction --interpolator all -p -r   "])
-      call cli%add(switch='--interpolator', switch_ab='-i', help='WENO interpolator type', required=.false., def='JS', act='store')
+      call cli%add(switch='--interpolator', switch_ab='-i', help='WENO interpolator type', required=.false., &
+                   def='reconstructor-JS', act='store', choices='all,reconstructor-JS')
       call cli%add(switch='--points_number', switch_ab='-pn', nargs='+', help='Number of points used to discretize the domain', &
                    required=.false., act='store', def='50')
       call cli%add(switch='--stencils', switch_ab='-s', nargs='+', help='Stencils dimensions (and number)', &
@@ -208,36 +209,7 @@ contains
     call self%cli%get(switch='-p', val=self%plots, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='--output', val=self%output_bname, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='--errors_analysis', val=self%errors_analysis, error=self%error) ; if (self%error/=0) stop
-
-    if (.not.is_interpolator_valid()) then
-      print "(A)", 'error: the interpolator type "'//trim(adjustl(self%interpolator_type))//'" is unknown!'
-      print "(A)", list_interpolators()
-      stop
-    endif
     endsubroutine parse_cli
-
-    function is_interpolator_valid()
-    !< Verify if the selected interpolator is valid.
-    logical      :: is_interpolator_valid !< Return true is the selected interpolator is available.
-    integer(I_P) :: s                   !< Counter.
-
-    is_interpolator_valid = .false.
-    do s=1, size(interpolators, dim=1)
-      is_interpolator_valid = (trim(adjustl(self%interpolator_type))==trim(adjustl(interpolators(s))))
-      if (is_interpolator_valid) exit
-    enddo
-    endfunction is_interpolator_valid
-
-    function list_interpolators() result(list)
-    !< List available solvers.
-    character(len=:), allocatable :: list !< Pretty printed list of available interpolators.
-    integer(I_P)                  :: s    !< Counter.
-
-    list = 'Valid interpolator names are:' // new_line('a')
-    do s=1, ubound(interpolators, dim=1)
-      list = list // '  + ' // trim(adjustl(interpolators(s))) // new_line('a')
-    enddo
-    endfunction list_interpolators
   endsubroutine initialize
 
   subroutine perform(self)

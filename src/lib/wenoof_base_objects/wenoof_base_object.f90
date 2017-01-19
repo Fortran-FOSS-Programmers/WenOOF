@@ -20,7 +20,7 @@ type, abstract :: base_object
   contains
     ! deferred public methods
     procedure(create_interface),      pass(self), deferred :: create      !< Create object.
-    procedure(description_interface), nopass,     deferred :: description !< Return object string-description.
+    procedure(description_interface), pass(self), deferred :: description !< Return object string-description.
     procedure(destroy_interface),     pass(self), deferred :: destroy     !< Destroy object.
 endtype base_object
 
@@ -37,8 +37,10 @@ abstract interface
   class(base_object_constructor),  intent(in)    :: constructor !< Object constructor.
   endsubroutine create_interface
 
-  pure function description_interface() result(string)
+  pure function description_interface(self) result(string)
   !< Return object string-description.
+  import :: base_object
+  class(base_object), intent(in) :: self   !< Object.
   character(len=:), allocatable  :: string !< String-description.
   endfunction description_interface
 

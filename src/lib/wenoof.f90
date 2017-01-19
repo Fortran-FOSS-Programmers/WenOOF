@@ -13,6 +13,7 @@ use wenoof_optimal_weights
 use wenoof_optimal_weights_js
 use wenoof_polynomials
 use wenoof_polynomials_js
+use wenoof_reconstructor_js
 use wenoof_smoothness_indicators
 use wenoof_smoothness_indicators_js
 
@@ -35,7 +36,7 @@ contains
   class(interpolator_constructor),          allocatable  :: interp_constructor  !< Interpolator constructor.
 
   select case(trim(adjustl(interpolator_type)))
-  case('JS')
+  case('interpolator-JS')
     call create_smoothness_indicators_js_constructor(S=S, constructor=is_constructor)
     call create_alpha_coefficients_js_constructor(S=S, constructor=alpha_constructor)
     call create_optimal_weights_js_constructor(S=S, constructor=weights_constructor)
@@ -48,10 +49,25 @@ contains
                                             constructor=interp_constructor)
     allocate(interpolator_js :: wenoof_interpolator)
     call wenoof_interpolator%create(constructor=interp_constructor)
+  case('reconstructor-JS')
+    call create_smoothness_indicators_js_constructor(S=S, constructor=is_constructor)
+    call create_alpha_coefficients_js_constructor(S=S, constructor=alpha_constructor)
+    call create_optimal_weights_js_constructor(S=S, constructor=weights_constructor)
+    call create_polynomials_js_constructor(S=S, constructor=polynom_constructor)
+    call create_reconstructor_js_constructor(is=is_constructor,           &
+                                             alpha=alpha_constructor,     &
+                                             weights=weights_constructor, &
+                                             polynom=polynom_constructor, &
+                                             S=S, eps=eps,                &
+                                             constructor=interp_constructor)
+    allocate(reconstructor_js :: wenoof_interpolator)
+    call wenoof_interpolator%create(constructor=interp_constructor)
   case('JS-Z')
     ! @TODO add Z support
+    error stop 'JS-Z to be implemented'
   case('JS-M')
     ! @TODO add M support
+    error stop 'JS-M to be implemented'
   case default
     ! @TODO add error handling
   endselect

@@ -1,57 +1,59 @@
-!< Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights.
-module wenoof_optimal_weights_js
-!< Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights.
+!< Jiang-Shu and Gerolymos-Senechal-Vallet weights.
+module wenoof_weights_js_object
+!< Jiang-Shu and Gerolymos-Senechal-Vallet weights.
 !<
-!< @note The provided WENO optimal weights implements the optimal weights defined in *Efficient Implementation of Weighted ENO
+!< @note The provided WENO weights implements the weights defined in *Efficient Implementation of Weighted ENO
 !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
 !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
 !< doi:10.1016/j.jcp.2009.07.039
 
 use penf, only : I_P, R_P
-use wenoof_optimal_weights
+use wenoof_weights_object
 
 implicit none
 private
-public :: optimal_weights_js
-public :: optimal_weights_js_constructor
-public :: create_optimal_weights_js_constructor
+public :: weights_js_object
+public :: weights_js_object_constructor
+public :: create_weights_js_object_constructor
 
-type, extends(optimal_weights_constructor) :: optimal_weights_js_constructor
+type, extends(weights_object_constructor) :: weights_js_object_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights object constructor.
-endtype optimal_weights_js_constructor
+endtype weights_js_object_constructor
 
-type, extends(optimal_weights):: optimal_weights_js
-  !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights object.
+type, extends(weights_object):: weights_js_object
+  !< Jiang-Shu and Gerolymos-Senechal-Vallet weights object.
   !<
-  !< @note The provided WENO optimal weights implements the optimal weights defined in *Efficient Implementation of Weighted ENO
+  !< @note The provided WENO weights implements the weights defined in *Efficient Implementation of Weighted ENO
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
   contains
     ! deferred public methods
     procedure, pass(self) :: compute     !< Compute weights.
-    procedure, nopass     :: description !< Return weights string-description.
-endtype optimal_weights_js
+    procedure, pass(self) :: description !< Return weights string-description.
+endtype weights_js_object
 
 contains
   ! public non TBP
-  subroutine create_optimal_weights_js_constructor(S, constructor)
-  !< Create optimal weights constructor.
-  integer(I_P),                                    intent(in)  :: S           !< Stencils dimension.
-  class(optimal_weights_constructor), allocatable, intent(out) :: constructor !< Optimal weights constructor.
+  subroutine create_weights_js_object_constructor(S, constructor)
+  !< Create weights constructor.
+  integer(I_P),                                   intent(in)  :: S           !< Stencils dimension.
+  class(weights_object_constructor), allocatable, intent(out) :: constructor !< Weights constructor.
 
-  allocate(optimal_weights_js_constructor :: constructor)
+  allocate(weights_js_object_constructor :: constructor)
   constructor%S = S
-  endsubroutine create_optimal_weights_js_constructor
+  endsubroutine create_weights_js_object_constructor
 
   ! deferred public methods
-  pure subroutine compute(self, S)
+  pure subroutine compute(self, stencil)
   !< Compute weights.
-  class(optimal_weights_js), intent(inout) :: self !< Optimal weights.
-  integer(I_P),              intent(in)    :: S    !< Number of stencils used.
+  class(weights_js_object), intent(inout) :: self                  !< Optimal weights.
+  real(R_P),                intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+
+  call self%alpha%compute(stencil=stencil)
 
   associate(opt => self%opt)
-    select case(S)
+    select case(self%S)
       case(2) ! 3rd order
         ! 1 => left interface (i-1/2)
         opt(1, 0) = 2._R_P/3._R_P ! stencil 0

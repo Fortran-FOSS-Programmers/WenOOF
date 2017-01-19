@@ -52,9 +52,6 @@ type, extends(interpolator) :: interpolator_js
     ! public methods
     procedure, pass(self) :: create  !< Create interpolator.
     procedure, pass(self) :: destroy !< Destroy interpolator.
-    ! private methods
-    procedure, pass(self), private :: compute_convolution !< Compute convolution.
-    procedure, pass(self), private :: compute_weights     !< Compute weights.
 endtype interpolator_js
 
 contains
@@ -85,27 +82,10 @@ contains
   character(len=1), parameter   :: nl=new_line('a') !< New line character.
   character(len=:), allocatable :: dummy_string     !< Dummy string.
 
-  string = 'Jiang-Shu WENO upwind-biased interpolator'//nl
-  string = string//'  Based on the scheme proposed by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
-           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130'//nl
-  ! string = string//'  Provide a formal order of accuracy equals to: '//trim(str(2*self%S - 1, .true.))//nl
-  ! string = string//'  Use '//trim(str(self%S, .true.))//' stencils composed by '//trim(str(self%S, .true.))//' values'//nl
-  ! string = string//'  The eps value used for avoiding division by zero is '//trim(str(self%eps, .true.))//nl
-  string = string//'  The "interpolate" method has the following public API'//nl
-  string = string//'    interpolate(S, stencil, location, interpolation)'//nl
-  string = string//'  where:'//nl
-  string = string//'    S: integer(I_P), intent(in), the number of stencils actually used'//nl
-  string = string//'    stencil(1:, 1-S:-1+S): real(R_P), intent(in), the stencils used'//nl
-  string = string//'    location: character(*), intent(in), the location of interpolation {left, right, both}'//nl
-  string = string//'    interpolation(1:, 1-S:-1+S): realR_P, intent(out), the interpolated values'//nl
-  string = string//'  The alpha coefficient are evaluated by the following method'//nl
-  ! string = string//self%alpha%description()//nl
-  string = string//'  The smoothness indicators are evaluated by the following method'//nl
-  ! string = string//self%IS%description()//nl
-  string = string//'  The polynomials are evaluated by the following method'//nl
-  ! string = string//self%polynom%description()//nl
-  string = string//'  The optimal weights are evaluated by the following method'//nl
-  ! string = string//self%weights%description()
+#ifndef DEBUG
+  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
+  error stop 'interpolator_js to be implemented'
+#endif
   endfunction description
 
   pure subroutine interpolate_standard(self, S, stencil, location, interpolation)
@@ -119,17 +99,10 @@ contains
   integer(I_P)                          :: f1, f2, ff            !< Faces to be computed.
   integer(I_P)                          :: f, k                  !< Counters.
 
-  call compute_faces_indexes(location=location, f1=f1, f2=f2, ff=ff)
-
-  call self%polynom%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
-
-  call self%is%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
-
-  call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS=self%IS%si, eps=self%eps, f1=f1, f2=f2)
-
-  call self%compute_weights(S=S, f1=f1, f2=f2, ff=ff, weights=weights)
-
-  call self%compute_convolution(S=S, f1=f1, f2=f2, ff=ff, weights=weights, interpolation=interpolation)
+#ifndef DEBUG
+  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
+  error stop 'interpolator_js to be implemented'
+#endif
   endsubroutine interpolate_standard
 
   pure subroutine interpolate_debug(self, S, stencil, location, interpolation, si, weights)
@@ -144,26 +117,10 @@ contains
   integer(I_P)                          :: f1, f2, ff          !< Faces to be computed.
   integer(I_P)                          :: f, k                !< Counters.
 
-  call compute_faces_indexes(location=location, f1=f1, f2=f2, ff=ff)
-
-  call self%polynom%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
-
-  call self%is%compute(S=S, stencil=stencil, f1=f1, f2=f2, ff = ff)
-
-  call self%alpha%compute(S=S, weight_opt=self%weights%opt, IS=self%IS%si, eps=self%eps, f1=f1, f2=f2)
-
-  call self%compute_weights(S=S, f1=f1, f2=f2, ff=ff, weights=weights)
-
-  call self%compute_convolution(S=S, f1=f1, f2=f2, ff=ff, weights=weights, interpolation=interpolation)
-
-  associate(is => self%is)
-    select type(is)
-    class is(smoothness_indicators)
-      do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-        si(f + ff, :) = is%si(f, :)
-      enddo
-    endselect
-  endassociate
+#ifndef DEBUG
+  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
+  error stop 'interpolator_js to be implemented'
+#endif
   endsubroutine interpolate_debug
 
   ! overridden methods
@@ -189,53 +146,4 @@ contains
   self%S = 0_I_P
   self%eps = 0._R_P
   endsubroutine destroy
-
-  ! private methods
-  pure subroutine compute_convolution(self, S, f1, f2, ff, weights, interpolation)
-  !< Compute convolution.
-  class(interpolator_js), intent(in)  :: self              !< Interpolator.
-  integer(I_P),           intent(in)  :: S                 !< Number of stencils actually used.
-  integer(I_P),           intent(in)  :: f1, f2, ff        !< Faces to be computed.
-  real(R_P),              intent(in)  :: weights(1:, 0:)   !< Weights of the stencils, [1:2, 0:S-1].
-  real(R_P),              intent(out) :: interpolation(1:) !< Result of the interpolation, [1:2].
-  integer(I_P)                        :: f, k              !< Counters.
-
-  interpolation = 0._R_P
-  do k = 0, S - 1 ! stencils loop
-    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      interpolation(f + ff) = interpolation(f + ff) + weights(f + ff, k) * self%polynom%poly(f, k)
-    enddo
-  enddo
-  endsubroutine compute_convolution
-
-  pure subroutine compute_weights(self, S, f1, f2, ff, weights)
-  !< Compute weights.
-  class(interpolator_js), intent(in)  :: self            !< Interpolator.
-  integer(I_P),           intent(in)  :: S               !< Number of stencils actually used.
-  integer(I_P),           intent(in)  :: f1, f2, ff      !< Faces to be computed.
-  real(R_P),              intent(out) :: weights(1:, 0:) !< Weights of the stencils, [1:2, 0:S-1].
-  integer(I_P)                        :: f, k            !< Counters.
-
-  do k = 0, S - 1 ! stencils loop
-    do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      weights(f + ff, k) = self%alpha%alpha_coef(f, k) / self%alpha%alpha_tot(f)
-    enddo
-  enddo
-  endsubroutine compute_weights
-
-  ! private non TBP
-  pure subroutine compute_faces_indexes(location, f1, f2, ff)
-  !< Compute faces indexes given the queried location.
-  character(*), intent(in)  :: location   !< Location of interpolation: left, right, both.
-  integer(I_P), intent(out) :: f1, f2, ff !< Faces to be computed.
-
-  select case(location)
-  case('both', 'b')
-    f1=1_I_P; f2=2_I_P; ff=0_I_P
-  case('left', 'l')
-    f1=1_I_P; f2=1_I_P; ff=0_I_P
-  case('right', 'r')
-    f1=2_I_P; f2=2_I_P; ff=-1_I_P
-  endselect
-  endsubroutine compute_faces_indexes
 endmodule wenoof_interpolator_js
