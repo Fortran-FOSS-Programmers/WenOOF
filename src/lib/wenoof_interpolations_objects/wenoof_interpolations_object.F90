@@ -12,15 +12,13 @@ public :: interpolations_object_constructor
 
 type, extends(base_object_constructor) :: interpolations_object_constructor
   !< Abstract interpolations object constructor.
-  integer(I_P) :: S=0_I_P !< Stencils dimension.
 endtype interpolations_object_constructor
 
 type, extends(base_object) :: interpolations_object
   !< Abstract interpolations object.
-  integer(I_P)           :: S=0_I_P     !< Stencils dimension.
   real(R_P), allocatable :: values(:,:) !< Stencil interpolations values [1:2,0:S-1].
   contains
-    ! deferred public methods
+    ! public deferred methods
     procedure, pass(self) :: compute     !< Compute interpolations.
     procedure, nopass     :: description !< Return interpolations string-description.
     ! public methods
@@ -29,7 +27,7 @@ type, extends(base_object) :: interpolations_object
 endtype interpolations_object
 
 contains
-  ! deferred public methods
+  ! public deferred methods
   pure subroutine compute(self, stencil)
   !< Compute interpolations.
   class(interpolation_objects), intent(inout) :: self                  !< Interpolations.
@@ -59,13 +57,8 @@ contains
   class(base_object_constructor), intent(in)    :: constructor !< Interpolations constructor.
 
   call self%destroy
-  select type(constructor)
-  class is(interpolations_constructor)
-    self%S = constructor%S
-    allocate(self%poly(1:2, 0:constructor%S - 1))
-  class default
-    ! @TODO add error handling
-  endselect
+  call self%base_object(constructor=constructor)
+  allocate(self%values(1:2, 0:self%S - 1))
   self%values = 0._R_P
   endsubroutine create
 
@@ -73,7 +66,7 @@ contains
   !< Destroy interpolations.
   class(interpolation_objects), intent(inout) :: self !< Interpolations.
 
-  self%S = 0_I_P
+  call self%base_object%destroy
   if (allocated(self%values)) deallocate(self%values)
   endsubroutine destroy
 endmodule wenoof_interpolations_object

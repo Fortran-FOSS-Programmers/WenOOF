@@ -1,113 +1,87 @@
-!< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object.
-module wenoof_smoothness_indicators_js
-!< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object.
+!< Jiang-Shu and Gerolymos-Senechal-Vallet Beta coefficients (smoothness indicators of stencil interpolations) object.
+module wenoof_beta_rec_js
+!< Jiang-Shu and Gerolymos-Senechal-Vallet Beta coefficients (smoothness indicators of stencil interpolations) object.
 !<
-!< @note The provided WENO optimal weights implements the smoothness indicators defined in *Efficient Implementation
+!< @note The provided beta object implements the smoothness indicators defined in *Efficient Implementation
 !< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
 !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
 !< doi:10.1016/j.jcp.2009.07.039
 
 use penf, only : I_P, R_P
 use wenoof_base_object
-use wenoof_smoothness_indicators
+use wenoof_beta_object
 
 implicit none
 private
-public :: smoothness_indicators_js
-public :: smoothness_indicators_js_constructor
-public :: create_smoothness_indicators_js_constructor
+public :: beta_rec_js
+public :: beta_rec_js_constructor
 
-type, extends(smoothness_indicators_constructor) :: smoothness_indicators_js_constructor
-  !< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object constructor.
-endtype smoothness_indicators_js_constructor
+type, extends(beta_object_constructor) :: beta_rec_js_constructor
+  !< Jiang-Shu and Gerolymos-Senechal-Vallet beta object constructor.
+endtype beta_rec_js_constructor
 
-type, extends(smoothness_indicators) :: smoothness_indicators_js
-  !< Jiang-Shu and Gerolymos-Senechal-Vallet smoothness indicators object.
+type, extends(beta_object) :: beta_rec_js
+  !< Jiang-Shu and Gerolymos-Senechal-Vallet Beta coefficients (smoothness indicators of stencil interpolations) object.
   !<
-  !< @note The provided WENO optimal weights implements the optimal weights defined in *Efficient Implementation of Weighted ENO
+  !< @note The provided beta object implements the smoothness indicators defined in *Efficient Implementation of Weighted ENO
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
-  !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Sénéchal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
+  !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
   private
-  real(R_P), allocatable :: coef(:,:,:) !< Smoothness indicators coefficients [1:2,0:S-1,0:S-1].
+  real(R_P), allocatable :: coef(:,:,:) !< Beta coefficients [1:2,0:S-1,0:S-1].
   contains
-    ! deferred public methods
-    procedure, pass(self) :: compute     !< Compute smoothness indicators.
-    procedure, nopass     :: description !< Return smoothness indicators string-description.
-    ! overridden public methods
-    procedure, pass(self) :: create  !< Create smoothness indicators.
-    procedure, pass(self) :: destroy !< Destroy smoothness indicators.
-endtype smoothness_indicators_js
+    ! public deferred methods
+    procedure, pass(self) :: compute     !< Compute Beta.
+    procedure, nopass     :: description !< Return Beta string-description.
+    ! public overridden methods
+    procedure, pass(self) :: create  !< Create Beta.
+    procedure, pass(self) :: destroy !< Destroy Beta.
+endtype beta_rec_js
 
 contains
-  ! public non TBP
-  subroutine create_smoothness_indicators_js_constructor(S, constructor)
-  !< Create smoothness indicators constructor.
-  integer(I_P),                                          intent(in)  :: S           !< Stencils dimension.
-  class(smoothness_indicators_constructor), allocatable, intent(out) :: constructor !< Smoothness indicators constructor.
+  ! public deferred methods
+  pure subroutine compute(self, stencil)
+  !< Compute beta.
+  class(beta_rec_js), intent(inout) :: self                !< Beta.
+  real(R_P),          intent(in)    :: stencil(1:, 1 - S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P)                      :: s1, s2, s3, f       !< Counters.
 
-  allocate(smoothness_indicators_js_constructor :: constructor)
-  constructor%S = S
-  endsubroutine create_smoothness_indicators_js_constructor
-
-  ! deferred public methods
-  pure subroutine compute(self, S, stencil, f1, f2, ff)
-  !< Compute smoothness indicators.
-  class(smoothness_indicators_js), intent(inout) :: self                !< Smoothness indicator.
-  integer(I_P),                    intent(in)    :: S                   !< Number of stencils actually used.
-  real(R_P),                       intent(in)    :: stencil(1:, 1 - S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P),                    intent(in)    :: f1, f2, ff          !< Faces to be computed.
-  integer(I_P)                                   :: s1, s2, s3, f       !< Counters
-
-  do s1=0, S - 1 ! stencils loop
-    do f=f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      self%si(f, s1) = 0._R_P
-      do s2=0, S - 1
-        do s3=0, S - 1
-          self%si(f, s1) = self%si(f, s1) + self%coef(s3, s2, s1) * stencil(f + ff, s1 - s3) * stencil(f + ff, s1 - s2)
+  do s1=0, self%S - 1 ! stencils loop
+    do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      self%values(f, s1) = 0._R_P
+      do s2=0, self%S - 1
+        do s3=0, self%S - 1
+          self%values(f, s1) = self%values(f, s1) + &
+                               self%coef(s3, s2, s1) * stencil(f + self%ff, s1 - s3) * stencil(f + self%ff, s1 - s2)
         enddo
       enddo
     enddo
   enddo
   endsubroutine compute
 
-  pure function description() result(string)
-  !< Return smoothness indicators string-description.
-  character(len=:), allocatable :: string           !< String-description.
-  character(len=1), parameter   :: nl=new_line('a') !< New line character.
+  pure function description(self) result(string)
+  !< Return Beta string-description.
+  class(beta_rec_js), intent(inout) :: self             !< Beta.
+  character(len=:), allocatable     :: string           !< String-description.
+  character(len=1), parameter       :: nl=new_line('a') !< New line character.
 
-  string = 'WENO smoothness indicators'//nl
-  string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
-           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and'//nl
-  string = string//'  on the work by Gerolimos, Sénéchal and  Vallet  "Very-High-Order WENO Schemes", see '// &
-           'JCP, 2009, vol. 228, pp. 8481-8524, doi:10.1016/j.jcp.2009.07.039'//nl
-  string = string//'  The "compute" method has the following public API'//nl
-  string = string//'    compute(S, stencil, f1, f2, ff)'//nl
-  string = string//'  where:'//nl
-  string = string//'    S: integer(I_P), intent(in), the number of the stencils used'//nl
-  string = string//'    stencil: real(R_P), intent(IN), the stencil used for the interpolation [1:2, 1-S:-1+S]'//nl
-  string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'//nl
-  string = string//'    ff: integer(I_P), intent(in), the parameter for the stencil value choice'
+#ifndef DEBUG
+  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
+  error stop 'beta_rec_js%description to be implemented, do not use!'
+#endif
   endfunction description
 
-  ! overridden public methods
+  ! public overridden methods
   pure subroutine create(self, constructor)
-  !< Create smoothness indicators.
-  class(smoothness_indicators_js), intent(inout) :: self        !< Smoothness indicators.
-  class(base_object_constructor),  intent(in)    :: constructor !< Smoothness indicators constructor.
-  integer(I_P)                                   :: S           !< Stencils dimension.
+  !< Create beta.
+  class(beta_rec_js),              intent(inout) :: self        !< Beta.
+  class(base_object_constructor),  intent(in)    :: constructor !< Beta constructor.
 
   call self%destroy
-  call self%smoothness_indicators%create(constructor=constructor)
-  select type(constructor)
-  class is(smoothness_indicators_js_constructor)
-    S = constructor%S
-    allocate(self%coef(0:S - 1, 0:S - 1, 0:S - 1))
-  class default
-    ! @TODO add error handling
-  endselect
+  call self%beta_object%create(constructor=constructor)
+  allocate(self%coef(0:self%S - 1, 0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
-    select case(S)
+    select case(self%S)
     case(2) ! 3rd order
       ! stencil 0
       !       i*i      ;     (i-1)*i
@@ -2426,10 +2400,10 @@ contains
   endsubroutine create
 
   elemental subroutine destroy(self)
-  !< Destroy smoothness indicators.
-  class(smoothness_indicators_js), intent(inout) :: self !< Smoothenss indicators.
+  !< Destroy Beta.
+  class(beta_rec_js), intent(inout) :: self !< Beta.
 
-  call self%smoothness_indicators%destroy
+  call self%beta_object%destroy
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
-endmodule wenoof_smoothness_indicators_js
+endmodule wenoof_beta_rec_js

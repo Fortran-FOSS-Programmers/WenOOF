@@ -12,12 +12,10 @@ public :: weights_object_constructor
 
 type, extends(base_object_constructor) :: weights_object_constructor
   !< Abstract weights object constructor.
-  integer(I_P) :: S=0_I_P !< Stencils dimension.
 endtype weights_object_constructor
 
 type, extends(base_object) :: weights_object
   !< Weights of stencil interpolations object.
-  integer(I_P)           :: S=0_I_P     !< Stencils dimension.
   real(R_P), allocatable :: values(:,:) !< Weights values of stencil interpolations [1:2,0:S-1].
   contains
     ! deferred public methods
@@ -59,13 +57,8 @@ contains
   class(base_object_constructor), intent(in)    :: constructor !< Weights constructor.
 
   call self%destroy
-  select type(constructor)
-  class is(optimal_weights_constructor)
-    self%S = constructor%S
-    allocate(self%values(1:2, 0:constructor%S - 1))
-  class default
-    ! @TODO add error handling
-  endselect
+  call self%base_object%create(constructor=constructor)
+  allocate(self%values(1:2, 0:self%S - 1))
   self%values = 0._R_P
   endsubroutine create
 
@@ -73,7 +66,7 @@ contains
   !< Destroy weights.
   class(weights_object), intent(inout) :: self !< Weights.
 
-  self%S = 0_I_P
+  call self%base_object%destroy
   if (allocated(self%values)) deallocate(self%values)
   endsubroutine destroy
 endmodule wenoof_weights_object

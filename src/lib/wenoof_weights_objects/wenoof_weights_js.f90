@@ -1,5 +1,5 @@
 !< Jiang-Shu and Gerolymos-Senechal-Vallet weights.
-module wenoof_weights_js_object
+module wenoof_weights_js
 !< Jiang-Shu and Gerolymos-Senechal-Vallet weights.
 !<
 !< @note The provided WENO weights implements the weights defined in *Efficient Implementation of Weighted ENO
@@ -11,22 +11,23 @@ use penf, only : I_P, R_P
 use wenoof_alpha_object
 use wenoof_beta_object
 use wenoof_kappa_object
+use wenoof_objects_factory
 use wenoof_weights_object
 
 implicit none
 private
-public :: weights_js_object
-public :: weights_js_object_constructor
-public :: create_weights_js_object_constructor
+public :: weights_js
+public :: weights_js_constructor
+public :: create_weights_js_constructor
 
-type, extends(weights_object_constructor) :: weights_js_object_constructor
+type, extends(weights_object_constructor) :: weights_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal weights object constructor.
   class(alpha_object_constructor), allocatable :: alpha_constructor !< Alpha coefficients (non linear weights) constructor.
   class(beta_object_constructor),  allocatable :: beta_constructor  !< Beta coefficients (smoothness indicators) constructor.
   class(kappa_object_constructor), allocatable :: kappa_constructor !< kappa coefficients (optimal, linear weights) constructor.
-endtype weights_js_object_constructor
+endtype weights_js_constructor
 
-type, extends(weights_object):: weights_js_object
+type, extends(weights_object):: weights_js
   !< Jiang-Shu and Gerolymos-Senechal-Vallet weights object.
   !<
   !< @note The provided WENO weights implements the weights defined in *Efficient Implementation of Weighted ENO
@@ -40,25 +41,31 @@ type, extends(weights_object):: weights_js_object
     ! deferred public methods
     procedure, pass(self) :: compute     !< Compute weights.
     procedure, pass(self) :: description !< Return weights string-description.
-endtype weights_js_object
+endtype weights_js
 
 contains
   ! public non TBP
-  subroutine create_weights_js_object_constructor(S, constructor)
+  subroutine create_weights_js_constructor(S, alpha_constructor, beta_constructor, kappa_constructor, constructor)
   !< Create weights constructor.
-  integer(I_P),                                   intent(in)  :: S           !< Stencils dimension.
-  class(weights_object_constructor), allocatable, intent(out) :: constructor !< Weights constructor.
+  integer(I_P),                                   intent(in)  :: S                 !< Stencils dimension.
+  class(alpha_object_constructor),                intent(in)  :: alpha_constructor !< Alpha constructor.
+  class(beta_object_constructor),                 intent(in)  :: beta_constructor  !< Beta constructor.
+  class(kappa_object_constructor),                intent(in)  :: kappa_constructor !< kappa constructor.
+  class(weights_object_constructor), allocatable, intent(out) :: constructor       !< Weights constructor.
 
-  allocate(weights_js_object_constructor :: constructor)
+  allocate(weights_rec_js_constructor :: constructor)
   constructor%S = S
-  endsubroutine create_weights_js_object_constructor
+  allocate(self%alpha_constructor, source=alpha_constructor)
+  allocate(self%beta_constructor, source=beta_constructor)
+  allocate(self%kappa_constructor, source=kappa_constructor)
+  endsubroutine create_weights_js_constructor
 
   ! deferred public methods
   pure subroutine compute(self, stencil)
   !< Compute weights.
-  class(weights_js_object), intent(inout) :: self                  !< Weights.
-  real(R_P),                intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P)                            :: f, s                  !< Counters.
+  class(weights_js), intent(inout) :: self                  !< Weights.
+  real(R_P),         intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P)                     :: f, s                  !< Counters.
 
   call self%beta%compute(stencil=stencil)
   call self%alpha%compute(beta=self%beta, kappa=self%kappa)
@@ -71,31 +78,30 @@ contains
 
   pure function description(self) result(string)
   !< Return string-description of weights.
-  class(weights_js_object), intent(in) :: self             !< Weights.
-  character(len=:), allocatable        :: string           !< String-description.
-  character(len=1), parameter          :: nl=new_line('a') !< New line character.
+  class(weights_js), intent(in) :: self             !< Weights.
+  character(len=:), allocatable :: string           !< String-description.
+  character(len=1), parameter   :: nl=new_line('a') !< New line character.
 
-  string = 'WENO optimal weights,'//nl
-  string = string//'  based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
-           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and'//nl
-  string = string//'  on the work by Gerolymos, Senechal and Vallet "Very-high-order weno schemes", see '// &
-           'JCP, 2009, vol. 228, pp. 8481--8524, doi:10.1016/j.jcp.2009.07.039'//nl
-  string = string//'    The optimal weights are allocated in a two-dimensional array, in which the first index'//nl
-  string = string//'    is the face selected (1 => i-1/2, 2 => i+1/2) and the second index is the number of the stencil '//nl
-  string = string//'    (from 0 to S-1)'
+#ifndef DEBUG
+  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
+  error stop 'weights_rec_js%description to be implemented, do not use!'
+#endif
   endfunction description
 
   ! overridden methods
   subroutine create(self, constructor)
   !< Create reconstructor.
-  class(weights_js_object),       intent(inout) :: self        !< Weights.
+  class(weights_js),              intent(inout) :: self        !< Weights.
   class(base_object_constructor), intent(in)    :: constructor !< Constructor.
+  type(objects_factory)                         :: factory     !< Objects factory.
 
   call self%destroy
   call self%weights_object%create(constructor=constructor)
   select type(constructor)
-  type is(weights_js_object_constructor)
+  type is(weights_js_constructor)
+    call factory%create(constructor=constructor%alpha_constructor, object=self%alpha)
+    call factory%create(constructor=constructor%beta_constructor, object=self%beta)
+    call factory%create(constructor=constructor%kappa_constructor, object=self%kappa)
   endselect
   endsubroutine create
-
-endmodule wenoof_optimal_weights_js
+endmodule wenoof_weights_js

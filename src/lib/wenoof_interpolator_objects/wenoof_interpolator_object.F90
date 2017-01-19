@@ -5,35 +5,30 @@ module wenoof_interpolator_object
 use penf, only : I_P, R_P
 use wenoof_base_object
 use wenoof_interpolations_obejct
-use wenoof_weights_object
 use wenoof_objects_factory
-! use wenoof_alpha_coefficients
-! use wenoof_optimal_weights
-! use wenoof_smoothness_indicators
+use wenoof_weights_object
 
 implicit none
 private
 public :: interpolator_object
 public :: interpolator_object_constructor
 
+real(R_P), parameter :: EPS_DEF=10._R_P**(-6) !< Small epsilon to avoid division be zero, default value.
+
 type, extends(base_object_constructor) :: interpolator_object_constructor
   !< Abstract interpolator object constructor.
   !<
   !< @note Every concrete WENO interpolator implementations must define their own constructor type.
-  integer(I_P)                                          :: S=0_I_P                    !< Stencils dimension.
-  class(interpolations_constructor_object), allocatable :: interpolations_constructor !< Stencil interpolations constructor.
-  class(weights_constructor_object),        allocatable :: weights_constructor        !< Weights of interpolations constructor.
-  contains
-    ! public methods
-    procedure, pass(self) :: create  => create_interpolator_constructor  !< Create interpolator constructor.
-    procedure, pass(self) :: destroy => destroy_interpolator_constructor !< Destroy interpolator constructor.
+  real(R_P)                                             :: eps=EPS_DEF                !< Small epsilon to avoid division by zero.
+  class(interpolations_object_constructor), allocatable :: interpolations_constructor !< Stencil interpolations constructor.
+  class(weights_object_constructor),        allocatable :: weights_constructor        !< Weights of interpolations constructor.
 endtype interpolator_object_constructor
 
 type, extends(base_object) :: interpolator_object
   !< Abstract interpolator object.
   !<
   !< @note Do not implement any actual interpolator: provide the interface for the different interpolators implemented.
-  integer(I_P)                              :: S=0_I_P        !< Stencils dimension.
+  real(R_P)                                 :: eps=EPS_DEF    !< Small epsilon to avoid division by zero.
   class(interpolations_object), allocatable :: interpolations !< Stencil interpolations.
   class(weights_object),        allocatable :: weights        !< Weights of interpolations.
   contains
@@ -51,24 +46,27 @@ contains
   ! constructor methods
 
   ! public methods
-  subroutine create_interpolator_constructor(self, S, interpolations_constructor, weights_constructor)
+  subroutine create_interpolator_constructor(self, S, interpolations_constructor, weights_constructor, eps)
   !< Create interpolator constructor.
-  class(interpolator_object_constructor),   intent(inout) :: self                       !< Interpolator constructor.
-  integer(I_P),                             intent(in)    :: S                          !< Stencils dimension.
-  class(interpolations_constructor_object), intent(in)    :: interpolations_constructor !< Stencil interpolations constructor.
-  class(weights_constructor_object),        intent(in)    :: weights_constructor        !< Weights of interpolations constructor.
+  class(interpolator_object_constructor),   intent(inout)        :: self                       !< Interpolator constructor.
+  integer(I_P),                             intent(in)           :: S                          !< Stencils dimension.
+  class(interpolations_constructor_object), intent(in)           :: interpolations_constructor !< Interpolations constructor.
+  class(weights_constructor_object),        intent(in)           :: weights_constructor        !< Weights constructor.
+  real(R_P),                                intent(in), optional :: eps                        !< Small epsilon to avoid / by zero.
 
   call self%destroy
   self%S = S
+  self%eps = EPS_DEF ; if present(eps) self%eps = eps
   allocate(self%interpolations_constructor, source=interpolations_constructor)
   allocate(self%weights_constructor       , source=weights_constructor       )
   endsubroutine create_interpolator_constructor
 
   pure subroutine destroy_interpolator_constructor(self)
   !< Destroy interpolator constructor.
-  class(interpolator_object_constructor), intent(inout) :: self !< Interpolator.
+  class(interpolator_object_constructor), intent(inout) :: self !< Interpolator constructor.
 
-  self%S = 0_I_P
+  call self%base_object_constructor%destroy
+  self%eps = EPS_DEF
   if (allocated(self%interpolations_constructor)) deallocate(self%interpolations_constructor)
   if (allocated(self%weights_constructor       )) deallocate(self%weights_constructor       )
   endsubroutine destroy_interpolator_constructor
@@ -121,9 +119,10 @@ contains
   type(objects_factory)                         :: factory     !< Objects factory.
 
   call self%destroy
+  call self%base_object%create(constructor=constructor)
   select type(constructor)
   class is(interpolator_constructor)
-    self%S = constructors%S
+    self%eps = constructors%eps
     call factory%create(constructor=constructor%interpolations_constructor, object=self%interpolations)
     call factory%create(constructor=constructor%weights_constructor, object=self%weights)
   class default
@@ -135,7 +134,8 @@ contains
   !< Destroy interpolator
   class(interpolator_object), intent(inout) :: self !< Interpolator.
 
-  self%S = 0_I_P
+  call self%base_object%destroy
+  self%S = EPS_DEF
   if (allocated(self%interpolations)) deallocate(self%interpolations)
   if (allocated(self%weights)) deallocate(self%weights)
   endsubroutine destroy
