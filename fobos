@@ -10,8 +10,7 @@ $CSHARED_INT = -cpp -c -fpic -assume realloc_lhs
 $LSHARED     = -shared
 $CSTATIC_GNU = -cpp -c -frealloc-lhs
 $CSTATIC_INT = -cpp -c -assume realloc_lhs
-$DEBUG_GNU   = -Og -g3 -Warray-bounds -Wcharacter-truncation -Wline-truncation -Wimplicit-interface -Wimplicit-procedure -Wunderflow -fcheck=all -fmodule-private -ffree-line-length-132 -fimplicit-none -fbacktrace -fdump-core -finit-real=nan
-; $DEBUG_GNU   = -Og -g3 -Warray-bounds -Wcharacter-truncation -Wline-truncation -Wimplicit-interface -Wimplicit-procedure -Wunderflow -fcheck=all -fmodule-private -ffree-line-length-132 -fimplicit-none -fbacktrace -fdump-core -finit-real=nan -std=f2008 -fall-intrinsics
+$DEBUG_GNU   = -Og -g3 -Warray-bounds -Wcharacter-truncation -Wline-truncation -Wimplicit-interface -Wimplicit-procedure -Wunderflow -fcheck=all -fmodule-private -ffree-line-length-132 -fimplicit-none -fbacktrace -fdump-core -finit-real=nan -std=f2008 -fall-intrinsics
 $DEBUG_INT   = -O0 -debug all -check all -warn all -extend-source 132 -traceback -gen-interfaces#-fpe-all=0 -fp-stack-check -fstack-protector-all -ftrapuv -no-ftz -std08
 $OPTIMIZE    = -O2
 $EXDIRS      = FLAP/src/tests/ PENF/src/tests/ pyplot-fortran/src/tests/
@@ -121,6 +120,7 @@ jobs         = 2
 compiler     = gnu
 cflags       = $CSHARED_GNU $DEBUG_GNU
 lflags       = $LSHARED $DEBUG_GNU
+preproc      = -DDEBUG
 exclude_dirs = $EXDIRS
 mod_dir      = ./mod/
 obj_dir      = ./obj/
@@ -134,6 +134,7 @@ jobs         = 2
 compiler     = gnu
 cflags       = $CSTATIC_GNU $DEBUG_GNU
 lflags       = $DEBUG_GNU
+preproc      = -DDEBUG
 exclude_dirs = $EXDIRS
 mod_dir      = ./mod/
 obj_dir      = ./obj/
@@ -173,6 +174,7 @@ jobs         = 2
 compiler     = intel
 cflags       = $CSHARED_INT $DEBUG_INT
 lflags       = $LSHARED $DEBUG_INT
+preproc      = -DDEBUG
 exclude_dirs = $EXDIRS
 mod_dir      = ./mod/
 obj_dir      = ./obj/
@@ -186,6 +188,7 @@ jobs         = 2
 compiler     = intel
 cflags       = $CSTATIC_INT $DEBUG_INT
 lflags       = $DEBUG_INT
+preproc      = -DDEBUG
 exclude_dirs = $EXDIRS
 mod_dir      = ./mod/
 obj_dir      = ./obj/
