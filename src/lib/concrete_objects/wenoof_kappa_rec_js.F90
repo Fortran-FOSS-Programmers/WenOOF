@@ -57,6 +57,8 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
+  allocate(self%values(1:2, 0:self%S - 1))
+  self%values = 0._R_P
   call self%compute
   endsubroutine create
 
@@ -198,5 +200,6 @@ contains
   class(kappa_rec_js), intent(inout) :: self !< Kappa.
 
   call self%destroy_
+  if (allocated(self%values)) deallocate(self%values)
   endsubroutine destroy
 endmodule wenoof_kappa_rec_js

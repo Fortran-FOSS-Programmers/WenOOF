@@ -8,9 +8,9 @@ use wenoof_base_object
 use wenoof_interpolations_object
 use wenoof_interpolations_rec_js
 use wenoof_interpolator_object
+use wenoof_objects_factory
 use wenoof_weights_object
 use wenoof_weights_js
-use wenoof_weights_factory
 
 implicit none
 private
@@ -34,6 +34,7 @@ type, extends(interpolator_object) :: reconstructor_js
     ! public deferred methods
     procedure, pass(self) :: create               !< Create reconstructor.
     procedure, pass(self) :: description          !< Return reconstructor string-description.
+    procedure, pass(self) :: destroy              !< Destroy reconstructor.
     procedure, pass(self) :: interpolate_debug    !< Interpolate values (providing also debug values).
     procedure, pass(self) :: interpolate_standard !< Interpolate values (without providing debug values).
 endtype reconstructor_js
@@ -68,23 +69,14 @@ contains
   !< Create interpolator.
   class(reconstructor_js),        intent(inout) :: self        !< Interpolator.
   class(base_object_constructor), intent(in)    :: constructor !< Constructor.
-  type(weights_factory)                         :: w_factory   !< Weights factory.
+  type(objects_factory)                         :: factory     !< Objects factory.
 
   call self%destroy
   call self%create_(constructor=constructor)
   select type(constructor)
   type is(reconstructor_js_constructor)
-    allocate(interpolations_rec_js :: self%interpolations)
-    call self%interpolations%create(constructor=constructor%interpolations_constructor)
-    call w_factory%create(constructor=constructor%weights_constructor, object=self%weights)
-
-    ! allocate(weights_js :: self%weights)
-    ! associate(weights=>self%weights)
-    !   select type(weights)
-    !   type is(weights_js)
-    !     call weights%create(constructor=constructor%weights_constructor)
-    !   endselect
-    ! endassociate
+    call factory%create(constructor=constructor%interpolations_constructor, object=self%interpolations)
+    call factory%create(constructor=constructor%weights_constructor, object=self%weights)
   endselect
   endsubroutine create
 
@@ -98,6 +90,15 @@ contains
   error stop 'reconstructor_js%description to be implemented, do not use!'
 #endif
   endfunction description
+
+  elemental subroutine destroy(self)
+  !< Destroy reconstructor.
+  class(reconstructor_js), intent(inout) :: self !< Reconstructor.
+
+  call self%destroy_
+  if (allocated(self%interpolations)) deallocate(self%interpolations)
+  if (allocated(self%weights)) deallocate(self%weights)
+  endsubroutine destroy
 
   pure subroutine interpolate_debug(self, stencil, interpolation, si, weights)
   !< Interpolate values (providing also debug values).

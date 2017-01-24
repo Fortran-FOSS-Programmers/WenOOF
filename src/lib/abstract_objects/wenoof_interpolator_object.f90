@@ -32,9 +32,6 @@ type, extends(base_object), abstract :: interpolator_object
     procedure(interpolate_standard_interface), pass(self), deferred :: interpolate_standard !< Interpolate values, standard mode.
     ! public methods
     generic :: interpolate => interpolate_standard, interpolate_debug !< Interpolate values.
-    ! public overridable methods
-    procedure, pass(self) :: create  !< Create interpolator.
-    procedure, pass(self) :: destroy !< Destroy interpolator.
 endtype interpolator_object
 
 abstract interface
@@ -58,30 +55,4 @@ abstract interface
   endsubroutine interpolate_standard_interface
 endinterface
 
-contains
-  ! public overridable methods
-  subroutine create(self, constructor)
-  !< Create interpolator.
-  class(interpolator_object),     intent(inout) :: self        !< Interpolator.
-  class(base_object_constructor), intent(in)    :: constructor !< Constructor.
-
-  call self%destroy
-  call self%create_(constructor=constructor)
-  ! select type(constructor)
-  ! class is(interpolator_object_constructor)
-  !   call factory%create(constructor=constructor%interpolations_constructor, object=self%interpolations)
-  !   call factory%create(constructor=constructor%weights_constructor, object=self%weights)
-  ! class default
-  !   ! @TODO add error handling
-  ! endselect
-  endsubroutine create
-
-  elemental subroutine destroy(self)
-  !< Destroy interpolator.
-  class(interpolator_object), intent(inout) :: self !< Interpolator.
-
-  call self%destroy_
-  if (allocated(self%interpolations)) deallocate(self%interpolations)
-  if (allocated(self%weights)) deallocate(self%weights)
-  endsubroutine destroy
 endmodule wenoof_interpolator_object

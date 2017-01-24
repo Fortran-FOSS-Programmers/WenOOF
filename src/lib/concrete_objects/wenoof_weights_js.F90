@@ -85,6 +85,8 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
+  allocate(self%values(1:2, 0:self%S - 1))
+  self%values = 0._R_P
   select type(constructor)
   type is(weights_js_constructor)
     associate(alpha_constructor=>constructor%alpha_constructor, &
@@ -149,6 +151,7 @@ contains
   class(weights_js), intent(inout) :: self !< Weights.
 
   call self%destroy_
+  if (allocated(self%values)) deallocate(self%values)
   if (allocated(self%alpha)) deallocate(self%alpha)
   if (allocated(self%beta)) deallocate(self%beta)
   if (allocated(self%kappa)) deallocate(self%kappa)

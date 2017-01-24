@@ -59,6 +59,10 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
+  allocate(self%values(1:2, 0:self%S - 1))
+  allocate(self%values_sum(1:2))
+  self%values = 0._R_P
+  self%values_sum = 0._R_P
   endsubroutine create
 
   pure subroutine compute(self, beta, kappa)
@@ -93,5 +97,7 @@ contains
   class(alpha_rec_js), intent(inout) :: self !< Alpha.
 
   call self%destroy_
+  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_sum)) deallocate(self%values_sum)
   endsubroutine destroy
 endmodule wenoof_alpha_rec_js

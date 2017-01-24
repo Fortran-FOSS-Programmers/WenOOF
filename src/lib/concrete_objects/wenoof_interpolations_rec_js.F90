@@ -61,6 +61,8 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
+  allocate(self%values(1:2, 0:self%S - 1))
+  self%values = 0._R_P
   allocate(self%coef(1:2, 0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
     select case(self%S)
@@ -364,6 +366,7 @@ contains
   class(interpolations_rec_js), intent(inout) :: self !< Interpolations.
 
   call self%destroy_
+  if (allocated(self%values)) deallocate(self%values)
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
 endmodule wenoof_interpolations_rec_js
