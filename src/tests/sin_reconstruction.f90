@@ -6,16 +6,16 @@ module test_module
 use flap, only : command_line_interface
 use penf, only : I_P, R_P, FR_P, str, strz
 use pyplot_module, only :  pyplot
-use wenoof, only : interpolator, wenoof_create
+use wenoof, only : interpolator_object, wenoof_create
 
 implicit none
 private
 public :: test
 
-character(99), parameter :: interpolators(1:4) = ["all ", &
-                                                  "JS  ", &
-                                                  "JS-Z", &
-                                                  "JS-M"] !< List of available interpolators.
+character(99), parameter :: interpolators(1:4) = ["all             ", &
+                                                  "reconstructor-JS", &
+                                                  "JS-Z            ", &
+                                                  "JS-M            "] !< List of available interpolators.
 real(R_P), parameter     :: pi = 4._R_P * atan(1._R_P)  !< Pi greek.
 
 type :: solution_data
@@ -138,7 +138,7 @@ contains
       self%solution(pn, s)%Dx = 2 * pi / self%points_number(pn)
       ! compute the values used for the interpolation/reconstruction of sin function: cell values
       do i=1 - self%S(s), self%points_number(pn) + self%S(s)
-        self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx
+        self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._R_P
         self%solution(pn, s)%fx_cell(i) = sin(self%solution(pn, s)%x_cell(i))
       enddo
       ! values to which the interpolation/reconstruction should tend
@@ -180,7 +180,8 @@ contains
                                    "sin_reconstruction --interpolator JS-Z -r     ",    &
                                    "sin_reconstruction --interpolator JS-M        ",    &
                                    "sin_reconstruction --interpolator all -p -r   "])
-      call cli%add(switch='--interpolator', switch_ab='-i', help='WENO interpolator type', required=.false., def='JS', act='store')
+      call cli%add(switch='--interpolator', switch_ab='-i', help='WENO interpolator type', required=.false., &
+                   def='reconstructor-JS', act='store', choices='all,reconstructor-JS')
       call cli%add(switch='--points_number', switch_ab='-pn', nargs='+', help='Number of points used to discretize the domain', &
                    required=.false., act='store', def='50')
       call cli%add(switch='--stencils', switch_ab='-s', nargs='+', help='Stencils dimensions (and number)', &
@@ -208,66 +209,35 @@ contains
     call self%cli%get(switch='-p', val=self%plots, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='--output', val=self%output_bname, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='--errors_analysis', val=self%errors_analysis, error=self%error) ; if (self%error/=0) stop
-
-    if (.not.is_interpolator_valid()) then
-      print "(A)", 'error: the interpolator type "'//trim(adjustl(self%interpolator_type))//'" is unknown!'
-      print "(A)", list_interpolators()
-      stop
-    endif
     endsubroutine parse_cli
-
-    function is_interpolator_valid()
-    !< Verify if the selected interpolator is valid.
-    logical      :: is_interpolator_valid !< Return true is the selected interpolator is available.
-    integer(I_P) :: s                   !< Counter.
-
-    is_interpolator_valid = .false.
-    do s=1, size(interpolators, dim=1)
-      is_interpolator_valid = (trim(adjustl(self%interpolator_type))==trim(adjustl(interpolators(s))))
-      if (is_interpolator_valid) exit
-    enddo
-    endfunction is_interpolator_valid
-
-    function list_interpolators() result(list)
-    !< List available solvers.
-    character(len=:), allocatable :: list !< Pretty printed list of available interpolators.
-    integer(I_P)                  :: s    !< Counter.
-
-    list = 'Valid interpolator names are:' // new_line('a')
-    do s=1, ubound(interpolators, dim=1)
-      list = list // '  + ' // trim(adjustl(interpolators(s))) // new_line('a')
-    enddo
-    endfunction list_interpolators
   endsubroutine initialize
 
   subroutine perform(self)
   !< Perform the test.
-  class(test), intent(inout)       :: self               !< Test.
-  real(R_P), allocatable           :: error(:,:)         !< Error (norm L2) with respect the exact solution.
-  real(R_P), allocatable           :: order(:,:)         !< Observed order based on subsequent refined solutions.
-  class(interpolator), allocatable :: weno_interpolator  !< WENO interpolator.
-  real(R_P), allocatable           :: stencil(:,:)       !< Stencils used.
-  integer(I_P)                     :: s                  !< Counter.
-  integer(I_P)                     :: pn                 !< Counter.
-  integer(I_P)                     :: i                  !< Counter.
+  class(test), intent(inout)              :: self         !< Test.
+  real(R_P), allocatable                  :: error(:,:)   !< Error (norm L2) with respect the exact solution.
+  real(R_P), allocatable                  :: order(:,:)   !< Observed order based on subsequent refined solutions.
+  class(interpolator_object), allocatable :: interpolator !< WENO interpolator.
+  real(R_P), allocatable                  :: stencil(:,:) !< Stencils used.
+  integer(I_P)                            :: s            !< Counter.
+  integer(I_P)                            :: pn           !< Counter.
+  integer(I_P)                            :: i            !< Counter.
 
   call self%compute_reference_solution
   do s=1, self%S_number
     call wenoof_create(interpolator_type=trim(adjustl(self%interpolator_type)), &
                        S=self%S(s),                                             &
-                       eps=self%eps,                                            &
-                       wenoof_interpolator=weno_interpolator)
+                       interpolator=interpolator,                               &
+                       eps=self%eps)
     allocate(stencil(1:2, 1-self%S(s):-1+self%S(s)))
     do pn=1, self%pn_number
       do i=1, self%points_number(pn)
-        stencil(1,:) = self%solution(pn, s)%fx_cell(i+0-self%S(s):i-2+self%S(s))
+        stencil(1,:) = self%solution(pn, s)%fx_cell(i+1-self%S(s):i-1+self%S(s))
         stencil(2,:) = self%solution(pn, s)%fx_cell(i+1-self%S(s):i-1+self%S(s))
-        call weno_interpolator%interpolate(S=self%S(s),                                            &
-                                           stencil=stencil,                                        &
-                                           location='b',                                           &
-                                           interpolation=self%solution(pn, s)%reconstruction(:,i), &
-                                           si=self%solution(pn, s)%si(:, i, 0:self%S(s)-1),        &
-                                           weights=self%solution(pn, s)%weights(:, i, 0:self%S(s)-1))
+        call interpolator%interpolate(stencil=stencil,                                        &
+                                      interpolation=self%solution(pn, s)%reconstruction(:,i), &
+                                      si=self%solution(pn, s)%si(:, i, 0:self%S(s)-1),        &
+                                      weights=self%solution(pn, s)%weights(:, i, 0:self%S(s)-1))
       enddo
     enddo
     deallocate(stencil)

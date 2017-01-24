@@ -1,111 +1,71 @@
-!< Jiang-Shu (Lagrange) polynomials object.
-module wenoof_polynomials_js
-!< Jiang-Shu (Lagrange) polynomials object.
+!< Jiang-Shu (Lagrange) interpolations object for derivative reconstruction.
+module wenoof_interpolations_rec_js
+!< Jiang-Shu (Lagrange) interpolations object for derivative reconstruction.
 !<
-!< @note The provided polynomials implement the Lagrange polynomials defined in *Efficient Implementation
+!< @note The provided interpolations implement the Lagrange interpolations defined in *Efficient Implementation
 !< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
 !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
 !< doi:10.1016/j.jcp.2009.07.039
 
 use penf, only : I_P, R_P
 use wenoof_base_object
-use wenoof_polynomials
+use wenoof_interpolations_object
 
 implicit none
 private
-public :: polynomials_js
-public :: polynomials_js_constructor
-public :: create_polynomials_js_constructor
+public :: interpolations_rec_js
+public :: interpolations_rec_js_constructor
+public :: create_interpolations_rec_js_constructor
 
-type, extends(polynomials_constructor) :: polynomials_js_constructor
-  !< Jiang-Shu (Lagrange) polynomials object constructor.
-endtype polynomials_js_constructor
+type, extends(interpolations_object_constructor) :: interpolations_rec_js_constructor
+  !< Jiang-Shu (Lagrange) interpolations object for derivative reconstruction constructor.
+endtype interpolations_rec_js_constructor
 
-type, extends(polynomials) :: polynomials_js
-  !< Jiang-Shu (Lagrange) polynomials object.
+type, extends(interpolations_object) :: interpolations_rec_js
+  !< Jiang-Shu (Lagrange) interpolations object for derivative reconstruction.
   !<
-  !< @note The provided polynomials implement the Lagrange polynomials defined in *Efficient Implementation
+  !< @note The provided interpolations implement the Lagrange interpolations defined in *Efficient Implementation
   !< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
   private
   real(R_P), allocatable :: coef(:,:,:) !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
-    ! deferred public methods
-    procedure, pass(self) :: compute     !< Compute weights.
-    procedure, nopass     :: description !< Return weights string-description.
-    ! overridden public methods
-    procedure, pass(self) :: create  !< Create weights.
-    procedure, pass(self) :: destroy !< Destroy weights.
-endtype polynomials_js
+    ! public deferred methods
+    procedure, pass(self) :: create      !< Create interpolations.
+    procedure, pass(self) :: compute     !< Compute interpolations.
+    procedure, pass(self) :: description !< Return interpolations string-description.
+    procedure, pass(self) :: destroy     !< Destroy interpolations.
+endtype interpolations_rec_js
 
 contains
-  ! public non TBP
-  subroutine create_polynomials_js_constructor(S, constructor)
-  !< Create polynomials constructor.
-  integer(I_P),                                intent(in)  :: S           !< Stencils dimension.
-  class(polynomials_constructor), allocatable, intent(out) :: constructor !< Polynomials constructor.
+  ! public non TBP procedures
+  subroutine create_interpolations_rec_js_constructor(S, constructor, face_left, face_right)
+  !< Create interpolations constructor.
+  integer(I_P),                                          intent(in)           :: S           !< Stencils dimension.
+  class(interpolations_object_constructor), allocatable, intent(out)          :: constructor !< Constructor.
+  logical,                                               intent(in), optional :: face_left   !< Activate left-face interpolations.
+  logical,                                               intent(in), optional :: face_right  !< Activate right-face interpolations.
 
-  allocate(polynomials_js_constructor :: constructor)
+  allocate(interpolations_rec_js_constructor :: constructor)
   constructor%S = S
-  endsubroutine create_polynomials_js_constructor
+  if (present(face_left)) constructor%face_left = face_left
+  if (present(face_right)) constructor%face_right = face_right
+  endsubroutine create_interpolations_rec_js_constructor
 
-  ! deferred public methods
-  pure subroutine compute(self, S, stencil, f1, f2, ff)
-  !< Compute polynomials.
-  class(polynomials_js), intent(inout) :: self                !< WENO polynomial.
-  integer(I_P),          intent(in)    :: S                   !< Number of stencils actually used.
-  real(R_P),             intent(in)    :: stencil(1:, 1 - S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P),          intent(in)    :: f1, f2, ff          !< Faces to be computed.
-  integer(I_P)                         :: s1, s2, f           !< Counters
-
-  self%poly = 0._R_P
-  do s1 = 0, S - 1 ! stencils loop
-    do s2 = 0, S - 1 ! values loop
-      do f = f1, f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-        self%poly(f, s1) = self%poly(f, s1) + self%coef(f, s2, s1) * stencil(f + ff, -s2 + s1)
-      enddo
-    enddo
-  enddo
-  endsubroutine compute
-
-  pure function description() result(string)
-  !< Return polynomials string-description.
-  character(len=:), allocatable :: string           !< String-description.
-  character(len=1), parameter   :: nl=new_line('a') !< New line character.
-
-  string = 'WENO polynomial'//nl
-  string = string//'  Based on the work by Jiang and Shu "Efficient Implementation of Weighted ENO Schemes", see '// &
-           'JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and'//nl
-  string = string//'  on the work by Gerolimos, Sénéchal and  Vallet  "Very-High-Order WENO Schemes", see '// &
-           'JCP, 2009, vol. 228, pp. 8481-8524, doi:10.1016/j.jcp.2009.07.039'//nl
-  string = string//'  The "compute" method has the following public API'//nl
-  string = string//'    compute(S, stencil, f1, f2, ff)'//nl
-  string = string//'  where:'//nl
-  string = string//'    S: integer(I_P), intent(in), the number of the stencils used'//nl
-  string = string//'    stencil: real(R_P), intent(IN), the stencil used for the interpolation [1:2, 1-S:-1+S]'//nl
-  string = string//'    f1, f2: integer(I_P), intent(in), the faces to be computed (1 => left interface, 2 => right interface)'//nl
-  string = string//'    ff: integer(I_P), intent(in), the parameter for the stencil value choice'
-  endfunction description
-
-  ! overridden public methods
-  pure subroutine create(self, constructor)
-  !< Create coefficients.
-  class(polynomials_js),          intent(inout) :: self        !< Polynomials.
-  class(base_object_constructor), intent(in)    :: constructor !< Polynomials constructor.
-  integer(I_P)                                  :: S           !< Stencils dimension.
+  ! public deferred methods
+  subroutine create(self, constructor)
+  !< Create interpolations.
+  class(interpolations_rec_js),   intent(inout) :: self        !< Interpolations.
+  class(base_object_constructor), intent(in)    :: constructor !< Interpolations constructor.
 
   call self%destroy
-  call self%polynomials%create(constructor=constructor)
-  select type(constructor)
-  class is(polynomials_js_constructor)
-    S = constructor%S
-    allocate(self%coef(1:2, 0:S - 1, 0:S - 1))
-  class default
-    ! @TODO add error handling
-  endselect
+  call self%create_(constructor=constructor)
+  allocate(self%values(1:2, 0:self%S - 1))
+  self%values = 0._R_P
+  allocate(self%coef(1:2, 0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
-    select case(S)
+    select case(self%S)
       case(2) ! 3rd order
         ! 1 => left interface (i-1/2)
         !  cell  0           ;    cell  1
@@ -372,11 +332,41 @@ contains
   endassociate
   endsubroutine create
 
-  elemental subroutine destroy(self)
-  !< Destroy polynomials.
-  class(polynomials_js), intent(inout) :: self !< WENO polynomials.
+  pure subroutine compute(self, stencil)
+  !< Compute interpolations.
+  class(interpolations_rec_js), intent(inout) :: self                  !< Interpolations.
+  real(R_P),                    intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P)                                :: s1                    !< Counter.
+  integer(I_P)                                :: s2                    !< Counter.
+  integer(I_P)                                :: f                     !< Counter.
 
-  call self%polynomials%destroy
+  self%values = 0._R_P
+  do s1=0, self%S - 1 ! stencils loop
+    do s2=0, self%S - 1 ! values loop
+      do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+        self%values(f, s1) = self%values(f, s1) + self%coef(f, s2, s1) * stencil(f + self%ff, -s2 + s1)
+      enddo
+    enddo
+  enddo
+  endsubroutine compute
+
+  pure function description(self) result(string)
+  !< Return interpolations string-description.
+  class(interpolations_rec_js), intent(in) :: self   !< Interpolations.
+  character(len=:), allocatable            :: string !< String-description.
+
+#ifndef DEBUG
+  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
+  error stop 'interpolations_rec_js%description to be implemented, do not use!'
+#endif
+  endfunction description
+
+  elemental subroutine destroy(self)
+  !< Destroy interpolations.
+  class(interpolations_rec_js), intent(inout) :: self !< Interpolations.
+
+  call self%destroy_
+  if (allocated(self%values)) deallocate(self%values)
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
-endmodule wenoof_polynomials_js
+endmodule wenoof_interpolations_rec_js
