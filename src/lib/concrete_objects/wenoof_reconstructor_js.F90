@@ -5,12 +5,11 @@ module wenoof_reconstructor_js
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P, str
 use wenoof_base_object
+use wenoof_interpolations_factory
 use wenoof_interpolations_object
-use wenoof_interpolations_rec_js
 use wenoof_interpolator_object
-use wenoof_objects_factory
+use wenoof_weights_factory
 use wenoof_weights_object
-use wenoof_weights_js
 
 implicit none
 private
@@ -69,14 +68,15 @@ contains
   !< Create interpolator.
   class(reconstructor_js),        intent(inout) :: self        !< Interpolator.
   class(base_object_constructor), intent(in)    :: constructor !< Constructor.
-  type(objects_factory)                         :: factory     !< Objects factory.
+  type(interpolations_factory)                  :: i_factory   !< Inteprolations factory.
+  type(weights_factory)                         :: w_factory   !< Weights factory.
 
   call self%destroy
   call self%create_(constructor=constructor)
   select type(constructor)
-  type is(reconstructor_js_constructor)
-    call factory%create(constructor=constructor%interpolations_constructor, object=self%interpolations)
-    call factory%create(constructor=constructor%weights_constructor, object=self%weights)
+  class is(interpolator_object_constructor)
+    call i_factory%create(constructor=constructor%interpolations_constructor, object=self%interpolations)
+    call w_factory%create(constructor=constructor%weights_constructor, object=self%weights)
   endselect
   endsubroutine create
 
@@ -109,7 +109,7 @@ contains
   real(R_P),               intent(out)   :: weights(1:, 0:)          !< Weights of the stencils, [1:2, 0:S-1].
 
   call self%interpolate_standard(stencil=stencil, interpolation=interpolation)
-  si = 0._R_P ! @TODO implement beta extraction
+  si = self%weights%smoothness_indicators()
   weights = self%weights%values
   endsubroutine interpolate_debug
 

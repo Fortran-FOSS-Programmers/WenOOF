@@ -19,7 +19,8 @@ type, extends(base_object), abstract :: weights_object
   real(R_P), allocatable :: values(:,:) !< Weights values of stencil interpolations [1:2,0:S-1].
   contains
     ! deferred public methods
-    procedure(compute_interface), pass(self), deferred :: compute !< Compute weights.
+    procedure(compute_interface),               pass(self), deferred :: compute               !< Compute weights.
+    procedure(smoothness_indicators_interface), pass(self), deferred :: smoothness_indicators !< Return smoothness indicators.
 endtype weights_object
 
 abstract interface
@@ -30,6 +31,13 @@ abstract interface
   class(weights_object), intent(inout) :: self                  !< Weights.
   real(R_P),             intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
   endsubroutine compute_interface
+
+  pure function smoothness_indicators_interface(self) result(si)
+  !< Return smoothness indicators.
+  import :: weights_object, R_P
+  class(weights_object), intent(in) :: self    !< Weights.
+  real(R_P), allocatable            :: si(:,:) !< Smoothness indicators.
+  endfunction smoothness_indicators_interface
 endinterface
 
 endmodule wenoof_weights_object
