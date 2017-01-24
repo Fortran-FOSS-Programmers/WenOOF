@@ -138,7 +138,7 @@ contains
       self%solution(pn, s)%Dx = 2 * pi / self%points_number(pn)
       ! compute the values used for the interpolation/reconstruction of sin function: cell values
       do i=1 - self%S(s), self%points_number(pn) + self%S(s)
-        self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx
+        self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._R_P
         self%solution(pn, s)%fx_cell(i) = sin(self%solution(pn, s)%x_cell(i))
       enddo
       ! values to which the interpolation/reconstruction should tend
@@ -232,7 +232,7 @@ contains
     allocate(stencil(1:2, 1-self%S(s):-1+self%S(s)))
     do pn=1, self%pn_number
       do i=1, self%points_number(pn)
-        stencil(1,:) = self%solution(pn, s)%fx_cell(i+0-self%S(s):i-2+self%S(s))
+        stencil(1,:) = self%solution(pn, s)%fx_cell(i+1-self%S(s):i-1+self%S(s))
         stencil(2,:) = self%solution(pn, s)%fx_cell(i+1-self%S(s):i-1+self%S(s))
         call interpolator%interpolate(stencil=stencil,                                        &
                                       interpolation=self%solution(pn, s)%reconstruction(:,i), &
