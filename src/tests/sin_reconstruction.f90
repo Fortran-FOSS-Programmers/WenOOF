@@ -6,7 +6,7 @@ module test_module
 use flap, only : command_line_interface
 use penf, only : I_P, R_P, FR_P, str, strz
 use pyplot_module, only :  pyplot
-use wenoof, only : interpolator, wenoof_create
+use wenoof, only : interpolator_object, wenoof_create
 
 implicit none
 private
@@ -214,32 +214,30 @@ contains
 
   subroutine perform(self)
   !< Perform the test.
-  class(test), intent(inout)       :: self               !< Test.
-  real(R_P), allocatable           :: error(:,:)         !< Error (norm L2) with respect the exact solution.
-  real(R_P), allocatable           :: order(:,:)         !< Observed order based on subsequent refined solutions.
-  class(interpolator), allocatable :: weno_interpolator  !< WENO interpolator.
-  real(R_P), allocatable           :: stencil(:,:)       !< Stencils used.
-  integer(I_P)                     :: s                  !< Counter.
-  integer(I_P)                     :: pn                 !< Counter.
-  integer(I_P)                     :: i                  !< Counter.
+  class(test), intent(inout)              :: self         !< Test.
+  real(R_P), allocatable                  :: error(:,:)   !< Error (norm L2) with respect the exact solution.
+  real(R_P), allocatable                  :: order(:,:)   !< Observed order based on subsequent refined solutions.
+  class(interpolator_object), allocatable :: interpolator !< WENO interpolator.
+  real(R_P), allocatable                  :: stencil(:,:) !< Stencils used.
+  integer(I_P)                            :: s            !< Counter.
+  integer(I_P)                            :: pn           !< Counter.
+  integer(I_P)                            :: i            !< Counter.
 
   call self%compute_reference_solution
   do s=1, self%S_number
     call wenoof_create(interpolator_type=trim(adjustl(self%interpolator_type)), &
                        S=self%S(s),                                             &
-                       eps=self%eps,                                            &
-                       wenoof_interpolator=weno_interpolator)
+                       interpolator=interpolator,                               &
+                       eps=self%eps)
     allocate(stencil(1:2, 1-self%S(s):-1+self%S(s)))
     do pn=1, self%pn_number
       do i=1, self%points_number(pn)
         stencil(1,:) = self%solution(pn, s)%fx_cell(i+0-self%S(s):i-2+self%S(s))
         stencil(2,:) = self%solution(pn, s)%fx_cell(i+1-self%S(s):i-1+self%S(s))
-        call weno_interpolator%interpolate(S=self%S(s),                                            &
-                                           stencil=stencil,                                        &
-                                           location='b',                                           &
-                                           interpolation=self%solution(pn, s)%reconstruction(:,i), &
-                                           si=self%solution(pn, s)%si(:, i, 0:self%S(s)-1),        &
-                                           weights=self%solution(pn, s)%weights(:, i, 0:self%S(s)-1))
+        call interpolator%interpolate(stencil=stencil,                                        &
+                                      interpolation=self%solution(pn, s)%reconstruction(:,i), &
+                                      si=self%solution(pn, s)%si(:, i, 0:self%S(s)-1),        &
+                                      weights=self%solution(pn, s)%weights(:, i, 0:self%S(s)-1))
       enddo
     enddo
     deallocate(stencil)

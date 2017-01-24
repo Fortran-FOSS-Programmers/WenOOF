@@ -8,12 +8,14 @@ module wenoof_kappa_rec_js
 !< doi:10.1016/j.jcp.2009.07.039
 
 use penf, only : I_P, R_P
+use wenoof_base_object
 use wenoof_kappa_object
 
 implicit none
 private
 public :: kappa_rec_js
 public :: kappa_rec_js_constructor
+public :: create_kappa_rec_js_constructor
 
 type, extends(kappa_object_constructor) :: kappa_rec_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal kappa object constructor.
@@ -28,14 +30,36 @@ type, extends(kappa_object):: kappa_rec_js
   !< doi:10.1016/j.jcp.2009.07.039
   contains
     ! public deferred methods
+    procedure, pass(self) :: create      !< Create kappa.
     procedure, pass(self) :: compute     !< Compute kappa.
     procedure, pass(self) :: description !< Return kappa string-description.
-    ! public overridden methods
-    procedure, pass(self) :: create !< Create interpolator.
+    procedure, pass(self) :: destroy     !< Destroy kappa.
 endtype kappa_rec_js
 
 contains
+  ! public non TBP procedures
+  subroutine create_kappa_rec_js_constructor(S, constructor)
+  !< Create kappa constructor.
+  integer(I_P),                                intent(in)   :: S           !< Stencils dimension.
+  class(kappa_object_constructor), allocatable, intent(out) :: constructor !< Constructor.
+
+  allocate(kappa_rec_js_constructor :: constructor)
+  constructor%S = S
+  endsubroutine create_kappa_rec_js_constructor
+
   ! deferred public methods
+  subroutine create(self, constructor)
+  !< Create kappa.
+  !<
+  !< @note The kappa coefficients are also computed, they being constants.
+  class(kappa_rec_js),            intent(inout) :: self        !< Kappa.
+  class(base_object_constructor), intent(in)    :: constructor !< Kappa constructor.
+
+  call self%destroy
+  call self%create_(constructor=constructor)
+  call self%compute
+  endsubroutine create
+
   pure subroutine compute(self)
   !< Compute kappa.
   class(kappa_rec_js), intent(inout) :: self !< Kappa.
@@ -160,9 +184,8 @@ contains
 
   pure function description(self) result(string)
   !< Return string-description of kappa.
-  class(kappa_rec_js), intent(in) :: self             !< Kappa.
-  character(len=:), allocatable   :: string           !< String-description.
-  character(len=1), parameter     :: nl=new_line('a') !< New line character.
+  class(kappa_rec_js), intent(in) :: self   !< Kappa.
+  character(len=:), allocatable   :: string !< String-description.
 
 #ifndef DEBUG
   ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
@@ -170,16 +193,10 @@ contains
 #endif
   endfunction description
 
-  ! overridden methods
-  subroutine create(self, constructor)
-  !< Create interpolator.
-  !<
-  !< @note The kappa coefficients are also computed, they being constants.
-  class(kappa_rec_js),            intent(inout) :: self        !< Kappa.
-  class(base_object_constructor), intent(in)    :: constructor !< Kappa constructor.
+  elemental subroutine destroy(self)
+  !< Destroy kappa.
+  class(kappa_rec_js), intent(inout) :: self !< Kappa.
 
-  call self%destroy
-  call self%kappa_object%create(constructor=constructor)
-  call self%compute
-  endsubroutine create
+  call self%destroy_
+  endsubroutine destroy
 endmodule wenoof_kappa_rec_js

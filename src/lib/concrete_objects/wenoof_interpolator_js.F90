@@ -11,11 +11,11 @@ private
 public :: interpolator_js
 public :: interpolator_js_constructor
 
-type, extends(interpolator_constructor) :: interpolator_js_constructor
+type, extends(interpolator_object_constructor) :: interpolator_js_constructor
   !< Jiang-Shu (upwind) interpolator object constructor.
 endtype interpolator_js_constructor
 
-type, extends(interpolator) :: interpolator_js
+type, extends(interpolator_object) :: interpolator_js
   !< Jiang-Shu (upwind) interpolator object.
   contains
     ! public deferred methods

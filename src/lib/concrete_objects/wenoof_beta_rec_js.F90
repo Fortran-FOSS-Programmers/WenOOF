@@ -15,6 +15,7 @@ implicit none
 private
 public :: beta_rec_js
 public :: beta_rec_js_constructor
+public :: create_beta_rec_js_constructor
 
 type, extends(beta_object_constructor) :: beta_rec_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet beta object constructor.
@@ -31,54 +32,35 @@ type, extends(beta_object) :: beta_rec_js
   real(R_P), allocatable :: coef(:,:,:) !< Beta coefficients [1:2,0:S-1,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: compute     !< Compute Beta.
-    procedure, nopass     :: description !< Return Beta string-description.
-    ! public overridden methods
-    procedure, pass(self) :: create  !< Create Beta.
-    procedure, pass(self) :: destroy !< Destroy Beta.
+    procedure, pass(self) :: create      !< Create beta.
+    procedure, pass(self) :: compute     !< Compute beta.
+    procedure, pass(self) :: description !< Return beta string-description.
+    procedure, pass(self) :: destroy     !< Destroy beta.
 endtype beta_rec_js
 
 contains
+  ! public non TBP procedures
+  subroutine create_beta_rec_js_constructor(S, constructor, face_left, face_right)
+  !< Create beta constructor.
+  integer(I_P),                                intent(in)           :: S           !< Stencils dimension.
+  class(beta_object_constructor), allocatable, intent(out)          :: constructor !< Constructor.
+  logical,                                     intent(in), optional :: face_left   !< Activate left-face interpolations.
+  logical,                                     intent(in), optional :: face_right  !< Activate right-face interpolations.
+
+  allocate(beta_rec_js_constructor :: constructor)
+  constructor%S = S
+  if (present(face_left)) constructor%face_left = face_left
+  if (present(face_right)) constructor%face_right = face_right
+  endsubroutine create_beta_rec_js_constructor
+
   ! public deferred methods
-  pure subroutine compute(self, stencil)
-  !< Compute beta.
-  class(beta_rec_js), intent(inout) :: self                !< Beta.
-  real(R_P),          intent(in)    :: stencil(1:, 1 - S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P)                      :: s1, s2, s3, f       !< Counters.
-
-  do s1=0, self%S - 1 ! stencils loop
-    do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      self%values(f, s1) = 0._R_P
-      do s2=0, self%S - 1
-        do s3=0, self%S - 1
-          self%values(f, s1) = self%values(f, s1) + &
-                               self%coef(s3, s2, s1) * stencil(f + self%ff, s1 - s3) * stencil(f + self%ff, s1 - s2)
-        enddo
-      enddo
-    enddo
-  enddo
-  endsubroutine compute
-
-  pure function description(self) result(string)
-  !< Return Beta string-description.
-  class(beta_rec_js), intent(inout) :: self             !< Beta.
-  character(len=:), allocatable     :: string           !< String-description.
-  character(len=1), parameter       :: nl=new_line('a') !< New line character.
-
-#ifndef DEBUG
-  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'beta_rec_js%description to be implemented, do not use!'
-#endif
-  endfunction description
-
-  ! public overridden methods
-  pure subroutine create(self, constructor)
+  subroutine create(self, constructor)
   !< Create beta.
   class(beta_rec_js),              intent(inout) :: self        !< Beta.
   class(base_object_constructor),  intent(in)    :: constructor !< Beta constructor.
 
   call self%destroy
-  call self%beta_object%create(constructor=constructor)
+  call self%create_(constructor=constructor)
   allocate(self%coef(0:self%S - 1, 0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
     select case(self%S)
@@ -2399,11 +2381,41 @@ contains
   endassociate
   endsubroutine create
 
+  pure subroutine compute(self, stencil)
+  !< Compute beta.
+  class(beta_rec_js), intent(inout) :: self                  !< Beta.
+  real(R_P),          intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P)                      :: s1, s2, s3, f         !< Counters.
+
+  do s1=0, self%S - 1 ! stencils loop
+    do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      self%values(f, s1) = 0._R_P
+      do s2=0, self%S - 1
+        do s3=0, self%S - 1
+          self%values(f, s1) = self%values(f, s1) + &
+                               self%coef(s3, s2, s1) * stencil(f + self%ff, s1 - s3) * stencil(f + self%ff, s1 - s2)
+        enddo
+      enddo
+    enddo
+  enddo
+  endsubroutine compute
+
+  pure function description(self) result(string)
+  !< Return beta string-description.
+  class(beta_rec_js), intent(in) :: self   !< Beta.
+  character(len=:), allocatable  :: string !< String-description.
+
+#ifndef DEBUG
+  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
+  error stop 'beta_rec_js%description to be implemented, do not use!'
+#endif
+  endfunction description
+
   elemental subroutine destroy(self)
-  !< Destroy Beta.
+  !< Destroy beta.
   class(beta_rec_js), intent(inout) :: self !< Beta.
 
-  call self%beta_object%destroy
+  call self%destroy_
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
 endmodule wenoof_beta_rec_js

@@ -1,13 +1,14 @@
-!< Borges alpha coefficients (non linear weights) object.
+!< Borges alpha (non linear weights) object.
 module wenoof_alpha_rec_z
-!< Borges alpha coefficients (non linear weights) object.
+!< Borges alpha (non linear weights) object.
 !<
-!< @note The provided WENO alpha coefficients implements the alpha coefficients defined in *An improved weighted essentially
-!< non-oscillatory scheme for hyperbolic conservation laws*, Rafael Borges, Monique Carmona, Bruno Costa and Wai Sun Don, JCP, 2008,
+!< @note The provided WENO alpha implements the alpha coefficients defined in *An improved weighted essentially non-oscillatory
+!< scheme for hyperbolic conservation laws*, Rafael Borges, Monique Carmona, Bruno Costa and Wai Sun Don, JCP, 2008,
 !< vol. 227, pp. 3191-3211, doi: 10.1016/j.jcp.2007.11.038.
 
 use penf, only : I_P, R_P
 use wenoof_alpha_object
+use wenoof_base_object
 use wenoof_beta_object
 use wenoof_kappa_object
 
@@ -17,27 +18,38 @@ public :: alpha_rec_z
 public :: alpha_rec_z_constructor
 
 type, extends(alpha_object_constructor) :: alpha_rec_z_constructor
-  !< Borges alpha coefficients (non linear weights) object constructor.
+  !< Borges alpha (non linear weights) object constructor.
 endtype alpha_rec_z_constructor
 
 type, extends(alpha_object) :: alpha_rec_z
-  !< Borges alpha coefficients (non linear weights) object.
+  !< Borges alpha (non linear weights) object.
   !<
-  !< @note The provided alpha coefficients implements the alpha coefficients defined in *An improved weighted essentially
-  !< non-oscillatory scheme for hyperbolic conservation laws*, Rafael Borges, Monique Carmona, Bruno Costa and Wai Sun Don, JCP,
+  !< @note The provided alpha implements the alpha coefficients defined in *An improved weighted essentially non-oscillatory
+  !< scheme for hyperbolic conservation laws*, Rafael Borges, Monique Carmona, Bruno Costa and Wai Sun Don, JCP,
   !< 2008, vol. 227, pp. 3191-3211, doi: 10.1016/j.jcp.2007.11.038.
   contains
     ! public deferred methods
-    procedure, pass(self) :: compute     !< Compute coefficients.
-    procedure, nopass     :: description !< Return coefficients string-description.
+    procedure, pass(self) :: create      !< Create alpha.
+    procedure, pass(self) :: compute     !< Compute alpha.
+    procedure, pass(self) :: description !< Return alpha string-description.
+    procedure, pass(self) :: destroy     !< Destroy alpha.
 endtype alpha_rec_z
 contains
   ! public deferred methods
+  subroutine create(self, constructor)
+  !< Create alpha.
+  class(alpha_rec_z),             intent(inout) :: self        !< Alpha.
+  class(base_object_constructor), intent(in)    :: constructor !< Alpha constructor.
+
+  call self%destroy
+  call self%create_(constructor=constructor)
+  endsubroutine create
+
   pure subroutine compute(self, beta, kappa)
-  !< Compute alpha coefficients.
-  class(alpha_rec_z),  intent(inout) :: self  !< Alpha coefficients.
-  class(beta_object),  intent(in)    :: beta  !< Beta coefficients.
-  class(kappa_object), intent(in)    :: kappa !< Kappa coefficients.
+  !< Compute alpha.
+  class(alpha_rec_z),  intent(inout) :: self  !< Alpha.
+  class(beta_object),  intent(in)    :: beta  !< Beta.
+  class(kappa_object), intent(in)    :: kappa !< Kappa.
   integer(I_P)                       :: f, s1 !< Counters.
 
   self%values_sum = 0._R_P
@@ -51,16 +63,22 @@ contains
   endsubroutine compute
 
   pure function description(self) result(string)
-  !< Return alpha coefficients string-descripition.
-  class(alpha_rec_z), intent(in) :: self             !< Alpha coefficients.
-  character(len=:), allocatable  :: string           !< String-description.
-  character(len=1), parameter    :: nl=new_line('a') !< New line character.
+  !< Return alpha string-descripition.
+  class(alpha_rec_z), intent(in) :: self   !< Alpha coefficients.
+  character(len=:), allocatable  :: string !< String-description.
 
 #ifndef DEBUG
   ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
   error stop 'alpha_rec_z%description to be implemented, do not use!'
 #endif
   endfunction description
+
+  elemental subroutine destroy(self)
+  !< Destroy alpha.
+  class(alpha_rec_z), intent(inout) :: self !< Alpha.
+
+  call self%destroy_
+  endsubroutine destroy
 
   ! private non TBP
   pure function tau(S, beta) result(w_tau)

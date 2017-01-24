@@ -15,6 +15,7 @@ implicit none
 private
 public :: interpolations_rec_js
 public :: interpolations_rec_js_constructor
+public :: create_interpolations_rec_js_constructor
 
 type, extends(interpolations_object_constructor) :: interpolations_rec_js_constructor
   !< Jiang-Shu (Lagrange) interpolations object for derivative reconstruction constructor.
@@ -31,53 +32,35 @@ type, extends(interpolations_object) :: interpolations_rec_js
   real(R_P), allocatable :: coef(:,:,:) !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
     ! public deferred methods
+    procedure, pass(self) :: create      !< Create interpolations.
     procedure, pass(self) :: compute     !< Compute interpolations.
     procedure, pass(self) :: description !< Return interpolations string-description.
-    ! public overridden methods
-    procedure, pass(self) :: create  !< Create interpolations.
-    procedure, pass(self) :: destroy !< Destroy interpolations.
+    procedure, pass(self) :: destroy     !< Destroy interpolations.
 endtype interpolations_rec_js
 
 contains
+  ! public non TBP procedures
+  subroutine create_interpolations_rec_js_constructor(S, constructor, face_left, face_right)
+  !< Create interpolations constructor.
+  integer(I_P),                                          intent(in)           :: S           !< Stencils dimension.
+  class(interpolations_object_constructor), allocatable, intent(out)          :: constructor !< Constructor.
+  logical,                                               intent(in), optional :: face_left   !< Activate left-face interpolations.
+  logical,                                               intent(in), optional :: face_right  !< Activate right-face interpolations.
+
+  allocate(interpolations_rec_js_constructor :: constructor)
+  constructor%S = S
+  if (present(face_left)) constructor%face_left = face_left
+  if (present(face_right)) constructor%face_right = face_right
+  endsubroutine create_interpolations_rec_js_constructor
+
   ! public deferred methods
-  pure subroutine compute(self, stencil)
-  !< Compute interpolations.
-  class(interpolations_rec_js), intent(inout) :: self                  !< Interpolations.
-  real(R_P),                    intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P)                                :: s1                    !< Counter.
-  integer(I_P)                                :: s2                    !< Counter.
-  integer(I_P)                                :: f                     !< Counter.
-
-  self%values = 0._R_P
-  do s1=0, self%S - 1 ! stencils loop
-    do s2=0, self%S - 1 ! values loop
-      do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-        self%values(f, s1) = self%values(f, s1) + self%coef(f, s2, s1) * stencil(f + self%ff, -s2 + s1)
-      enddo
-    enddo
-  enddo
-  endsubroutine compute
-
-  pure function description(self) result(string)
-  !< Return interpolations string-description.
-  class(interpolations_rec_js), intent(in) :: self             !< Interpolations.
-  character(len=:), allocatable            :: string           !< String-description.
-  character(len=1), parameter              :: nl=new_line('a') !< New line character.
-
-#ifndef DEBUG
-  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'interpolations_rec_js%description to be implemented, do not use!'
-#endif
-  endfunction description
-
-  ! public overridden methods
-  pure subroutine create(self, constructor)
+  subroutine create(self, constructor)
   !< Create interpolations.
-  class(interpolations_js_object), intent(inout) :: self        !< Interpolations.
-  class(base_object_constructor),  intent(in)    :: constructor !< Interpolations constructor.
+  class(interpolations_rec_js),   intent(inout) :: self        !< Interpolations.
+  class(base_object_constructor), intent(in)    :: constructor !< Interpolations constructor.
 
   call self%destroy
-  call self%interpolations_object%create(constructor=constructor)
+  call self%create_(constructor=constructor)
   allocate(self%coef(1:2, 0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
     select case(self%S)
@@ -347,11 +330,40 @@ contains
   endassociate
   endsubroutine create
 
+  pure subroutine compute(self, stencil)
+  !< Compute interpolations.
+  class(interpolations_rec_js), intent(inout) :: self                  !< Interpolations.
+  real(R_P),                    intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  integer(I_P)                                :: s1                    !< Counter.
+  integer(I_P)                                :: s2                    !< Counter.
+  integer(I_P)                                :: f                     !< Counter.
+
+  self%values = 0._R_P
+  do s1=0, self%S - 1 ! stencils loop
+    do s2=0, self%S - 1 ! values loop
+      do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+        self%values(f, s1) = self%values(f, s1) + self%coef(f, s2, s1) * stencil(f + self%ff, -s2 + s1)
+      enddo
+    enddo
+  enddo
+  endsubroutine compute
+
+  pure function description(self) result(string)
+  !< Return interpolations string-description.
+  class(interpolations_rec_js), intent(in) :: self   !< Interpolations.
+  character(len=:), allocatable            :: string !< String-description.
+
+#ifndef DEBUG
+  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
+  error stop 'interpolations_rec_js%description to be implemented, do not use!'
+#endif
+  endfunction description
+
   elemental subroutine destroy(self)
   !< Destroy interpolations.
-  class(interpolations_js_object), intent(inout) :: self !< Interpolations.
+  class(interpolations_rec_js), intent(inout) :: self !< Interpolations.
 
-  call self%interpolations_object%destroy
+  call self%destroy_
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
-endmodule wenoof_interpolations_js
+endmodule wenoof_interpolations_rec_js
