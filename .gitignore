@@ -24,6 +24,10 @@
 # log files
 *.log
 
+# test results
+*.dat
+*.png
+
 # special directories
 doc/html/
 exe/
