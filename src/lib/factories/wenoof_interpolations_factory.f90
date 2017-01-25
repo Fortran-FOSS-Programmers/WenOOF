@@ -2,7 +2,6 @@
 module wenoof_interpolations_factory
 !< Wenoof interpolations factory.
 
-! use wenoof_base_object
 use wenoof_interpolations_object
 use wenoof_interpolations_rec_js
 

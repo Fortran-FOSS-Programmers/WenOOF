@@ -2,7 +2,6 @@
 module wenoof_interpolator_factory
 !< Wenoof interpolator factory.
 
-! use wenoof_base_object
 use wenoof_interpolator_object
 use wenoof_interpolator_js
 use wenoof_reconstructor_js

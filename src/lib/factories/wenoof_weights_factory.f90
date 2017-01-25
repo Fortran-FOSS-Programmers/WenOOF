@@ -2,7 +2,6 @@
 module wenoof_weights_factory
 !< Wenoof weights factory.
 
-! use wenoof_base_object
 use wenoof_weights_object
 use wenoof_weights_js
 

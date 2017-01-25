@@ -2,7 +2,6 @@
 module wenoof_kappa_factory
 !< Wenoof kappa factory.
 
-! use wenoof_base_object
 use wenoof_kappa_object
 use wenoof_kappa_rec_js
 

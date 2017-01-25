@@ -6,7 +6,6 @@ use wenoof_alpha_object
 use wenoof_alpha_rec_js
 use wenoof_alpha_rec_m
 use wenoof_alpha_rec_z
-! use wenoof_base_object
 
 implicit none
 private

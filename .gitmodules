@@ -8,5 +8,5 @@
   branch = master
 [submodule "src/third_party/FLAP"]
   path = src/third_party/FLAP
-  url = https://github.com/szaghi/FLAP
+  url = git@github.com:szaghi/FLAP.git
   branch = master

@@ -5,7 +5,11 @@ module wenoof_alpha_rec_js
 !< @note The provided alpha implements the alpha coefficients defined in *Efficient Implementation of Weighted ENO
 !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
 
-use penf, only : I_P, R_P
+#ifdef r16p
+use penf, only: I_P, RPP=>R16P
+#else
+use penf, only: I_P, RPP=>R8P
+#endif
 use wenoof_alpha_object
 use wenoof_base_object
 use wenoof_beta_object
@@ -42,7 +46,7 @@ contains
   class(alpha_object_constructor), allocatable, intent(out)          :: constructor !< Constructor.
   logical,                                      intent(in), optional :: face_left   !< Activate left-face interpolations.
   logical,                                      intent(in), optional :: face_right  !< Activate right-face interpolations.
-  real(R_P),                                    intent(in), optional :: eps         !< Small epsilon to avoid division by zero.
+  real(RPP),                                    intent(in), optional :: eps         !< Small epsilon to avoid division by zero.
 
   allocate(alpha_rec_js_constructor :: constructor)
   constructor%S = S
@@ -61,8 +65,8 @@ contains
   call self%create_(constructor=constructor)
   allocate(self%values(1:2, 0:self%S - 1))
   allocate(self%values_sum(1:2))
-  self%values = 0._R_P
-  self%values_sum = 0._R_P
+  self%values = 0._RPP
+  self%values_sum = 0._RPP
   endsubroutine create
 
   pure subroutine compute(self, beta, kappa)
@@ -72,7 +76,7 @@ contains
   class(kappa_object), intent(in)    :: kappa !< Kappa coefficients.
   integer(I_P)                       :: f, s1 !< Counters.
 
-  self%values_sum = 0._R_P
+  self%values_sum = 0._RPP
   do s1=0, self%S - 1 ! stencil loops
     do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
       self%values(f, s1) =  kappa%values(f, s1)/(self%eps + beta%values(f, s1)) ** self%S

@@ -1,11 +1,14 @@
 !< WenOOF test: reconstruction of sin function.
-
 module test_module
 !< Auxiliary module defining the test class.
 
 use flap, only : command_line_interface
-use penf, only : I_P, R_P, FR_P, str, strz
-use pyplot_module, only :  pyplot
+#ifdef r16p
+use penf, only: I_P, RPP=>R16P, FRPP=>FR16P, str, strz
+#else
+use penf, only: I_P, RPP=>R8P, FRPP=>FR8P, str, strz
+#endif
+use pyplot_module, only : pyplot
 use wenoof, only : interpolator_object, wenoof_create
 
 implicit none
@@ -16,21 +19,21 @@ character(99), parameter :: interpolators(1:4) = ["all             ", &
                                                   "reconstructor-JS", &
                                                   "JS-Z            ", &
                                                   "JS-M            "] !< List of available interpolators.
-real(R_P), parameter     :: pi = 4._R_P * atan(1._R_P)  !< Pi greek.
+real(RPP), parameter     :: pi = 4._RPP * atan(1._RPP)  !< Pi greek.
 
 type :: solution_data
   !< Class to handle solution data.
-  real(R_P), allocatable :: x_cell(:)           !< Cell domain [1-S:points_number+S].
-  real(R_P), allocatable :: fx_cell(:)          !< Cell refecence values [1-S:points_number+S].
-  real(R_P), allocatable :: x_face(:,:)         !< Face domain [1:2,1:points_number].
-  real(R_P), allocatable :: fx_face(:,:)        !< Face reference values [1:2,1:points_number].
-  real(R_P), allocatable :: dfx_cell(:)         !< Cell refecence values of df/dx [1:points_number].
-  real(R_P), allocatable :: interpolation(:,:)  !< Interpolated values [1:2,1:points_number].
-  real(R_P), allocatable :: reconstruction(:,:) !< Reconstruction values [1:2,1:points_number].
-  real(R_P), allocatable :: si(:,:,:)           !< Computed smoothness indicators [1:2,1:points_number,0:S-1].
-  real(R_P), allocatable :: weights(:,:,:)      !< Computed weights [1:2,1:points_number,0:S-1].
-  real(R_P)              :: Dx=0._R_P           !< Space step (spatial resolution).
-  real(R_P)              :: error_L2=0._R_P     !< L2 norm of the numerical error.
+  real(RPP), allocatable :: x_cell(:)           !< Cell domain [1-S:points_number+S].
+  real(RPP), allocatable :: fx_cell(:)          !< Cell refecence values [1-S:points_number+S].
+  real(RPP), allocatable :: x_face(:,:)         !< Face domain [1:2,1:points_number].
+  real(RPP), allocatable :: fx_face(:,:)        !< Face reference values [1:2,1:points_number].
+  real(RPP), allocatable :: dfx_cell(:)         !< Cell refecence values of df/dx [1:points_number].
+  real(RPP), allocatable :: interpolation(:,:)  !< Interpolated values [1:2,1:points_number].
+  real(RPP), allocatable :: reconstruction(:,:) !< Reconstruction values [1:2,1:points_number].
+  real(RPP), allocatable :: si(:,:,:)           !< Computed smoothness indicators [1:2,1:points_number,0:S-1].
+  real(RPP), allocatable :: weights(:,:,:)      !< Computed weights [1:2,1:points_number,0:S-1].
+  real(RPP)              :: Dx=0._RPP           !< Space step (spatial resolution).
+  real(RPP)              :: error_L2=0._RPP     !< L2 norm of the numerical error.
 endtype solution_data
 
 type :: test
@@ -49,9 +52,9 @@ type :: test
   integer(I_P), allocatable        :: points_number(:)        !< Points number used to discretize the domain.
   integer(I_P)                     :: S_number                !< Number of different stencils tested.
   integer(I_P), allocatable        :: S(:)                    !< Stencils used.
-  real(R_P)                        :: eps                     !< Smal episol to avoid zero-division.
+  real(RPP)                        :: eps                     !< Smal episol to avoid zero-division.
   type(solution_data), allocatable :: solution(:,:)           !< Solution [1:pn_number, 1:S_number].
-  real(R_P), allocatable           :: accuracy(:,:)           !< Accuracy (measured) [1:pn_number-1, 1:S_number].
+  real(RPP), allocatable           :: accuracy(:,:)           !< Accuracy (measured) [1:pn_number-1, 1:S_number].
   logical                          :: errors_analysis=.false. !< Flag for activating errors analysis.
   logical                          :: plots=.false.           !< Flag for activating plots saving.
   logical                          :: results=.false.         !< Flag for activating results saving.
@@ -99,7 +102,7 @@ contains
   allocate(self%solution(1:self%pn_number, 1:self%S_number))
   if (self%pn_number>1) then
     allocate(self%accuracy(1:self%pn_number, 1:self%S_number))
-    self%accuracy = 0._R_P
+    self%accuracy = 0._RPP
   endif
   do s=1, self%S_number
     do pn=1, self%pn_number
@@ -112,15 +115,15 @@ contains
       allocate(self%solution(pn, s)%reconstruction(1:2,1:self%points_number(pn)                        ))
       allocate(self%solution(pn, s)%si(            1:2,1:self%points_number(pn),          0:self%S(s)-1))
       allocate(self%solution(pn, s)%weights(       1:2,1:self%points_number(pn),          0:self%S(s)-1))
-      self%solution(pn, s)%x_cell         = 0._R_P
-      self%solution(pn, s)%fx_cell        = 0._R_P
-      self%solution(pn, s)%x_face         = 0._R_P
-      self%solution(pn, s)%fx_face        = 0._R_P
-      self%solution(pn, s)%dfx_cell       = 0._R_P
-      self%solution(pn, s)%interpolation  = 0._R_P
-      self%solution(pn, s)%reconstruction = 0._R_P
-      self%solution(pn, s)%si             = 0._R_P
-      self%solution(pn, s)%weights        = 0._R_P
+      self%solution(pn, s)%x_cell         = 0._RPP
+      self%solution(pn, s)%fx_cell        = 0._RPP
+      self%solution(pn, s)%x_face         = 0._RPP
+      self%solution(pn, s)%fx_face        = 0._RPP
+      self%solution(pn, s)%dfx_cell       = 0._RPP
+      self%solution(pn, s)%interpolation  = 0._RPP
+      self%solution(pn, s)%reconstruction = 0._RPP
+      self%solution(pn, s)%si             = 0._RPP
+      self%solution(pn, s)%weights        = 0._RPP
     enddo
   enddo
   endsubroutine allocate_solution_data
@@ -138,13 +141,13 @@ contains
       self%solution(pn, s)%Dx = 2 * pi / self%points_number(pn)
       ! compute the values used for the interpolation/reconstruction of sin function: cell values
       do i=1 - self%S(s), self%points_number(pn) + self%S(s)
-        self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._R_P
+        self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._RPP
         self%solution(pn, s)%fx_cell(i) = sin(self%solution(pn, s)%x_cell(i))
       enddo
       ! values to which the interpolation/reconstruction should tend
       do i = 1, self%points_number(pn)
-        self%solution(pn, s)%x_face(1,i) = self%solution(pn, s)%x_cell(i) - self%solution(pn, s)%Dx / 2._R_P
-        self%solution(pn, s)%x_face(2,i) = self%solution(pn, s)%x_cell(i) + self%solution(pn, s)%Dx / 2._R_P
+        self%solution(pn, s)%x_face(1,i) = self%solution(pn, s)%x_cell(i) - self%solution(pn, s)%Dx / 2._RPP
+        self%solution(pn, s)%x_face(2,i) = self%solution(pn, s)%x_cell(i) + self%solution(pn, s)%Dx / 2._RPP
         self%solution(pn, s)%fx_face(1,i) = sin(self%solution(pn, s)%x_face(1,i))
         self%solution(pn, s)%fx_face(2,i) = sin(self%solution(pn, s)%x_face(2,i))
         self%solution(pn, s)%dfx_cell(i) = cos(self%solution(pn, s)%x_cell(i))
@@ -215,10 +218,10 @@ contains
   subroutine perform(self)
   !< Perform the test.
   class(test), intent(inout)              :: self         !< Test.
-  real(R_P), allocatable                  :: error(:,:)   !< Error (norm L2) with respect the exact solution.
-  real(R_P), allocatable                  :: order(:,:)   !< Observed order based on subsequent refined solutions.
+  real(RPP), allocatable                  :: error(:,:)   !< Error (norm L2) with respect the exact solution.
+  real(RPP), allocatable                  :: order(:,:)   !< Observed order based on subsequent refined solutions.
   class(interpolator_object), allocatable :: interpolator !< WENO interpolator.
-  real(R_P), allocatable                  :: stencil(:,:) !< Stencils used.
+  real(RPP), allocatable                  :: stencil(:,:) !< Stencils used.
   integer(I_P)                            :: s            !< Counter.
   integer(I_P)                            :: pn           !< Counter.
   integer(I_P)                            :: i            !< Counter.
@@ -290,7 +293,7 @@ contains
                   weights        => self%solution(pn, s)%weights,        &
                   Dx             => self%solution(pn, s)%Dx)
           do i = 1, self%points_number(pn)
-            write(file_unit, "("//trim(str(10+4*self%S(s), .true.))//"("//FR_P//",1X))") &
+            write(file_unit, "("//trim(str(10+4*self%S(s), .true.))//"("//FRPP//",1X))") &
                x_cell(i),                                   &
                fx_cell(i),                                  &
                dfx_cell(i),                                 &
@@ -308,19 +311,22 @@ contains
 
     if (self%errors_analysis.and.self%pn_number>1) then
       open(newunit=file_unit, file=file_bname//'-accuracy.dat')
-      write(file_unit, "(A)") 'VARIABLES = "S" "Np" "error (L2)" "observed order"'
+      write(file_unit, "(A)") 'VARIABLES = "S" "Np" "error (L2)" "observed order" "formal order"'
       do s=1, self%S_number
         do pn=1, self%pn_number
-          write(file_unit, "(2(I5,1X),2("//FR_P//",1X))") self%S(s),                     &
-                                                          self%points_number(pn),        &
-                                                          self%solution(pn, s)%error_L2, &
-                                                          self%accuracy(pn, s)
+          write(file_unit, "(2(I5,1X),"//FRPP//",1X,F5.2,1X,I3)") self%S(s),                     &
+                                                                  self%points_number(pn),        &
+                                                                  self%solution(pn, s)%error_L2, &
+                                                                  self%accuracy(pn, s),          &
+                                                                  2*self%S(s)-1
         enddo
       enddo
       close(file_unit)
     endif
   endif
 
+#ifndef r16p
+  ! pyplot fortran does not support 128 bit reals
   if (self%plots) then
     do s=1, self%S_number
       do pn=1, self%pn_number
@@ -332,19 +338,20 @@ contains
                           label='$\sin(x)$',                  &
                           linestyle='k-',                     &
                           linewidth=2,                        &
-                          ylim=[-1.1_R_P, 1.1_R_P])
+                          ylim=[-1.1_RPP, 1.1_RPP])
         call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%points_number(pn)),                               &
                           y=(self%solution(pn, s)%reconstruction(2,:)-self%solution(pn, s)%reconstruction(1,:))/ &
                             self%solution(pn, s)%Dx,                                                             &
                           label='WENO reconstruction',                                                           &
                           linestyle='ro',                                                                        &
                           markersize=6,                                                                          &
-                          ylim=[-1.1_R_P, 1.1_R_P])
+                          ylim=[-1.1_RPP, 1.1_RPP])
         call plt%savefig(file_bname//&
                          '-S_'//trim(str(self%S(s), .true.))//'-Np_'//trim(str(self%points_number(pn), .true.))//'.png')
       enddo
     enddo
   endif
+#endif
   endsubroutine save_results_and_plots
 
   subroutine analize_errors(self)
@@ -361,7 +368,7 @@ contains
                   Dx=>self%solution(pn, s)%Dx, &
                   dfx_cell=>self%solution(pn, s)%dfx_cell, &
                   reconstruction=>self%solution(pn, s)%reconstruction)
-          error_L2 = 0._R_P
+          error_L2 = 0._RPP
           do i=1, self%points_number(pn)
             error_L2 = error_L2 + ((reconstruction(2,i)-reconstruction(1,i))/Dx - dfx_cell(i))**2
           enddo
