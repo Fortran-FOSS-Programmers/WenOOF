@@ -2,7 +2,11 @@
 module wenoof_weights_object
 !< Abstract weights object.
 
-use penf, only : I_P, R_P
+#ifdef r16p
+use penf, only: RPP=>R16P
+#else
+use penf, only: RPP=>R8P
+#endif
 use wenoof_base_object
 
 implicit none
@@ -16,7 +20,7 @@ endtype weights_object_constructor
 
 type, extends(base_object), abstract :: weights_object
   !< Weights of stencil interpolations object.
-  real(R_P), allocatable :: values(:,:) !< Weights values of stencil interpolations [1:2,0:S-1].
+  real(RPP), allocatable :: values(:,:) !< Weights values of stencil interpolations [1:2,0:S-1].
   contains
     ! deferred public methods
     procedure(compute_interface),               pass(self), deferred :: compute               !< Compute weights.
@@ -27,16 +31,16 @@ abstract interface
   !< Abstract interfaces of [[weights_object]].
   pure subroutine compute_interface(self, stencil)
   !< Compute beta.
-  import :: weights_object, R_P
+  import :: weights_object, RPP
   class(weights_object), intent(inout) :: self                  !< Weights.
-  real(R_P),             intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(RPP),             intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
   endsubroutine compute_interface
 
   pure function smoothness_indicators_interface(self) result(si)
   !< Return smoothness indicators.
-  import :: weights_object, R_P
+  import :: weights_object, RPP
   class(weights_object), intent(in) :: self    !< Weights.
-  real(R_P), allocatable            :: si(:,:) !< Smoothness indicators.
+  real(RPP), allocatable            :: si(:,:) !< Smoothness indicators.
   endfunction smoothness_indicators_interface
 endinterface
 

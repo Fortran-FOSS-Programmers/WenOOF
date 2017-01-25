@@ -2,7 +2,6 @@
 module wenoof_beta_factory
 !< Wenoof beta factory.
 
-! use wenoof_base_object
 use wenoof_beta_object
 use wenoof_beta_rec_js
 

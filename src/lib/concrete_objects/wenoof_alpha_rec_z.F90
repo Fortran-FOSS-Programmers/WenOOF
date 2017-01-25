@@ -6,7 +6,11 @@ module wenoof_alpha_rec_z
 !< scheme for hyperbolic conservation laws*, Rafael Borges, Monique Carmona, Bruno Costa and Wai Sun Don, JCP, 2008,
 !< vol. 227, pp. 3191-3211, doi: 10.1016/j.jcp.2007.11.038.
 
-use penf, only : I_P, R_P
+#ifdef r16p
+use penf, only: I_P, RPP=>R16P
+#else
+use penf, only: I_P, RPP=>R8P
+#endif
 use wenoof_alpha_object
 use wenoof_base_object
 use wenoof_beta_object
@@ -52,11 +56,11 @@ contains
   class(kappa_object), intent(in)    :: kappa !< Kappa.
   integer(I_P)                       :: f, s1 !< Counters.
 
-  self%values_sum = 0._R_P
+  self%values_sum = 0._RPP
   do s1=0, self%S - 1 ! stencil loops
     do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
       self%values(f, s1) = kappa%values(f, s1) * &
-                           ((1._R_P + (tau(S=self%S, beta=beta%values) / (self%eps + beta%values(f, s1)))) ** (weno_exp(self%S)))
+                           ((1._RPP + (tau(S=self%S, beta=beta%values) / (self%eps + beta%values(f, s1)))) ** (weno_exp(self%S)))
       self%values_sum(f) = self%values_sum(f) + self%values(f, s1)
     enddo
   enddo
@@ -84,8 +88,8 @@ contains
   pure function tau(S, beta) result(w_tau)
   !< Compute the tau coefficient used in the WENO-Z alpha coefficients.
   integer(I_P), intent(in) :: S           !< Number of stencils used.
-  real(R_P),    intent(in) :: beta(0:S-1) !< Smoothness indicators.
-  real(R_P)                :: w_tau       !< Tau coefficient.
+  real(RPP),    intent(in) :: beta(0:S-1) !< Smoothness indicators.
+  real(RPP)                :: w_tau       !< Tau coefficient.
 
   w_tau = abs(beta(0) -                           &
               (1_I_P - weno_odd(S)) * beta(1) -   &

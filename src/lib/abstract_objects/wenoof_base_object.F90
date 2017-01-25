@@ -4,21 +4,25 @@ module wenoof_base_object
 !<
 !< Define a minimal, base, object that is used as ancestor of all objects, e.g. smoothness indicator, optimal weights, etc...
 
-use penf
+#ifdef r16p
+use penf, only: I_P, RPP=>R16P
+#else
+use penf, only: I_P, RPP=>R8P
+#endif
 
 implicit none
 private
 public :: base_object
 public :: base_object_constructor
 
-real(R_P), parameter :: EPS_DEF=10._R_P**(-6) !< Small epsilon to avoid division by zero, default value.
+real(RPP), parameter :: EPS_DEF=10._RPP**(-6) !< Small epsilon to avoid division by zero, default value.
 
 type :: base_object_constructor
   !< Abstract base object constructor.
   integer(I_P) :: S=0_I_P           !< Stencils dimension.
   logical      :: face_left=.true.  !< Activate left-face interpolation computation.
   logical      :: face_right=.true. !< Activate right-face interpolation computation.
-  real(R_P)    :: eps=EPS_DEF       !< Small epsilon to avoid division by zero.
+  real(RPP)    :: eps=EPS_DEF       !< Small epsilon to avoid division by zero.
 endtype base_object_constructor
 
 type, abstract :: base_object
@@ -29,7 +33,7 @@ type, abstract :: base_object
   integer(I_P) :: f1=1_I_P    !< Lower bound of faces index.
   integer(I_P) :: f2=2_I_P    !< Upper bound of faces index.
   integer(I_P) :: ff=0_I_P    !< Offset (step) of faces index.
-  real(R_P)    :: eps=EPS_DEF !< Small epsilon to avoid division by zero.
+  real(RPP)    :: eps=EPS_DEF !< Small epsilon to avoid division by zero.
   contains
     ! public deferred methods
     procedure(create_interface),      pass(self), deferred :: create      !< Create object.

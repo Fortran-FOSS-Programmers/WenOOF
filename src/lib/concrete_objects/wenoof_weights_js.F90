@@ -7,7 +7,11 @@ module wenoof_weights_js
 !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
 !< doi:10.1016/j.jcp.2009.07.039
 
-use penf, only : I_P, R_P
+#ifdef r16p
+use penf, only: I_P, RPP=>R16P
+#else
+use penf, only: I_P, RPP=>R8P
+#endif
 use wenoof_alpha_factory
 use wenoof_alpha_object
 use wenoof_alpha_rec_js
@@ -64,7 +68,7 @@ contains
   class(weights_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
   logical,                                        intent(in), optional :: face_left         !< Activate left-face interpolations.
   logical,                                        intent(in), optional :: face_right        !< Activate right-face interpolations.
-  real(R_P),                                      intent(in), optional :: eps               !< Small epsilon to avoid zero-div.
+  real(RPP),                                      intent(in), optional :: eps               !< Small epsilon to avoid zero-div.
 
   allocate(weights_js_constructor :: constructor)
   constructor%S = S
@@ -89,7 +93,7 @@ contains
   call self%destroy
   call self%create_(constructor=constructor)
   allocate(self%values(1:2, 0:self%S - 1))
-  self%values = 0._R_P
+  self%values = 0._RPP
   select type(constructor)
   type is(weights_js_constructor)
     associate(alpha_constructor=>constructor%alpha_constructor, &
@@ -127,7 +131,7 @@ contains
   pure subroutine compute(self, stencil)
   !< Compute weights.
   class(weights_js), intent(inout) :: self                  !< Weights.
-  real(R_P),         intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(RPP),         intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
   integer(I_P)                     :: f, s                  !< Counters.
 
   call self%beta%compute(stencil=stencil)
@@ -164,7 +168,7 @@ contains
   pure function smoothness_indicators(self) result(si)
   !< Return smoothness indicators..
   class(weights_js), intent(in) :: self    !< Weights.
-  real(R_P), allocatable        :: si(:,:) !< Smoothness indicators.
+  real(RPP), allocatable        :: si(:,:) !< Smoothness indicators.
 
   if (allocated(self%beta)) then
     if (allocated(self%beta%values)) then

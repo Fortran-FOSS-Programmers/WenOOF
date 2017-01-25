@@ -2,7 +2,11 @@
 module wenoof_beta_object
 !< Abstract Beta coefficients (smoothness indicators of stencil interpolations) object.
 
-use penf, only : I_P, R_P
+#ifdef r16p
+use penf, only: RPP=>R16P
+#else
+use penf, only: RPP=>R8P
+#endif
 use wenoof_base_object
 
 implicit none
@@ -16,7 +20,7 @@ endtype beta_object_constructor
 
 type, extends(base_object), abstract :: beta_object
   !< Abstract Beta coefficients (smoothness indicators of stencil interpolations) object.
-  real(R_P), allocatable :: values(:,:) !< Beta values [1:2,0:S-1].
+  real(RPP), allocatable :: values(:,:) !< Beta values [1:2,0:S-1].
   contains
     ! public deferred methods
     procedure(compute_interface), pass(self), deferred :: compute !< Compute beta.
@@ -26,9 +30,9 @@ abstract interface
   !< Abstract interfaces of [[beta_object]].
   pure subroutine compute_interface(self, stencil)
   !< Compute beta.
-  import :: beta_object, R_P
+  import :: beta_object, RPP
   class(beta_object), intent(inout) :: self                  !< Beta.
-  real(R_P),          intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(RPP),          intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
   endsubroutine compute_interface
 endinterface
 

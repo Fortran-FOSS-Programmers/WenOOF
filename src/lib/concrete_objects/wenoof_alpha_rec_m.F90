@@ -6,7 +6,11 @@ module wenoof_alpha_rec_m
 !< Achieving optimal order near critical points*, Andrew K. Henrick, Tariq D. Aslam, Joseph M. Powers, JCP,
 !< 2005, vol. 207, pp. 542-567, doi:10.1016/j.jcp.2005.01.023
 
-use penf, only : I_P, R_P
+#ifdef r16p
+use penf, only: I_P, RPP=>R16P
+#else
+use penf, only: I_P, RPP=>R8P
+#endif
 use wenoof_alpha_object
 use wenoof_alpha_rec_js
 use wenoof_alpha_rec_z
@@ -74,16 +78,16 @@ contains
   class(kappa_object), intent(in)    :: kappa !< Kappa.
   integer(I_P)                       :: f, s1 !< Counters.
 
-  self%values_sum = 0._R_P
+  self%values_sum = 0._RPP
   call self%alpha_base%compute(beta=beta, kappa=kappa)
   do s1=0, self%S - 1 ! stencil loops
     do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
       self%values(f, s1) =                                                                                  &
         (self%alpha_base%values(f, s1) * (kappa%values(f, s1) + kappa%values(f, s1) * kappa%values(f, s1) - &
-         3._R_P * kappa%values(f, s1) * self%alpha_base%values(f, s1) + self%alpha_base%values(f, s1) *     &
+         3._RPP * kappa%values(f, s1) * self%alpha_base%values(f, s1) + self%alpha_base%values(f, s1) *     &
          self%alpha_base%values(f, s1))) /                                                                  &
          (kappa%values(f, s1) * kappa%values(f, s1) + self%alpha_base%values(f, s1) *                       &
-         (1._R_P - 2._R_P * kappa%values(f, s1)))
+         (1._RPP - 2._RPP * kappa%values(f, s1)))
       self%values_sum(f) = self%values_sum(f) + self%values(f, s1)
     enddo
   enddo

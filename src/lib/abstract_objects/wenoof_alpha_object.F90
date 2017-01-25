@@ -2,7 +2,11 @@
 module wenoof_alpha_object
 !< Abstract alpha (non linear weights) object.
 
-use penf, only : I_P, R_P
+#ifdef r16p
+use penf, only: RPP=>R16P
+#else
+use penf, only: RPP=>R8P
+#endif
 use wenoof_base_object
 use wenoof_beta_object
 use wenoof_kappa_object
@@ -19,8 +23,8 @@ endtype alpha_object_constructor
 
 type, extends(base_object), abstract :: alpha_object
   !< Abstract alpha (non linear weights) object.
-  real(R_P), allocatable :: values(:,:)   !< Alpha coefficients [1:2,0:S-1].
-  real(R_P), allocatable :: values_sum(:) !< Sum of alpha coefficients [1:2].
+  real(RPP), allocatable :: values(:,:)   !< Alpha coefficients [1:2,0:S-1].
+  real(RPP), allocatable :: values_sum(:) !< Sum of alpha coefficients [1:2].
   contains
     ! public deferred methods
     procedure(compute_interface), pass(self), deferred :: compute !< Compute alpha.

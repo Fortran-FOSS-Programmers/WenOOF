@@ -2,7 +2,11 @@
 module wenoof
 !< WenOOF, WENO interpolation Object Oriented Fortran library
 
-use penf
+#ifdef r16p
+use penf, only: I_P, RPP=>R16P
+#else
+use penf, only: I_P, RPP=>R8P
+#endif
 use wenoof_alpha_object
 use wenoof_alpha_rec_js
 use wenoof_alpha_rec_z
@@ -32,7 +36,7 @@ contains
   class(interpolator_object), allocatable, intent(out)          :: interpolator               !< The concrete WENO interpolator.
   logical,                                 intent(in), optional :: face_left                  !< Activate left-face interpolations.
   logical,                                 intent(in), optional :: face_right                 !< Activate right-face interpolations.
-  real(R_P),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero-div.
+  real(RPP),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero-div.
   class(alpha_object_constructor),          allocatable         :: alpha_constructor          !< Alpha constructor.
   class(beta_object_constructor),           allocatable         :: beta_constructor           !< Beta constructor.
   class(interpolations_object_constructor), allocatable         :: interpolations_constructor !< Interpolations constructor.

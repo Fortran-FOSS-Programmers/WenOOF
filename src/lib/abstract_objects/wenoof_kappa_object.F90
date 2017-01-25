@@ -2,7 +2,11 @@
 module wenoof_kappa_object
 !< Abstract Kappa (optimal, linear weights of stencil interpolations) object.
 
-use penf, only : I_P, R_P
+#ifdef r16p
+use penf, only: RPP=>R16P
+#else
+use penf, only: RPP=>R8P
+#endif
 use wenoof_base_object
 
 implicit none
@@ -16,7 +20,7 @@ endtype kappa_object_constructor
 
 type, extends(base_object), abstract :: kappa_object
   !< Kappa (optimal, linear weights of stencil interpolations) object.
-  real(R_P), allocatable :: values(:,:) !< Kappa coefficients values [1:2,0:S-1].
+  real(RPP), allocatable :: values(:,:) !< Kappa coefficients values [1:2,0:S-1].
   contains
     ! public deferred methods
     procedure(compute_interface), pass(self), deferred :: compute !< Compute kappa.
