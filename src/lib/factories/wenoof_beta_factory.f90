@@ -2,6 +2,7 @@
 module wenoof_beta_factory
 !< Wenoof beta factory.
 
+use penf, only: I_P
 use wenoof_beta_object
 use wenoof_beta_rec_js
 
@@ -13,7 +14,8 @@ type :: beta_factory
   !< Factory, create an instance of concrete extension of [[beta_object]] given its constructor.
   contains
     ! public methods
-    procedure, nopass :: create !< Create a concrete instance of [[beta_object]].
+    procedure, nopass :: create             !< Create a concrete instance of [[beta_object]].
+    procedure, nopass :: create_constructor !< Create a concrete instance of [[beta_object_constructor]].
 endtype beta_factory
 
 contains
@@ -30,4 +32,22 @@ contains
   endselect
   call object%create(constructor=constructor)
   endsubroutine create
+
+  subroutine create_constructor(interpolator_type, S, constructor, face_left, face_right)
+  !< Create an instance of concrete extension of [[beta_object_constructor]].
+  character(*),                                intent(in)           :: interpolator_type !< Type of the interpolator.
+  integer(I_P),                                intent(in)           :: S                 !< Stencils dimension.
+  class(beta_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
+  logical,                                     intent(in), optional :: face_left         !< Activate left-face interpolations.
+  logical,                                     intent(in), optional :: face_right        !< Activate right-face interpolations.
+
+  select case(trim(adjustl(interpolator_type)))
+  case('interpolator-JS')
+    ! @TODO implement this
+    error stop 'interpolator-JS to be implemented'
+  case('reconstructor-JS')
+    allocate(beta_rec_js_constructor :: constructor)
+  endselect
+  call constructor%create(S=S, face_left=face_left, face_right=face_right)
+  endsubroutine create_constructor
 endmodule wenoof_beta_factory

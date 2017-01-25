@@ -6,9 +6,9 @@ module wenoof_alpha_rec_js
 !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
 
 #ifdef r16p
-use penf, only: I_P, RPP=>R16P
+use penf, only: I_P, RPP=>R16P, str
 #else
-use penf, only: I_P, RPP=>R8P
+use penf, only: I_P, RPP=>R8P, str
 #endif
 use wenoof_alpha_object
 use wenoof_base_object
@@ -19,7 +19,6 @@ implicit none
 private
 public :: alpha_rec_js
 public :: alpha_rec_js_constructor
-public :: create_alpha_rec_js_constructor
 
 type, extends(alpha_object_constructor) :: alpha_rec_js_constructor
   !< Jiang-Shu alpha object constructor.
@@ -39,22 +38,6 @@ type, extends(alpha_object) :: alpha_rec_js
 endtype alpha_rec_js
 
 contains
-  ! public non TBP
-  subroutine create_alpha_rec_js_constructor(S, constructor, face_left, face_right, eps)
-  !< Create alpha constructor.
-  integer(I_P),                                 intent(in)           :: S           !< Stencils dimension.
-  class(alpha_object_constructor), allocatable, intent(out)          :: constructor !< Constructor.
-  logical,                                      intent(in), optional :: face_left   !< Activate left-face interpolations.
-  logical,                                      intent(in), optional :: face_right  !< Activate right-face interpolations.
-  real(RPP),                                    intent(in), optional :: eps         !< Small epsilon to avoid division by zero.
-
-  allocate(alpha_rec_js_constructor :: constructor)
-  constructor%S = S
-  if (present(face_left)) constructor%face_left = face_left
-  if (present(face_right)) constructor%face_right = face_right
-  if (present(eps)) constructor%eps = eps
-  endsubroutine create_alpha_rec_js_constructor
-
   ! deferred public methods
   subroutine create(self, constructor)
   !< Create alpha.
@@ -87,13 +70,16 @@ contains
 
   pure function description(self) result(string)
   !< Return alpha string-descripition.
-  class(alpha_rec_js), intent(in) :: self   !< Alpha coefficient.
-  character(len=:), allocatable   :: string !< String-description.
+  class(alpha_rec_js), intent(in) :: self             !< Alpha coefficient.
+  character(len=:), allocatable   :: string           !< String-description.
+  character(len=1), parameter     :: nl=new_line('a') !< New line char.
 
-#ifndef DEBUG
-  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'alpha_rec_js%description to be implemented, do not use!'
-#endif
+  string = '    Jiang-Shu alpha coefficients for reconstructor:'//nl
+  string = string//'      - S   = '//trim(str(self%S))//nl
+  string = string//'      - f1  = '//trim(str(self%f1))//nl
+  string = string//'      - f2  = '//trim(str(self%f2))//nl
+  string = string//'      - ff  = '//trim(str(self%ff))//nl
+  string = string//'      - eps = '//trim(str(self%eps))
   endfunction description
 
   elemental subroutine destroy(self)

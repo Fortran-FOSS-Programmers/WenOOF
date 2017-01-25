@@ -16,7 +16,7 @@ private
 public :: alpha_object
 public :: alpha_object_constructor
 
-type, extends(base_object_constructor) :: alpha_object_constructor
+type, extends(base_object_constructor), abstract :: alpha_object_constructor
   !< Abstract alpha (non linear weights) object constructor.
   contains
 endtype alpha_object_constructor

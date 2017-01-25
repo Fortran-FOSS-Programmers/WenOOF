@@ -14,7 +14,7 @@ private
 public :: interpolations_object
 public :: interpolations_object_constructor
 
-type, extends(base_object_constructor) :: interpolations_object_constructor
+type, extends(base_object_constructor), abstract :: interpolations_object_constructor
   !< Abstract interpolations object constructor.
 endtype interpolations_object_constructor
 

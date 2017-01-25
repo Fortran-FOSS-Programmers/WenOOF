@@ -4,9 +4,9 @@ module wenoof_reconstructor_js
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 #ifdef r16p
-use penf, only: I_P, RPP=>R16P
+use penf, only: I_P, RPP=>R16P, str
 #else
-use penf, only: I_P, RPP=>R8P
+use penf, only: I_P, RPP=>R8P, str
 #endif
 use wenoof_base_object
 use wenoof_interpolations_factory
@@ -19,7 +19,6 @@ implicit none
 private
 public :: reconstructor_js
 public :: reconstructor_js_constructor
-public :: create_reconstructor_js_constructor
 
 type, extends(interpolator_object_constructor) :: reconstructor_js_constructor
   !< Jiang-Shu (upwind) reconstructor object constructor.
@@ -43,30 +42,6 @@ type, extends(interpolator_object) :: reconstructor_js
 endtype reconstructor_js
 
 contains
-  ! public non TBP
-  subroutine create_reconstructor_js_constructor(S, interpolations_constructor, weights_constructor, constructor, &
-                                                 face_left, face_right, eps)
-  !< Create weights constructor.
-  integer(I_P),                             intent(in)               :: S                          !< Stencils dimension.
-  class(interpolations_object_constructor), intent(in)               :: interpolations_constructor !< Interpolations constructor.
-  class(weights_object_constructor),        intent(in)               :: weights_constructor        !< Weights constructor.
-  class(interpolator_object_constructor),   intent(out), allocatable :: constructor                !< Constructor.
-  logical,                                  intent(in), optional     :: face_left                  !< Activate left-face interp.
-  logical,                                  intent(in), optional     :: face_right                 !< Activate right-face interp.
-  real(RPP),                                intent(in), optional     :: eps                        !< Small eps to avoid zero-div.
-
-  allocate(reconstructor_js_constructor :: constructor)
-  constructor%S = S
-  if (present(face_left)) constructor%face_left = face_left
-  if (present(face_right)) constructor%face_right = face_right
-  if (present(eps)) constructor%eps = eps
-  select type(constructor)
-  type is(reconstructor_js_constructor)
-    allocate(constructor%interpolations_constructor, source=interpolations_constructor)
-    allocate(constructor%weights_constructor, source=weights_constructor)
-  endselect
-  endsubroutine create_reconstructor_js_constructor
-
   ! public deferred methods
   subroutine create(self, constructor)
   !< Create interpolator.
@@ -86,13 +61,16 @@ contains
 
   pure function description(self) result(string)
   !< Return reconstructor string-descripition.
-  class(reconstructor_js), intent(in) :: self   !< Reconstructor.
-  character(len=:), allocatable       :: string !< String-description.
+  class(reconstructor_js), intent(in) :: self             !< Reconstructor.
+  character(len=:), allocatable       :: string           !< String-description.
+  character(len=1), parameter         :: nl=new_line('a') !< New line char.
 
-#ifndef DEBUG
-  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'reconstructor_js%description to be implemented, do not use!'
-#endif
+  string = 'Jiang-Shu reconstructor:'//nl
+  string = string//'  - S   = '//trim(str(self%S))//nl
+  string = string//'  - f1  = '//trim(str(self%f1))//nl
+  string = string//'  - f2  = '//trim(str(self%f2))//nl
+  string = string//'  - ff  = '//trim(str(self%ff))//nl
+  string = string//self%weights%description()
   endfunction description
 
   elemental subroutine destroy(self)

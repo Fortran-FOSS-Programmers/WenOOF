@@ -19,7 +19,6 @@ implicit none
 private
 public :: kappa_rec_js
 public :: kappa_rec_js_constructor
-public :: create_kappa_rec_js_constructor
 
 type, extends(kappa_object_constructor) :: kappa_rec_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal kappa object constructor.
@@ -41,16 +40,6 @@ type, extends(kappa_object):: kappa_rec_js
 endtype kappa_rec_js
 
 contains
-  ! public non TBP procedures
-  subroutine create_kappa_rec_js_constructor(S, constructor)
-  !< Create kappa constructor.
-  integer(I_P),                                intent(in)   :: S           !< Stencils dimension.
-  class(kappa_object_constructor), allocatable, intent(out) :: constructor !< Constructor.
-
-  allocate(kappa_rec_js_constructor :: constructor)
-  constructor%S = S
-  endsubroutine create_kappa_rec_js_constructor
-
   ! deferred public methods
   subroutine create(self, constructor)
   !< Create kappa.

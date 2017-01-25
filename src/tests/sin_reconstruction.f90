@@ -58,6 +58,7 @@ type :: test
   logical                          :: errors_analysis=.false. !< Flag for activating errors analysis.
   logical                          :: plots=.false.           !< Flag for activating plots saving.
   logical                          :: results=.false.         !< Flag for activating results saving.
+  logical                          :: verbose=.false.         !< Flag for activating verbose output.
   contains
     ! public methods
     procedure, pass(self) :: execute !< Execute selected test(s).
@@ -195,6 +196,7 @@ contains
       call cli%add(switch='--plots', switch_ab='-p', help='Save plots', required=.false., act='store_true', def='.false.')
       call cli%add(switch='--output', help='Output files basename', required=.false., act='store', def='sin_reconstruction')
       call cli%add(switch='--errors_analysis', help='Peform errors analysis', required=.false., act='store_true', def='.false.')
+      call cli%add(switch='--verbose', help='Verbose output', required=.false., act='store_true', def='.false.')
     endassociate
     endsubroutine set_cli
 
@@ -212,6 +214,7 @@ contains
     call self%cli%get(switch='-p', val=self%plots, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='--output', val=self%output_bname, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='--errors_analysis', val=self%errors_analysis, error=self%error) ; if (self%error/=0) stop
+    call self%cli%get(switch='--verbose', val=self%verbose, error=self%error) ; if (self%error/=0) stop
     endsubroutine parse_cli
   endsubroutine initialize
 
@@ -232,6 +235,7 @@ contains
                        S=self%S(s),                                             &
                        interpolator=interpolator,                               &
                        eps=self%eps)
+    if (self%verbose) print '(A)', interpolator%description()
     allocate(stencil(1:2, 1-self%S(s):-1+self%S(s)))
     do pn=1, self%pn_number
       do i=1, self%points_number(pn)

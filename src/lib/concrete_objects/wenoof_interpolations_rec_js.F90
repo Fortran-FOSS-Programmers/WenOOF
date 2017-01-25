@@ -19,7 +19,6 @@ implicit none
 private
 public :: interpolations_rec_js
 public :: interpolations_rec_js_constructor
-public :: create_interpolations_rec_js_constructor
 
 type, extends(interpolations_object_constructor) :: interpolations_rec_js_constructor
   !< Jiang-Shu (Lagrange) interpolations object for derivative reconstruction constructor.
@@ -43,20 +42,6 @@ type, extends(interpolations_object) :: interpolations_rec_js
 endtype interpolations_rec_js
 
 contains
-  ! public non TBP procedures
-  subroutine create_interpolations_rec_js_constructor(S, constructor, face_left, face_right)
-  !< Create interpolations constructor.
-  integer(I_P),                                          intent(in)           :: S           !< Stencils dimension.
-  class(interpolations_object_constructor), allocatable, intent(out)          :: constructor !< Constructor.
-  logical,                                               intent(in), optional :: face_left   !< Activate left-face interpolations.
-  logical,                                               intent(in), optional :: face_right  !< Activate right-face interpolations.
-
-  allocate(interpolations_rec_js_constructor :: constructor)
-  constructor%S = S
-  if (present(face_left)) constructor%face_left = face_left
-  if (present(face_right)) constructor%face_right = face_right
-  endsubroutine create_interpolations_rec_js_constructor
-
   ! public deferred methods
   subroutine create(self, constructor)
   !< Create interpolations.

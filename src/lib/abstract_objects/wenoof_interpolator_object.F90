@@ -16,7 +16,7 @@ private
 public :: interpolator_object
 public :: interpolator_object_constructor
 
-type, extends(base_object_constructor) :: interpolator_object_constructor
+type, extends(base_object_constructor), abstract :: interpolator_object_constructor
   !< Abstract interpolator object constructor.
   !<
   !< @note Every concrete WENO interpolator implementations must define their own constructor type.

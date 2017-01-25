@@ -14,7 +14,7 @@ private
 public :: kappa_object
 public :: kappa_object_constructor
 
-type, extends(base_object_constructor) :: kappa_object_constructor
+type, extends(base_object_constructor), abstract :: kappa_object_constructor
   !< Abstract kappa object constructor.
 endtype kappa_object_constructor
 

@@ -19,7 +19,6 @@ implicit none
 private
 public :: beta_rec_js
 public :: beta_rec_js_constructor
-public :: create_beta_rec_js_constructor
 
 type, extends(beta_object_constructor) :: beta_rec_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet beta object constructor.
@@ -43,20 +42,6 @@ type, extends(beta_object) :: beta_rec_js
 endtype beta_rec_js
 
 contains
-  ! public non TBP procedures
-  subroutine create_beta_rec_js_constructor(S, constructor, face_left, face_right)
-  !< Create beta constructor.
-  integer(I_P),                                intent(in)           :: S           !< Stencils dimension.
-  class(beta_object_constructor), allocatable, intent(out)          :: constructor !< Constructor.
-  logical,                                     intent(in), optional :: face_left   !< Activate left-face interpolations.
-  logical,                                     intent(in), optional :: face_right  !< Activate right-face interpolations.
-
-  allocate(beta_rec_js_constructor :: constructor)
-  constructor%S = S
-  if (present(face_left)) constructor%face_left = face_left
-  if (present(face_right)) constructor%face_right = face_right
-  endsubroutine create_beta_rec_js_constructor
-
   ! public deferred methods
   subroutine create(self, constructor)
   !< Create beta.

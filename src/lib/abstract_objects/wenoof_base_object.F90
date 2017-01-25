@@ -17,12 +17,14 @@ public :: base_object_constructor
 
 real(RPP), parameter :: EPS_DEF=10._RPP**(-6) !< Small epsilon to avoid division by zero, default value.
 
-type :: base_object_constructor
+type, abstract :: base_object_constructor
   !< Abstract base object constructor.
   integer(I_P) :: S=0_I_P           !< Stencils dimension.
   logical      :: face_left=.true.  !< Activate left-face interpolation computation.
   logical      :: face_right=.true. !< Activate right-face interpolation computation.
   real(RPP)    :: eps=EPS_DEF       !< Small epsilon to avoid division by zero.
+  contains
+    procedure, pass(self) :: create => create_base_object_constructor
 endtype base_object_constructor
 
 type, abstract :: base_object
@@ -70,6 +72,25 @@ abstract interface
 endinterface
 
 contains
+  ! base object constructor
+
+  ! public methods
+  subroutine create_base_object_constructor(self, S, face_left, face_right, eps)
+  !< Create alpha constructor.
+  class(base_object_constructor), intent(inout)        :: self       !< Constructor.
+  integer(I_P),                   intent(in)           :: S          !< Stencils dimension.
+  logical,                        intent(in), optional :: face_left  !< Activate left-face interpolations.
+  logical,                        intent(in), optional :: face_right !< Activate right-face interpolations.
+  real(RPP),                      intent(in), optional :: eps        !< Small epsilon to avoid division by zero.
+
+  self%S = S
+  if (present(face_left)) self%face_left = face_left
+  if (present(face_right)) self%face_right = face_right
+  if (present(eps)) self%eps = eps
+  endsubroutine create_base_object_constructor
+
+  ! base object
+
   ! public non overridable methods
   subroutine create_(self, constructor)
   !< Create object.

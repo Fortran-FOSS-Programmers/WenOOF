@@ -14,7 +14,7 @@ private
 public :: beta_object
 public :: beta_object_constructor
 
-type, extends(base_object_constructor) :: beta_object_constructor
+type, extends(base_object_constructor), abstract :: beta_object_constructor
   !< Abstract Beta coefficients object constructor.
 endtype beta_object_constructor
 
