@@ -186,9 +186,9 @@ contains
       call cli%add(switch='--interpolator', switch_ab='-i', help='WENO interpolator type', required=.false., &
                    def='reconstructor-JS', act='store', choices='all,reconstructor-JS')
       call cli%add(switch='--points_number', switch_ab='-pn', nargs='+', help='Number of points used to discretize the domain', &
-                   required=.false., act='store', def='50')
+                   required=.false., act='store', def='50 100')
       call cli%add(switch='--stencils', switch_ab='-s', nargs='+', help='Stencils dimensions (and number)', &
-                   required=.false., act='store', def='2', choices='2, 3, 4, 5, 6, 7, 8, 9')
+                   required=.false., act='store', def='2 3 4 5 6 7 8 9', choices='2, 3, 4, 5, 6, 7, 8, 9')
       call cli%add(switch='--eps', help='Small epsilon to avoid zero-division', required=.false., act='store', def='1.e-6')
       call cli%add(switch='--output_dir', help='Output directory', required=.false., act='store', def='./')
       call cli%add(switch='--results', switch_ab='-r', help='Save results', required=.false., act='store_true', def='.false.')
