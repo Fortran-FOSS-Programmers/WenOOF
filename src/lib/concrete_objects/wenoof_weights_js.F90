@@ -8,6 +8,7 @@ module wenoof_weights_js
 !< doi:10.1016/j.jcp.2009.07.039
 
 use penf, only : I_P, R_P
+use wenoof_alpha_factory
 use wenoof_alpha_object
 use wenoof_alpha_rec_js
 use wenoof_alpha_rec_m
@@ -44,10 +45,11 @@ type, extends(weights_object):: weights_js
   class(kappa_object), allocatable :: kappa !< kappa coefficients (optimal, linear weights).
   contains
     ! deferred public methods
-    procedure, pass(self) :: create      !< Create weights.
-    procedure, pass(self) :: compute     !< Compute weights.
-    procedure, pass(self) :: description !< Return weights string-description.
-    procedure, pass(self) :: destroy     !< Destroy weights.
+    procedure, pass(self) :: create                !< Create weights.
+    procedure, pass(self) :: compute               !< Compute weights.
+    procedure, pass(self) :: description           !< Return weights string-description.
+    procedure, pass(self) :: destroy               !< Destroy weights.
+    procedure, pass(self) :: smoothness_indicators !< Return smoothness indicators.
 endtype weights_js
 
 contains
@@ -82,6 +84,7 @@ contains
   !< Create reconstructor.
   class(weights_js),              intent(inout) :: self        !< Weights.
   class(base_object_constructor), intent(in)    :: constructor !< Constructor.
+  type(alpha_factory)                           :: factory     !< Objects factory.
 
   call self%destroy
   call self%create_(constructor=constructor)
@@ -95,8 +98,9 @@ contains
 
       select type(alpha_constructor)
       type is(alpha_rec_js_constructor)
-        allocate(alpha_rec_js :: self%alpha)
-        call self%alpha%create(constructor=alpha_constructor)
+        ! allocate(alpha_rec_js :: self%alpha)
+        ! call self%alpha%create(constructor=alpha_constructor)
+        call factory%create(constructor=alpha_constructor, object=self%alpha)
       type is(alpha_rec_m_constructor)
         ! @TODO implement this
         error stop 'alpha_rec_m to be implemented'
@@ -156,4 +160,16 @@ contains
   if (allocated(self%beta)) deallocate(self%beta)
   if (allocated(self%kappa)) deallocate(self%kappa)
   endsubroutine destroy
+
+  pure function smoothness_indicators(self) result(si)
+  !< Return smoothness indicators..
+  class(weights_js), intent(in) :: self    !< Weights.
+  real(R_P), allocatable        :: si(:,:) !< Smoothness indicators.
+
+  if (allocated(self%beta)) then
+    if (allocated(self%beta%values)) then
+      si = self%beta%values
+    endif
+  endif
+  endfunction smoothness_indicators
 endmodule wenoof_weights_js
