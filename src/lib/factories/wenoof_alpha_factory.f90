@@ -58,6 +58,20 @@ contains
     error stop 'interpolator-JS to be implemented'
   case('reconstructor-JS')
     allocate(alpha_rec_js_constructor :: constructor)
+  case('reconstructor-M-JS')
+    allocate(alpha_rec_m_constructor :: constructor)
+    select type(constructor)
+    type is(alpha_rec_m_constructor)
+      constructor%base_type = 'JS'
+    endselect
+  case('reconstructor-M-Z')
+    allocate(alpha_rec_m_constructor :: constructor)
+    select type(constructor)
+    type is(alpha_rec_m_constructor)
+      constructor%base_type = 'Z'
+    endselect
+  case('reconstructor-Z')
+    allocate(alpha_rec_z_constructor :: constructor)
   endselect
   call constructor%create(S=S, face_left=face_left, face_right=face_right, eps=eps)
   endsubroutine create_constructor

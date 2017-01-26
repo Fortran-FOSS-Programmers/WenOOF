@@ -45,6 +45,12 @@ contains
     error stop 'interpolator-JS to be implemented'
   case('reconstructor-JS')
     allocate(kappa_rec_js_constructor :: constructor)
+  case('reconstructor-M-JS')
+    allocate(kappa_rec_js_constructor :: constructor)
+  case('reconstructor-M-Z')
+    allocate(kappa_rec_js_constructor :: constructor)
+  case('reconstructor-Z')
+    allocate(kappa_rec_js_constructor :: constructor)
   endselect
   call constructor%create(S=S)
   endsubroutine create_constructor

@@ -7,9 +7,9 @@ module wenoof_alpha_rec_m
 !< 2005, vol. 207, pp. 542-567, doi:10.1016/j.jcp.2005.01.023
 
 #ifdef r16p
-use penf, only: I_P, RPP=>R16P
+use penf, only: I_P, RPP=>R16P, str
 #else
-use penf, only: I_P, RPP=>R8P
+use penf, only: I_P, RPP=>R8P, str
 #endif
 use wenoof_alpha_object
 use wenoof_alpha_rec_js
@@ -52,6 +52,10 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
+  allocate(self%values(1:2, 0:self%S - 1))
+  allocate(self%values_sum(1:2))
+  self%values = 0._RPP
+  self%values_sum = 0._RPP
   select type(constructor)
   type is(alpha_rec_m_constructor)
     if (allocated(constructor%base_type)) then
@@ -95,13 +99,24 @@ contains
 
   pure function description(self) result(string)
   !< Return alpha string-descripition.
-  class(alpha_rec_m), intent(in) :: self   !< Alpha.
-  character(len=:), allocatable  :: string !< String-description.
+  class(alpha_rec_m), intent(in) :: self             !< Alpha.
+  character(len=:), allocatable  :: string           !< String-description.
+  character(len=1), parameter    :: nl=new_line('a') !< New line char.
 
-#ifndef DEBUG
-  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'alpha_rec_m%description to be implemented, do not use!'
-#endif
+  string = '    Henrick alpha coefficients for reconstructor:'//nl
+  string = string//'      - S   = '//trim(str(self%S))//nl
+  string = string//'      - f1  = '//trim(str(self%f1))//nl
+  string = string//'      - f2  = '//trim(str(self%f2))//nl
+  string = string//'      - ff  = '//trim(str(self%ff))//nl
+  string = string//'      - eps = '//trim(str(self%eps))//nl
+  associate(alpha_base=>self%alpha_base)
+    select type(alpha_base)
+    type is(alpha_rec_js)
+      string = string//'      - base-mapped-alpha type = Jiang-Shu'
+    type is(alpha_rec_z)
+      string = string//'      - base-mapped-alpha type = Bogeg'
+    endselect
+  endassociate
   endfunction description
 
   elemental subroutine destroy(self)
@@ -109,6 +124,8 @@ contains
   class(alpha_rec_m), intent(inout) :: self !< Alpha.
 
   call self%destroy_
+  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_sum)) deallocate(self%values_sum)
   if (allocated(self%alpha_base)) deallocate(self%alpha_base)
   endsubroutine destroy
 endmodule wenoof_alpha_rec_m
