@@ -18,8 +18,10 @@ use wenoof_alpha_rec_js
 use wenoof_alpha_rec_m
 use wenoof_alpha_rec_z
 use wenoof_base_object
+use wenoof_beta_factory
 use wenoof_beta_object
 use wenoof_beta_rec_js
+use wenoof_kappa_factory
 use wenoof_kappa_object
 use wenoof_kappa_rec_js
 use wenoof_weights_object
@@ -61,7 +63,9 @@ contains
   !< Create reconstructor.
   class(weights_js),              intent(inout) :: self        !< Weights.
   class(base_object_constructor), intent(in)    :: constructor !< Constructor.
-  type(alpha_factory)                           :: factory     !< Objects factory.
+  type(alpha_factory)                           :: a_factory   !< Alpha factory.
+  type(beta_factory)                            :: b_factory   !< Beta factory.
+  type(kappa_factory)                           :: k_factory   !< Kappa factory.
 
   call self%destroy
   call self%create_(constructor=constructor)
@@ -73,30 +77,29 @@ contains
               beta_constructor=>constructor%beta_constructor,   &
               kappa_constructor=>constructor%kappa_constructor)
 
-      select type(alpha_constructor)
-      type is(alpha_rec_js_constructor)
-        ! allocate(alpha_rec_js :: self%alpha)
-        ! call self%alpha%create(constructor=alpha_constructor)
-        call factory%create(constructor=alpha_constructor, object=self%alpha)
-      type is(alpha_rec_m_constructor)
-        ! @TODO implement this
-        error stop 'alpha_rec_m to be implemented'
-      type is(alpha_rec_z_constructor)
-        ! @TODO implement this
-        error stop 'alpha_rec_z to be implemented'
-      endselect
+      call a_factory%create(constructor=alpha_constructor, object=self%alpha)
+      ! select type(alpha_constructor)
+      ! type is(alpha_rec_js_constructor)
+      !   call factory%create(constructor=alpha_constructor, object=self%alpha)
+      ! type is(alpha_rec_m_constructor)
+      !   call factory%create(constructor=alpha_constructor, object=self%alpha)
+      ! type is(alpha_rec_z_constructor)
+      !   call factory%create(constructor=alpha_constructor, object=self%alpha)
+      ! endselect
 
-      select type(beta_constructor)
-      type is(beta_rec_js_constructor)
-        allocate(beta_rec_js :: self%beta)
-        call self%beta%create(constructor=beta_constructor)
-      endselect
+      call b_factory%create(constructor=beta_constructor, object=self%beta)
+      ! select type(beta_constructor)
+      ! type is(beta_rec_js_constructor)
+      !   allocate(beta_rec_js :: self%beta)
+      !   call self%beta%create(constructor=beta_constructor)
+      ! endselect
 
-      select type(kappa_constructor)
-      type is(kappa_rec_js_constructor)
-        allocate(kappa_rec_js :: self%kappa)
-        call self%kappa%create(constructor=kappa_constructor)
-      endselect
+      call k_factory%create(constructor=kappa_constructor, object=self%kappa)
+      ! select type(kappa_constructor)
+      ! type is(kappa_rec_js_constructor)
+      !   allocate(kappa_rec_js :: self%kappa)
+      !   call self%kappa%create(constructor=kappa_constructor)
+      ! endselect
     endassociate
   endselect
   endsubroutine create

@@ -54,6 +54,12 @@ contains
     error stop 'interpolator-JS to be implemented'
   case('reconstructor-JS')
     allocate(weights_js_constructor :: constructor)
+  case('reconstructor-M-JS')
+    allocate(weights_js_constructor :: constructor)
+  case('reconstructor-M-Z')
+    allocate(weights_js_constructor :: constructor)
+  case('reconstructor-Z')
+    allocate(weights_js_constructor :: constructor)
   endselect
   call constructor%create(S=S, face_left=face_left, face_right=face_right)
   select type(constructor)

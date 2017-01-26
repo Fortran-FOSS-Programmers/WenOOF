@@ -15,10 +15,11 @@ implicit none
 private
 public :: test
 
-character(99), parameter :: interpolators(1:4) = ["all             ", &
-                                                  "reconstructor-JS", &
-                                                  "JS-Z            ", &
-                                                  "JS-M            "] !< List of available interpolators.
+character(99), parameter :: interpolators(1:5) = ["all               ", &
+                                                  "reconstructor-JS  ", &
+                                                  "reconstructor-M-JS", &
+                                                  "reconstructor-M-Z ", &
+                                                  "reconstructor-Z   "] !< List of available interpolators.
 real(RPP), parameter     :: pi = 4._RPP * atan(1._RPP)  !< Pi greek.
 
 type :: solution_data
@@ -185,7 +186,8 @@ contains
                                    "sin_reconstruction --interpolator JS-M        ",    &
                                    "sin_reconstruction --interpolator all -p -r   "])
       call cli%add(switch='--interpolator', switch_ab='-i', help='WENO interpolator type', required=.false., &
-                   def='reconstructor-JS', act='store', choices='all,reconstructor-JS')
+                   def='reconstructor-JS', act='store',                                                      &
+                   choices='all,reconstructor-JS,reconstructor-M-JS,reconstructor-M-Z,reconstructor-Z')
       call cli%add(switch='--points_number', switch_ab='-pn', nargs='+', help='Number of points used to discretize the domain', &
                    required=.false., act='store', def='50 100')
       call cli%add(switch='--stencils', switch_ab='-s', nargs='+', help='Stencils dimensions (and number)', &

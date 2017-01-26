@@ -7,9 +7,9 @@ module wenoof_alpha_rec_z
 !< vol. 227, pp. 3191-3211, doi: 10.1016/j.jcp.2007.11.038.
 
 #ifdef r16p
-use penf, only: I_P, RPP=>R16P
+use penf, only: I_P, RPP=>R16P, str
 #else
-use penf, only: I_P, RPP=>R8P
+use penf, only: I_P, RPP=>R8P, str
 #endif
 use wenoof_alpha_object
 use wenoof_base_object
@@ -47,6 +47,10 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
+  allocate(self%values(1:2, 0:self%S - 1))
+  allocate(self%values_sum(1:2))
+  self%values = 0._RPP
+  self%values_sum = 0._RPP
   endsubroutine create
 
   pure subroutine compute(self, beta, kappa)
@@ -68,13 +72,17 @@ contains
 
   pure function description(self) result(string)
   !< Return alpha string-descripition.
-  class(alpha_rec_z), intent(in) :: self   !< Alpha coefficients.
-  character(len=:), allocatable  :: string !< String-description.
+  class(alpha_rec_z), intent(in) :: self             !< Alpha coefficients.
+  character(len=:), allocatable  :: string           !< String-description.
+  character(len=1), parameter    :: nl=new_line('a') !< New line char.
 
-#ifndef DEBUG
-  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'alpha_rec_z%description to be implemented, do not use!'
-#endif
+  string = '    Borges alpha coefficients for reconstructor:'//nl
+  string = string//'      - S   = '//trim(str(self%S))//nl
+  string = string//'      - f1  = '//trim(str(self%f1))//nl
+  string = string//'      - f2  = '//trim(str(self%f2))//nl
+  string = string//'      - ff  = '//trim(str(self%ff))//nl
+  string = string//'      - eps = '//trim(str(self%eps))
+
   endfunction description
 
   elemental subroutine destroy(self)
@@ -82,6 +90,8 @@ contains
   class(alpha_rec_z), intent(inout) :: self !< Alpha.
 
   call self%destroy_
+  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_sum)) deallocate(self%values_sum)
   endsubroutine destroy
 
   ! private non TBP
