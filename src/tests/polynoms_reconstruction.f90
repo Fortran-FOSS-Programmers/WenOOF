@@ -1,5 +1,5 @@
-!< WenOOF test: reconstruction of sin function.
-module sin_test_module
+!< WenOOF test: reconstruction of polynomial functions.
+module polynoms_test_module
 !< Auxiliary module defining the test class.
 
 use flap, only : command_line_interface
@@ -140,19 +140,19 @@ contains
   call self%allocate_solution_data
   do s=1, self%S_number
     do pn=1, self%pn_number
-      self%solution(pn, s)%Dx = 2 * pi / self%points_number(pn)
-      ! compute the values used for the interpolation/reconstruction of sin function: cell values
+      self%solution(pn, s)%Dx = 1._RPP / self%points_number(pn)
+      ! compute the values used for the interpolation/reconstruction of polynomials function: cell values
       do i=1 - self%S(s), self%points_number(pn) + self%S(s)
         self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._RPP
-        self%solution(pn, s)%fx_cell(i) = sin(self%solution(pn, s)%x_cell(i))
+        self%solution(pn, s)%fx_cell(i) = interface_function(x=self%solution(pn, s)%x_cell(i), o=2*self%S(s)+2)
       enddo
       ! values to which the interpolation/reconstruction should tend
       do i = 1, self%points_number(pn)
         self%solution(pn, s)%x_face(1,i) = self%solution(pn, s)%x_cell(i) - self%solution(pn, s)%Dx / 2._RPP
         self%solution(pn, s)%x_face(2,i) = self%solution(pn, s)%x_cell(i) + self%solution(pn, s)%Dx / 2._RPP
-        self%solution(pn, s)%fx_face(1,i) = sin(self%solution(pn, s)%x_face(1,i))
-        self%solution(pn, s)%fx_face(2,i) = sin(self%solution(pn, s)%x_face(2,i))
-        self%solution(pn, s)%dfx_cell(i) = cos(self%solution(pn, s)%x_cell(i))
+        self%solution(pn, s)%fx_face(1,i) = interface_function(self%solution(pn, s)%x_face(1,i), o=2*self%S(s)+2)
+        self%solution(pn, s)%fx_face(2,i) = interface_function(self%solution(pn, s)%x_face(2,i), o=2*self%S(s)+2)
+        self%solution(pn, s)%dfx_cell(i) = dinterface_function_dx(self%solution(pn, s)%x_cell(i), o=2*self%S(s)+2)
       enddo
     enddo
   enddo
@@ -278,8 +278,8 @@ contains
       do pn=1, self%pn_number
         open(newunit=file_unit, file=file_bname//'-S_'//trim(str(self%S(s), .true.))//&
                                      '-Np_'//trim(str(self%points_number(pn), .true.))//'.dat')
-        buffer = 'VARIABLES = "x" "sin(x)" "cos(x)" "x_left" "x_right" "sin(x)_left" "sin(x)_right"'
-        buffer = buffer//' "reconstruction_left" "reconstruction_right" "cos_reconstruction"'
+        buffer = 'VARIABLES = "x" "f(x)" "df_dx(x)" "x_left" "x_right" "f(x)_left" "f(x)_right"'
+        buffer = buffer//' "reconstruction_left" "reconstruction_right" "df_dx_reconstruction"'
         do ss=0, self%S(s)-1
           buffer = buffer//' "si-'//trim(str(ss, .true.))//'_left"'//' "si-'//trim(str(ss, .true.))//'_right"'
         enddo
@@ -392,15 +392,42 @@ contains
     endif
   endif
   endsubroutine analize_errors
-endmodule sin_test_module
 
-program sin_reconstruction
-!< WenOOF test: reconstruction of sin function.
+  ! non TBP
+  pure function interface_function(x, o) result(y)
+  !< Interface function.
+  real(RPP),    intent(in) :: x !< X value.
+  integer(I_P), intent(in) :: o !< Polynomial order.
+  real(RPP)                :: y !< Y value.
+  integer(I_P)             :: i !< Counter.
 
-use sin_test_module
+  y = 0._RPP
+  do i=1, o
+    y = y + i * (x ** i)
+  enddo
+  endfunction interface_function
+
+  pure function dinterface_function_dx(x, o) result(y)
+  !< Derivative of interface function.
+  real(RPP),    intent(in) :: x !< X value.
+  integer(I_P), intent(in) :: o !< Polynomial order.
+  real(RPP)                :: y !< Y value.
+  integer(I_P)             :: i !< Counter.
+
+  y = 0._RPP
+  do i=1, o
+    y = y + i * i * (x ** (i - 1))
+  enddo
+  endfunction dinterface_function_dx
+endmodule polynoms_test_module
+
+program polynoms_reconstruction
+!< WenOOF test: reconstruction of polynomial functions.
+
+use polynoms_test_module
 
 implicit none
 type(test) :: sin_test
 
 call sin_test%execute
-endprogram sin_reconstruction
+endprogram polynoms_reconstruction
