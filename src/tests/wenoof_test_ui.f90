@@ -53,7 +53,7 @@ contains
     !< Set Command Line Interface.
 
     associate(cli => self%cli)
-      call cli%init(progname    = 'sin reconstruction',                                 &
+      call cli%init(progname    = 'WenOOF Test',                                        &
                     authors     = 'Fortran-FOSS-Programmers',                           &
                     license     = 'GNU GPLv3',                                          &
                     description = 'Test WenOOF library on sin function reconstruction', &
@@ -72,7 +72,7 @@ contains
       call cli%add(switch='--output_dir', help='Output directory', required=.false., act='store', def='./')
       call cli%add(switch='--results', switch_ab='-r', help='Save results', required=.false., act='store_true', def='.false.')
       call cli%add(switch='--plots', switch_ab='-p', help='Save plots', required=.false., act='store_true', def='.false.')
-      call cli%add(switch='--output', help='Output files basename', required=.false., act='store', def='sin_reconstruction')
+      call cli%add(switch='--output', help='Output files basename', required=.false., act='store', def='output')
       call cli%add(switch='--errors_analysis', help='Peform errors analysis', required=.false., act='store_true', def='.false.')
       call cli%add(switch='--verbose', help='Verbose output', required=.false., act='store_true', def='.false.')
     endassociate

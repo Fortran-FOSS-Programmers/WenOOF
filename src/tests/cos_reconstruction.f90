@@ -1,5 +1,5 @@
-!< WenOOF test: reconstruction of sin function.
-module sin_test_module
+!< WenOOF test: reconstruction of cosine function.
+module cos_test_module
 !< Auxiliary module defining the test class.
 
 use flap, only : command_line_interface
@@ -25,8 +25,8 @@ type :: solution_data
   real(RPP), allocatable :: x_face(:,:)         !< Face domain [1:2,1:points_number].
   real(RPP), allocatable :: fx_face(:,:)        !< Face reference values [1:2,1:points_number].
   real(RPP), allocatable :: dfx_cell(:)         !< Cell refecence values of df/dx [1:points_number].
-  real(RPP), allocatable :: interpolation(:,:)  !< Interpolated values [1:2,1:points_number].
-  real(RPP), allocatable :: reconstruction(:,:) !< Reconstruction values [1:2,1:points_number].
+  real(RPP), allocatable :: interpolations(:,:) !< Interpolated values [1:2,1:points_number].
+  real(RPP), allocatable :: reconstruction(:)   !< Reconstruction values [1:2,1:points_number].
   real(RPP), allocatable :: si(:,:,:)           !< Computed smoothness indicators [1:2,1:points_number,0:S-1].
   real(RPP), allocatable :: weights(:,:,:)      !< Computed weights [1:2,1:points_number,0:S-1].
   real(RPP)              :: Dx=0._RPP           !< Space step (spatial resolution).
@@ -92,8 +92,8 @@ contains
       allocate(self%solution(pn, s)%x_face(        1:2,  1:self%ui%points_number(pn)                              ))
       allocate(self%solution(pn, s)%fx_face(       1:2,  1:self%ui%points_number(pn)                              ))
       allocate(self%solution(pn, s)%dfx_cell(            1:self%ui%points_number(pn)                              ))
-      allocate(self%solution(pn, s)%interpolation( 1:2,  1:self%ui%points_number(pn)                              ))
-      allocate(self%solution(pn, s)%reconstruction(1:2,  1:self%ui%points_number(pn)                              ))
+      allocate(self%solution(pn, s)%interpolations(1:2,  1:self%ui%points_number(pn)                              ))
+      allocate(self%solution(pn, s)%reconstruction(      1:self%ui%points_number(pn)                              ))
       allocate(self%solution(pn, s)%si(            1:2,  1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
       allocate(self%solution(pn, s)%weights(       1:2,  1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
       self%solution(pn, s)%x_cell         = 0._RPP
@@ -101,7 +101,7 @@ contains
       self%solution(pn, s)%x_face         = 0._RPP
       self%solution(pn, s)%fx_face        = 0._RPP
       self%solution(pn, s)%dfx_cell       = 0._RPP
-      self%solution(pn, s)%interpolation  = 0._RPP
+      self%solution(pn, s)%interpolations = 0._RPP
       self%solution(pn, s)%reconstruction = 0._RPP
       self%solution(pn, s)%si             = 0._RPP
       self%solution(pn, s)%weights        = 0._RPP
@@ -120,7 +120,7 @@ contains
   do s=1, self%ui%S_number
     do pn=1, self%ui%pn_number
       self%solution(pn, s)%Dx = 2 * pi / self%ui%points_number(pn)
-      ! compute the values used for the interpolation/reconstruction of sin function: cell values
+      ! compute the values used for the interpolation/reconstruction of cos function: cell values
       do i=1 - self%ui%S(s), self%ui%points_number(pn) + self%ui%S(s)
         self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._RPP
         self%solution(pn, s)%fx_cell(i) = sin(self%solution(pn, s)%x_cell(i))
@@ -169,9 +169,11 @@ contains
         stencil(1,:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))
         stencil(2,:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))
         call interpolator%interpolate(stencil=stencil,                                        &
-                                      interpolation=self%solution(pn, s)%reconstruction(:,i), &
+                                      interpolation=self%solution(pn, s)%interpolations(:,i), &
                                       si=self%solution(pn, s)%si(:, i, 0:self%ui%S(s)-1),     &
                                       weights=self%solution(pn, s)%weights(:, i, 0:self%ui%S(s)-1))
+        self%solution(pn, s)%reconstruction(i) = &
+          (self%solution(pn, s)%interpolations(2,i) - self%solution(pn, s)%interpolations(1,i))/self%solution(pn, s)%Dx
       enddo
     enddo
     deallocate(stencil)
@@ -219,6 +221,7 @@ contains
                   dfx_cell       => self%solution(pn, s)%dfx_cell,       &
                   x_face         => self%solution(pn, s)%x_face,         &
                   fx_face        => self%solution(pn, s)%fx_face,        &
+                  interpolations => self%solution(pn, s)%interpolations, &
                   reconstruction => self%solution(pn, s)%reconstruction, &
                   si             => self%solution(pn, s)%si,             &
                   weights        => self%solution(pn, s)%weights,        &
@@ -230,8 +233,8 @@ contains
                dfx_cell(i),                                                                 &
               (x_face(f,i), f=1, 2),                                                        &
               (fx_face(f,i), f=1, 2),                                                       &
-              (reconstruction(f,i), f=1, 2),                                                &
-              (reconstruction(2,i)-reconstruction(1,i))/Dx,                                 &
+              (interpolations(f,i), f=1, 2),                                                &
+               reconstruction(i),                                                           &
              ((si(f, i, ss), f=1, 2), ss=0, self%ui%S(s)-1),                                &
              ((weights(f, i, ss), f=1, 2), ss=0, self%ui%S(s)-1)
           enddo
@@ -266,13 +269,12 @@ contains
         call plt%initialize(grid=.true., xlabel='angle (rad)', title=buffer, legend=.true.)
         call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%ui%points_number(pn)), &
                           y=self%solution(pn, s)%dfx_cell(:),                         &
-                          label='$\sin(x)$',                                          &
+                          label='$\cos(x)$',                                          &
                           linestyle='k-',                                             &
                           linewidth=2,                                                &
                           ylim=[-1.1_RPP, 1.1_RPP])
         call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%ui%points_number(pn)),                            &
-                          y=(self%solution(pn, s)%reconstruction(2,:)-self%solution(pn, s)%reconstruction(1,:))/ &
-                            self%solution(pn, s)%Dx,                                                             &
+                          y=self%solution(pn, s)%reconstruction(:),                                              &
                           label='WENO reconstruction',                                                           &
                           linestyle='ro',                                                                        &
                           markersize=6,                                                                          &
@@ -301,7 +303,7 @@ contains
                   reconstruction=>self%solution(pn, s)%reconstruction)
           error_L2 = 0._RPP
           do i=1, self%ui%points_number(pn)
-            error_L2 = error_L2 + ((reconstruction(2,i)-reconstruction(1,i))/Dx - dfx_cell(i))**2
+            error_L2 = error_L2 + (reconstruction(i) - dfx_cell(i))**2
           enddo
           error_L2 = sqrt(error_L2)
         endassociate
@@ -317,15 +319,15 @@ contains
     endif
   endif
   endsubroutine analize_errors
-endmodule sin_test_module
+endmodule cos_test_module
 
-program sin_reconstruction
-!< WenOOF test: reconstruction of sin function.
+program cos_reconstruction
+!< WenOOF test: reconstruction of cosine function.
 
-use sin_test_module
+use cos_test_module
 
 implicit none
-type(test) :: sin_test
+type(test) :: cos_test
 
-call sin_test%execute
-endprogram sin_reconstruction
+call cos_test%execute
+endprogram cos_reconstruction
