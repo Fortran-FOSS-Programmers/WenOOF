@@ -10,3 +10,7 @@
   path = src/third_party/FLAP
   url = https://github.com/szaghi/FLAP
   branch = master
+[submodule "src/third_party/FOODIE"]
+	path = src/third_party/FOODIE
+	url = https://github.com/Fortran-FOSS-Programmers/FOODIE
+  branch = master
