@@ -8,7 +8,12 @@ use penf, only: RPP=>R16P
 #else
 use penf, only: RPP=>R8P
 #endif
+use wenoof_base_object
+use wenoof_interpolations_factory
+use wenoof_interpolations_object
 use wenoof_interpolator_object
+use wenoof_weights_factory
+use wenoof_weights_object
 
 implicit none
 private
@@ -21,39 +26,61 @@ endtype interpolator_js_constructor
 
 type, extends(interpolator_object) :: interpolator_js
   !< Jiang-Shu (upwind) interpolator object.
+  !<
+  !< @note Provide the *High Order Weighted Essentially Nonoscillatory Schemes for Convection Dominated Problems*,
+  !< Chi-Wang Shu, SIAM Review, 2009, vol. 51, pp. 82--126, doi:10.1137/070679065.
+  !<
+  !< @note The supported accuracy formal order are: 3rd, 5th, 7th, 9th, 11th, 13th, 15th, 17th  corresponding to use 2, 3, 4, 5, 6,
+  !< 7, 8, 9 stencils composed of 2, 3, 4, 5, 6, 7, 8, 9 values, respectively.
   contains
     ! public deferred methods
+    procedure, pass(self) :: create               !< Create interpolator.
     procedure, pass(self) :: description          !< Return interpolator string-description.
+    procedure, pass(self) :: destroy              !< Destroy interpolator.
     procedure, pass(self) :: interpolate_standard !< Interpolate values (without providing debug values).
     procedure, pass(self) :: interpolate_debug    !< Interpolate values (providing also debug values).
 endtype interpolator_js
 
 contains
   ! public deferred methods
+  subroutine create(self, constructor)
+  !< Create interpolator.
+  class(interpolator_js),         intent(inout) :: self        !< Interpolator.
+  class(base_object_constructor), intent(in)    :: constructor !< Constructor.
+  type(interpolations_factory)                  :: i_factory   !< Inteprolations factory.
+  type(weights_factory)                         :: w_factory   !< Weights factory.
+
+  call self%destroy
+  call self%create_(constructor=constructor)
+  select type(constructor)
+  class is(interpolator_object_constructor)
+    call i_factory%create(constructor=constructor%interpolations_constructor, object=self%interpolations)
+    call w_factory%create(constructor=constructor%weights_constructor, object=self%weights)
+  endselect
+  endsubroutine create
+
   pure function description(self) result(string)
   !< Return interpolator string-descripition.
   class(interpolator_js), intent(in) :: self             !< Interpolator.
   character(len=:), allocatable      :: string           !< String-description.
   character(len=1), parameter        :: nl=new_line('a') !< New line character.
-  character(len=:), allocatable      :: dummy_string     !< Dummy string.
 
-#ifndef DEBUG
-  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'interpolator_js to be implemented, do not use!'
-#endif
+  string = 'Jiang-Shu reconstructor:'//nl
+  string = string//'  - S   = '//trim(str(self%S))//nl
+  string = string//'  - f1  = '//trim(str(self%f1))//nl
+  string = string//'  - f2  = '//trim(str(self%f2))//nl
+  string = string//'  - ff  = '//trim(str(self%ff))//nl
+  string = string//self%weights%description()
   endfunction description
 
-  pure subroutine interpolate_standard(self, stencil, interpolation)
-  !< Interpolate values (without providing debug values).
-  class(interpolator_js), intent(inout) :: self                     !< Interpolator.
-  real(RPP),              intent(in)    :: stencil(1:, 1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
-  real(RPP),              intent(out)   :: interpolation(1:)        !< Result of the interpolation, [1:2].
+  elemental subroutine destroy(self)
+  !< Destroy interpolator.
+  class(interpolator_js), intent(inout) :: self !< Interpolator.
 
-#ifndef DEBUG
-  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'interpolator_js to be implemented, do not use!'
-#endif
-  endsubroutine interpolate_standard
+  call self%destroy_
+  if (allocated(self%interpolations)) deallocate(self%interpolations)
+  if (allocated(self%weights)) deallocate(self%weights)
+  endsubroutine destroy
 
   pure subroutine interpolate_debug(self, stencil, interpolation, si, weights)
   !< Interpolate values (providing also debug values).
@@ -63,9 +90,26 @@ contains
   real(RPP),              intent(out)   :: si(1:, 0:)               !< Computed values of smoothness indicators [1:2, 0:S-1].
   real(RPP),              intent(out)   :: weights(1:, 0:)          !< Weights of the stencils, [1:2, 0:S-1].
 
-#ifndef DEBUG
-  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'interpolator_js to be implemented, do not use!'
-#endif
+  call self%interpolate_standard(stencil=stencil, interpolation=interpolation)
+  si = self%weights%smoothness_indicators()
+  weights = self%weights%values
   endsubroutine interpolate_debug
+
+  pure subroutine interpolate_standard(self, stencil, interpolation)
+  !< Interpolate values (without providing debug values).
+  class(interpolator_js), intent(inout) :: self                     !< Interpolator.
+  real(RPP),              intent(in)    :: stencil(1:, 1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
+  real(RPP),              intent(out)   :: interpolation(1:)        !< Result of the interpolation, [1:2].
+  integer(I_P)                          :: f, s                     !< Counters.
+
+  call self%interpolations%compute(stencil=stencil)
+  call self%weights%compute(stencil=stencil)
+  interpolation = 0._RPP
+  do s=0, self%S - 1 ! stencils loop
+    do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      interpolation(f + self%ff) = interpolation(f + self%ff) + &
+                                   self%weights%values(f + self%ff, s) * self%interpolations%values(f, s)
+    enddo
+  enddo
+  endsubroutine interpolate_standard
 endmodule wenoof_interpolator_js

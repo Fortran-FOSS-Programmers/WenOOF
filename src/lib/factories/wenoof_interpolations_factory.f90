@@ -5,6 +5,7 @@ module wenoof_interpolations_factory
 use penf, only: I_P
 use wenoof_interpolations_object
 use wenoof_interpolations_rec_js
+use wenoof_interpolations_int_js
 
 implicit none
 private
@@ -25,6 +26,8 @@ contains
   class(interpolations_object), allocatable, intent(out) :: object      !< Object.
 
   select type(constructor)
+  type is(interpolations_int_js_constructor)
+    allocate(interpolations_int_js :: object)
   type is(interpolations_rec_js_constructor)
     allocate(interpolations_rec_js :: object)
   class default
@@ -43,8 +46,7 @@ contains
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')
-    ! @TODO implement this
-    error stop 'interpolator-JS to be implemented'
+    allocate(interpolations_int_js_constructor :: constructor)
   case('reconstructor-JS')
     allocate(interpolations_rec_js_constructor :: constructor)
   case('reconstructor-M-JS')

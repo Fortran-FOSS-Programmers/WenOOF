@@ -5,7 +5,7 @@ module wenoof_interpolator_factory
 use penf, only: I_P
 use wenoof_interpolations_object
 use wenoof_interpolator_object
-! use wenoof_interpolator_js
+use wenoof_interpolator_js
 use wenoof_reconstructor_js
 use wenoof_weights_object
 
@@ -28,8 +28,8 @@ contains
   class(interpolator_object), allocatable, intent(out) :: object      !< Object.
 
   select type(constructor)
-  ! type is(interpolator_js_constructor)
-    ! allocate(interpolator_js :: object)
+  type is(interpolator_js_constructor)
+    allocate(interpolator_js :: object)
   type is(reconstructor_js_constructor)
     allocate(reconstructor_js :: object)
   class default
@@ -51,8 +51,13 @@ contains
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')
-    ! @TODO implement this
-    error stop 'interpolator-JS to be implemented'
+    allocate(interpolator_js_constructor :: constructor)
+  case('interpolator-M-JS')
+    allocate(interpolator_js_constructor :: constructor)
+  case('interpolator-M-Z')
+    allocate(interpolator_js_constructor :: constructor)
+  case('interpolator-Z')
+    allocate(interpolator_js_constructor :: constructor)
   case('reconstructor-JS')
     allocate(reconstructor_js_constructor :: constructor)
   case('reconstructor-M-JS')

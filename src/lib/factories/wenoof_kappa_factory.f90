@@ -5,6 +5,7 @@ module wenoof_kappa_factory
 use penf, only: I_P
 use wenoof_kappa_object
 use wenoof_kappa_rec_js
+use wenoof_kappa_int_js
 
 implicit none
 private
@@ -27,6 +28,8 @@ contains
   select type(constructor)
   type is(kappa_rec_js_constructor)
     allocate(kappa_rec_js :: object)
+  type is(kappa_int_js_constructor)
+    allocate(kappa_int_js :: object)
   class default
     error stop 'error: WenOOF object factory do NOT know the constructor given'
   endselect
@@ -41,8 +44,13 @@ contains
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')
-    ! @TODO implement this
-    error stop 'interpolator-JS to be implemented'
+    allocate(kappa_int_js_constructor :: constructor)
+  case('interpolator-M-JS')
+    allocate(kappa_int_js_constructor :: constructor)
+  case('interpolator-M-Z')
+    allocate(kappa_int_js_constructor :: constructor)
+  case('interpolator-Z')
+    allocate(kappa_int_js_constructor :: constructor)
   case('reconstructor-JS')
     allocate(kappa_rec_js_constructor :: constructor)
   case('reconstructor-M-JS')

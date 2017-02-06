@@ -5,6 +5,7 @@ module wenoof_beta_factory
 use penf, only: I_P
 use wenoof_beta_object
 use wenoof_beta_rec_js
+use wenoof_beta_int_js
 
 implicit none
 private
@@ -27,6 +28,8 @@ contains
   select type(constructor)
   type is(beta_rec_js_constructor)
     allocate(beta_rec_js :: object)
+  type is(beta_int_js_constructor)
+    allocate(beta_int_js :: object)
   class default
     error stop 'error: WenOOF object factory do NOT know the constructor given'
   endselect
@@ -43,8 +46,13 @@ contains
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')
-    ! @TODO implement this
-    error stop 'interpolator-JS to be implemented'
+    allocate(beta_int_js_constructor :: constructor)
+  case('interpolator-M-JS')
+    allocate(beta_int_js_constructor :: constructor)
+  case('interpolator-M-Z')
+    allocate(beta_int_js_constructor :: constructor)
+  case('interpolator-Z')
+    allocate(beta_int_js_constructor :: constructor)
   case('reconstructor-JS')
     allocate(beta_rec_js_constructor :: constructor)
   case('reconstructor-M-JS')

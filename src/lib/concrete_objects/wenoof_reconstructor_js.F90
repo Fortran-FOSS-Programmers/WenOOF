@@ -44,8 +44,8 @@ endtype reconstructor_js
 contains
   ! public deferred methods
   subroutine create(self, constructor)
-  !< Create interpolator.
-  class(reconstructor_js),        intent(inout) :: self        !< Interpolator.
+  !< Create reconstructor.
+  class(reconstructor_js),        intent(inout) :: self        !< Reconstructor.
   class(base_object_constructor), intent(in)    :: constructor !< Constructor.
   type(interpolations_factory)                  :: i_factory   !< Inteprolations factory.
   type(weights_factory)                         :: w_factory   !< Weights factory.
