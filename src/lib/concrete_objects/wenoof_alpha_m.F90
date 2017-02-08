@@ -77,20 +77,22 @@ contains
 
   pure subroutine compute(self, beta, kappa)
   !< Compute alpha.
-  class(alpha_rec_m),  intent(inout) :: self  !< Alpha.
-  class(beta_object),  intent(in)    :: beta  !< Beta.
-  class(kappa_object), intent(in)    :: kappa !< Kappa.
-  integer(I_P)                       :: f, s1 !< Counters.
+  class(alpha_rec_m),  intent(inout) :: self        !< Alpha.
+  class(beta_object),  intent(in)    :: beta        !< Beta.
+  class(kappa_object), intent(in)    :: kappa       !< Kappa.
+  real(RPP)                          :: kappa_base  !< Kappa evaluated from the base alphas.
+  integer(I_P)                       :: f, s1       !< Counters.
 
   self%values_sum = 0._RPP
   call self%alpha_base%compute(beta=beta, kappa=kappa)
   do s1=0, self%S - 1 ! stencil loops
     do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      self%values(f, s1) =                                                                                  &
-        (self%alpha_base%values(f, s1) * (kappa%values(f, s1) + kappa%values(f, s1) * kappa%values(f, s1) - &
-         3._RPP * kappa%values(f, s1) * self%alpha_base%values(f, s1) + self%alpha_base%values(f, s1) *     &
-         self%alpha_base%values(f, s1))) /                                                                  &
-         (kappa%values(f, s1) * kappa%values(f, s1) + self%alpha_base%values(f, s1) *                       &
+      kappa_base = self%alpha_base%values(f, s1) / self%alpha_base%values_sum(f)
+      self%values(f, s1) =                                                               &
+        (kappa_base * (kappa%values(f, s1) + kappa%values(f, s1) * kappa%values(f, s1) - &
+         3._RPP * kappa%values(f, s1) * kappa_base + kappa_base *                        &
+         kappa_base)) /                                                                  &
+         (kappa%values(f, s1) * kappa%values(f, s1) + kappa_base *                       &
          (1._RPP - 2._RPP * kappa%values(f, s1)))
       self%values_sum(f) = self%values_sum(f) + self%values(f, s1)
     enddo
