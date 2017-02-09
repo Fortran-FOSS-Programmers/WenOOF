@@ -4,9 +4,9 @@ module wenoof_interpolator_js
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 #ifdef r16p
-use penf, only: RPP=>R16P
+use penf, only: I_P, RPP=>R16P, str
 #else
-use penf, only: RPP=>R8P
+use penf, only: I_P, RPP=>R8P, str
 #endif
 use wenoof_base_object
 use wenoof_interpolations_factory

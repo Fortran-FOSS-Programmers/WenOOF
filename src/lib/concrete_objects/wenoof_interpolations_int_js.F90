@@ -37,7 +37,7 @@ type, extends(interpolations_object) :: interpolations_int_js
     procedure, pass(self) :: compute     !< Compute interpolations.
     procedure, pass(self) :: description !< Return interpolations string-description.
     procedure, pass(self) :: destroy     !< Destroy interpolations.
-endtype interpolations_rec_js
+endtype interpolations_int_js
 
 contains
   ! public deferred methods
