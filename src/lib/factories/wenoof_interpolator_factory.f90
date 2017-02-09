@@ -69,6 +69,9 @@ contains
   endselect
   call constructor%create(S=S, face_left=face_left, face_right=face_right)
   select type(constructor)
+  type is(interpolator_js_constructor)
+    allocate(constructor%interpolations_constructor, source=interpolations_constructor)
+    allocate(constructor%weights_constructor, source=weights_constructor)
   type is(reconstructor_js_constructor)
     allocate(constructor%interpolations_constructor, source=interpolations_constructor)
     allocate(constructor%weights_constructor, source=weights_constructor)
