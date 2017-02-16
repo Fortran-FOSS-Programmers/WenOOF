@@ -22,7 +22,6 @@ type :: test_ui
   !< Class to handle test(s) User Interface (UI).
   type(command_line_interface) :: cli                                  !< Command line interface handler.
   integer(I_P)                 :: error=0                              !< Error handler.
-  character(99)                :: approximation_type='reconstruction'  !< Action performed.
   character(99)                :: interpolator_type='JS'               !< Interpolator used.
   character(99)                :: output_bname='unset'                 !< Output files basename.
   character(99)                :: output_dir=''                        !< Output directory.
@@ -62,8 +61,6 @@ contains
                                    "$EXECUTABLE --action I --interpolator JS-Z -r     ",    &
                                    "$EXECUTABLE --action R --interpolator JS-M        ",    &
                                    "$EXECUTABLE --action R --interpolator all -p -r   "])
-      call cli%add(switch='--approximation', switch_ab='-a', help='WENO action', required=.false., &
-                   def='reconstruction', act='store', choices='both,reconstruction,interpolation')                                                      &
       call cli%add(switch='--interpolator', switch_ab='-i', help='WENO interpolator/recontructor type', required=.false., &
                    def='JS', act='store', choices='all,JS,M-JS,M-Z,Z')
       call cli%add(switch='--points_number', switch_ab='-pn', nargs='+', help='Number of points used to discretize the domain', &
@@ -84,7 +81,6 @@ contains
     !< Parse Command Line Interface and check its validity.
 
     call self%cli%parse(error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='-a', val=self%action_type, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='-i', val=self%interpolator_type, error=self%error) ; if (self%error/=0) stop
     call self%cli%get_varying(switch='-pn', val=self%points_number, error=self%error) ; if (self%error/=0) stop
     call self%cli%get_varying(switch='-s', val=self%S, error=self%error) ; if (self%error/=0) stop
@@ -103,21 +99,20 @@ contains
 
   function loop_interpolator(self, interpolator) result(again)
   !< Loop over available interpolators.
-  class(test_ui), intent(in)  :: self         !< Test UI.
-  character(99),  intent(out) :: interpolator !< Interpolator name.
-  logical                     :: again        !< Flag continuing the loop.
-  integer(I_P), save          :: i = 0        !< Counter.
+  class(test_ui), intent(in)  :: self          !< Test UI.
+  character(99),  intent(out) :: interpolator  !< Interpolator name.
+  character(99),              :: approximation !< Approximation type.
+  logical                     :: again         !< Flag continuing the loop.
+  integer(I_P), save          :: i = 0         !< Counter.
 
   again = .false.
   if (i==0) then
     i = 1
-    interpolator = 'interpolator-'trim(adjustl(interpolators(i)))
-    interpolator = 'reconstructor-'trim(adjustl(interpolators(i)))
+    interpolator = trim(adjustl(interpolators(i)))
     again = .true.
   elseif (i<size(interpolators, dim=1)) then
     i = i + 1
-    interpolator = 'interpolator-'trim(adjustl(interpolators(i)))
-    interpolator = 'reconstructor-'trim(adjustl(interpolators(i)))
+    interpolator = trim(adjustl(interpolators(i)))
     again = .true.
   else
     i = 0
