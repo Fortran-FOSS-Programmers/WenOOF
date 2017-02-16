@@ -28,7 +28,7 @@ type :: solution_data
   real(RPP), allocatable :: si(:,:,:)           !< Computed smoothness indicators [1:2,1:points_number,0:S-1].
   real(RPP), allocatable :: weights(:,:,:)      !< Computed weights [1:2,1:points_number,0:S-1].
   real(RPP)              :: Dx=0._RPP           !< Space step (spatial resolution).
-  real(RPP)              :: error_L2(:)=0._RPP  !< L2 norm of the numerical error [1:2].
+  real(RPP), allocatable :: error_L2(:)         !< L2 norm of the numerical error [1:2].
 endtype solution_data
 
 type :: test
@@ -80,7 +80,7 @@ contains
   call self%deallocate_solution_data
   allocate(self%solution(1:self%ui%pn_number, 1:self%ui%S_number))
   if (self%ui%pn_number>1) then
-    allocate(self%accuracy(1:self%ui%pn_number, 1:self%ui%S_number))
+    allocate(self%accuracy(1:2, 1:self%ui%pn_number, 1:self%ui%S_number))
     self%accuracy = 0._RPP
   endif
   do s=1, self%ui%S_number
@@ -92,6 +92,7 @@ contains
       allocate(self%solution(pn, s)%interpolations(1:2,  1:self%ui%points_number(pn)                              ))
       allocate(self%solution(pn, s)%si(            1:2,  1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
       allocate(self%solution(pn, s)%weights(       1:2,  1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
+      allocate(self%solution(pn, s)%error_L2(      1:2                                                            ))
       self%solution(pn, s)%x_cell         = 0._RPP
       self%solution(pn, s)%fx_cell        = 0._RPP
       self%solution(pn, s)%x_face         = 0._RPP
@@ -99,6 +100,7 @@ contains
       self%solution(pn, s)%interpolations = 0._RPP
       self%solution(pn, s)%si             = 0._RPP
       self%solution(pn, s)%weights        = 0._RPP
+      self%solution(pn, s)%error_L2       = 0._RPP
     enddo
   enddo
   endsubroutine allocate_solution_data
@@ -238,7 +240,7 @@ contains
           write(file_unit, "(2(I5,1X),"//FRPP//",1X,F5.2,1X,I3)") self%ui%S(s),                             &
                                                                   self%ui%points_number(pn),                &
                                                                  (self%solution(pn, s)%error_L2(f), f=1, 2) &
-                                                                 (self%accuracy(pn, s), f=1, 2)             &
+                                                                 (self%accuracy(f, pn, s), f=1, 2)          &
                                                                   2*self%ui%S(s)-1
         enddo
       enddo
@@ -286,6 +288,7 @@ contains
   integer(I_P)               :: s    !< Counter.
   integer(I_P)               :: pn   !< Counter.
   integer(I_P)               :: i    !< Counter.
+  integer(I_P)               :: f    !< Counter.
 
   if (self%ui%errors_analysis) then
     do s=1, self%ui%S_number
