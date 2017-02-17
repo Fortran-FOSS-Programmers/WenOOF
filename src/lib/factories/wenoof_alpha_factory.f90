@@ -54,8 +54,21 @@ contains
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')
-    ! @TODO implement this
-    error stop 'interpolator-JS to be implemented'
+    allocate(alpha_rec_js_constructor :: constructor)
+  case('interpolator-M-JS')
+    allocate(alpha_rec_m_constructor :: constructor)
+    select type(constructor)
+    type is(alpha_rec_m_constructor)
+      constructor%base_type = 'JS'
+    endselect
+  case('interpolator-M-Z')
+    allocate(alpha_rec_m_constructor :: constructor)
+    select type(constructor)
+    type is(alpha_rec_m_constructor)
+      constructor%base_type = 'Z'
+    endselect
+  case('interpolator-Z')
+    allocate(alpha_rec_z_constructor :: constructor)
   case('reconstructor-JS')
     allocate(alpha_rec_js_constructor :: constructor)
   case('reconstructor-M-JS')

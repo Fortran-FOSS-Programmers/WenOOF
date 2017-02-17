@@ -57,10 +57,10 @@ contains
                     authors     = 'Fortran-FOSS-Programmers',                           &
                     license     = 'GNU GPLv3',                                          &
                     description = 'Test WenOOF library on function reconstruction',     &
-                    examples    = ["$EXECUTABLE --action I --interpolator JS --results",    &
-                                   "$EXECUTABLE --action I --interpolator JS-Z -r     ",    &
-                                   "$EXECUTABLE --action R --interpolator JS-M        ",    &
-                                   "$EXECUTABLE --action R --interpolator all -p -r   "])
+                    examples    = ["$EXECUTABLE --interpolator JS --results",    &
+                                   "$EXECUTABLE --interpolator JS-Z -r     ",    &
+                                   "$EXECUTABLE --interpolator JS-M        ",    &
+                                   "$EXECUTABLE --interpolator all -p -r   "])
       call cli%add(switch='--interpolator', switch_ab='-i', help='WENO interpolator/recontructor type', required=.false., &
                    def='JS', act='store', choices='all,JS,M-JS,M-Z,Z')
       call cli%add(switch='--points_number', switch_ab='-pn', nargs='+', help='Number of points used to discretize the domain', &

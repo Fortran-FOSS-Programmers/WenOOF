@@ -50,8 +50,13 @@ contains
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')
-    ! @TODO implement this
-    error stop 'interpolator-JS to be implemented'
+    allocate(weights_js_constructor :: constructor)
+  case('interpolator-M-JS')
+    allocate(weights_js_constructor :: constructor)
+  case('interpolator-M-Z')
+    allocate(weights_js_constructor :: constructor)
+  case('interpolator-Z')
+    allocate(weights_js_constructor :: constructor)
   case('reconstructor-JS')
     allocate(weights_js_constructor :: constructor)
   case('reconstructor-M-JS')

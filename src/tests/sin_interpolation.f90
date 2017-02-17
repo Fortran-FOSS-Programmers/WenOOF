@@ -218,13 +218,13 @@ contains
                   weights        => self%solution(pn, s)%weights,        &
                   Dx             => self%solution(pn, s)%Dx)
           do i = 1, self%ui%points_number(pn)
-            write(file_unit, "("//trim(str(10+4*self%ui%S(s), .true.))//"("//FRPP//",1X))") &
-               x_cell(i),                                                                   &
-               fx_cell(i),                                                                  &
-              (x_face(f,i), f=1, 2),                                                        &
-              (fx_face(f,i), f=1, 2),                                                       &
-              (interpolations(f,i), f=1, 2),                                                &
-             ((si(f, i, ss), f=1, 2), ss=0, self%ui%S(s)-1),                                &
+            write(file_unit, "("//trim(str(8+4*self%ui%S(s), .true.))//"("//FRPP//",1X))") &
+               x_cell(i),                                                                  &
+               fx_cell(i),                                                                 &
+              (x_face(f,i), f=1, 2),                                                       &
+              (fx_face(f,i), f=1, 2),                                                      &
+              (interpolations(f,i), f=1, 2),                                               &
+             ((si(f, i, ss), f=1, 2), ss=0, self%ui%S(s)-1),                               &
              ((weights(f, i, ss), f=1, 2), ss=0, self%ui%S(s)-1)
           enddo
         endassociate
@@ -234,13 +234,13 @@ contains
 
     if (self%ui%errors_analysis.and.self%ui%pn_number>1) then
       open(newunit=file_unit, file=file_bname//'-accuracy.dat')
-      write(file_unit, "(A)") 'VARIABLES = "S" "Np" "error (L2)" "observed order" "formal order"'
+      write(file_unit, "(A)") 'VARIABLES = "S" "Np" "error (L2) L" "error (L2) R" "obs order L" "obs order R" "formal order"'
       do s=1, self%ui%S_number
         do pn=1, self%ui%pn_number
-          write(file_unit, "(2(I5,1X),"//FRPP//",1X,F5.2,1X,I3)") self%ui%S(s),                             &
-                                                                  self%ui%points_number(pn),                &
-                                                                 (self%solution(pn, s)%error_L2(f), f=1, 2) &
-                                                                 (self%accuracy(f, pn, s), f=1, 2)          &
+          write(file_unit, "(2(I5,1X),"//FRPP//",1X,"//FRPP//",1X,F5.2,1X,F5.2,1X,I3)") self%ui%S(s),        &
+                                                                  self%ui%points_number(pn),                 &
+                                                                 (self%solution(pn, s)%error_L2(f), f=1, 2), &
+                                                                 (self%accuracy(f, pn, s), f=1, 2),          &
                                                                   2*self%ui%S(s)-1
         enddo
       enddo
