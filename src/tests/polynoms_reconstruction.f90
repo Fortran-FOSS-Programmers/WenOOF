@@ -1,5 +1,5 @@
 !< WenOOF test: reconstruction of polynomial functions.
-module polynoms_test_module
+module polynoms_rec_test_module
 !< Auxiliary module defining the test class.
 
 use flap, only : command_line_interface
@@ -14,12 +14,6 @@ use wenoof, only : interpolator_object, wenoof_create
 implicit none
 private
 public :: test
-
-character(99), parameter :: interpolators(1:5) = ["all               ", &
-                                                  "reconstructor-JS  ", &
-                                                  "reconstructor-M-JS", &
-                                                  "reconstructor-M-Z ", &
-                                                  "reconstructor-Z   "] !< List of available interpolators.
 real(RPP), parameter     :: pi = 4._RPP * atan(1._RPP)  !< Pi greek.
 
 type :: solution_data
@@ -44,22 +38,9 @@ type :: test
   !<
   !< Test has only 1 public method `execute`: it executes test(s) accordingly to cli options.
   private
-  type(command_line_interface)     :: cli                     !< Command line interface handler.
-  integer(I_P)                     :: error=0                 !< Error handler.
-  character(99)                    :: interpolator_type='JS'  !< Interpolator used.
-  character(99)                    :: output_bname='unset'    !< Output files basename.
-  character(99)                    :: output_dir=''           !< Output directory.
-  integer(I_P)                     :: pn_number               !< Number of different points-number tested.
-  integer(I_P), allocatable        :: points_number(:)        !< Points number used to discretize the domain.
-  integer(I_P)                     :: S_number                !< Number of different stencils tested.
-  integer(I_P), allocatable        :: S(:)                    !< Stencils used.
-  real(RPP)                        :: eps                     !< Smal episol to avoid zero-division.
-  type(solution_data), allocatable :: solution(:,:)           !< Solution [1:pn_number, 1:S_number].
-  real(RPP), allocatable           :: accuracy(:,:)           !< Accuracy (measured) [1:pn_number-1, 1:S_number].
-  logical                          :: errors_analysis=.false. !< Flag for activating errors analysis.
-  logical                          :: plots=.false.           !< Flag for activating plots saving.
-  logical                          :: results=.false.         !< Flag for activating results saving.
-  logical                          :: verbose=.false.         !< Flag for activating verbose output.
+  type(test_ui)                    :: ui            !< Command line interface handler.
+  type(solution_data), allocatable :: solution(:,:) !< Solution [1:pn_number, 1:S_number].
+  real(RPP), allocatable           :: accuracy(:,:) !< Accuracy (measured) [1:pn_number-1, 1:S_number].
   contains
     ! public methods
     procedure, pass(self) :: execute !< Execute selected test(s).
@@ -68,7 +49,6 @@ type :: test
     procedure, pass(self), private :: analize_errors             !< Analize errors.
     procedure, pass(self), private :: compute_reference_solution !< Compute reference solution.
     procedure, pass(self), private :: deallocate_solution_data   !< Deallocate solution data.
-    procedure, pass(self), private :: initialize                 !< Initialize test(s).
     procedure, pass(self), private :: perform                    !< Perform test(s).
     procedure, pass(self), private :: save_results_and_plots     !< Save results and plots.
 endtype test
@@ -80,12 +60,11 @@ contains
   class(test), intent(inout) :: self !< Test.
   integer(I_P)               :: s    !< Counter.
 
-  call self%initialize
-  if (trim(adjustl(self%interpolator_type))/='all') then
+  call self%ui%get
+  if (trim(adjustl(self%ui%interpolator_type))/='all') then
     call self%perform
   else
-    do s=2, size(interpolators, dim=1)
-      self%interpolator_type = trim(adjustl(interpolators(s)))
+    do while(self%ui%loop_interpolator(interpolator=self%ui%interpolator_type))
       call self%perform
     enddo
   endif
@@ -99,30 +78,28 @@ contains
   integer(I_P)                :: pn   !< Counter.
 
   call self%deallocate_solution_data
-  self%pn_number = size(self%points_number, dim=1)
-  self%S_number = size(self%S, dim=1)
-  allocate(self%solution(1:self%pn_number, 1:self%S_number))
-  if (self%pn_number>1) then
-    allocate(self%accuracy(1:self%pn_number, 1:self%S_number))
+  allocate(self%solution(1:self%ui%pn_number, 1:self%ui%S_number))
+  if (self%ui%pn_number>1) then
+    allocate(self%accuracy(1:self%ui%pn_number, 1:self%ui%S_number))
     self%accuracy = 0._RPP
   endif
-  do s=1, self%S_number
-    do pn=1, self%pn_number
-      allocate(self%solution(pn, s)%x_cell(  1-self%S(s):self%points_number(pn)+self%S(s)              ))
-      allocate(self%solution(pn, s)%fx_cell( 1-self%S(s):self%points_number(pn)+self%S(s)              ))
-      allocate(self%solution(pn, s)%x_face(        1:2,1:self%points_number(pn)                        ))
-      allocate(self%solution(pn, s)%fx_face(       1:2,1:self%points_number(pn)                        ))
-      allocate(self%solution(pn, s)%dfx_cell(          1:self%points_number(pn)                        ))
-      allocate(self%solution(pn, s)%interpolation( 1:2,1:self%points_number(pn)                        ))
-      allocate(self%solution(pn, s)%reconstruction(1:2,1:self%points_number(pn)                        ))
-      allocate(self%solution(pn, s)%si(            1:2,1:self%points_number(pn),          0:self%S(s)-1))
-      allocate(self%solution(pn, s)%weights(       1:2,1:self%points_number(pn),          0:self%S(s)-1))
+  do s=1, self%ui%S_number
+    do pn=1, self%ui%pn_number
+      allocate(self%solution(pn, s)%x_cell( 1-self%ui%S(s):self%ui%points_number(pn)+self%ui%S(s)                 ))
+      allocate(self%solution(pn, s)%fx_cell(1-self%ui%S(s):self%ui%points_number(pn)+self%ui%S(s)                 ))
+      allocate(self%solution(pn, s)%x_face(        1:2,  1:self%ui%points_number(pn)                              ))
+      allocate(self%solution(pn, s)%fx_face(       1:2,  1:self%ui%points_number(pn)                              ))
+      allocate(self%solution(pn, s)%dfx_cell(            1:self%ui%points_number(pn)                              ))
+      allocate(self%solution(pn, s)%interpolations(1:2,  1:self%ui%points_number(pn)                              ))
+      allocate(self%solution(pn, s)%reconstruction(      1:self%ui%points_number(pn)                              ))
+      allocate(self%solution(pn, s)%si(            1:2,  1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
+      allocate(self%solution(pn, s)%weights(       1:2,  1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
       self%solution(pn, s)%x_cell         = 0._RPP
       self%solution(pn, s)%fx_cell        = 0._RPP
       self%solution(pn, s)%x_face         = 0._RPP
       self%solution(pn, s)%fx_face        = 0._RPP
       self%solution(pn, s)%dfx_cell       = 0._RPP
-      self%solution(pn, s)%interpolation  = 0._RPP
+      self%solution(pn, s)%interpolations = 0._RPP
       self%solution(pn, s)%reconstruction = 0._RPP
       self%solution(pn, s)%si             = 0._RPP
       self%solution(pn, s)%weights        = 0._RPP
@@ -165,60 +142,6 @@ contains
   if (allocated(self%solution)) deallocate(self%solution)
   if (allocated(self%accuracy)) deallocate(self%accuracy)
   endsubroutine deallocate_solution_data
-
-  subroutine initialize(self)
-  !< Initialize test: set Command Line Interface, parse it and check its validity.
-  class(test), intent(inout) :: self !< Test.
-
-  call set_cli
-  call parse_cli
-  contains
-    subroutine set_cli()
-    !< Set Command Line Interface.
-
-    associate(cli => self%cli)
-      call cli%init(progname    = 'sin reconstruction',                                 &
-                    authors     = 'Fortran-FOSS-Programmers',                           &
-                    license     = 'GNU GPLv3',                                          &
-                    description = 'Test WenOOF library on sin function reconstruction', &
-                    examples    = ["sin_reconstruction --interpolator JS --results",    &
-                                   "sin_reconstruction --interpolator JS-Z -r     ",    &
-                                   "sin_reconstruction --interpolator JS-M        ",    &
-                                   "sin_reconstruction --interpolator all -p -r   "])
-      call cli%add(switch='--interpolator', switch_ab='-i', help='WENO interpolator type', required=.false., &
-                   def='reconstructor-JS', act='store',                                                      &
-                   choices='all,reconstructor-JS,reconstructor-M-JS,reconstructor-M-Z,reconstructor-Z')
-      call cli%add(switch='--points_number', switch_ab='-pn', nargs='+', help='Number of points used to discretize the domain', &
-                   required=.false., act='store', def='50 100')
-      call cli%add(switch='--stencils', switch_ab='-s', nargs='+', help='Stencils dimensions (and number)', &
-                   required=.false., act='store', def='2 3 4 5 6 7 8 9', choices='2, 3, 4, 5, 6, 7, 8, 9')
-      call cli%add(switch='--eps', help='Small epsilon to avoid zero-division', required=.false., act='store', def='1.e-6')
-      call cli%add(switch='--output_dir', help='Output directory', required=.false., act='store', def='./')
-      call cli%add(switch='--results', switch_ab='-r', help='Save results', required=.false., act='store_true', def='.false.')
-      call cli%add(switch='--plots', switch_ab='-p', help='Save plots', required=.false., act='store_true', def='.false.')
-      call cli%add(switch='--output', help='Output files basename', required=.false., act='store', def='sin_reconstruction')
-      call cli%add(switch='--errors_analysis', help='Peform errors analysis', required=.false., act='store_true', def='.false.')
-      call cli%add(switch='--verbose', help='Verbose output', required=.false., act='store_true', def='.false.')
-    endassociate
-    endsubroutine set_cli
-
-    subroutine parse_cli()
-    !< Parse Command Line Interface and check its validity.
-    character(len=:), allocatable :: valid_solvers_list !< Pretty printed list of available solvers.
-
-    call self%cli%parse(error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='-i', val=self%interpolator_type, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get_varying(switch='-pn', val=self%points_number, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get_varying(switch='-s', val=self%S, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='--eps', val=self%eps, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='--output_dir', val=self%output_dir, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='-r', val=self%results, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='-p', val=self%plots, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='--output', val=self%output_bname, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='--errors_analysis', val=self%errors_analysis, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='--verbose', val=self%verbose, error=self%error) ; if (self%error/=0) stop
-    endsubroutine parse_cli
-  endsubroutine initialize
 
   subroutine perform(self)
   !< Perform the test.
@@ -419,15 +342,15 @@ contains
     y = y + i * i * (x ** (i - 1))
   enddo
   endfunction dinterface_function_dx
-endmodule polynoms_test_module
+endmodule polynoms_rec_test_module
 
 program polynoms_reconstruction
 !< WenOOF test: reconstruction of polynomial functions.
 
-use polynoms_test_module
+use polynoms_rec_test_module
 
 implicit none
-type(test) :: sin_test
+type(test) :: poly_test
 
-call sin_test%execute
+call poly_test%execute
 endprogram polynoms_reconstruction
