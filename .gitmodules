@@ -10,3 +10,7 @@
   path = src/third_party/FLAP
   url = https://github.com/szaghi/FLAP
   branch = master
+[submodule "src/third_party/FOLLIA"]
+	path = src/third_party/FOLLIA
+	url = https://github.com/giacombum/FOLLIA.git
+  branch = master
