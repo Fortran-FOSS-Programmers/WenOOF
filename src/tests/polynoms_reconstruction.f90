@@ -10,6 +10,7 @@ use penf, only: I_P, RPP=>R8P, FRPP=>FR8P, str, strz
 #endif
 use pyplot_module, only : pyplot
 use wenoof, only : interpolator_object, wenoof_create
+use wenoof_test_ui, only : test_ui
 
 implicit none
 private
@@ -23,7 +24,7 @@ type :: solution_data
   real(RPP), allocatable :: x_face(:,:)         !< Face domain [1:2,1:points_number].
   real(RPP), allocatable :: fx_face(:,:)        !< Face reference values [1:2,1:points_number].
   real(RPP), allocatable :: dfx_cell(:)         !< Cell refecence values of df/dx [1:points_number].
-  real(RPP), allocatable :: interpolation(:,:)  !< Interpolated values [1:2,1:points_number].
+  real(RPP), allocatable :: interpolations(:,:) !< Interpolated values [1:2,1:points_number].
   real(RPP), allocatable :: reconstruction(:,:) !< Reconstruction values [1:2,1:points_number].
   real(RPP), allocatable :: si(:,:,:)           !< Computed smoothness indicators [1:2,1:points_number,0:S-1].
   real(RPP), allocatable :: weights(:,:,:)      !< Computed weights [1:2,1:points_number,0:S-1].
@@ -91,7 +92,7 @@ contains
       allocate(self%solution(pn, s)%fx_face(       1:2,  1:self%ui%points_number(pn)                              ))
       allocate(self%solution(pn, s)%dfx_cell(            1:self%ui%points_number(pn)                              ))
       allocate(self%solution(pn, s)%interpolations(1:2,  1:self%ui%points_number(pn)                              ))
-      allocate(self%solution(pn, s)%reconstruction(      1:self%ui%points_number(pn)                              ))
+      allocate(self%solution(pn, s)%reconstruction(1:2,  1:self%ui%points_number(pn)                              ))
       allocate(self%solution(pn, s)%si(            1:2,  1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
       allocate(self%solution(pn, s)%weights(       1:2,  1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
       self%solution(pn, s)%x_cell         = 0._RPP
@@ -115,21 +116,21 @@ contains
   integer(I_P)                :: i    !< Counter.
 
   call self%allocate_solution_data
-  do s=1, self%S_number
-    do pn=1, self%pn_number
-      self%solution(pn, s)%Dx = 1._RPP / self%points_number(pn)
+  do s=1, self%ui%S_number
+    do pn=1, self%ui%pn_number
+      self%solution(pn, s)%Dx = 1._RPP / self%ui%points_number(pn)
       ! compute the values used for the interpolation/reconstruction of polynomials function: cell values
-      do i=1 - self%S(s), self%points_number(pn) + self%S(s)
+      do i=1 - self%ui%S(s), self%ui%points_number(pn) + self%ui%S(s)
         self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._RPP
-        self%solution(pn, s)%fx_cell(i) = interface_function(x=self%solution(pn, s)%x_cell(i), o=2*self%S(s)+2)
+        self%solution(pn, s)%fx_cell(i) = interface_function(x=self%solution(pn, s)%x_cell(i), o=2*self%ui%S(s)+2)
       enddo
       ! values to which the interpolation/reconstruction should tend
-      do i = 1, self%points_number(pn)
+      do i = 1, self%ui%points_number(pn)
         self%solution(pn, s)%x_face(1,i) = self%solution(pn, s)%x_cell(i) - self%solution(pn, s)%Dx / 2._RPP
         self%solution(pn, s)%x_face(2,i) = self%solution(pn, s)%x_cell(i) + self%solution(pn, s)%Dx / 2._RPP
-        self%solution(pn, s)%fx_face(1,i) = interface_function(self%solution(pn, s)%x_face(1,i), o=2*self%S(s)+2)
-        self%solution(pn, s)%fx_face(2,i) = interface_function(self%solution(pn, s)%x_face(2,i), o=2*self%S(s)+2)
-        self%solution(pn, s)%dfx_cell(i) = dinterface_function_dx(self%solution(pn, s)%x_cell(i), o=2*self%S(s)+2)
+        self%solution(pn, s)%fx_face(1,i) = interface_function(self%solution(pn, s)%x_face(1,i), o=2*self%ui%S(s)+2)
+        self%solution(pn, s)%fx_face(2,i) = interface_function(self%solution(pn, s)%x_face(2,i), o=2*self%ui%S(s)+2)
+        self%solution(pn, s)%dfx_cell(i) = dinterface_function_dx(self%solution(pn, s)%x_cell(i), o=2*self%ui%S(s)+2)
       enddo
     enddo
   enddo
@@ -155,21 +156,21 @@ contains
   integer(I_P)                            :: i            !< Counter.
 
   call self%compute_reference_solution
-  do s=1, self%S_number
-    call wenoof_create(interpolator_type=trim(adjustl(self%interpolator_type)), &
-                       S=self%S(s),                                             &
-                       interpolator=interpolator,                               &
-                       eps=self%eps)
-    if (self%verbose) print '(A)', interpolator%description()
-    allocate(stencil(1:2, 1-self%S(s):-1+self%S(s)))
-    do pn=1, self%pn_number
-      do i=1, self%points_number(pn)
-        stencil(1,:) = self%solution(pn, s)%fx_cell(i+1-self%S(s):i-1+self%S(s))
-        stencil(2,:) = self%solution(pn, s)%fx_cell(i+1-self%S(s):i-1+self%S(s))
+  do s=1, self%ui%S_number
+    call wenoof_create(interpolator_type=trim(adjustl(self%ui%interpolator_type)), &
+                       S=self%ui%S(s),                                             &
+                       interpolator=interpolator,                                  &
+                       eps=self%ui%eps)
+    if (self%ui%verbose) print '(A)', interpolator%description()
+    allocate(stencil(1:2, 1-self%ui%S(s):-1+self%ui%S(s)))
+    do pn=1, self%ui%pn_number
+      do i=1, self%ui%points_number(pn)
+        stencil(1,:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))
+        stencil(2,:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))
         call interpolator%interpolate(stencil=stencil,                                        &
                                       interpolation=self%solution(pn, s)%reconstruction(:,i), &
-                                      si=self%solution(pn, s)%si(:, i, 0:self%S(s)-1),        &
-                                      weights=self%solution(pn, s)%weights(:, i, 0:self%S(s)-1))
+                                      si=self%solution(pn, s)%si(:, i, 0:self%ui%S(s)-1),        &
+                                      weights=self%solution(pn, s)%weights(:, i, 0:self%ui%S(s)-1))
       enddo
     enddo
     deallocate(stencil)
@@ -192,26 +193,26 @@ contains
   integer(I_P)                  :: ss         !< Counter.
   integer(I_P)                  :: f          !< Counter.
 
-  output_dir = trim(adjustl(self%output_dir))//'/'
-  if (self%results.or.self%plots) call execute_command_line('mkdir -p '//output_dir)
-  file_bname = output_dir//trim(adjustl(self%output_bname))//'-'//trim(adjustl(self%interpolator_type))
+  output_dir = trim(adjustl(self%ui%output_dir))//'/'
+  if (self%ui%results.or.self%ui%plots) call execute_command_line('mkdir -p '//output_dir)
+  file_bname = output_dir//trim(adjustl(self%ui%output_bname))//'-'//trim(adjustl(self%ui%interpolator_type))
 
-  if (self%results) then
-    do s=1, self%S_number
-      do pn=1, self%pn_number
-        open(newunit=file_unit, file=file_bname//'-S_'//trim(str(self%S(s), .true.))//&
-                                     '-Np_'//trim(str(self%points_number(pn), .true.))//'.dat')
+  if (self%ui%results) then
+    do s=1, self%ui%S_number
+      do pn=1, self%ui%pn_number
+        open(newunit=file_unit, file=file_bname//'-S_'//trim(str(self%ui%S(s), .true.))//&
+                                     '-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.dat')
         buffer = 'VARIABLES = "x" "f(x)" "df_dx(x)" "x_left" "x_right" "f(x)_left" "f(x)_right"'
         buffer = buffer//' "reconstruction_left" "reconstruction_right" "df_dx_reconstruction"'
-        do ss=0, self%S(s)-1
+        do ss=0, self%ui%S(s)-1
           buffer = buffer//' "si-'//trim(str(ss, .true.))//'_left"'//' "si-'//trim(str(ss, .true.))//'_right"'
         enddo
-        do ss=0, self%S(s)-1
+        do ss=0, self%ui%S(s)-1
           buffer = buffer//' "W-'//trim(str(ss, .true.))//'_left"'//' "W-'//trim(str(ss, .true.))//'_right"'
         enddo
         write(file_unit, "(A)") buffer
-        write(file_unit, "(A)") 'ZONE T = "'//'S_'//trim(str(self%S(s), .true.))//&
-                                              '-Np_'//trim(str(self%points_number(pn), .true.))//'"'
+        write(file_unit, "(A)") 'ZONE T = "'//'S_'//trim(str(self%ui%S(s), .true.))//&
+                                              '-Np_'//trim(str(self%ui%points_number(pn), .true.))//'"'
         associate(x_cell         => self%solution(pn, s)%x_cell,         &
                   fx_cell        => self%solution(pn, s)%fx_cell,        &
                   dfx_cell       => self%solution(pn, s)%dfx_cell,       &
@@ -221,33 +222,33 @@ contains
                   si             => self%solution(pn, s)%si,             &
                   weights        => self%solution(pn, s)%weights,        &
                   Dx             => self%solution(pn, s)%Dx)
-          do i = 1, self%points_number(pn)
-            write(file_unit, "("//trim(str(10+4*self%S(s), .true.))//"("//FRPP//",1X))") &
-               x_cell(i),                                   &
-               fx_cell(i),                                  &
-               dfx_cell(i),                                 &
-              (x_face(f,i), f=1, 2),                        &
-              (fx_face(f,i), f=1, 2),                       &
-              (reconstruction(f,i), f=1, 2),                &
-              (reconstruction(2,i)-reconstruction(1,i))/Dx, &
-             ((si(f, i, ss), f=1, 2), ss=0, self%S(s)-1),   &
-             ((weights(f, i, ss), f=1, 2), ss=0, self%S(s)-1)
+          do i = 1, self%ui%points_number(pn)
+            write(file_unit, "("//trim(str(10+4*self%ui%S(s), .true.))//"("//FRPP//",1X))") &
+               x_cell(i),                                    &
+               fx_cell(i),                                   &
+               dfx_cell(i),                                  &
+              (x_face(f,i), f=1, 2),                         &
+              (fx_face(f,i), f=1, 2),                        &
+              (reconstruction(f,i), f=1, 2),                 &
+              (reconstruction(2,i)-reconstruction(1,i))/Dx,  &
+             ((si(f, i, ss), f=1, 2), ss=0, self%ui%S(s)-1), &
+             ((weights(f, i, ss), f=1, 2), ss=0, self%ui%S(s)-1)
           enddo
         endassociate
         close(file_unit)
       enddo
     enddo
 
-    if (self%errors_analysis.and.self%pn_number>1) then
+    if (self%ui%errors_analysis.and.self%ui%pn_number>1) then
       open(newunit=file_unit, file=file_bname//'-accuracy.dat')
       write(file_unit, "(A)") 'VARIABLES = "S" "Np" "error (L2)" "observed order" "formal order"'
-      do s=1, self%S_number
-        do pn=1, self%pn_number
-          write(file_unit, "(2(I5,1X),"//FRPP//",1X,F5.2,1X,I3)") self%S(s),                     &
-                                                                  self%points_number(pn),        &
+      do s=1, self%ui%S_number
+        do pn=1, self%ui%pn_number
+          write(file_unit, "(2(I5,1X),"//FRPP//",1X,F5.2,1X,I3)") self%ui%S(s),                  &
+                                                                  self%ui%points_number(pn),     &
                                                                   self%solution(pn, s)%error_L2, &
                                                                   self%accuracy(pn, s),          &
-                                                                  2*self%S(s)-1
+                                                                  2*self%ui%S(s)-1
         enddo
       enddo
       close(file_unit)
@@ -257,18 +258,18 @@ contains
 #ifndef r16p
   ! pyplot fortran does not support 128 bit reals
   if (self%plots) then
-    do s=1, self%S_number
-      do pn=1, self%pn_number
+    do s=1, self%ui%S_number
+      do pn=1, self%ui%pn_number
         buffer = 'WENO reconstruction of $d \sin(x)/Dx=\cos(x)$; '//&
-                 'S='//trim(str(self%S(s), .true.))//'Np='//trim(str(self%points_number(pn), .true.))
+                 'S='//trim(str(self%ui%S(s), .true.))//'Np='//trim(str(self%ui%points_number(pn), .true.))
         call plt%initialize(grid=.true., xlabel='angle (rad)', title=buffer, legend=.true.)
-        call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%points_number(pn)),   &
-                          y=self%solution(pn, s)%dfx_cell(:), &
-                          label='$\sin(x)$',                  &
-                          linestyle='k-',                     &
-                          linewidth=2,                        &
+        call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%ui%points_number(pn)),  &
+                          y=self%solution(pn, s)%dfx_cell(:),                          &
+                          label='$\sin(x)$',                                           &
+                          linestyle='k-',                                              &
+                          linewidth=2,                                                 &
                           ylim=[-1.1_RPP, 1.1_RPP])
-        call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%points_number(pn)),                               &
+        call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%ui%points_number(pn)),                            &
                           y=(self%solution(pn, s)%reconstruction(2,:)-self%solution(pn, s)%reconstruction(1,:))/ &
                             self%solution(pn, s)%Dx,                                                             &
                           label='WENO reconstruction',                                                           &
@@ -276,7 +277,7 @@ contains
                           markersize=6,                                                                          &
                           ylim=[-1.1_RPP, 1.1_RPP])
         call plt%savefig(file_bname//&
-                         '-S_'//trim(str(self%S(s), .true.))//'-Np_'//trim(str(self%points_number(pn), .true.))//'.png')
+                         '-S_'//trim(str(self%ui%S(s), .true.))//'-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.png')
       enddo
     enddo
   endif
@@ -290,24 +291,24 @@ contains
   integer(I_P)               :: pn   !< Counter.
   integer(I_P)               :: i    !< Counter.
 
-  if (self%errors_analysis) then
-    do s=1, self%S_number
-      do pn=1, self%pn_number
+  if (self%ui%errors_analysis) then
+    do s=1, self%ui%S_number
+      do pn=1, self%ui%pn_number
         associate(error_L2=>self%solution(pn, s)%error_L2, &
                   Dx=>self%solution(pn, s)%Dx, &
                   dfx_cell=>self%solution(pn, s)%dfx_cell, &
                   reconstruction=>self%solution(pn, s)%reconstruction)
           error_L2 = 0._RPP
-          do i=1, self%points_number(pn)
+          do i=1, self%ui%points_number(pn)
             error_L2 = error_L2 + ((reconstruction(2,i)-reconstruction(1,i))/Dx - dfx_cell(i))**2
           enddo
           error_L2 = sqrt(error_L2)
         endassociate
       enddo
     enddo
-    if (self%pn_number>1) then
-      do s=1, self%S_number
-        do pn=2, self%pn_number
+    if (self%ui%pn_number>1) then
+      do s=1, self%ui%S_number
+        do pn=2, self%ui%pn_number
           self%accuracy(pn, s) = log(self%solution(pn - 1, s)%error_L2 / self%solution(pn, s)%error_L2) / &
                                  log(self%solution(pn - 1, s)%Dx / self%solution(pn, s)%Dx)
         enddo

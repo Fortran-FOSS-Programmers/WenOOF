@@ -27,8 +27,8 @@ type :: solution_data
   real(RPP), allocatable :: interpolations(:,:) !< Interpolated values [1:2,1:points_number].
   real(RPP), allocatable :: si(:,:,:)           !< Computed smoothness indicators [1:2,1:points_number,0:S-1].
   real(RPP), allocatable :: weights(:,:,:)      !< Computed weights [1:2,1:points_number,0:S-1].
-  real(RPP)              :: Dx=0._RPP           !< Space step (spatial resolution).
   real(RPP), allocatable :: error_L2(:)         !< L2 norm of the numerical error [1:2].
+  real(RPP)              :: Dx=0._RPP           !< Space step (spatial resolution).
 endtype solution_data
 
 type :: test
