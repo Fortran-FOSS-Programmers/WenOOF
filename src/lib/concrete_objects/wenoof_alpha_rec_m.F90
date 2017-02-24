@@ -34,13 +34,16 @@ type, extends(alpha_object) :: alpha_rec_m
   !< @note The provided alpha implements the alpha coefficients defined in *Mapped weighted essentially non-oscillatory schemes:
   !< Achieving optimal order near critical points*, Andrew K. Henrick, Tariq D. Aslam, Joseph M. Powers,
   !< JCP, 2005, vol. 207, pp. 542-567, doi:10.1016/j.jcp.2005.01.023.
-  class(alpha_object), allocatable :: alpha_base !< Base alpha to be re-mapped.
+  real(RPP),           allocatable :: values(:,:)   !< Alpha coefficients [1:2,0:S-1].
+  real(RPP),           allocatable :: values_sum(:) !< Sum of alpha coefficients [1:2].
+  class(alpha_object), allocatable :: alpha_base    !< Base alpha to be re-mapped.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create alpha.
-    procedure, pass(self) :: compute     !< Compute alpha.
-    procedure, pass(self) :: description !< Return alpha string-description.
-    procedure, pass(self) :: destroy     !< Destroy alpha.
+    procedure, pass(self) :: create             !< Create alpha.
+    procedure, pass(self) :: compute_alpha_int  !< Compute alpha.
+    procedure, pass(self) :: compute_alpha_rec  !< Compute alpha.
+    procedure, pass(self) :: description        !< Return alpha string-description.
+    procedure, pass(self) :: destroy            !< Destroy alpha.
 endtype alpha_rec_m
 
 contains
@@ -75,7 +78,16 @@ contains
   endselect
   endsubroutine create
 
-  pure subroutine compute(self, beta, kappa)
+  pure subroutine compute_alpha_int(self, beta, kappa)
+  !< Compute alpha.
+  class(alpha_rec_m), intent(inout) :: self  !< Alpha coefficient.
+  class(beta_object),  intent(in)   :: beta  !< Beta coefficients.
+  class(kappa_object), intent(in)   :: kappa !< Kappa coefficients.
+
+  ! Empty subroutine.
+  endsubroutine compute_alpha_int
+
+  pure subroutine compute_alpha_rec(self, beta, kappa)
   !< Compute alpha.
   class(alpha_rec_m),  intent(inout) :: self        !< Alpha.
   class(beta_object),  intent(in)    :: beta        !< Beta.
@@ -86,7 +98,7 @@ contains
   self%values_sum = 0._RPP
   call self%alpha_base%compute(beta=beta, kappa=kappa)
   do s1=0, self%S - 1 ! stencil loops
-    do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+    do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
       kappa_base = self%alpha_base%values(f, s1) / self%alpha_base%values_sum(f)
       self%values(f, s1) =                                                               &
         (kappa_base * (kappa%values(f, s1) + kappa%values(f, s1) * kappa%values(f, s1) - &
@@ -97,7 +109,7 @@ contains
       self%values_sum(f) = self%values_sum(f) + self%values(f, s1)
     enddo
   enddo
-  endsubroutine compute
+  endsubroutine compute_alpha_rec
 
   pure function description(self) result(string)
   !< Return alpha string-descripition.
@@ -107,9 +119,6 @@ contains
 
   string = '    Henrick alpha coefficients for reconstructor:'//nl
   string = string//'      - S   = '//trim(str(self%S))//nl
-  string = string//'      - f1  = '//trim(str(self%f1))//nl
-  string = string//'      - f2  = '//trim(str(self%f2))//nl
-  string = string//'      - ff  = '//trim(str(self%ff))//nl
   string = string//'      - eps = '//trim(str(self%eps))//nl
   associate(alpha_base=>self%alpha_base)
     select type(alpha_base)

@@ -101,14 +101,12 @@ contains
   call factory%create(constructor=constructor, object=object)
   endsubroutine create_interpolations_object
 
-  subroutine create_interpolator(self, interpolator_type, S, interpolator, face_left, face_right, eps)
+  subroutine create_interpolator(self, interpolator_type, S, interpolator, eps)
   !< Create an instance of concrete extension of [[interpolator_object]] given user options.
   class(objects_factory),                  intent(in)           :: self                       !< The factory.
   character(*),                            intent(in)           :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                            intent(in)           :: S                          !< Stencils dimension.
   class(interpolator_object), allocatable, intent(out)          :: interpolator               !< Interpolator.
-  logical,                                 intent(in), optional :: face_left                  !< Activate left-face interpolations.
-  logical,                                 intent(in), optional :: face_right                 !< Activate right-face interpolations.
   real(RPP),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero/div.
   class(alpha_object_constructor),          allocatable         :: alpha_constructor          !< Alpha constructor.
   class(beta_object_constructor),           allocatable         :: beta_constructor           !< Beta constructor.
@@ -120,15 +118,11 @@ contains
   call self%create_constructor(interpolator_type=interpolator_type, &
                                S=S,                                 &
                                constructor=alpha_constructor,       &
-                               face_left=face_left,                 &
-                               face_right=face_right,               &
                                eps=eps)
 
   call self%create_constructor(interpolator_type=interpolator_type, &
                                S=S,                                 &
-                               constructor=beta_constructor,        &
-                               face_left=face_left,                 &
-                               face_right=face_right)
+                               constructor=beta_constructor)
 
   call self%create_constructor(interpolator_type=interpolator_type, S=S, constructor=kappa_constructor)
 
@@ -137,23 +131,17 @@ contains
                                alpha_constructor=alpha_constructor, &
                                beta_constructor=beta_constructor,   &
                                kappa_constructor=kappa_constructor, &
-                               constructor=weights_constructor,     &
-                               face_left=face_left,                 &
-                               face_right=face_right)
+                               constructor=weights_constructor)
 
   call self%create_constructor(interpolator_type=interpolator_type,    &
                                S=S,                                    &
-                               constructor=interpolations_constructor, &
-                               face_left=face_left,                    &
-                               face_right=face_right)
+                               constructor=interpolations_constructor)
 
   call self%create_constructor(interpolator_type=interpolator_type,                   &
                                S=S,                                                   &
                                interpolations_constructor=interpolations_constructor, &
                                weights_constructor=weights_constructor,               &
-                               constructor=interpolator_constructor,                  &
-                               face_left=face_left,                                   &
-                               face_right=face_right)
+                               constructor=interpolator_constructor)
 
   call self%create_interpolator_object(constructor=interpolator_constructor, object=interpolator)
   endsubroutine create_interpolator
@@ -176,38 +164,30 @@ contains
   call factory%create(constructor=constructor, object=object)
   endsubroutine create_weights_object
 
-  subroutine create_alpha_object_constructor(interpolator_type, S, constructor, face_left, face_right, eps)
+  subroutine create_alpha_object_constructor(interpolator_type, S, constructor, eps)
   !< Create an instance of concrete extension of [[alpha_object_constructor]].
   character(*),                                 intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                 intent(in)           :: S                 !< Stencils dimension.
   class(alpha_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  logical,                                      intent(in), optional :: face_left         !< Activate left-face interpolations.
-  logical,                                      intent(in), optional :: face_right        !< Activate right-face interpolations.
   real(RPP),                                    intent(in), optional :: eps               !< Small epsilon to avoid zero/division.
   type(alpha_factory)                                                :: factory           !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type, &
                                   S=S,                                 &
                                   constructor=constructor,             &
-                                  face_left=face_left,                 &
-                                  face_right=face_right,               &
                                   eps=eps)
   endsubroutine create_alpha_object_constructor
 
-  subroutine create_beta_object_constructor(interpolator_type, S, constructor, face_left, face_right)
+  subroutine create_beta_object_constructor(interpolator_type, S, constructor)
   !< Create an instance of concrete extension of [[beta_object_constructor]].
   character(*),                                intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                intent(in)           :: S                 !< Stencils dimension.
   class(beta_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  logical,                                     intent(in), optional :: face_left         !< Activate left-face interpolations.
-  logical,                                     intent(in), optional :: face_right        !< Activate right-face interpolations.
   type(beta_factory)                                                :: factory           !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type, &
                                   S=S,                                 &
-                                  constructor=constructor,             &
-                                  face_left=face_left,                 &
-                                  face_right=face_right)
+                                  constructor=constructor)
   endsubroutine create_beta_object_constructor
 
   subroutine create_kappa_object_constructor(interpolator_type, S, constructor)
@@ -220,45 +200,37 @@ contains
   call factory%create_constructor(interpolator_type=interpolator_type, S=S, constructor=constructor)
   endsubroutine create_kappa_object_constructor
 
-  subroutine create_interpolations_object_constructor(interpolator_type, S, constructor, face_left, face_right)
+  subroutine create_interpolations_object_constructor(interpolator_type, S, constructor)
   !< Create an instance of concrete extension of [[interpolations_object_constructor]].
   character(*),                                          intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                          intent(in)           :: S                 !< Stencils dimension.
   class(interpolations_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  logical,                                               intent(in), optional :: face_left         !< Activate left-face interp.
-  logical,                                               intent(in), optional :: face_right        !< Activate right-face interp.
   type(interpolations_factory)                                                :: factory           !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type, &
                                   S=S,                                 &
-                                  constructor=constructor,             &
-                                  face_left=face_left,                 &
-                                  face_right=face_right)
+                                  constructor=constructor)
   endsubroutine create_interpolations_object_constructor
 
   subroutine create_interpolator_object_constructor(interpolator_type, S, interpolations_constructor, weights_constructor, &
-                                                    constructor, face_left, face_right)
+                                                    constructor)
   !< Create an instance of concrete extension of [[interpolator_object_constructor]].
   character(*),                                        intent(in)           :: interpolator_type          !< Type of interpolator.
   integer(I_P),                                        intent(in)           :: S                          !< Stencils dimension.
   class(interpolations_object_constructor),            intent(in)           :: interpolations_constructor !< Interpolations const.
   class(weights_object_constructor),                   intent(in)           :: weights_constructor        !< Weights constructor.
   class(interpolator_object_constructor), allocatable, intent(out)          :: constructor                !< Constructor.
-  logical,                                             intent(in), optional :: face_left                  !< Activate left interp.
-  logical,                                             intent(in), optional :: face_right                 !< Activate right interp.
   type(interpolator_factory)                                                :: factory                    !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type,                   &
                                   S=S,                                                   &
                                   interpolations_constructor=interpolations_constructor, &
                                   weights_constructor=weights_constructor,               &
-                                  constructor=constructor,                               &
-                                  face_left=face_left,                                   &
-                                  face_right=face_right)
+                                  constructor=constructor)
   endsubroutine create_interpolator_object_constructor
 
   subroutine create_weights_object_constructor(interpolator_type, S, alpha_constructor, beta_constructor, kappa_constructor, &
-                                               constructor, face_left, face_right)
+                                               constructor)
   !< Create an instance of concrete extension of [[weights_object_constructor]].
   character(*),                                   intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                   intent(in)           :: S                 !< Stencils dimension.
@@ -266,8 +238,6 @@ contains
   class(beta_object_constructor),                 intent(in)           :: beta_constructor  !< Beta constructor.
   class(kappa_object_constructor),                intent(in)           :: kappa_constructor !< kappa constructor.
   class(weights_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  logical,                                        intent(in), optional :: face_left         !< Activate left-face interp.
-  logical,                                        intent(in), optional :: face_right        !< Activate right-face interp.
   type(weights_factory)                                                :: factory           !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type, &
@@ -275,8 +245,6 @@ contains
                                   alpha_constructor=alpha_constructor, &
                                   beta_constructor=beta_constructor,   &
                                   kappa_constructor=kappa_constructor, &
-                                  constructor=constructor,             &
-                                  face_left=face_left,                 &
-                                  face_right=face_right)
+                                  constructor=constructor)
   endsubroutine create_weights_object_constructor
 endmodule wenoof_objects_factory

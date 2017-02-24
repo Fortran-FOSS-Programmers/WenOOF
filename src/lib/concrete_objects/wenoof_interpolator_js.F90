@@ -67,9 +67,6 @@ contains
 
   string = 'Jiang-Shu reconstructor:'//nl
   string = string//'  - S   = '//trim(str(self%S))//nl
-  string = string//'  - f1  = '//trim(str(self%f1))//nl
-  string = string//'  - f2  = '//trim(str(self%f2))//nl
-  string = string//'  - ff  = '//trim(str(self%ff))//nl
   string = string//self%weights%description()
   endfunction description
 
@@ -82,34 +79,51 @@ contains
   if (allocated(self%weights)) deallocate(self%weights)
   endsubroutine destroy
 
-  pure subroutine interpolate_debug(self, stencil, interpolation, si, weights)
+  pure subroutine interpolate_with_stencil_of_rank_1_debug(self, stencil, interpolation, si, weights)
   !< Interpolate values (providing also debug values).
-  class(interpolator_js), intent(inout) :: self                     !< Interpolator.
-  real(RPP),              intent(in)    :: stencil(1:, 1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
-  real(RPP),              intent(out)   :: interpolation(1:)        !< Result of the interpolation, [1:2].
-  real(RPP),              intent(out)   :: si(1:, 0:)               !< Computed values of smoothness indicators [1:2, 0:S-1].
-  real(RPP),              intent(out)   :: weights(1:, 0:)          !< Weights of the stencils, [1:2, 0:S-1].
+  class(interpolator_js), intent(inout) :: self                 !< Interpolator.
+  real(RPP),              intent(in)    :: stencil(1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
+  real(RPP),              intent(out)   :: interpolation        !< Result of the interpolation, [1:2].
+  real(RPP),              intent(out)   :: si(0:)               !< Computed values of smoothness indicators [1:2, 0:S-1].
+  real(RPP),              intent(out)   :: weights(0:)          !< Weights of the stencils, [1:2, 0:S-1].
 
   call self%interpolate_standard(stencil=stencil, interpolation=interpolation)
   si = self%weights%smoothness_indicators()
   weights = self%weights%values
-  endsubroutine interpolate_debug
+  endsubroutine interpolate_with_stencil_of_rank_1_debug
 
-  pure subroutine interpolate_standard(self, stencil, interpolation)
+  pure subroutine interpolate_with_stencil_of_rank_2_debug(self, stencil, interpolation, si, weights)
+  !< Interpolate values (providing also debug values).
+  class(interpolator_js), intent(inout) :: self                     !< Reconstructor.
+  real(RPP),               intent(in)   :: stencil(1:, 1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
+  real(RPP),               intent(out)  :: interpolation(1:)        !< Result of the interpolation, [1:2].
+  real(RPP),               intent(out)  :: si(1:, 0:)               !< Computed values of smoothness indicators [1:2, 0:S-1].
+  real(RPP),               intent(out)  :: weights(1:, 0:)          !< Weights of the stencils, [1:2, 0:S-1].
+
+  ! Empty subroutine.
+  endsubroutine interpolate_with_stencil_of_rank_2_debug
+
+  pure subroutine interpolate_with_stencil_of_rank_1_standard(self, stencil, interpolation)
   !< Interpolate values (without providing debug values).
-  class(interpolator_js), intent(inout) :: self                     !< Interpolator.
-  real(RPP),              intent(in)    :: stencil(1:, 1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
-  real(RPP),              intent(out)   :: interpolation(1:)        !< Result of the interpolation, [1:2].
-  integer(I_P)                          :: f, s                     !< Counters.
+  class(interpolator_js), intent(inout) :: self                 !< Interpolator.
+  real(RPP),              intent(in)    :: stencil(1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
+  real(RPP),              intent(out)   :: interpolation        !< Result of the interpolation, [1:2].
+  integer(I_P)                          :: s                    !< Counters.
 
   call self%interpolations%compute(stencil=stencil)
   call self%weights%compute(stencil=stencil)
   interpolation = 0._RPP
   do s=0, self%S - 1 ! stencils loop
-    do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      interpolation(f + self%ff) = interpolation(f + self%ff) + &
-                                   self%weights%values(f + self%ff, s) * self%interpolations%values(f, s)
-    enddo
+    interpolation = interpolation + self%weights%values(s) * self%interpolations%values(s)
   enddo
-  endsubroutine interpolate_standard
+  endsubroutine interpolate_with_stencil_of_rank_1_standard
+
+  pure subroutine interpolate_with_stencil_of_rank_2_standard(self, stencil, interpolation)
+  !< Interpolate values (without providing debug values).
+  class(reconstructor_js), intent(inout) :: self                     !< Reconstructor.
+  real(RPP),               intent(in)    :: stencil(1:, 1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
+  real(RPP),               intent(out)   :: interpolation(1:)        !< Result of the interpolation, [1:2].
+
+  ! Empty subroutine.
+  endsubroutine interpolate_with_stencil_of_rank_2_standard
 endmodule wenoof_interpolator_js

@@ -31,12 +31,14 @@ type, extends(kappa_object):: kappa_rec_js
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
+  real(RPP), allocatable :: values(:,:) !< Kappa coefficients values [1:2,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create kappa.
-    procedure, pass(self) :: compute     !< Compute kappa.
-    procedure, pass(self) :: description !< Return kappa string-description.
-    procedure, pass(self) :: destroy     !< Destroy kappa.
+    procedure, pass(self) :: create             !< Create kappa.
+    procedure, pass(self) :: compute_kappa_int  !< Compute kappa.
+    procedure, pass(self) :: compute_kappa_rec  !< Compute kappa.
+    procedure, pass(self) :: description        !< Return kappa string-description.
+    procedure, pass(self) :: destroy            !< Destroy kappa.
 endtype kappa_rec_js
 
 contains
@@ -55,7 +57,14 @@ contains
   call self%compute
   endsubroutine create
 
-  pure subroutine compute(self)
+  pure subroutine compute_kappa_int(self)
+  !< Compute kappa.
+  class(kappa_rec_js), intent(inout) :: self !< Kappa.
+
+  ! Empty subroutine.
+  endsubroutine compute_kappa_int
+
+  pure subroutine compute_kappa_rec(self)
   !< Compute kappa.
   class(kappa_rec_js), intent(inout) :: self !< Kappa.
 
@@ -175,7 +184,7 @@ contains
         val(2, 8) =    9._RPP/24310._RPP ! stencil 8
     endselect
   endassociate
-  endsubroutine compute
+  endsubroutine compute_kappa_rec
 
   pure function description(self) result(string)
   !< Return string-description of kappa.

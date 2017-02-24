@@ -36,13 +36,11 @@ contains
   call object%create(constructor=constructor)
   endsubroutine create
 
-  subroutine create_constructor(interpolator_type, S, constructor, face_left, face_right)
+  subroutine create_constructor(interpolator_type, S, constructor)
   !< Create an instance of concrete extension of [[beta_object_constructor]].
   character(*),                                          intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                          intent(in)           :: S                 !< Stencils dimension.
   class(interpolations_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  logical,                                               intent(in), optional :: face_left         !< Activate left-face interp.
-  logical,                                               intent(in), optional :: face_right        !< Activate right-face interp.
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')
@@ -56,6 +54,6 @@ contains
   case('reconstructor-Z')
     allocate(interpolations_rec_js_constructor :: constructor)
   endselect
-  call constructor%create(S=S, face_left=face_left, face_right=face_right)
+  call constructor%create(S=S)
   endsubroutine create_constructor
 endmodule wenoof_interpolations_factory

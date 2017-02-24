@@ -29,14 +29,16 @@ type, extends(beta_object) :: beta_int_js
   !< @note The provided interpolations implement the Lagrange interpolations defined in *High Order Weighted Essentially
   !< Nonoscillatory Schemes for Convection Dominated Problems*, Chi-Wang Shu, SIAM Review, 2009, vol. 51, pp. 82--126,
   !< doi:10.1137/070679065.
+  real(RPP), allocatable :: values(:)   !< Beta values [0:S-1].
   private
-  real(RPP), allocatable :: coef(:,:,:) !< Beta coefficients [1:2,0:S-1,0:S-1].
+  real(RPP), allocatable :: coef(:,:,:) !< Beta coefficients [0:S-1,0:S-1,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create beta.
-    procedure, pass(self) :: compute     !< Compute beta.
-    procedure, pass(self) :: description !< Return beta string-description.
-    procedure, pass(self) :: destroy     !< Destroy beta.
+    procedure, pass(self) :: create                           !< Create beta.
+    procedure, pass(self) :: compute_with_stencil_of_rank_1   !< Compute beta.
+    procedure, pass(self) :: compute_with_stencil_of_rank_1   !< Compute beta.
+    procedure, pass(self) :: description                      !< Return beta string-description.
+    procedure, pass(self) :: destroy                          !< Destroy beta.
 endtype beta_int_js
 
 contains
@@ -48,7 +50,7 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(1:2, 0:self%S - 1))
+  allocate(self%values(0:self%S - 1))
   self%values = 0._RPP
   allocate(self%coef(0:self%S - 1, 0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
@@ -2371,24 +2373,29 @@ contains
   endassociate
   endsubroutine create
 
-  pure subroutine compute(self, stencil)
+  pure subroutine compute_with_stencil_of_rank_1(self, stencil)
   !< Compute beta.
-  class(beta_int_js), intent(inout) :: self                  !< Beta.
-  real(RPP),          intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P)                      :: s1, s2, s3, f         !< Counters.
+  class(beta_int_js), intent(inout) :: self               !< Beta.
+  real(RPP),          intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  integer(I_P)                      :: s1, s2, s3         !< Counters.
 
   do s1=0, self%S - 1 ! stencils loop
-    do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      self%values(f, s1) = 0._RPP
-      do s2=0, self%S - 1
-        do s3=0, self%S - 1
-          self%values(f, s1) = self%values(f, s1) + &
-                               self%coef(s3, s2, s1) * stencil(f + self%ff, s1 - s3) * stencil(f + self%ff, s1 - s2)
-        enddo
+    self%values(f, s1) = 0._RPP
+    do s2=0, self%S - 1
+      do s3=0, self%S - 1
+        self%values(s1) = self%values(s1) + self%coef(s3, s2, s1) * stencil(s1 - s3) * stencil(s1 - s2)
       enddo
     enddo
   enddo
-  endsubroutine compute
+  endsubroutine compute_with_stencil_of_rank_1
+
+  pure subroutine compute_with_stencil_of_rank_2(self, stencil)
+  !< Compute beta.
+  class(beta_int_js), intent(inout) :: self                  !< Beta.
+  real(RPP),          intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+
+  ! Empty subroutine.
+  endsubroutine compute_with_stencil_of_rank_2
 
   pure function description(self) result(string)
   !< Return beta string-description.

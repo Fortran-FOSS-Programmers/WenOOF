@@ -11,6 +11,9 @@ use wenoof_alpha_object
 use wenoof_alpha_rec_js
 use wenoof_alpha_rec_m
 use wenoof_alpha_rec_z
+use wenoof_alpha_int_js
+use wenoof_alpha_int_m
+use wenoof_alpha_int_z
 
 implicit none
 private
@@ -31,6 +34,12 @@ contains
   class(alpha_object), allocatable, intent(out) :: object      !< Object.
 
   select type(constructor)
+  type is(alpha_int_js_constructor)
+    allocate(alpha_int_js :: object)
+  type is(alpha_int_m_constructor)
+    allocate(alpha_int_m :: object)
+  type is(alpha_int_z_constructor)
+    allocate(alpha_int_z :: object)
   type is(alpha_rec_js_constructor)
     allocate(alpha_rec_js :: object)
   type is(alpha_rec_m_constructor)
@@ -43,32 +52,30 @@ contains
   call object%create(constructor=constructor)
   endsubroutine create
 
-  subroutine create_constructor(interpolator_type, S, constructor, face_left, face_right, eps)
+  subroutine create_constructor(interpolator_type, S, constructor, eps)
   !< Create an instance of concrete extension of [[alpha_object_constructor]].
   character(*),                                 intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                 intent(in)           :: S                 !< Stencils dimension.
   class(alpha_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  logical,                                      intent(in), optional :: face_left         !< Activate left-face interpolations.
-  logical,                                      intent(in), optional :: face_right        !< Activate right-face interpolations.
   real(RPP),                                    intent(in), optional :: eps               !< Small epsilon to avoid zero/division.
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')
-    allocate(alpha_rec_js_constructor :: constructor)
+    allocate(alpha_int_js_constructor :: constructor)
   case('interpolator-M-JS')
-    allocate(alpha_rec_m_constructor :: constructor)
+    allocate(alpha_int_m_constructor :: constructor)
     select type(constructor)
-    type is(alpha_rec_m_constructor)
+    type is(alpha_int_m_constructor)
       constructor%base_type = 'JS'
     endselect
   case('interpolator-M-Z')
-    allocate(alpha_rec_m_constructor :: constructor)
+    allocate(alpha_int_m_constructor :: constructor)
     select type(constructor)
-    type is(alpha_rec_m_constructor)
+    type is(alpha_int_m_constructor)
       constructor%base_type = 'Z'
     endselect
   case('interpolator-Z')
-    allocate(alpha_rec_z_constructor :: constructor)
+    allocate(alpha_int_z_constructor :: constructor)
   case('reconstructor-JS')
     allocate(alpha_rec_js_constructor :: constructor)
   case('reconstructor-M-JS')
@@ -86,6 +93,6 @@ contains
   case('reconstructor-Z')
     allocate(alpha_rec_z_constructor :: constructor)
   endselect
-  call constructor%create(S=S, face_left=face_left, face_right=face_right, eps=eps)
+  call constructor%create(S=S, eps=eps)
   endsubroutine create_constructor
 endmodule wenoof_alpha_factory

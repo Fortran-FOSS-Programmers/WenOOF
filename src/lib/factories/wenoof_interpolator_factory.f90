@@ -39,15 +39,13 @@ contains
   endsubroutine create
 
   subroutine create_constructor(interpolator_type, S, interpolations_constructor, weights_constructor, &
-                                constructor, face_left, face_right)
+                                constructor)
   !< Create an instance of concrete extension of [[weights_object_constructor]].
   character(*),                                        intent(in)           :: interpolator_type          !< Type of interpolator.
   integer(I_P),                                        intent(in)           :: S                          !< Stencils dimension.
   class(interpolations_object_constructor),            intent(in)           :: interpolations_constructor !< Interpolations const.
   class(weights_object_constructor),                   intent(in)           :: weights_constructor        !< Weights constructor.
   class(interpolator_object_constructor), allocatable, intent(out)          :: constructor                !< Constructor.
-  logical,                                             intent(in), optional :: face_left                  !< Activate left interp.
-  logical,                                             intent(in), optional :: face_right                 !< Activate right interp.
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')
@@ -67,7 +65,7 @@ contains
   case('reconstructor-Z')
     allocate(reconstructor_js_constructor :: constructor)
   endselect
-  call constructor%create(S=S, face_left=face_left, face_right=face_right)
+  call constructor%create(S=S)
   select type(constructor)
   type is(interpolator_js_constructor)
     allocate(constructor%interpolations_constructor, source=interpolations_constructor)

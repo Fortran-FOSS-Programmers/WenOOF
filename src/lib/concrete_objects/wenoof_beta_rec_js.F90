@@ -31,8 +31,9 @@ type, extends(beta_object) :: beta_rec_js
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
+  real(RPP), allocatable :: values(:,:) !< Beta values [1:2,0:S-1].
   private
-  real(RPP), allocatable :: coef(:,:,:) !< Beta coefficients [1:2,0:S-1,0:S-1].
+  real(RPP), allocatable :: coef(:,:,:) !< Beta coefficients [0:S-1,0:S-1,0:S-1].
   contains
     ! public deferred methods
     procedure, pass(self) :: create      !< Create beta.
@@ -2373,24 +2374,31 @@ contains
   endassociate
   endsubroutine create
 
-  pure subroutine compute(self, stencil)
+  pure subroutine compute_with_stencil_of_rank_1(self, stencil)
+  !< Compute beta.
+  class(beta_rec_js), intent(inout) :: self               !< Beta.
+  real(RPP),          intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+
+  ! Empty routine.
+  endsubroutine compute_with_stencil_of_rank_1
+
+  pure subroutine compute_with_stencil_of_rank_2(self, stencil)
   !< Compute beta.
   class(beta_rec_js), intent(inout) :: self                  !< Beta.
   real(RPP),          intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
   integer(I_P)                      :: s1, s2, s3, f         !< Counters.
 
   do s1=0, self%S - 1 ! stencils loop
-    do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+    do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
       self%values(f, s1) = 0._RPP
       do s2=0, self%S - 1
         do s3=0, self%S - 1
-          self%values(f, s1) = self%values(f, s1) + &
-                               self%coef(s3, s2, s1) * stencil(f + self%ff, s1 - s3) * stencil(f + self%ff, s1 - s2)
+          self%values(f, s1) = self%values(f, s1) + self%coef(s3, s2, s1) * stencil(f, s1 - s3) * stencil(f, s1 - s2)
         enddo
       enddo
     enddo
   enddo
-  endsubroutine compute
+  endsubroutine compute_with_stencil_of_rank_2
 
   pure function description(self) result(string)
   !< Return beta string-description.
