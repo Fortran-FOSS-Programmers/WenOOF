@@ -33,8 +33,6 @@ type, extends(kappa_object):: kappa_int_js
   contains
     ! public deferred methods
     procedure, pass(self) :: create             !< Create kappa.
-    procedure, pass(self) :: compute_kappa_int  !< Compute kappa.
-    procedure, pass(self) :: compute_kappa_rec  !< Compute kappa.
     procedure, pass(self) :: description        !< Return kappa string-description.
     procedure, pass(self) :: destroy            !< Destroy kappa.
 endtype kappa_int_js
@@ -52,13 +50,6 @@ contains
   call self%create_(constructor=constructor)
   allocate(self%values(0:self%S - 1))
   self%values = 0._RPP
-  call self%compute
-  endsubroutine create
-
-  pure subroutine compute_kappa_int(self)
-  !< Compute kappa.
-  class(kappa_int_js), intent(inout) :: self !< Kappa.
-
   associate(val => self%values)
     select case(self%S)
       case(2) ! 3rd order
@@ -175,14 +166,7 @@ contains
         val(8) =    17._RPP/65536._RPP  ! stencil 8
     endselect
   endassociate
-  endsubroutine compute_kappa_int
-
-  pure subroutine compute_kappa_rec(self)
-  !< Compute kappa.
-  class(kappa_int_js), intent(inout) :: self !< Kappa.
-
-  ! Empty subroutine.
-  endsubroutine compute_kappa_rec
+  endsubroutine create
 
   pure function description(self) result(string)
   !< Return string-description of kappa.
