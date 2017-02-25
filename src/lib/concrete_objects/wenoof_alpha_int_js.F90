@@ -33,11 +33,10 @@ type, extends(alpha_object) :: alpha_int_js
   real(RPP)              :: values_sum  !< Sum of alpha coefficients.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create             !< Create alpha.
-    procedure, pass(self) :: compute_alpha_int  !< Compute alpha.
-    procedure, pass(self) :: compute_alpha_rec  !< Compute alpha.
-    procedure, pass(self) :: description        !< Return alpha string-description.
-    procedure, pass(self) :: destroy            !< Destroy alpha.
+    procedure, pass(self) :: create                        !< Create alpha.
+    procedure, pass(self) :: compute => compute_alpha_int  !< Compute alpha.
+    procedure, pass(self) :: description                   !< Return alpha string-description.
+    procedure, pass(self) :: destroy                       !< Destroy alpha.
 endtype alpha_int_js
 
 contains
@@ -63,19 +62,10 @@ contains
 
   self%values_sum = 0._RPP
   do s1=0, self%S - 1 ! stencil loops
-    self%values(s1) =  kappa%values(s1)/(self%eps + beta%values(s1)) ** self%S
+    self%values(s1) =  kappa%values_rank_1(s1)/(self%eps + beta%values(s1)) ** self%S
     self%values_sum = self%values_sum + self%values(s1)
   enddo
   endsubroutine compute_alpha_int
-
-  pure subroutine compute_alpha_rec(self, beta, kappa)
-  !< Compute alpha.
-  class(alpha_int_js), intent(inout) :: self  !< Alpha coefficient.
-  class(beta_object),  intent(in)    :: beta  !< Beta coefficients.
-  class(kappa_object), intent(in)    :: kappa !< Kappa coefficients.
-
-  ! Empty subroutine
-  endsubroutine compute_alpha_rec
 
   pure function description(self) result(string)
   !< Return alpha string-descripition.

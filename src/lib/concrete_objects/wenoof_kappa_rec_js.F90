@@ -34,11 +34,10 @@ type, extends(kappa_object):: kappa_rec_js
   real(RPP), allocatable :: values(:,:) !< Kappa coefficients values [1:2,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create             !< Create kappa.
-    procedure, pass(self) :: compute_kappa_int  !< Compute kappa.
-    procedure, pass(self) :: compute_kappa_rec  !< Compute kappa.
-    procedure, pass(self) :: description        !< Return kappa string-description.
-    procedure, pass(self) :: destroy            !< Destroy kappa.
+    procedure, pass(self) :: create                        !< Create kappa.
+    procedure, pass(self) :: compute => compute_kappa_rec  !< Compute kappa.
+    procedure, pass(self) :: description                   !< Return kappa string-description.
+    procedure, pass(self) :: destroy                       !< Destroy kappa.
 endtype kappa_rec_js
 
 contains
@@ -50,25 +49,20 @@ contains
   class(kappa_rec_js),            intent(inout) :: self        !< Kappa.
   class(base_object_constructor), intent(in)    :: constructor !< Kappa constructor.
 
-  call self%destroy
-  call self%create_(constructor=constructor)
-  allocate(self%values(1:2, 0:self%S - 1))
-  self%values = 0._RPP
-  call self%compute
+  associate(val => self%values_rank_2)
+    call self%destroy
+    call self%create_(constructor=constructor)
+    allocate(self%values(1:2, 0:self%S - 1))
+    self%values = 0._RPP
+    call self%compute
+  endassociate
   endsubroutine create
-
-  pure subroutine compute_kappa_int(self)
-  !< Compute kappa.
-  class(kappa_rec_js), intent(inout) :: self !< Kappa.
-
-  ! Empty subroutine.
-  endsubroutine compute_kappa_int
 
   pure subroutine compute_kappa_rec(self)
   !< Compute kappa.
   class(kappa_rec_js), intent(inout) :: self !< Kappa.
 
-  associate(val => self%values)
+  associate(val => self%values_rank_2)
     select case(self%S)
       case(2) ! 3rd order
         ! 1 => left interface (i-1/2)

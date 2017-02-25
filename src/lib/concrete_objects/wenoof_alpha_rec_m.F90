@@ -39,11 +39,10 @@ type, extends(alpha_object) :: alpha_rec_m
   class(alpha_object), allocatable :: alpha_base    !< Base alpha to be re-mapped.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create             !< Create alpha.
-    procedure, pass(self) :: compute_alpha_int  !< Compute alpha.
-    procedure, pass(self) :: compute_alpha_rec  !< Compute alpha.
-    procedure, pass(self) :: description        !< Return alpha string-description.
-    procedure, pass(self) :: destroy            !< Destroy alpha.
+    procedure, pass(self) :: create                        !< Create alpha.
+    procedure, pass(self) :: compute => compute_alpha_rec  !< Compute alpha.
+    procedure, pass(self) :: description                   !< Return alpha string-description.
+    procedure, pass(self) :: destroy                       !< Destroy alpha.
 endtype alpha_rec_m
 
 contains
@@ -78,15 +77,6 @@ contains
   endselect
   endsubroutine create
 
-  pure subroutine compute_alpha_int(self, beta, kappa)
-  !< Compute alpha.
-  class(alpha_rec_m), intent(inout) :: self  !< Alpha coefficient.
-  class(beta_object),  intent(in)   :: beta  !< Beta coefficients.
-  class(kappa_object), intent(in)   :: kappa !< Kappa coefficients.
-
-  ! Empty subroutine.
-  endsubroutine compute_alpha_int
-
   pure subroutine compute_alpha_rec(self, beta, kappa)
   !< Compute alpha.
   class(alpha_rec_m),  intent(inout) :: self        !< Alpha.
@@ -100,12 +90,12 @@ contains
   do s1=0, self%S - 1 ! stencil loops
     do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
       kappa_base = self%alpha_base%values(f, s1) / self%alpha_base%values_sum(f)
-      self%values(f, s1) =                                                               &
-        (kappa_base * (kappa%values(f, s1) + kappa%values(f, s1) * kappa%values(f, s1) - &
-         3._RPP * kappa%values(f, s1) * kappa_base + kappa_base *                        &
-         kappa_base)) /                                                                  &
-         (kappa%values(f, s1) * kappa%values(f, s1) + kappa_base *                       &
-         (1._RPP - 2._RPP * kappa%values(f, s1)))
+      self%values(f, s1) =                                                                                    &
+        (kappa_base * (kappa%values_rank_2(f, s1) + kappa%values_rank_2(f, s1) * kappa%values_rank_2(f, s1) - &
+         3._RPP * kappa%values_rank_2(f, s1) * kappa_base + kappa_base *                                      &
+         kappa_base)) /                                                                                       &
+         (kappa%values_rank_2(f, s1) * kappa%values_rank_2(f, s1) + kappa_base *                              &
+         (1._RPP - 2._RPP * kappa%values_rank_2(f, s1)))
       self%values_sum(f) = self%values_sum(f) + self%values(f, s1)
     enddo
   enddo

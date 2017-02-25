@@ -39,11 +39,10 @@ type, extends(alpha_object) :: alpha_int_m
   class(alpha_object), allocatable :: alpha_base  !< Base alpha to be re-mapped.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create             !< Create alpha.
-    procedure, pass(self) :: compute_alpha_int  !< Compute alpha.
-    procedure, pass(self) :: compute_alpha_rec  !< Compute alpha.
-    procedure, pass(self) :: description        !< Return alpha string-description.
-    procedure, pass(self) :: destroy            !< Destroy alpha.
+    procedure, pass(self) :: create                        !< Create alpha.
+    procedure, pass(self) :: compute => compute_alpha_int  !< Compute alpha.
+    procedure, pass(self) :: description                   !< Return alpha string-description.
+    procedure, pass(self) :: destroy                       !< Destroy alpha.
 endtype alpha_int_m
 
 contains
@@ -89,23 +88,14 @@ contains
   call self%alpha_base%compute(beta=beta, kappa=kappa)
   do s1=0, self%S - 1 ! stencil loops
     kappa_base = self%alpha_base%values(s1) / self%alpha_base%values_sum
-    self%values(s1) =                                                         &
-      (kappa_base * (kappa%values(s1) + kappa%values(s1) * kappa%values(s1) - &
-       3._RPP * kappa%values(s1) * kappa_base + kappa_base * kappa_base)) /   &
-       (kappa%values(s1) * kappa%values(s1) + kappa_base *                    &
-       (1._RPP - 2._RPP * kappa%values(s1)))
+    self%values(s1) =                                                                              &
+      (kappa_base * (kappa%values_rank_1(s1) + kappa%values_rank_1(s1) * kappa%values_rank_1(s1) - &
+       3._RPP * kappa%values_rank_1(s1) * kappa_base + kappa_base * kappa_base)) /                 &
+       (kappa%values_rank_1(s1) * kappa%values_rank_1(s1) + kappa_base *                           &
+       (1._RPP - 2._RPP * kappa%values_rank_1(s1)))
     self%values_sum = self%values_sum + self%values(s1)
   enddo
   endsubroutine compute_alpha_int
-
-  pure subroutine compute_alpha_rec(self, beta, kappa)
-  !< Compute alpha.
-  class(alpha_int_m),  intent(inout) :: self        !< Alpha.
-  class(beta_object),  intent(in)    :: beta        !< Beta.
-  class(kappa_object), intent(in)    :: kappa       !< Kappa.
-
-  ! Empty subroutine.
-  endsubroutine compute_alpha_rec
 
   pure function description(self) result(string)
   !< Return alpha string-descripition.
