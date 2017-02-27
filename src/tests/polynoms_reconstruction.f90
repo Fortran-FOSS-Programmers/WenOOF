@@ -157,9 +157,9 @@ contains
 
   call self%compute_reference_solution
   do s=1, self%ui%S_number
-    call wenoof_create(interpolator_type=trim(adjustl(self%ui%interpolator_type)), &
-                       S=self%ui%S(s),                                             &
-                       interpolator=interpolator,                                  &
+    call wenoof_create(interpolator_type='reconstructor-'//trim(adjustl(self%ui%interpolator_type)), &
+                       S=self%ui%S(s),                                                               &
+                       interpolator=interpolator,                                                    &
                        eps=self%ui%eps)
     if (self%ui%verbose) print '(A)', interpolator%description()
     allocate(stencil(1:2, 1-self%ui%S(s):-1+self%ui%S(s)))
