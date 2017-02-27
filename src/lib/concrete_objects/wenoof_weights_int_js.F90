@@ -1,5 +1,5 @@
 !< Jiang-Shu and Gerolymos-Senechal-Vallet weights.
-module wenoof_weight_int_js
+module wenoof_weights_int_js
 !< Jiang-Shu and Gerolymos-Senechal-Vallet weights.
 !<
 !< @note The provided WENO weights implements the weights defined in *Efficient Implementation of Weighted ENO
@@ -169,4 +169,4 @@ contains
 
   ! Empty routine
   endfunction smoothness_indicators_of_rank_2
-endmodule wenoof_weight_int_js
+endmodule wenoof_weights_int_js
