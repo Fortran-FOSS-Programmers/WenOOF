@@ -36,8 +36,8 @@ type, extends(interpolations_object) :: interpolations_rec_js
   contains
     ! public deferred methods
     procedure, pass(self) :: create                             !< Create interpolations.
-    procedure, pass(self) :: compute_with_stencil_or_rank_1     !< Compute interpolations.
-    procedure, pass(self) :: compute_with_stencil_or_rank_2     !< Compute interpolations.
+    procedure, pass(self) :: compute_with_stencil_of_rank_1     !< Compute interpolations.
+    procedure, pass(self) :: compute_with_stencil_of_rank_2     !< Compute interpolations.
     procedure, pass(self) :: description                        !< Return interpolations string-description.
     procedure, pass(self) :: destroy                            !< Destroy interpolations.
 endtype interpolations_rec_js
@@ -495,7 +495,7 @@ contains
   class(interpolations_rec_js), intent(inout) :: self !< Interpolations.
 
   call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_rank_2)) deallocate(self%values_rank_2)
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
 endmodule wenoof_interpolations_rec_js

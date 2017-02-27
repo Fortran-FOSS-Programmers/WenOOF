@@ -334,6 +334,7 @@ contains
       val(s1) = val(s1) + self%coef(s2, s1) * stencil(-s2 + s1)
     enddo
   enddo
+  endassociate
   endsubroutine compute_with_stencil_of_rank_1
 
   pure subroutine compute_with_stencil_of_rank_2(self, stencil)
@@ -360,7 +361,7 @@ contains
   class(interpolations_int_js), intent(inout) :: self !< Interpolations.
 
   call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_rank_1)) deallocate(self%values_rank_1)
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
 endmodule wenoof_interpolations_int_js

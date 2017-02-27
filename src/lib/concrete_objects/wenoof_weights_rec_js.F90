@@ -152,7 +152,7 @@ contains
   if (allocated(self%kappa)) deallocate(self%kappa)
   endsubroutine destroy
 
-  pure subroutine smoothness_indicators_of_rank_1(self)
+  pure subroutine smoothness_indicators_of_rank_1(self, si)
   !< Return smoothness indicators..
   class(weights_rec_js),  intent(in)  :: self  !< Weights.
   real(RPP), allocatable, intent(out) :: si(:) !< Smoothness indicators.
@@ -160,7 +160,7 @@ contains
   ! Empty routine
   endsubroutine smoothness_indicators_of_rank_1
 
-  pure subroutine smoothness_indicators_of_rank_2(self)
+  pure subroutine smoothness_indicators_of_rank_2(self, si)
   !< Return smoothness indicators..
   class(weights_rec_js),  intent(in)  :: self    !< Weights.
   real(RPP), allocatable, intent(out) :: si(:,:) !< Smoothness indicators.

@@ -162,10 +162,10 @@ contains
   endif
   endsubroutine smoothness_indicators_of_rank_1
 
-  pure subroutine smoothness_indicators_of_rank_2(self)
+  pure subroutine smoothness_indicators_of_rank_2(self, si)
   !< Return smoothness indicators..
-  class(weights_int_js),  intent(in)  :: self  !< Weights.
-  real(RPP), allocatable, intent(out) :: si(:) !< Smoothness indicators.
+  class(weights_int_js),  intent(in)  :: self    !< Weights.
+  real(RPP), allocatable, intent(out) :: si(:,:) !< Smoothness indicators.
 
   ! Empty routine
   endsubroutine smoothness_indicators_of_rank_2
