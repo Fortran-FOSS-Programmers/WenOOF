@@ -54,10 +54,12 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(1:2, 0:self%S - 1))
-  allocate(self%values_sum(1:2))
-  self%values = 0._RPP
-  self%values_sum = 0._RPP
+  allocate(self%values_rank_2(1:2, 0:self%S - 1))
+  allocate(self%values_sum_rank_2(1:2))
+  associate(val => self%values_rank_2, val_sum => self%values_sum_rank_2)
+    val = 0._RPP
+    val_sum = 0._RPP
+  endassociate
   select type(constructor)
   type is(alpha_rec_m_constructor)
     if (allocated(constructor%base_type)) then
@@ -85,20 +87,22 @@ contains
   real(RPP)                          :: kappa_base  !< Kappa evaluated from the base alphas.
   integer(I_P)                       :: f, s1       !< Counters.
 
-  self%values_sum = 0._RPP
+  associate(val => self%values_rank_2, val_sum => self%values_sum_rank_2)
+  val_sum = 0._RPP
   call self%alpha_base%compute(beta=beta, kappa=kappa)
   do s1=0, self%S - 1 ! stencil loops
     do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      kappa_base = self%alpha_base%values(f, s1) / self%alpha_base%values_sum(f)
-      self%values(f, s1) =                                                                                    &
+      kappa_base = self%alpha_base%values_rank_2(f, s1) / self%alpha_base%values_sum_rank_2(f)
+      val(f, s1) =                                                                                            &
         (kappa_base * (kappa%values_rank_2(f, s1) + kappa%values_rank_2(f, s1) * kappa%values_rank_2(f, s1) - &
          3._RPP * kappa%values_rank_2(f, s1) * kappa_base + kappa_base *                                      &
          kappa_base)) /                                                                                       &
          (kappa%values_rank_2(f, s1) * kappa%values_rank_2(f, s1) + kappa_base *                              &
          (1._RPP - 2._RPP * kappa%values_rank_2(f, s1)))
-      self%values_sum(f) = self%values_sum(f) + self%values(f, s1)
+      val_sum(f) = val_sum(f) + val(f, s1)
     enddo
   enddo
+  endassociate
   endsubroutine compute_alpha_rec
 
   pure function description(self) result(string)
@@ -125,8 +129,8 @@ contains
   class(alpha_rec_m), intent(inout) :: self !< Alpha.
 
   call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
-  if (allocated(self%values_sum)) deallocate(self%values_sum)
+  if (allocated(self%values_rank_2)) deallocate(self%values_rank_2)
+  if (allocated(self%values_sum_rank_2)) deallocate(self%values_sum_rank_2)
   if (allocated(self%alpha_base)) deallocate(self%alpha_base)
   endsubroutine destroy
 endmodule wenoof_alpha_rec_m

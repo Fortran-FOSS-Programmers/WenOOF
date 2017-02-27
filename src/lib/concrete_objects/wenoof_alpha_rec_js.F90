@@ -29,8 +29,6 @@ type, extends(alpha_object) :: alpha_rec_js
   !<
   !< @note The provided WENO alpha implements the alpha coefficients defined in *Efficient Implementation of Weighted
   !< ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
-  real(RPP), allocatable :: values(:,:)   !< Alpha coefficients [1:2,0:S-1].
-  real(RPP), allocatable :: values_sum(:) !< Sum of alpha coefficients [1:2].
   contains
     ! public deferred methods
     procedure, pass(self) :: create                        !< Create alpha.
@@ -48,10 +46,12 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(1:2, 0:self%S - 1))
-  allocate(self%values_sum(1:2))
-  self%values = 0._RPP
-  self%values_sum = 0._RPP
+  allocate(self%values_rank_2(1:2, 0:self%S - 1))
+  allocate(self%values_sum_rank_2(1:2))
+  associate(val => self%values_rank_2, val_sum => self%values_sum_rank_2)
+    val = 0._RPP
+    val_sum = 0._RPP
+  endassociate
   endsubroutine create
 
   pure subroutine compute_alpha_rec(self, beta, kappa)
@@ -61,13 +61,15 @@ contains
   class(kappa_object), intent(in)    :: kappa !< Kappa coefficients.
   integer(I_P)                       :: f, s1 !< Counters.
 
-  self%values_sum = 0._RPP
-  do s1=0, self%S - 1 ! stencil loops
-    do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      self%values(f, s1) = kappa%values_rank_2(f, s1)/(self%eps + beta%values(f, s1)) ** self%S
-      self%values_sum(f) = self%values_sum(f) + self%values(f, s1)
+  associate(val => self%values_rank_2, val_sum => self%values_sum_rank_2)
+    val_sum = 0._RPP
+    do s1=0, self%S - 1 ! stencil loops
+      do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+        val(f, s1) = kappa%values_rank_2(f, s1)/(self%eps + beta%values_rank_2(f, s1)) ** self%S
+        val_sum(f) = val_sum(f) + val(f, s1)
+      enddo
     enddo
-  enddo
+  endassociate
   endsubroutine compute_alpha_rec
 
   pure function description(self) result(string)
@@ -86,7 +88,7 @@ contains
   class(alpha_rec_js), intent(inout) :: self !< Alpha.
 
   call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
-  if (allocated(self%values_sum)) deallocate(self%values_sum)
+  if (allocated(self%values_rank_2)) deallocate(self%values_rank_2)
+  if (allocated(self%values_sum_rank_2)) deallocate(self%values_sum_rank_2)
   endsubroutine destroy
 endmodule wenoof_alpha_rec_js

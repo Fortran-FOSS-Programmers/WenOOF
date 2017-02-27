@@ -46,13 +46,11 @@ contains
   class(kappa_int_js),            intent(inout) :: self        !< Kappa.
   class(base_object_constructor), intent(in)    :: constructor !< Kappa constructor.
 
-  associate(val => self%values_rank_1)
-    call self%destroy
-    call self%create_(constructor=constructor)
-    allocate(val(0:self%S - 1))
-    val = 0._RPP
-    call self%compute
-  endassociate
+  call self%destroy
+  call self%create_(constructor=constructor)
+  allocate(self%values_rank_1(0:self%S - 1))
+  self%values_rank_1 = 0._RPP
+  call self%compute
   endsubroutine create
 
   pure subroutine compute_kappa_int(self)
@@ -193,6 +191,6 @@ contains
   class(kappa_int_js), intent(inout) :: self !< Kappa.
 
   call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_rank_1)) deallocate(self%values_rank_1)
   endsubroutine destroy
 endmodule wenoof_kappa_int_js

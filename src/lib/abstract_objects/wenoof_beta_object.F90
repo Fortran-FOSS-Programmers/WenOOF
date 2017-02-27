@@ -20,6 +20,8 @@ endtype beta_object_constructor
 
 type, extends(base_object), abstract :: beta_object
   !< Abstract Beta coefficients (smoothness indicators of stencil interpolations) object.
+  real(RPP), allocatable :: values_rank_1(:)   !< Beta values [0:S-1].
+  real(RPP), allocatable :: values_rank_2(:,:) !< Beta values [1:2,0:S-1].
   contains
     ! public methods
     generic :: compute => compute_with_stencil_of_rank_1, compute_with_stencil_of_rank_2

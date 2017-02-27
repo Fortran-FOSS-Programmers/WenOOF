@@ -29,16 +29,15 @@ type, extends(beta_object) :: beta_int_js
   !< @note The provided interpolations implement the Lagrange interpolations defined in *High Order Weighted Essentially
   !< Nonoscillatory Schemes for Convection Dominated Problems*, Chi-Wang Shu, SIAM Review, 2009, vol. 51, pp. 82--126,
   !< doi:10.1137/070679065.
-  real(RPP), allocatable :: values(:)   !< Beta values [0:S-1].
   private
   real(RPP), allocatable :: coef(:,:,:) !< Beta coefficients [0:S-1,0:S-1,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create                           !< Create beta.
-    procedure, pass(self) :: compute_with_stencil_of_rank_1   !< Compute beta.
-    procedure, pass(self) :: compute_with_stencil_of_rank_1   !< Compute beta.
-    procedure, pass(self) :: description                      !< Return beta string-description.
-    procedure, pass(self) :: destroy                          !< Destroy beta.
+    procedure, pass(self) :: create                             !< Create beta.
+    procedure, pass(self) :: compute_with_stencil_of_rank_1     !< Compute beta.
+    procedure, pass(self) :: compute_with_stencil_of_rank_2     !< Compute beta.
+    procedure, pass(self) :: description                        !< Return beta string-description.
+    procedure, pass(self) :: destroy                            !< Destroy beta.
 endtype beta_int_js
 
 contains
@@ -50,8 +49,8 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(0:self%S - 1))
-  self%values = 0._RPP
+  allocate(self%values_rank_1(0:self%S - 1))
+  self%values_rank_1 = 0._RPP
   allocate(self%coef(0:self%S - 1, 0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
     select case(self%S)
@@ -2379,14 +2378,16 @@ contains
   real(RPP),          intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
   integer(I_P)                      :: s1, s2, s3         !< Counters.
 
-  do s1=0, self%S - 1 ! stencils loop
-    self%values(f, s1) = 0._RPP
-    do s2=0, self%S - 1
-      do s3=0, self%S - 1
-        self%values(s1) = self%values(s1) + self%coef(s3, s2, s1) * stencil(s1 - s3) * stencil(s1 - s2)
+  associate(val => self%values_rank_1)
+    do s1=0, self%S - 1 ! stencils loop
+      val(s1) = 0._RPP
+      do s2=0, self%S - 1
+        do s3=0, self%S - 1
+          val(s1) = val(s1) + self%coef(s3, s2, s1) * stencil(s1 - s3) * stencil(s1 - s2)
+        enddo
       enddo
     enddo
-  enddo
+  endassociate
   endsubroutine compute_with_stencil_of_rank_1
 
   pure subroutine compute_with_stencil_of_rank_2(self, stencil)
@@ -2413,7 +2414,7 @@ contains
   class(beta_int_js), intent(inout) :: self !< Beta.
 
   call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_rank_1)) deallocate(self%values_rank_1)
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
 endmodule wenoof_beta_int_js

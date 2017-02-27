@@ -23,6 +23,10 @@ endtype alpha_object_constructor
 
 type, extends(base_object), abstract :: alpha_object
   !< Abstract alpha (non linear weights) object.
+  real(RPP), allocatable :: values_rank_1(:)      !< Alpha values [0:S-1].
+  real(RPP)              :: values_sum_rank_1     !< Sum of alpha coefficients.
+  real(RPP), allocatable :: values_rank_2(:,:)    !< Alpha values [1:2,0:S-1].
+  real(RPP), allocatable :: values_sum_rank_2(:)  !< Sum of alpha coefficients [1:2].
   contains
     ! public deferred methods
     procedure(compute_interface), pass(self), deferred :: compute !< Compute alpha.

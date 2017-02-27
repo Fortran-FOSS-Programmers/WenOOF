@@ -36,10 +36,11 @@ type, extends(interpolations_object) :: interpolations_rec_js
   real(RPP), allocatable :: coef(:,:,:) !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create interpolations.
-    procedure, pass(self) :: compute     !< Compute interpolations.
-    procedure, pass(self) :: description !< Return interpolations string-description.
-    procedure, pass(self) :: destroy     !< Destroy interpolations.
+    procedure, pass(self) :: create                             !< Create interpolations.
+    procedure, pass(self) :: compute_with_stencil_or_rank_1     !< Compute interpolations.
+    procedure, pass(self) :: compute_with_stencil_or_rank_2     !< Compute interpolations.
+    procedure, pass(self) :: description                        !< Return interpolations string-description.
+    procedure, pass(self) :: destroy                            !< Destroy interpolations.
 endtype interpolations_rec_js
 
 contains

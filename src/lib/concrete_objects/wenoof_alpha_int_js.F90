@@ -29,8 +29,6 @@ type, extends(alpha_object) :: alpha_int_js
   !<
   !< @note The provided WENO alpha implements the alpha coefficients defined in *Efficient Implementation of Weighted
   !< ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
-  real(RPP), allocatable :: values(:)   !< Alpha coefficients [0:S-1].
-  real(RPP)              :: values_sum  !< Sum of alpha coefficients.
   contains
     ! public deferred methods
     procedure, pass(self) :: create                        !< Create alpha.
@@ -48,9 +46,11 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(0:self%S - 1))
-  self%values = 0._RPP
-  self%values_sum = 0._RPP
+  allocate(self%values_rank_1(0:self%S - 1))
+  associate(val => self%values_rank_1, val_sum => self%values_sum_rank_1)
+    val = 0._RPP
+    val_sum = 0._RPP
+  endassociate
   endsubroutine create
 
   pure subroutine compute_alpha_int(self, beta, kappa)
@@ -60,11 +60,13 @@ contains
   class(kappa_object), intent(in)    :: kappa !< Kappa coefficients.
   integer(I_P)                       :: s1    !< Counter.
 
-  self%values_sum = 0._RPP
-  do s1=0, self%S - 1 ! stencil loops
-    self%values(s1) =  kappa%values_rank_1(s1)/(self%eps + beta%values(s1)) ** self%S
-    self%values_sum = self%values_sum + self%values(s1)
-  enddo
+  associate(val => self%values_rank_1, val_sum => self%values_sum_rank_1)
+    val_sum = 0._RPP
+    do s1=0, self%S - 1 ! stencil loops
+      val(s1) = kappa%values_rank_1(s1)/(self%eps + beta%values_rank_1(s1)) ** self%S
+      val_sum = val_sum + val(s1)
+    enddo
+  endassociate
   endsubroutine compute_alpha_int
 
   pure function description(self) result(string)
@@ -83,6 +85,6 @@ contains
   class(alpha_int_js), intent(inout) :: self !< Alpha.
 
   call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_rank_1)) deallocate(self%values_rank_1)
   endsubroutine destroy
 endmodule wenoof_alpha_int_js

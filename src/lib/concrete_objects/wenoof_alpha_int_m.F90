@@ -54,9 +54,11 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(0:self%S - 1))
-  self%values = 0._RPP
-  self%values_sum = 0._RPP
+  allocate(self%values_rank_1(0:self%S - 1))
+  associate(val => self%values_rank_1, val_sum => self%values_sum_rank_1)
+    val = 0._RPP
+    val_sum = 0._RPP
+  endassociate
   select type(constructor)
   type is(alpha_int_m_constructor)
     if (allocated(constructor%base_type)) then
@@ -84,17 +86,19 @@ contains
   real(RPP)                          :: kappa_base  !< Kappa evaluated from the base alphas.
   integer(I_P)                       :: s1          !< Counter.
 
-  self%values_sum = 0._RPP
-  call self%alpha_base%compute(beta=beta, kappa=kappa)
-  do s1=0, self%S - 1 ! stencil loops
-    kappa_base = self%alpha_base%values(s1) / self%alpha_base%values_sum
-    self%values(s1) =                                                                              &
-      (kappa_base * (kappa%values_rank_1(s1) + kappa%values_rank_1(s1) * kappa%values_rank_1(s1) - &
-       3._RPP * kappa%values_rank_1(s1) * kappa_base + kappa_base * kappa_base)) /                 &
-       (kappa%values_rank_1(s1) * kappa%values_rank_1(s1) + kappa_base *                           &
-       (1._RPP - 2._RPP * kappa%values_rank_1(s1)))
-    self%values_sum = self%values_sum + self%values(s1)
-  enddo
+  associate(val => self%values_rank_1, val_sum => self%values_sum_rank_1)
+    val_sum = 0._RPP
+    call self%alpha_base%compute(beta=beta, kappa=kappa)
+    do s1=0, self%S - 1 ! stencil loops
+      kappa_base = self%alpha_base%values_rank_1(s1) / self%alpha_base%values_sum_rank_1
+      val(s1) =                                                                                      &
+        (kappa_base * (kappa%values_rank_1(s1) + kappa%values_rank_1(s1) * kappa%values_rank_1(s1) - &
+         3._RPP * kappa%values_rank_1(s1) * kappa_base + kappa_base * kappa_base)) /                 &
+         (kappa%values_rank_1(s1) * kappa%values_rank_1(s1) + kappa_base *                           &
+         (1._RPP - 2._RPP * kappa%values_rank_1(s1)))
+      val_sum = val_sum + val(s1)
+    enddo
+  endassociate
   endsubroutine compute_alpha_int
 
   pure function description(self) result(string)
@@ -121,7 +125,7 @@ contains
   class(alpha_int_m), intent(inout) :: self !< Alpha.
 
   call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_rank_1)) deallocate(self%values_rank_1)
   if (allocated(self%alpha_base)) deallocate(self%alpha_base)
   endsubroutine destroy
 endmodule wenoof_alpha_int_m

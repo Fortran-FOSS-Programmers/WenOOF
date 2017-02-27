@@ -32,14 +32,13 @@ type, extends(alpha_object) :: alpha_int_z
   !< scheme for hyperbolic conservation laws*, Rafael Borges, Monique Carmona, Bruno Costa and Wai Sun Don, JCP,
   !< 2008, vol. 227, pp. 3191-3211, doi: 10.1016/j.jcp.2007.11.038.
   real(RPP), allocatable :: values(:)   !< Alpha coefficients [0:S-1].
-  real(RPP),             :: values_sum  !< Sum of alpha coefficients.
+  real(RPP)              :: values_sum  !< Sum of alpha coefficients.
   contains
     ! public deferred methods
     procedure, pass(self) :: create                        !< Create alpha.
     procedure, pass(self) :: compute => compute_alpha_int  !< Compute alpha.
     procedure, pass(self) :: description                   !< Return alpha string-description.
     procedure, pass(self) :: destroy                       !< Destroy alpha.
-  enddo
 endtype alpha_int_z
 contains
   ! public deferred methods
@@ -50,9 +49,11 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(0:self%S - 1))
-  self%values = 0._RPP
-  self%values_sum = 0._RPP
+  allocate(self%values_rank_1(0:self%S - 1))
+  associate(val => self%values_rank_1, val_sum => self%values_sum_rank_1)
+    val = 0._RPP
+    val_sum = 0._RPP
+  endassociate
   endsubroutine create
 
   pure subroutine compute_alpha_int(self, beta, kappa)
@@ -62,12 +63,15 @@ contains
   class(kappa_object), intent(in)    :: kappa !< Kappa.
   integer(I_P)                       :: s1    !< Counter.
 
-  self%values_sum = 0._RPP
-  do s1=0, self%S - 1 ! stencil loops
-    self%values(s1) = kappa%values_rank_1(s1) * &
-                         ((1._RPP + (tau(S=self%S, beta=beta%values) / (self%eps + beta%values(s1)))) ** (weno_exp(self%S)))
-    self%values_sum = self%values_sum + self%values(s1)
-  enddo
+  associate(val => self%values_rank_1, val_sum => self%values_sum_rank_1)
+    val_sum = 0._RPP
+    do s1=0, self%S - 1 ! stencil loops
+      val = kappa%values_rank_1(s1) *                            &
+            ((1._RPP + (tau(S=self%S, beta=beta%values_rank_1) / &
+            (self%eps + beta%values_rank_1(s1)))) ** (weno_exp(self%S)))
+      val_sum = val_sum + val(s1)
+    enddo
+  endassociate
   endsubroutine compute_alpha_int
 
   pure function description(self) result(string)
@@ -87,7 +91,7 @@ contains
   class(alpha_int_z), intent(inout) :: self !< Alpha.
 
   call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_rank_1)) deallocate(self%values_rank_1)
   endsubroutine destroy
 
   ! private non TBP
