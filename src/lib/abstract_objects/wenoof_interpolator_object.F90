@@ -44,7 +44,6 @@ type, extends(base_object), abstract :: interpolator_object
     procedure(interpolate_with_stencil_of_rank_2_standard_interface), pass(self), &
                          deferred :: interpolate_with_stencil_of_rank_2_standard
     ! public methods
-    generic :: interpolate => interpolate_standard, interpolate_debug !< Interpolate values.
 endtype interpolator_object
 
 abstract interface
