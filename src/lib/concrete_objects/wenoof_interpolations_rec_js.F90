@@ -31,7 +31,6 @@ type, extends(interpolations_object) :: interpolations_rec_js
   !< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
-  real(RPP), allocatable :: values(:,:) !< Interpolations values [1:2,0:S-1].
   private
   real(RPP), allocatable :: coef(:,:,:) !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
@@ -52,8 +51,8 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(1:2, 0:self%S - 1))
-  self%values = 0._RPP
+  allocate(self%values_rank_2(1:2, 0:self%S - 1))
+  self%values_rank_2 = 0._RPP
   allocate(self%coef(1:2, 0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
     select case(self%S)
@@ -305,7 +304,7 @@ contains
         c(1,4,3)=  533._RPP/ 840._RPP; c(1,4,2)=- 307._RPP/ 840._RPP; c(1,4,1)=  393._RPP/ 840._RPP; c(1,4,0)=-1007._RPP/ 840._RPP
         c(1,5,3)=- 139._RPP/ 840._RPP; c(1,5,2)=  113._RPP/ 840._RPP; c(1,5,1)=- 167._RPP/ 840._RPP; c(1,5,0)=  463._RPP/ 840._RPP
         c(1,6,3)=   29._RPP/ 840._RPP; c(1,6,2)=-  27._RPP/ 840._RPP; c(1,6,1)=   43._RPP/ 840._RPP; c(1,6,0)=- 125._RPP/ 840._RPP
-        c(1,7,3)=-   3._RPP/ 840._RPP; c(1,7,2)=    3._RPP/ 840._RPP; c(1,7,1)=-   5._RPP/ 840._RPP; c(1,7,0)=   15._RPP/ 840 _RPP
+        c(1,7,3)=-   3._RPP/ 840._RPP; c(1,7,2)=    3._RPP/ 840._RPP; c(1,7,1)=-   5._RPP/ 840._RPP; c(1,7,0)=   15._RPP/ 840._RPP
         ! 2 => right interface (i+1/2)
         c(2,7,0)=- 105._RPP/ 840._RPP; c(2,7,1)=   15._RPP/ 840._RPP; c(2,7,2)=-   5._RPP/ 840._RPP; c(2,7,3)=    3._RPP/ 840._RPP
         c(2,6,0)=  855._RPP/ 840._RPP; c(2,6,1)=- 125._RPP/ 840._RPP; c(2,6,2)=   43._RPP/ 840._RPP; c(2,6,3)=-  27._RPP/ 840._RPP
@@ -323,7 +322,7 @@ contains
         c(2,3,4)=  533._RPP/ 840._RPP; c(2,3,5)=- 307._RPP/ 840._RPP; c(2,3,6)=  393._RPP/ 840._RPP; c(2,3,7)=-1007._RPP/ 840._RPP
         c(2,2,4)=- 139._RPP/ 840._RPP; c(2,2,5)=  113._RPP/ 840._RPP; c(2,2,6)=- 167._RPP/ 840._RPP; c(2,2,7)=  463._RPP/ 840._RPP
         c(2,1,4)=   29._RPP/ 840._RPP; c(2,1,5)=-  27._RPP/ 840._RPP; c(2,1,6)=   43._RPP/ 840._RPP; c(2,1,7)=- 125._RPP/ 840._RPP
-        c(2,0,4)=-   3._RPP/ 840._RPP; c(2,0,5)=    3._RPP/ 840._RPP; c(2,0,6)=-   5._RPP/ 840._RPP; c(2,0,7)=   15._RPP/ 840 _RPP
+        c(2,0,4)=-   3._RPP/ 840._RPP; c(2,0,5)=    3._RPP/ 840._RPP; c(2,0,6)=-   5._RPP/ 840._RPP; c(2,0,7)=   15._RPP/ 840._RPP
       case(9) ! 17th order
         ! 1 => left interface (i-1/2)
         !  cell  0                    ;     cell  1                   ;     cell  2
@@ -468,14 +467,16 @@ contains
   integer(I_P)                                :: s2                    !< Counter.
   integer(I_P)                                :: f                     !< Counter.
 
-  self%values = 0._RPP
+  associate(val => self%values_rank_2)
+  val = 0._RPP
   do s1=0, self%S - 1 ! stencils loop
     do s2=0, self%S - 1 ! values loop
       do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-        self%values(f, s1) = self%values(f, s1) + self%coef(f, s2, s1) * stencil(f, -s2 + s1)
+        val(f, s1) = val(f, s1) + self%coef(f, s2, s1) * stencil(f, -s2 + s1)
       enddo
     enddo
   enddo
+  endassociate
   endsubroutine compute_with_stencil_of_rank_2
 
   pure function description(self) result(string)

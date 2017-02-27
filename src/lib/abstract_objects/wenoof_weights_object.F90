@@ -47,19 +47,19 @@ abstract interface
   real(RPP),             intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
   endsubroutine compute_with_stencil_of_rank_2_interface
 
-  pure function smoothness_indicators_of_rank_1_interface(self) result(si)
+  pure subroutine smoothness_indicators_of_rank_1_interface(self, si)
   !< Return smoothness indicators.
   import :: weights_object, RPP
-  class(weights_object), intent(in) :: self  !< Weights.
-  real(RPP), allocatable            :: si(:) !< Smoothness indicators.
-  endfunction smoothness_indicators_of_rank_1_interface
+  class(weights_object),  intent(in)  :: self  !< Weights.
+  real(RPP), allocatable, intent(out) :: si(:) !< Smoothness indicators.
+  endsubroutine smoothness_indicators_of_rank_1_interface
 
-  pure function smoothness_indicators_of_rank_2_interface(self) result(si)
+  pure subroutine smoothness_indicators_of_rank_2_interface(self, si)
   !< Return smoothness indicators.
   import :: weights_object, RPP
-  class(weights_object), intent(in) :: self    !< Weights.
-  real(RPP), allocatable            :: si(:,:) !< Smoothness indicators.
-  endfunction smoothness_indicators_of_rank_2_interface
+  class(weights_object),  intent(in)  :: self    !< Weights.
+  real(RPP), allocatable, intent(out) :: si(:,:) !< Smoothness indicators.
+  endsubroutine smoothness_indicators_of_rank_2_interface
 endinterface
 
 endmodule wenoof_weights_object

@@ -20,7 +20,8 @@ endtype interpolations_object_constructor
 
 type, extends(base_object), abstract :: interpolations_object
   !< Abstract interpolations object.
-  real(RPP), allocatable :: values(:,:) !< Stencil interpolations values [1:2,0:S-1].
+  real(RPP), allocatable :: values_rank_1(:)   !< Stencil interpolations values [0:S-1].
+  real(RPP), allocatable :: values_rank_2(:,:) !< Stencil interpolations values [1:2,0:S-1].
   contains
     ! public methods
     generic :: compute => compute_with_stencil_of_rank_1, compute_with_stencil_of_rank_2

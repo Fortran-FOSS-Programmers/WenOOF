@@ -29,9 +29,8 @@ type, extends(interpolations_object) :: interpolations_int_js
   !< @note The provided interpolations implement the Lagrange interpolations defined in *High Order Weighted Essentially
   !< Nonoscillatory Schemes for Convection Dominated Problems*, Chi-Wang Shu, SIAM Review, 2009, vol. 51, pp. 82--126,
   !< doi:10.1137/070679065.
-  real(RPP), allocatable :: values(:)   !< Interpolations values [0:S-1].
   private
-  real(RPP), allocatable :: coef(:,:,:) !< Polynomial coefficients [0:S-1,0:S-1].
+  real(RPP), allocatable :: coef(:,:)   !< Polynomial coefficients [0:S-1,0:S-1].
   contains
     ! public deferred methods
     procedure, pass(self) :: create                         !< Create interpolations.
@@ -50,8 +49,8 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(0:self%S - 1))
-  self%values = 0._RPP
+  allocate(self%values_rank_1(0:self%S - 1))
+  self%values_rank_1 = 0._RPP
   allocate(self%coef(0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
     select case(self%S)
@@ -328,10 +327,11 @@ contains
   integer(I_P)                                :: s1                 !< Counter.
   integer(I_P)                                :: s2                 !< Counter.
 
-  self%values = 0._RPP
+  associate(val => self%values_rank_1)
+  val = 0._RPP
   do s1=0, self%S - 1 ! stencils loop
     do s2=0, self%S - 1 ! values loop
-      self%values(s1) = self%values(s1) + self%coef(s2, s1) * stencil(-s2 + s1)
+      val(s1) = val(s1) + self%coef(s2, s1) * stencil(-s2 + s1)
     enddo
   enddo
   endsubroutine compute_with_stencil_of_rank_1
