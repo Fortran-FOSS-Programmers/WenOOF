@@ -37,8 +37,10 @@ type, extends(interpolator_object) :: reconstructor_js
     procedure, pass(self) :: create               !< Create reconstructor.
     procedure, pass(self) :: description          !< Return reconstructor string-description.
     procedure, pass(self) :: destroy              !< Destroy reconstructor.
-    procedure, pass(self) :: interpolate_debug    !< Interpolate values (providing also debug values).
-    procedure, pass(self) :: interpolate_standard !< Interpolate values (without providing debug values).
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_1_standard !< Interpolate values (without providing debug values).
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_2_standard !< Interpolate values (without providing debug values).
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_1_debug    !< Interpolate values (providing also debug values).
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_2_debug    !< Interpolate values (providing also debug values).
 endtype reconstructor_js
 
 contains
@@ -101,7 +103,7 @@ contains
   call self%interpolate_standard(stencil=stencil, interpolation=interpolation)
   call self%weights%smoothness_indicators_of_rank_2(si=si)
   !si = self%weights%smoothness_indicators()
-  weights = self%weights%values
+  weights = self%weights%values_rank_2
   endsubroutine interpolate_with_stencil_of_rank_2_debug
 
   pure subroutine interpolate_with_stencil_of_rank_1_standard(self, stencil, interpolation)
@@ -125,7 +127,7 @@ contains
   interpolation = 0._RPP
   do s=0, self%S - 1 ! stencils loop
     do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      interpolation(f) = interpolation(f) + self%weights%values(f, s) * self%interpolations%values(f, s)
+      interpolation(f) = interpolation(f) + self%weights%values_rank_2(f, s) * self%interpolations%values_rank_2(f, s)
     enddo
   enddo
   endsubroutine interpolate_with_stencil_of_rank_2_standard

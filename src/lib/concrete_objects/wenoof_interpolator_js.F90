@@ -37,8 +37,10 @@ type, extends(interpolator_object) :: interpolator_js
     procedure, pass(self) :: create               !< Create interpolator.
     procedure, pass(self) :: description          !< Return interpolator string-description.
     procedure, pass(self) :: destroy              !< Destroy interpolator.
-    procedure, pass(self) :: interpolate_standard !< Interpolate values (without providing debug values).
-    procedure, pass(self) :: interpolate_debug    !< Interpolate values (providing also debug values).
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_1_standard !< Interpolate values (without providing debug values).
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_2_standard !< Interpolate values (without providing debug values).
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_1_debug    !< Interpolate values (providing also debug values).
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_2_debug    !< Interpolate values (providing also debug values).
 endtype interpolator_js
 
 contains
@@ -89,7 +91,7 @@ contains
 
   call self%interpolate_standard(stencil=stencil, interpolation=interpolation)
   call self%weights%smoothness_indicators_of_rank_1(si=si)
-  weights = self%weights%values
+  weights = self%weights%values_rank_1
   endsubroutine interpolate_with_stencil_of_rank_1_debug
 
   pure subroutine interpolate_with_stencil_of_rank_2_debug(self, stencil, interpolation, si, weights)
@@ -114,15 +116,15 @@ contains
   call self%weights%compute(stencil=stencil)
   interpolation = 0._RPP
   do s=0, self%S - 1 ! stencils loop
-    interpolation = interpolation + self%weights%values(s) * self%interpolations%values(s)
+    interpolation = interpolation + self%weights%values_rank_1(s) * self%interpolations%values_rank_1(s)
   enddo
   endsubroutine interpolate_with_stencil_of_rank_1_standard
 
   pure subroutine interpolate_with_stencil_of_rank_2_standard(self, stencil, interpolation)
   !< Interpolate values (without providing debug values).
-  class(reconstructor_js), intent(inout) :: self                     !< Reconstructor.
-  real(RPP),               intent(in)    :: stencil(1:, 1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
-  real(RPP),               intent(out)   :: interpolation(1:)        !< Result of the interpolation, [1:2].
+  class(interpolator_js), intent(inout) :: self                     !< Reconstructor.
+  real(RPP),              intent(in)    :: stencil(1:, 1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
+  real(RPP),              intent(out)   :: interpolation(1:)        !< Result of the interpolation, [1:2].
 
   ! Empty subroutine.
   endsubroutine interpolate_with_stencil_of_rank_2_standard

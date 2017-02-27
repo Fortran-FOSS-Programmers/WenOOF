@@ -69,7 +69,11 @@ contains
   endselect
   call constructor%create(S=S)
   select type(constructor)
-  type is(weights_js_constructor)
+  type is(weights_int_js_constructor)
+    allocate(constructor%alpha_constructor, source=alpha_constructor)
+    allocate(constructor%beta_constructor, source=beta_constructor)
+    allocate(constructor%kappa_constructor, source=kappa_constructor)
+  type is(weights_rec_js_constructor)
     allocate(constructor%alpha_constructor, source=alpha_constructor)
     allocate(constructor%beta_constructor, source=beta_constructor)
     allocate(constructor%kappa_constructor, source=kappa_constructor)

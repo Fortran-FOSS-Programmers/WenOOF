@@ -45,7 +45,6 @@ type, extends(weights_object):: weights_int_js
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
-  real(RPP),           allocatable :: values(:) !< Weights values of stencil interpolations [1:2,0:S-1].
   class(alpha_object), allocatable :: alpha     !< Alpha coefficients (non linear weights).
   class(beta_object),  allocatable :: beta      !< Beta coefficients (smoothness indicators).
   class(kappa_object), allocatable :: kappa     !< kappa coefficients (optimal, linear weights).
@@ -72,8 +71,8 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(0:self%S - 1))
-  self%values = 0._RPP
+  allocate(self%values_rank_1(0:self%S - 1))
+  self%values_rank_1 = 0._RPP
   select type(constructor)
   type is(weights_int_js_constructor)
     associate(alpha_constructor=>constructor%alpha_constructor, &
@@ -116,7 +115,7 @@ contains
   call self%beta%compute(stencil=stencil)
   call self%alpha%compute(beta=self%beta, kappa=self%kappa)
   do s=0, self%S - 1 ! stencils loop
-    self%values(s) = self%alpha%values_rank_1(s) / self%alpha%values_sum_rank_1
+    self%values_rank_1(s) = self%alpha%values_rank_1(s) / self%alpha%values_sum_rank_1
   enddo
   endsubroutine compute_with_stencil_of_rank_1
 
@@ -144,7 +143,7 @@ contains
   class(weights_int_js), intent(inout) :: self !< Weights.
 
   call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_rank_1)) deallocate(self%values_rank_1)
   if (allocated(self%alpha)) deallocate(self%alpha)
   if (allocated(self%beta)) deallocate(self%beta)
   if (allocated(self%kappa)) deallocate(self%kappa)
@@ -153,7 +152,7 @@ contains
   pure subroutine smoothness_indicators_of_rank_1(self, si)
   !< Return smoothness indicators..
   class(weights_int_js),  intent(in)  :: self  !< Weights.
-  real(RPP), allocatable, intent(out) :: si(:) !< Smoothness indicators.
+  real(RPP),              intent(out) :: si(:) !< Smoothness indicators.
 
   if (allocated(self%beta)) then
     if (allocated(self%beta%values_rank_1)) then
@@ -165,7 +164,7 @@ contains
   pure subroutine smoothness_indicators_of_rank_2(self, si)
   !< Return smoothness indicators..
   class(weights_int_js),  intent(in)  :: self    !< Weights.
-  real(RPP), allocatable, intent(out) :: si(:,:) !< Smoothness indicators.
+  real(RPP),              intent(out) :: si(:,:) !< Smoothness indicators.
 
   ! Empty routine
   endsubroutine smoothness_indicators_of_rank_2

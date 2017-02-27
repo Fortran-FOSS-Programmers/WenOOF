@@ -20,6 +20,8 @@ endtype weights_object_constructor
 
 type, extends(base_object), abstract :: weights_object
   !< Weights of stencil interpolations object.
+  real(RPP), allocatable :: values_rank_1(:)   !< Weights values of stencil interpolations [0:S-1].
+  real(RPP), allocatable :: values_rank_2(:,:) !< Weights values of stencil interpolations [1:2,0:S-1].
   contains
     ! public methods
     generic :: compute               => compute_with_stencil_of_rank_1, compute_with_stencil_of_rank_2
@@ -51,14 +53,14 @@ abstract interface
   !< Return smoothness indicators.
   import :: weights_object, RPP
   class(weights_object),  intent(in)  :: self  !< Weights.
-  real(RPP), allocatable, intent(out) :: si(:) !< Smoothness indicators.
+  real(RPP),              intent(out) :: si(:) !< Smoothness indicators.
   endsubroutine smoothness_indicators_of_rank_1_interface
 
   pure subroutine smoothness_indicators_of_rank_2_interface(self, si)
   !< Return smoothness indicators.
   import :: weights_object, RPP
   class(weights_object),  intent(in)  :: self    !< Weights.
-  real(RPP), allocatable, intent(out) :: si(:,:) !< Smoothness indicators.
+  real(RPP),              intent(out) :: si(:,:) !< Smoothness indicators.
   endsubroutine smoothness_indicators_of_rank_2_interface
 endinterface
 
