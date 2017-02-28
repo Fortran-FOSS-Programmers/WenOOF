@@ -34,9 +34,9 @@ type, extends(interpolator_object) :: interpolator_js
   !< 7, 8, 9 stencils composed of 2, 3, 4, 5, 6, 7, 8, 9 values, respectively.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create               !< Create interpolator.
-    procedure, pass(self) :: description          !< Return interpolator string-description.
-    procedure, pass(self) :: destroy              !< Destroy interpolator.
+    procedure, pass(self) :: create                                      !< Create interpolator.
+    procedure, pass(self) :: description                                 !< Return interpolator string-description.
+    procedure, pass(self) :: destroy                                     !< Destroy interpolator.
     procedure, pass(self) :: interpolate_with_stencil_of_rank_1_standard !< Interpolate values (without providing debug values).
     procedure, pass(self) :: interpolate_with_stencil_of_rank_2_standard !< Interpolate values (without providing debug values).
     procedure, pass(self) :: interpolate_with_stencil_of_rank_1_debug    !< Interpolate values (providing also debug values).
