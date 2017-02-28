@@ -89,7 +89,7 @@ contains
   real(RPP),              intent(out)   :: si(0:)               !< Computed values of smoothness indicators [1:2, 0:S-1].
   real(RPP),              intent(out)   :: weights(0:)          !< Weights of the stencils, [1:2, 0:S-1].
 
-  call self%interpolate_standard(stencil=stencil, interpolation=interpolation)
+  call self%interpolate(stencil=stencil, interpolation=interpolation)
   call self%weights%smoothness_indicators_of_rank_1(si=si)
   weights = self%weights%values_rank_1
   endsubroutine interpolate_with_stencil_of_rank_1_debug

@@ -168,10 +168,10 @@ contains
       do i=1, self%ui%points_number(pn)
         stencil(1,:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))
         stencil(2,:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))
-        call interpolator%interpolate_debug(stencil=stencil,                                        &
-                                            interpolation=self%solution(pn, s)%interpolations(:,i), &
-                                            si=self%solution(pn, s)%si(:, i, 0:self%ui%S(s)-1),     &
-                                            weights=self%solution(pn, s)%weights(:, i, 0:self%ui%S(s)-1))
+        call interpolator%interpolate(stencil=stencil,                                        &
+                                      interpolation=self%solution(pn, s)%interpolations(:,i), &
+                                      si=self%solution(pn, s)%si(:, i, 0:self%ui%S(s)-1),     &
+                                      weights=self%solution(pn, s)%weights(:, i, 0:self%ui%S(s)-1))
         self%solution(pn, s)%reconstruction(i) = &
           (self%solution(pn, s)%interpolations(2,i) - self%solution(pn, s)%interpolations(1,i))/self%solution(pn, s)%Dx
       enddo

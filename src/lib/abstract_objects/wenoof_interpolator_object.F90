@@ -32,8 +32,8 @@ type, extends(base_object), abstract :: interpolator_object
   class(weights_object),        allocatable :: weights        !< Weights of interpolations.
   contains
     ! public methods
-    generic :: interpolate_debug    => interpolate_with_stencil_of_rank_1_debug, interpolate_with_stencil_of_rank_2_debug
-    generic :: interpolate_standard => interpolate_with_stencil_of_rank_1_standard, interpolate_with_stencil_of_rank_2_standard
+    generic :: interpolate    => interpolate_with_stencil_of_rank_1_debug,    interpolate_with_stencil_of_rank_2_debug, &
+                                 interpolate_with_stencil_of_rank_1_standard, interpolate_with_stencil_of_rank_2_standard
     ! public deferred methods
     procedure(interpolate_with_stencil_of_rank_1_debug_interface), pass(self),    &
                          deferred :: interpolate_with_stencil_of_rank_1_debug
