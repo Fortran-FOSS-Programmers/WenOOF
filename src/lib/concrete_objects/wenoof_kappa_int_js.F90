@@ -13,6 +13,7 @@ use penf, only: I_P, RPP=>R8P
 #endif
 use wenoof_base_object
 use wenoof_kappa_object
+use wenoof_interpolations_int_js
 
 implicit none
 private
@@ -65,13 +66,13 @@ contains
 
   pure subroutine compute_kappa_int(self, stencil, x_target)
   !< Compute kappa.
-  class(kappa_int_js), intent(inout) :: self !< Kappa.
+  class(kappa_int_js), intent(inout) :: self        !< Kappa.
   real(RPP),           intent(in)    :: stencil(:)  !< Stencil used for interpolation, [1-S:S-1].
   real(RPP),           intent(in)    :: x_target    !< Coordinate of the interpolation point.
   real(RPP)                          :: prod        !< Temporary variable.
-  integer(I_P)                       :: i, j ,k     !< Counters.
+  integer(I_P)                       :: i, j        !< Counters.
 
-  associate(S => self%S,val => self%values_rank_1)
+  associate(S => self%S, val => self%values_rank_1, c => interpolations_int_js%coef)
     if((x_target-(stencil(0)+stencil(-1))/2._RPP)<10._RPP**(-10)) then
       ! left interface (i-1/2)
       select case(S)
@@ -186,16 +187,23 @@ contains
       endselect
     else
       ! internal point
-      do k=0,S-1  !stencils loop
-        do j=0,S-1  !values loop
-          prod = 1._RPP
-          do i=0,S-1
-            if (-S+k+j==-S+k+i) cycle
-            prod = prod * ((x_target - stencil(-S+k+i+1)) / (stencil(-S+k+j) - stencil(-S+k+i+1)))
-          enddo
-          val(j,k) = prod
+      allocate(coef(0:2*S-2))
+      do j=0,2*S-2  !values loop
+        prod = 1._RPP
+        do i=0,2*S-2
+          if (i==j) cycle
+          prod = prod * ((x_target - stencil(-S+i+1)) / (stencil(-S+j+1) - stencil(-S+i+1)))
         enddo
+        coef(j) = prod
       enddo
+      do j = 0,S-1
+        coeff = 0._RPP
+        do i = 0, j-1
+          coeff = coeff + val(i) * c(j,i)
+        enddo
+        val(j) = (coef(j) - coeff) / c(j,i)
+      enddo
+      deallocate(coef)
     endif
   endassociate
   endsubroutine compute_kappa_int
