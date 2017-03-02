@@ -109,8 +109,8 @@ contains
   pure subroutine compute_with_stencil_of_rank_1(self, stencil)
   !< Compute weights.
   class(weights_int_js), intent(inout) :: self               !< Weights.
-  real(RPP),            intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
-  integer(I_P)                        :: s                  !< Counters.
+  real(RPP),             intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  integer(I_P)                         :: s                  !< Counters.
 
   call self%beta%compute(stencil=stencil)
   call self%alpha%compute(beta=self%beta, kappa=self%kappa)
