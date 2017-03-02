@@ -48,6 +48,8 @@ contains
   !< Create interpolations.
   class(interpolations_int_js),   intent(inout) :: self        !< Interpolations.
   class(base_object_constructor), intent(in)    :: constructor !< Interpolations constructor.
+  real(RPP)                                     :: prod        !< Temporary variable.
+  integer(I_P)                                  :: i, j, k     !< Counters.
 
   call self%destroy
   call self%create_(constructor=constructor)
