@@ -40,7 +40,7 @@ abstract interface
 
   pure subroutine compute_kappa_int_interface(self, stencil, x_target)
   !< Compute kappa.
-  import :: kappa_object
+  import :: kappa_object, RPP
   class(kappa_object), intent(inout) :: self        !< Kappa.
   real(RPP),           intent(in)    :: stencil(:)  !< Stencil used for interpolation, [1-S:S-1].
   real(RPP),           intent(in)    :: x_target    !< Coordinate of the interpolation point.
