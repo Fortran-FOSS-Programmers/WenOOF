@@ -18,7 +18,6 @@ type :: kappa_factory
     procedure, nopass          :: create                                          !< Create a concrete instance of [[kappa_object]].
     procedure, nopass, generic :: create_constructor => create_constructor_rec, & !< Create a concrete instance
                                                         create_constructor_int    !< of [[kappa_object_constructor]].
-
 endtype kappa_factory
 
 contains
