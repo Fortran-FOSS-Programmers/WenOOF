@@ -15,8 +15,9 @@ type :: interpolations_factory
   !< Factory, create an instance of concrete extension of [[interpolations_object]] given its constructor.
   contains
     ! public methods
-    procedure, nopass :: create             !< Create a concrete instance of [[interpolations_object]].
-    procedure, nopass :: create_constructor !< Create a concrete instance of [[interpolations_object_constructor]].
+    procedure, nopass          :: create             !< Create a concrete instance of [[interpolations_object]].
+    procedure, nopass, generic :: create_constructor => create_constructor_rec, & !< Create a concrete instance
+                                                        create_constructor_int    !< of [[interpolations_object_constructor]].
 endtype interpolations_factory
 
 contains
@@ -36,24 +37,27 @@ contains
   call object%create(constructor=constructor)
   endsubroutine create
 
-  subroutine create_constructor(interpolator_type, S, constructor)
+  subroutine create_constructor_rec(interpolator_type, S, constructor)
   !< Create an instance of concrete extension of [[beta_object_constructor]].
-  character(*),                                          intent(in)           :: interpolator_type !< Type of the interpolator.
-  integer(I_P),                                          intent(in)           :: S                 !< Stencils dimension.
-  class(interpolations_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
+  character(*),                                          intent(in)  :: interpolator_type !< Type of the interpolator.
+  integer(I_P),                                          intent(in)  :: S                 !< Stencils dimension.
+  class(interpolations_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
 
-  select case(trim(adjustl(interpolator_type)))
-  case('interpolator-JS')
-    allocate(interpolations_int_js_constructor :: constructor)
-  case('reconstructor-JS')
-    allocate(interpolations_rec_js_constructor :: constructor)
-  case('reconstructor-M-JS')
-    allocate(interpolations_rec_js_constructor :: constructor)
-  case('reconstructor-M-Z')
-    allocate(interpolations_rec_js_constructor :: constructor)
-  case('reconstructor-Z')
-    allocate(interpolations_rec_js_constructor :: constructor)
-  endselect
+  allocate(interpolations_rec_js_constructor :: constructor)
+  call constructor%create(S=S)
+  endsubroutine create_constructor_rec
+
+  subroutine create_constructor(interpolator_type, S, stencil, x_target, constructor)
+  !< Create an instance of concrete extension of [[beta_object_constructor]].
+  character(*),                                          intent(in)  :: interpolator_type !< Type of the interpolator.
+  integer(I_P),                                          intent(in)  :: S                 !< Stencils dimension.
+  real(RPP),                                             intent(in)  :: stencil(1-S:)     !< Stencil used for inter, [1-S:-1+S].
+  real(RPP),                                             intent(in)  :: x_target          !< Coordinate of the interp point.
+  class(interpolations_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
+
+  allocate(interpolations_int_js_constructor :: constructor)
+  allocate(stencil  :: constructor%stencil)
+  constructor%x_target = x_target
   call constructor%create(S=S)
   endsubroutine create_constructor
 endmodule wenoof_interpolations_factory

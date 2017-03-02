@@ -174,6 +174,12 @@ contains
                                S=S,                                 &
                                constructor=beta_constructor)
 
+  call self%create_constructor(interpolator_type=interpolator_type,    &
+                               S=S,                                    &
+                               stencil=stencil,                        &
+                               x_target=x_target,                      &
+                               constructor=interpolations_constructor)
+
   call self%create_constructor(interpolator_type=interpolator_type, &
                                S=S,                                 &
                                stencil=stencil,                     &
@@ -186,12 +192,6 @@ contains
                                beta_constructor=beta_constructor,   &
                                kappa_constructor=kappa_constructor, &
                                constructor=weights_constructor)
-
-  call self%create_constructor(interpolator_type=interpolator_type,    &
-                               S=S,                                    &
-                               stencil=stencil,                        &
-                               x_target=x_target,                      &
-                               constructor=interpolations_constructor)
 
   call self%create_constructor(interpolator_type=interpolator_type,                   &
                                S=S,                                                   &
