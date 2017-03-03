@@ -89,20 +89,20 @@ contains
           c(4,3)=  -5._RPP/128._RPP  ! stencil 3
           c(4,4)=  35._RPP/128._RPP  ! stencil 4
         case(6) ! 11th order
-          !  cell  0                ;    cell  1                ;    cell  2                ;    cell  3
-          c(0,0)=    7._RPP/256._RPP; c(1,0)=  -45._RPP/256._RPP; c(2,0)=   63._RPP/128._RPP; c(3,0)= -105._RPP/128._RPP  ! stencil 0
-          c(0,1)=   -3._RPP/256._RPP; c(1,1)=   21._RPP/256._RPP; c(2,1)=  -35._RPP/128._RPP; c(3,1)=  105._RPP/128._RPP  ! stencil 1
-          c(0,2)=    3._RPP/256._RPP; c(1,2)=  -25._RPP/256._RPP; c(2,2)=   75._RPP/128._RPP; c(3,2)=   75._RPP/128._RPP  ! stencil 2
-          c(0,3)=   -7._RPP/256._RPP; c(1,3)=  105._RPP/256._RPP; c(2,3)=  105._RPP/128._RPP; c(3,3)=  -35._RPP/128._RPP  ! stencil 3
-          c(0,4)=   63._RPP/256._RPP; c(1,4)=  315._RPP/256._RPP; c(2,4)= -105._RPP/128._RPP; c(3,4)=   63._RPP/128._RPP  ! stencil 4
-          c(0,5)=  693._RPP/256._RPP; c(1,5)=-1155._RPP/256._RPP; c(2,5)=  693._RPP/128._RPP; c(3,5)= -495._RPP/128._RPP  ! stencil 5
-          !  cell  4                ;    cell  5
-          c(4,0)=  315._RPP/256._RPP; c(5,0)=   63._RPP/256._RPP  ! stencil 0
-          c(4,1)=  105._RPP/256._RPP; c(5,1)=   -7._RPP/256._RPP  ! stencil 1
-          c(4,2)=  -25._RPP/256._RPP; c(5,2)=    3._RPP/256._RPP  ! stencil 2
-          c(4,3)=   21._RPP/256._RPP; c(5,3)=   -3._RPP/256._RPP  ! stencil 3
-          c(4,4)=  -45._RPP/256._RPP; c(5,4)=    7._RPP/256._RPP  ! stencil 4
-          c(4,5)=  385._RPP/256._RPP; c(5,5)=  -63._RPP/256._RPP  ! stencil 5
+          !  cell  0                ;    cell  1                ;    cell  2
+          c(0,0)=    7._RPP/256._RPP; c(1,0)=  -45._RPP/256._RPP; c(2,0)=   63._RPP/128._RPP  ! stencil 0
+          c(0,1)=   -3._RPP/256._RPP; c(1,1)=   21._RPP/256._RPP; c(2,1)=  -35._RPP/128._RPP  ! stencil 1
+          c(0,2)=    3._RPP/256._RPP; c(1,2)=  -25._RPP/256._RPP; c(2,2)=   75._RPP/128._RPP  ! stencil 2
+          c(0,3)=   -7._RPP/256._RPP; c(1,3)=  105._RPP/256._RPP; c(2,3)=  105._RPP/128._RPP  ! stencil 3
+          c(0,4)=   63._RPP/256._RPP; c(1,4)=  315._RPP/256._RPP; c(2,4)= -105._RPP/128._RPP  ! stencil 4
+          c(0,5)=  693._RPP/256._RPP; c(1,5)=-1155._RPP/256._RPP; c(2,5)=  693._RPP/128._RPP  ! stencil 5
+          !   cell  3               ;    cell  4                ;    cell  5
+          c(3,0)= -105._RPP/128._RPP; c(4,0)=  315._RPP/256._RPP; c(5,0)=   63._RPP/256._RPP  ! stencil 0
+          c(3,1)=  105._RPP/128._RPP; c(4,1)=  105._RPP/256._RPP; c(5,1)=   -7._RPP/256._RPP  ! stencil 1
+          c(3,2)=   75._RPP/128._RPP; c(4,2)=  -25._RPP/256._RPP; c(5,2)=    3._RPP/256._RPP  ! stencil 2
+          c(3,3)=  -35._RPP/128._RPP; c(4,3)=   21._RPP/256._RPP; c(5,3)=   -3._RPP/256._RPP  ! stencil 3
+          c(3,4)=   63._RPP/128._RPP; c(4,4)=  -45._RPP/256._RPP; c(5,4)=    7._RPP/256._RPP  ! stencil 4
+          c(3,5)= -495._RPP/128._RPP; c(4,5)=  385._RPP/256._RPP; c(5,5)=  -63._RPP/256._RPP  ! stencil 5
         case(7) ! 13th order
           !  cell  0                ;    cell  1                ;    cell  2
           c(0,0)=  -21._RPP/1024._RPP; c(1,0)=   77._RPP/512._RPP ; c(2,0)= -495._RPP/1024._RPP  ! stencil 0
@@ -220,20 +220,20 @@ contains
           c(4,3)=   3._RPP/128._RPP ! stencil 3
           c(4,4)=  -5._RPP/128._RPP ! stencil 4
         case(6) ! 11th order
-          !  cell  0                ;    cell  1                ;   cell  2                 ;    cell  3
-          c(0,0)=  -63._RPP/256._RPP; c(1,0)=  385._RPP/256._RPP; c(2,0)= -495._RPP/128._RPP; c(3,0)=  693._RPP/128._RPP  ! stencil 0
-          c(0,1)=    7._RPP/256._RPP; c(1,1)=  -45._RPP/256._RPP; c(2,1)=   63._RPP/128._RPP; c(3,1)= -105._RPP/128._RPP  ! stencil 1
-          c(0,2)=   -3._RPP/256._RPP; c(1,2)=   21._RPP/256._RPP; c(2,2)=  -35._RPP/128._RPP; c(3,2)=  105._RPP/128._RPP  ! stencil 2
-          c(0,3)=    3._RPP/256._RPP; c(1,3)=  -25._RPP/256._RPP; c(2,3)=   75._RPP/128._RPP; c(3,3)=   75._RPP/128._RPP  ! stencil 3
-          c(0,4)=   -7._RPP/256._RPP; c(1,4)=  105._RPP/256._RPP; c(2,4)=  105._RPP/128._RPP; c(3,4)=  -35._RPP/128._RPP  ! stencil 4
-          c(0,5)=   63._RPP/256._RPP; c(1,5)=  315._RPP/256._RPP; c(2,5)= -105._RPP/128._RPP; c(3,5)=   63._RPP/128._RPP  ! stencil 5
-          !  cell  4                ;    cell  5
-          c(4,0)=-1155._RPP/256._RPP; c(5,0)=  693._RPP/256._RPP  ! stencil 0
-          c(4,1)=  315._RPP/256._RPP; c(5,1)=   63._RPP/256._RPP  ! stencil 1
-          c(4,2)=  105._RPP/256._RPP; c(5,2)=   -7._RPP/256._RPP  ! stencil 2
-          c(4,3)=  -25._RPP/256._RPP; c(5,3)=    3._RPP/256._RPP  ! stencil 3
-          c(4,4)=   21._RPP/256._RPP; c(5,4)=   -3._RPP/256._RPP  ! stencil 4
-          c(4,5)=  -45._RPP/256._RPP; c(5,5)=    7._RPP/256._RPP  ! stencil 5
+          !  cell  0                ;    cell  1                ;   cell  2
+          c(0,0)=  -63._RPP/256._RPP; c(1,0)=  385._RPP/256._RPP; c(2,0)= -495._RPP/128._RPP  ! stencil 0
+          c(0,1)=    7._RPP/256._RPP; c(1,1)=  -45._RPP/256._RPP; c(2,1)=   63._RPP/128._RPP  ! stencil 1
+          c(0,2)=   -3._RPP/256._RPP; c(1,2)=   21._RPP/256._RPP; c(2,2)=  -35._RPP/128._RPP  ! stencil 2
+          c(0,3)=    3._RPP/256._RPP; c(1,3)=  -25._RPP/256._RPP; c(2,3)=   75._RPP/128._RPP  ! stencil 3
+          c(0,4)=   -7._RPP/256._RPP; c(1,4)=  105._RPP/256._RPP; c(2,4)=  105._RPP/128._RPP  ! stencil 4
+          c(0,5)=   63._RPP/256._RPP; c(1,5)=  315._RPP/256._RPP; c(2,5)= -105._RPP/128._RPP  ! stencil 5
+          !  cell  3                ;    cell  4                ;   cell  5
+          c(3,0)=  693._RPP/128._RPP; c(4,0)=-1155._RPP/256._RPP; c(5,0)=  693._RPP/256._RPP  ! stencil 0
+          c(3,1)= -105._RPP/128._RPP; c(4,1)=  315._RPP/256._RPP; c(5,1)=   63._RPP/256._RPP  ! stencil 1
+          c(3,2)=  105._RPP/128._RPP; c(4,2)=  105._RPP/256._RPP; c(5,2)=   -7._RPP/256._RPP  ! stencil 2
+          c(3,3)=   75._RPP/128._RPP; c(4,3)=  -25._RPP/256._RPP; c(5,3)=    3._RPP/256._RPP  ! stencil 3
+          c(3,4)=  -35._RPP/128._RPP; c(4,4)=   21._RPP/256._RPP; c(5,4)=   -3._RPP/256._RPP  ! stencil 4
+          c(3,5)=   63._RPP/128._RPP; c(4,5)=  -45._RPP/256._RPP; c(5,5)=    7._RPP/256._RPP  ! stencil 5
         case(7) ! 13th order
           !  cell  0                ;    cell  1                ;    cell  2
           c(0,0)=  231._RPP/1024._RPP; c(1,0)= -819._RPP/512._RPP ; c(2,0)= 5005._RPP/1024._RPP  ! stencil 0
