@@ -63,7 +63,7 @@ contains
   ! deferred public methods
   subroutine create(self, constructor)
   !< Create reconstructor.
-  class(weights_int_js),           intent(inout) :: self        !< Weights.
+  class(weights_int_js),          intent(inout) :: self        !< Weights.
   class(base_object_constructor), intent(in)    :: constructor !< Constructor.
   type(alpha_factory)                           :: a_factory   !< Alpha factory.
   type(beta_factory)                            :: b_factory   !< Beta factory.
