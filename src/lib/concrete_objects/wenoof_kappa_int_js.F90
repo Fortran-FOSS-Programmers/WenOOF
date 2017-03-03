@@ -34,11 +34,11 @@ type, extends(kappa_object):: kappa_int_js
   !< doi:10.1137/070679065.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create                        !< Create kappa.
-    procedure, pass(self) :: compute_kappa_rec             !< Compute kappa.
-    procedure, pass(self) :: compute_kappa_int             !< Compute kappa.
-    procedure, pass(self) :: description                   !< Return kappa string-description.
-    procedure, pass(self) :: destroy                       !< Destroy kappa.
+    procedure, pass(self) :: create              !< Create kappa.
+    procedure, pass(self) :: compute_kappa_rec   !< Compute kappa.
+    procedure, pass(self) :: compute_kappa_int   !< Compute kappa.
+    procedure, pass(self) :: description         !< Return kappa string-description.
+    procedure, pass(self) :: destroy             !< Destroy kappa.
 endtype kappa_int_js
 
 contains
@@ -54,7 +54,10 @@ contains
   call self%create_(constructor=constructor)
   allocate(self%values_rank_1(0:self%S - 1))
   self%values_rank_1 = 0._RPP
-  call self%compute(stencil=constructor%stencil, x_target=constructor%x_target)
+  select type(constructor)
+  type is(kappa_int_js_constructor)
+    call self%compute(stencil=constructor%stencil, x_target=constructor%x_target)
+  endselect
   endsubroutine create
 
   pure subroutine compute_kappa_rec(self)
@@ -66,13 +69,16 @@ contains
 
   pure subroutine compute_kappa_int(self, stencil, x_target)
   !< Compute kappa.
-  class(kappa_int_js), intent(inout) :: self        !< Kappa.
-  real(RPP),           intent(in)    :: stencil(:)  !< Stencil used for interpolation, [1-S:S-1].
-  real(RPP),           intent(in)    :: x_target    !< Coordinate of the interpolation point.
-  real(RPP)                          :: prod        !< Temporary variable.
-  integer(I_P)                       :: i, j        !< Counters.
+  class(kappa_int_js), intent(inout) :: self            !< Kappa.
+  real(RPP),           intent(in)    :: stencil(:)      !< Stencil used for interpolation, [1-S:S-1].
+  real(RPP),           intent(in)    :: x_target        !< Coordinate of the interpolation point.
+  class(interpolations_int_js)       :: interpolations  !< Interpolations object.
+  real(RPP),           allocatable   :: coef(:)         !< Interpolation coefficients on the whole stencil.
+  real(RPP)                          :: prod            !< Temporary variable.
+  real(RPP)                          :: coeff           !< Temporary variable.
+  integer(I_P)                       :: i, j            !< Counters.
 
-  associate(S => self%S, val => self%values_rank_1, c => interpolations_int_js%coef)
+  associate(S => self%S, val => self%values_rank_1, c => interpolations%coef)
     if((x_target-(stencil(0)+stencil(-1))/2._RPP)<10._RPP**(-10)) then
       ! left interface (i-1/2)
       select case(S)

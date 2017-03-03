@@ -34,10 +34,11 @@ type, extends(kappa_object):: kappa_rec_js
   real(RPP), allocatable :: values(:,:) !< Kappa coefficients values [1:2,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create                        !< Create kappa.
-    procedure, pass(self) :: compute => compute_kappa_rec  !< Compute kappa.
-    procedure, pass(self) :: description                   !< Return kappa string-description.
-    procedure, pass(self) :: destroy                       !< Destroy kappa.
+    procedure, pass(self) :: create              !< Create kappa.
+    procedure, pass(self) :: compute_kappa_rec   !< Compute kappa.
+    procedure, pass(self) :: compute_kappa_int   !< Compute kappa.
+    procedure, pass(self) :: description         !< Return kappa string-description.
+    procedure, pass(self) :: destroy             !< Destroy kappa.
 endtype kappa_rec_js
 
 contains
@@ -177,6 +178,15 @@ contains
     endselect
   endassociate
   endsubroutine compute_kappa_rec
+
+  pure subroutine compute_kappa_int(self, stencil, x_target)
+  !< Compute kappa.
+  class(kappa_rec_js), intent(inout) :: self        !< Kappa.
+  real(RPP),           intent(in)    :: stencil(:)  !< Stencil used for interpolation, [1-S:S-1].
+  real(RPP),           intent(in)    :: x_target    !< Coordinate of the interpolation point.
+
+  ! Empty Subroutine
+  endsubroutine compute_kappa_int
 
   pure function description(self) result(string)
   !< Return string-description of kappa.

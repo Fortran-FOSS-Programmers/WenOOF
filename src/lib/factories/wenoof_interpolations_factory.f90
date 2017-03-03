@@ -47,7 +47,7 @@ contains
   call constructor%create(S=S)
   endsubroutine create_constructor_rec
 
-  subroutine create_constructor(interpolator_type, S, stencil, x_target, constructor)
+  subroutine create_constructor_int(interpolator_type, S, stencil, x_target, constructor)
   !< Create an instance of concrete extension of [[beta_object_constructor]].
   character(*),                                          intent(in)  :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                          intent(in)  :: S                 !< Stencils dimension.
@@ -59,5 +59,5 @@ contains
   allocate(stencil  :: constructor%stencil)
   constructor%x_target = x_target
   call constructor%create(S=S)
-  endsubroutine create_constructor
+  endsubroutine create_constructor_int
 endmodule wenoof_interpolations_factory
