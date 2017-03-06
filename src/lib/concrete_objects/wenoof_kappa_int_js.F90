@@ -204,10 +204,12 @@ contains
       enddo
       do j = 0,S-1
         coeff = 0._RPP
-        do i = 0, j-1
-          coeff = coeff + val(i) * c(j,i)
+        k = j
+        do i = 0,j-1
+          coeff = coeff + val(i) * c(k,i)
+          k = k - 1
         enddo
-        val(j) = (coef(j) - coeff) / c(j,i)
+        val(j) = (coef(j) - coeff) / c(0,j)
       enddo
       deallocate(coef)
     endif
