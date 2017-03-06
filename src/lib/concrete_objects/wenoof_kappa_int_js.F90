@@ -76,7 +76,7 @@ contains
   real(RPP),           allocatable   :: coef(:)         !< Interpolation coefficients on the whole stencil.
   real(RPP)                          :: prod            !< Temporary variable.
   real(RPP)                          :: coeff           !< Temporary variable.
-  integer(I_P)                       :: i, j            !< Counters.
+  integer(I_P)                       :: i, j, k         !< Counters.
 
   associate(S => self%S, val => self%values_rank_1, c => interpolations%coef)
     if((x_target-(stencil(0)+stencil(-1))/2._RPP)<10._RPP**(-10)) then
