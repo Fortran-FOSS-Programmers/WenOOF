@@ -2,7 +2,11 @@
 module wenoof_interpolations_factory
 !< Wenoof interpolations factory.
 
-use penf, only: I_P
+#ifdef r16p
+use penf, only: I_P, RPP=>R16P
+#else
+use penf, only: I_P, RPP=>R8P
+#endif
 use wenoof_interpolations_object
 use wenoof_interpolations_rec_js
 use wenoof_interpolations_int_js
@@ -56,7 +60,7 @@ contains
   class(interpolations_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
 
   allocate(interpolations_int_js_constructor :: constructor)
-  allocate(stencil  :: constructor%stencil)
+  allocate(stencil :: constructor%stencil)
   constructor%x_target = x_target
   call constructor%create(S=S)
   endsubroutine create_constructor_int

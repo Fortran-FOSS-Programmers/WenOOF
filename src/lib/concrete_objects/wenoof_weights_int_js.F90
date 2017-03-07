@@ -14,16 +14,16 @@ use penf, only: I_P, RPP=>R8P, str
 #endif
 use wenoof_alpha_factory
 use wenoof_alpha_object
-use wenoof_alpha_rec_js
-use wenoof_alpha_rec_m
-use wenoof_alpha_rec_z
+use wenoof_alpha_int_js
+use wenoof_alpha_int_m
+use wenoof_alpha_int_z
 use wenoof_base_object
 use wenoof_beta_factory
 use wenoof_beta_object
-use wenoof_beta_rec_js
+use wenoof_beta_int_js
 use wenoof_kappa_factory
 use wenoof_kappa_object
-use wenoof_kappa_rec_js
+use wenoof_kappa_int_js
 use wenoof_weights_object
 
 implicit none

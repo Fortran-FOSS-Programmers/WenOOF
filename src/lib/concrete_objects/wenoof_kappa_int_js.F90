@@ -12,8 +12,10 @@ use penf, only: I_P, RPP=>R16P
 use penf, only: I_P, RPP=>R8P
 #endif
 use wenoof_base_object
-use wenoof_kappa_object
+use wenoof_interpolations_factory
+use wenoof_interpolations_object
 use wenoof_interpolations_int_js
+use wenoof_kappa_object
 
 implicit none
 private
@@ -22,8 +24,9 @@ public :: kappa_int_js_constructor
 
 type, extends(kappa_object_constructor) :: kappa_int_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal kappa object constructor.
-  real(RPP), allocatable :: stencil(:)   !< Stencil used for interpolation, [1-S:S-1].
-  real(RPP)              :: x_target     !< Coordinate of the interpolation point.
+  real(RPP),                                allocatable :: stencil(:)                 !< Stencil used for interpolation, [1-S:S-1].
+  real(RPP)                                             :: x_target                   !< Coordinate of the interpolation point.
+  class(interpolations_object_constructor), allocatable :: interpolations_constructor !< interpolations coefficients constructor.
 endtype kappa_int_js_constructor
 
 type, extends(kappa_object):: kappa_int_js
@@ -32,6 +35,7 @@ type, extends(kappa_object):: kappa_int_js
   !< @note The provided WENO kappa implements the linear weights defined in *High Order Weighted Essentially
   !< Nonoscillatory Schemes for Convection Dominated Problems*, Chi-Wang Shu, SIAM Review, 2009, vol. 51, pp. 82--126,
   !< doi:10.1137/070679065.
+  class(interpolations_object), allocatable :: interpolations   !< interpolations coefficients.
   contains
     ! public deferred methods
     procedure, pass(self) :: create              !< Create kappa.
@@ -49,6 +53,7 @@ contains
   !< @note The kappa coefficients are also computed, they being constants.
   class(kappa_int_js),            intent(inout) :: self        !< Kappa.
   class(base_object_constructor), intent(in)    :: constructor !< Kappa constructor.
+  type(interpolations_factory)                  :: i_factory   !< Interpolations factory.
 
   call self%destroy
   call self%create_(constructor=constructor)
@@ -56,7 +61,10 @@ contains
   self%values_rank_1 = 0._RPP
   select type(constructor)
   type is(kappa_int_js_constructor)
-    call self%compute(stencil=constructor%stencil, x_target=constructor%x_target)
+    associate(interpolations_constructor=>constructor%interpolations_constructor)
+      call i_factory%create(constructor=interpolations_constructor, object=self%interpolations)
+      call self%compute(stencil=constructor%stencil, x_target=constructor%x_target)
+    endassociate
   endselect
   endsubroutine create
 
@@ -78,7 +86,7 @@ contains
   real(RPP)                          :: coeff           !< Temporary variable.
   integer(I_P)                       :: i, j, k         !< Counters.
 
-  associate(S => self%S, val => self%values_rank_1, c => interpolations%coef)
+  associate(S => self%S, val => self%values_rank_1, interp => self%interpolations)
     if((x_target-(stencil(0)+stencil(-1))/2._RPP)<10._RPP**(-10)) then
       ! left interface (i-1/2)
       select case(S)
@@ -206,10 +214,10 @@ contains
         coeff = 0._RPP
         k = j
         do i = 0,j-1
-          coeff = coeff + val(i) * c(k,i)
+          coeff = coeff + val(i) * interp%coef(k,i)
           k = k - 1
         enddo
-        val(j) = (coef(j) - coeff) / c(0,j)
+        val(j) = (coef(j) - coeff) / interp%coef(0,j)
       enddo
       deallocate(coef)
     endif
