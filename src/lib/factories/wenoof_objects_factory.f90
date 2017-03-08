@@ -180,10 +180,11 @@ contains
                                x_target=x_target,                      &
                                constructor=interpolations_constructor)
 
-  call self%create_constructor(interpolator_type=interpolator_type, &
-                               S=S,                                 &
-                               stencil=stencil,                     &
-                               x_target=x_target,                   &
+  call self%create_constructor(interpolator_type=interpolator_type,                   &
+                               S=S,                                                   &
+                               stencil=stencil,                                       &
+                               x_target=x_target,                                     &
+                               interpolations_constructor=interpolations_constructor, &
                                constructor=kappa_constructor)
 
   call self%create_constructor(interpolator_type=interpolator_type, &
