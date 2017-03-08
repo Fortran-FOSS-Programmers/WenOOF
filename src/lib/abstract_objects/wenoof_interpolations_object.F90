@@ -16,6 +16,8 @@ public :: interpolations_object_constructor
 
 type, extends(base_object_constructor), abstract :: interpolations_object_constructor
   !< Abstract interpolations object constructor.
+  real(RPP), allocatable :: stencil(:)   !< Stencil used for interpolation, [1-S:S-1].
+  real(RPP)              :: x_target     !< Coordinate of the interpolation point.
 endtype interpolations_object_constructor
 
 type, extends(base_object), abstract :: interpolations_object

@@ -16,6 +16,8 @@ public :: kappa_object_constructor
 
 type, extends(base_object_constructor), abstract :: kappa_object_constructor
   !< Abstract kappa object constructor.
+  real(RPP), allocatable :: stencil(:)                 !< Stencil used for interpolation, [1-S:S-1].
+  real(RPP)              :: x_target                   !< Coordinate of the interpolation point.
 endtype kappa_object_constructor
 
 type, extends(base_object), abstract :: kappa_object

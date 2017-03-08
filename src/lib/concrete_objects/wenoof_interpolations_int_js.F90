@@ -21,8 +21,6 @@ public :: interpolations_int_js_constructor
 
 type, extends(interpolations_object_constructor) :: interpolations_int_js_constructor
   !< Jiang-Shu (Lagrange) interpolations object for function interpolation constructor.
-  real(RPP), allocatable :: stencil(:)   !< Stencil used for interpolation, [1-S:S-1].
-  real(RPP)              :: x_target     !< Coordinate of the interpolation point.
 endtype interpolations_int_js_constructor
 
 type, extends(interpolations_object) :: interpolations_int_js

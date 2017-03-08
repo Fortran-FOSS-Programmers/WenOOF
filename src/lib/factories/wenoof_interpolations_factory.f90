@@ -19,9 +19,9 @@ type :: interpolations_factory
   !< Factory, create an instance of concrete extension of [[interpolations_object]] given its constructor.
   contains
     ! public methods
-    procedure, nopass          :: create             !< Create a concrete instance of [[interpolations_object]].
-    procedure, nopass, generic :: create_constructor => create_constructor_rec, & !< Create a concrete instance
-                                                        create_constructor_int    !< of [[interpolations_object_constructor]].
+    procedure, nopass :: create             !< Create a concrete instance of [[interpolations_object]].
+    generic           :: create_constructor => create_constructor_rec, & !< Create a concrete instance
+                                               create_constructor_int    !< of [[interpolations_object_constructor]].
 endtype interpolations_factory
 
 contains

@@ -24,8 +24,6 @@ public :: kappa_int_js_constructor
 
 type, extends(kappa_object_constructor) :: kappa_int_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal kappa object constructor.
-  real(RPP),                                allocatable :: stencil(:)                 !< Stencil used for interpolation, [1-S:S-1].
-  real(RPP)                                             :: x_target                   !< Coordinate of the interpolation point.
   class(interpolations_object_constructor), allocatable :: interpolations_constructor !< interpolations coefficients constructor.
 endtype kappa_int_js_constructor
 
