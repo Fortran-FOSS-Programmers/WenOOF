@@ -15,9 +15,11 @@ type :: kappa_factory
   !< Factory, create an instance of concrete extension of [[kappa_object]] given its constructor.
   contains
     ! public methods
-    procedure, nopass          :: create                                          !< Create a concrete instance of [[kappa_object]].
-    procedure, nopass, generic :: create_constructor => create_constructor_rec, & !< Create a concrete instance
-                                                        create_constructor_int    !< of [[kappa_object_constructor]].
+    procedure, nopass :: create                                          !< Create a concrete instance of [[kappa_object]].
+    procedure, nopass :: create_constructor_rec
+    procedure, nopass :: create_constructor_int
+    generic           :: create_constructor => create_constructor_rec, & !< Create a concrete instance
+                                               create_constructor_int    !< of [[kappa_object_constructor]].
 endtype kappa_factory
 
 contains

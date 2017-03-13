@@ -19,7 +19,9 @@ type :: interpolations_factory
   !< Factory, create an instance of concrete extension of [[interpolations_object]] given its constructor.
   contains
     ! public methods
-    procedure, nopass :: create             !< Create a concrete instance of [[interpolations_object]].
+    procedure, nopass :: create                                          !< Create a concrete instance of [[interpolations_object]].
+    procedure, nopass :: create_constructor_rec
+    procedure, nopass :: create_constructor_int
     generic           :: create_constructor => create_constructor_rec, & !< Create a concrete instance
                                                create_constructor_int    !< of [[interpolations_object_constructor]].
 endtype interpolations_factory
@@ -60,7 +62,8 @@ contains
   class(interpolations_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
 
   allocate(interpolations_int_js_constructor :: constructor)
-  allocate(stencil :: constructor%stencil)
+  allocate(constructor%stencil(1-S:S-1))
+  constructor%stencil = stencil
   constructor%x_target = x_target
   call constructor%create(S=S)
   endsubroutine create_constructor_int

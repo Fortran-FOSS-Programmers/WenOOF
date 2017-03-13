@@ -78,10 +78,9 @@ contains
   class(kappa_int_js), intent(inout) :: self            !< Kappa.
   real(RPP),           intent(in)    :: stencil(:)      !< Stencil used for interpolation, [1-S:S-1].
   real(RPP),           intent(in)    :: x_target        !< Coordinate of the interpolation point.
-  class(interpolations_int_js)       :: interpolations  !< Interpolations object.
-  real(RPP),           allocatable   :: coef(:)         !< Interpolation coefficients on the whole stencil.
+  real(RPP),           allocatable   :: coeff(:)        !< Interpolation coefficients on the whole stencil.
   real(RPP)                          :: prod            !< Temporary variable.
-  real(RPP)                          :: coeff           !< Temporary variable.
+  real(RPP)                          :: coeff_t         !< Temporary variable.
   integer(I_P)                       :: i, j, k         !< Counters.
 
   associate(S => self%S, val => self%values_rank_1, interp => self%interpolations)
@@ -199,25 +198,25 @@ contains
       endselect
     else
       ! internal point
-      allocate(coef(0:2*S-2))
+      allocate(coeff(0:2*S-2))
       do j=0,2*S-2  !values loop
         prod = 1._RPP
         do i=0,2*S-2
           if (i==j) cycle
           prod = prod * ((x_target - stencil(-S+i+1)) / (stencil(-S+j+1) - stencil(-S+i+1)))
         enddo
-        coef(j) = prod
+        coeff(j) = prod
       enddo
       do j = 0,S-1
-        coeff = 0._RPP
+        coeff_t = 0._RPP
         k = j
         do i = 0,j-1
-          coeff = coeff + val(i) * interp%coef(k,i)
+          coeff_t = coeff_t + val(i) * interp%coef(k,i)
           k = k - 1
         enddo
-        val(j) = (coef(j) - coeff) / interp%coef(0,j)
+        val(j) = (coeff(j) - coeff_t) / interp%coef(0,j)
       enddo
-      deallocate(coef)
+      deallocate(coeff)
     endif
   endassociate
   endsubroutine compute_kappa_int
