@@ -207,15 +207,18 @@ contains
         enddo
         coeff(j) = prod
       enddo
-      do j = 0,S-1
-        coeff_t = 0._RPP
-        k = j
-        do i = 0,j-1
-          coeff_t = coeff_t + val(i) * interp%coef(k,i)
-          k = k - 1
-        enddo
-        val(j) = (coeff(j) - coeff_t) / interp%coef(0,j)
-      enddo
+      select type(interp)
+        type is(interpolations_int_js)
+          do j = 0,S-1
+            coeff_t = 0._RPP
+            k = j
+            do i = 0,j-1
+              coeff_t = coeff_t + val(i) * interp%coef(k,i)
+              k = k - 1
+            enddo
+            val(j) = (coeff(j) - coeff_t) / interp%coef(0,j)
+          enddo
+      endselect
       deallocate(coeff)
     endif
   endassociate

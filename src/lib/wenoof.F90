@@ -12,8 +12,13 @@ use wenoof_objects_factory
 
 implicit none
 private
-public          :: interpolator_object
-generic, public :: wenoof_create => wenoof_create_reconstructor, wenoof_create_interpolator
+public :: interpolator_object
+public :: wenoof_create
+
+interface wenoof_create
+  module procedure wenoof_create_reconstructor
+  module procedure wenoof_create_interpolator
+end interface wenoof_create
 
 contains
   subroutine wenoof_create_reconstructor(interpolator_type, S, interpolator, eps)

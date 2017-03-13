@@ -2,7 +2,12 @@
 module wenoof_kappa_factory
 !< Wenoof kappa factory.
 
-use penf, only: I_P
+#ifdef r16p
+use penf, only: I_P, RPP=>R16P
+#else
+use penf, only: I_P, RPP=>R8P
+#endif
+use wenoof_interpolations_object
 use wenoof_kappa_object
 use wenoof_kappa_rec_js
 use wenoof_kappa_int_js
@@ -49,16 +54,18 @@ contains
   call constructor%create(S=S)
   endsubroutine create_constructor_rec
 
-  subroutine create_constructor_int(interpolator_type, S, stencil, x_target, constructor)
+  subroutine create_constructor_int(interpolator_type, S, stencil, x_target, interpolations_constructor, constructor)
   !< Create an instance of concrete extension of [[kappa_object_constructor]].
-  character(*),                                 intent(in)  :: interpolator_type !< Type of the interpolator.
-  integer(I_P),                                 intent(in)  :: S                 !< Stencils dimension.
-  real(RPP),                                    intent(in)  :: stencil(1-S:)     !< Stencil used for inter, [1-S:-1+S].
-  real(RPP),                                    intent(in)  :: x_target          !< Coordinate of the interp point.
-  class(kappa_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
+  character(*),                                 intent(in)  :: interpolator_type          !< Type of the interpolator.
+  integer(I_P),                                 intent(in)  :: S                          !< Stencils dimension.
+  real(RPP),                                    intent(in)  :: stencil(1-S:)              !< Stencil used for inter, [1-S:-1+S].
+  real(RPP),                                    intent(in)  :: x_target                   !< Coordinate of the interp point.
+  class(interpolations_object_constructor),     intent(in)  :: interpolations_constructor !< interpolations constructor.
+  class(kappa_object_constructor), allocatable, intent(out) :: constructor                !< Constructor.
 
   allocate(kappa_int_js_constructor :: constructor)
-  allocate(stencil  :: constructor%stencil)
+  allocate(constructor%stencil(1-S:S-1))
+  constructor%stencil = stencil
   constructor%x_target = x_target
   call constructor%create(S=S)
   endsubroutine create_constructor_int

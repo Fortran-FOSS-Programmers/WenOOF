@@ -52,19 +52,22 @@ type :: objects_factory
                                                                        !< [[interpolator_object_constructor]] or
                                                                        !< [[weights_object_constructor]].
     ! private methods
-    procedure, nopass,     private :: create_alpha_object                      !< Create [[alpha_object]] instance
-    procedure, nopass,     private :: create_beta_object                       !< Create [[beta_object]] instance.
-    procedure, nopass,     private :: create_kappa_object                      !< Create [[kappa_object]] instance.
-    procedure, nopass,     private :: create_interpolations_object             !< Create [[interpolations_object]] instance.
-    procedure, pass(self), private :: create_interpolator                      !< Create [[interpolator_object]] instance.
-    procedure, nopass,     private :: create_interpolator_object               !< Create [[interpolator_object]] instance.
-    procedure, nopass,     private :: create_weights_object                    !< Create [[weights_object]] instance.
-    procedure, nopass,     private :: create_alpha_object_constructor          !< Create [[alpha_object_constructor]] instance.
-    procedure, nopass,     private :: create_beta_object_constructor           !< Create [[beta_object_constructor]] instance.
-    procedure, nopass,     private :: create_kappa_object_constructor          !< Create [[kappa_object_constructor]] instance.
-    procedure, nopass,     private :: create_interpolations_object_constructor !< Create [[interpolations_object_constructor]] inst.
-    procedure, nopass,     private :: create_interpolator_object_constructor   !< Create [[interpolator_object_constructor]] inst.
-    procedure, nopass,     private :: create_weights_object_constructor        !< Create [[weights_object_constructor]] instance.
+    procedure, nopass,     private :: create_alpha_object                          !< Create [[alpha_object]] instance
+    procedure, nopass,     private :: create_beta_object                           !< Create [[beta_object]] instance.
+    procedure, nopass,     private :: create_kappa_object                          !< Create [[kappa_object]] instance.
+    procedure, nopass,     private :: create_interpolations_object                 !< Create [[interpolations_object]] instance.
+    procedure, pass(self), private :: create_interpolator                          !< Create [[interpolator]] instance.
+    procedure, pass(self), private :: create_reconstructor                         !< Create [[reconstructor]] instance.
+    procedure, nopass,     private :: create_interpolator_object                   !< Create [[interpolator_object]] instance.
+    procedure, nopass,     private :: create_weights_object                        !< Create [[weights_object]] instance.
+    procedure, nopass,     private :: create_alpha_object_constructor              !< Create [[alpha_object_constructor]] instance.
+    procedure, nopass,     private :: create_beta_object_constructor               !< Create [[beta_object_constructor]] instance.
+    procedure, nopass,     private :: create_kappa_int_object_constructor          !< Create [[kappa_object_constructor]] instance.
+    procedure, nopass,     private :: create_kappa_rec_object_constructor          !< Create [[kappa_object_constructor]] instance.
+    procedure, nopass,     private :: create_interpolations_int_object_constructor !< Create [[interpolations_object_constructor]]
+    procedure, nopass,     private :: create_interpolations_rec_object_constructor !< instance.
+    procedure, nopass,     private :: create_interpolator_object_constructor       !< Create [[interpolator_object_constructor]] i.
+    procedure, nopass,     private :: create_weights_object_constructor            !< Create [[weights_object_constructor]] inst.
 endtype objects_factory
 
 contains
@@ -149,7 +152,7 @@ contains
   call self%create_interpolator_object(constructor=interpolator_constructor, object=interpolator)
   endsubroutine create_reconstructor
 
-  subroutine create_interpolator(self, interpolator_type, S, interpolator, stencil, xtarget, eps)
+  subroutine create_interpolator(self, interpolator_type, S, interpolator, stencil, x_target, eps)
   !< Create an instance of concrete extension of [[interpolator_object]] given user options.
   class(objects_factory),                  intent(in)           :: self                       !< The factory.
   character(*),                            intent(in)           :: interpolator_type          !< Type of the interpolator.
@@ -247,19 +250,21 @@ contains
                                   constructor=constructor)
   endsubroutine create_beta_object_constructor
 
-  subroutine create_kappa_int_object_constructor(interpolator_type, S, stencil, x_target, constructor)
+  subroutine create_kappa_int_object_constructor(interpolator_type, S, stencil, x_target, interpolations_constructor, constructor)
   !< Create an instance of concrete extension of [[kappa_object_constructor]].
-  character(*),                                 intent(in)  :: interpolator_type !< Type of the interpolator.
-  integer(I_P),                                 intent(in)  :: S                 !< Stencils dimension.
-  real(RPP),                                    intent(in)  :: stencil(1-S:)     !< Stencil used for inter, [1-S:-1+S].
-  real(RPP),                                    intent(in)  :: x_target          !< Coordinate of the interp point.
-  class(kappa_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
-  type(kappa_factory)                                       :: factory           !< The factory.
+  character(*),                                 intent(in)  :: interpolator_type          !< Type of the interpolator.
+  integer(I_P),                                 intent(in)  :: S                          !< Stencils dimension.
+  real(RPP),                                    intent(in)  :: stencil(1-S:)              !< Stencil used for inter, [1-S:-1+S].
+  real(RPP),                                    intent(in)  :: x_target                   !< Coordinate of the interp point.
+  class(interpolations_object_constructor),     intent(in)  :: interpolations_constructor !< interpolations constructor.
+  class(kappa_object_constructor), allocatable, intent(out) :: constructor                !< Constructor.
+  type(kappa_factory)                                       :: factory                    !< The factory.
 
-  call factory%create_constructor(interpolator_type=interpolator_type, &
-                                  S=S,                                 &
-                                  stencil=stencil,                     &
-                                  x_target=x_target,                   &
+  call factory%create_constructor(interpolator_type=interpolator_type,                   &
+                                  S=S,                                                   &
+                                  stencil=stencil,                                       &
+                                  x_target=x_target,                                     &
+                                  interpolations_constructor=interpolations_constructor, &
                                   constructor=constructor)
   endsubroutine create_kappa_int_object_constructor
 
@@ -289,12 +294,12 @@ contains
 
   subroutine create_interpolations_int_object_constructor(interpolator_type, S, stencil, x_target, constructor)
   !< Create an instance of concrete extension of [[interpolations_object_constructor]].
-  character(*),                                          intent(in)           :: interpolator_type !< Type of the interpolator.
-  integer(I_P),                                          intent(in)           :: S                 !< Stencils dimension.
-  real(RPP),                                             intent(in)           :: stencil(1-S:)     !< Stencil used for inter, [1-S:-1+S].
-  real(RPP),                                             intent(in)           :: x_target          !< Coordinate of the interp point.
-  class(interpolations_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  type(interpolations_factory)                                                :: factory           !< The factory.
+  character(*),                                          intent(in)  :: interpolator_type !< Type of the interpolator.
+  integer(I_P),                                          intent(in)  :: S                 !< Stencils dimension.
+  real(RPP),                                             intent(in)  :: stencil(1-S:)     !< Stencil used for inter, [1-S:-1+S].
+  real(RPP),                                             intent(in)  :: x_target          !< Coordinate of the interp point.
+  class(interpolations_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
+  type(interpolations_factory)                                       :: factory           !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type, &
                                   S=S,                                 &
