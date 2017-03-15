@@ -13,3 +13,6 @@
 [submodule "src/third_party/FACE"]
 	path = src/third_party/FACE
 	url = https://github.com/szaghi/FACE.git
+[submodule "src/third_party/FOODIE"]
+	path = src/third_party/FOODIE
+	url = https://github.com/Fortran-FOSS-Programmers/FOODIE.git
