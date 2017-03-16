@@ -84,7 +84,7 @@ contains
   integer(I_P)                       :: i, j, k         !< Counters.
 
   associate(S => self%S, val => self%values_rank_1, interp => self%interpolations)
-    if((x_target-(stencil(0)+stencil(-1))/2._RPP)<10._RPP**(-10)) then
+    if(x_target==-0.5_RPP) then
       ! left interface (i-1/2)
       select case(S)
         case(2) ! 3rd order
@@ -140,7 +140,7 @@ contains
           val(7) =    17._RPP/8192._RPP   ! stencil 7
           val(8) =     1._RPP/65536._RPP  ! stencil 8
       endselect
-    elseif((x_target-(stencil(0)+stencil(1))/2._RPP)<10._RPP**(-10)) then
+    elseif(x_target==0.5_RPP) then
       ! right interface (i+1/2)
       select case(S)
         case(2) ! 3rd order

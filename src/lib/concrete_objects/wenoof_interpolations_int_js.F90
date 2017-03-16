@@ -56,7 +56,7 @@ contains
   select type(constructor)
   type is(interpolations_int_js_constructor)
     associate(S => self%S, c => self%coef, stencil => constructor%stencil, x_target => constructor%x_target)
-      if((x_target-(stencil(0)+stencil(-1))/2._RPP)<10._RPP**(-10)) then
+      if(x_target==-0.5_RPP) then
         ! left interface (i-1/2)
         select case(S)
           case(2) ! 3rd order
@@ -187,7 +187,7 @@ contains
             c(6,7)=  -4095._RPP/8192._RPP ; c(7,7)=    495._RPP/4096._RPP ; c(8,7)=   -429._RPP/32768._RPP  ! stencil 7
             c(6,8)=  58905._RPP/8192._RPP ; c(7,8)=  -7293._RPP/4096._RPP ; c(8,8)=   6435._RPP/32768._RPP  ! stencil 8
         endselect
-      elseif((x_target-(stencil(0)+stencil(1))/2._RPP)<10._RPP**(-10)) then
+      elseif(x_target==0.5_RPP) then
         ! right interface (i+1/2)
         select case(self%S)
           case(2) ! 3rd order
