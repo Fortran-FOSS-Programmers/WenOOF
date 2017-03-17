@@ -29,7 +29,9 @@ type :: test_ui
   integer(I_P), allocatable    :: points_number(:)                     !< Points number used to discretize the domain.
   integer(I_P)                 :: S_number                             !< Number of different stencils tested.
   integer(I_P), allocatable    :: S(:)                                 !< Stencils used.
-  real(RPP)                    :: eps                                  !< Smal episol to avoid zero-division.
+  real(RPP)                    :: eps                                  !< Small epsilon to avoid zero-division.
+  real(RPP)                    :: x_target                             !< Interpolation target coordinate.
+  logical                      :: interpolate                          !< Flag for activating interpolation.
   logical                      :: errors_analysis=.false.              !< Flag for activating errors analysis.
   logical                      :: plots=.false.                        !< Flag for activating plots saving.
   logical                      :: results=.false.                      !< Flag for activating results saving.
@@ -57,23 +59,63 @@ contains
                     authors     = 'Fortran-FOSS-Programmers',                           &
                     license     = 'GNU GPLv3',                                          &
                     description = 'Test WenOOF library on function reconstruction',     &
-                    examples    = ["$EXECUTABLE --interpolator JS --results",    &
-                                   "$EXECUTABLE --interpolator JS-Z -r     ",    &
-                                   "$EXECUTABLE --interpolator JS-M        ",    &
-                                   "$EXECUTABLE --interpolator all -p -r   "])
-      call cli%add(switch='--interpolator', switch_ab='-i', help='WENO interpolator/recontructor type', required=.false., &
-                   def='JS', act='store', choices='all,JS,M-JS,M-Z,Z')
-      call cli%add(switch='--points_number', switch_ab='-pn', nargs='+', help='Number of points used to discretize the domain', &
-                   required=.false., act='store', def='50 100')
-      call cli%add(switch='--stencils', switch_ab='-s', nargs='+', help='Stencils dimensions (and number)', &
-                   required=.false., act='store', def='2 3 4 5 6 7 8 9', choices='2, 3, 4, 5, 6, 7, 8, 9')
-      call cli%add(switch='--eps', help='Small epsilon to avoid zero-division', required=.false., act='store', def='1.e-6')
-      call cli%add(switch='--output_dir', help='Output directory', required=.false., act='store', def='./')
-      call cli%add(switch='--results', switch_ab='-r', help='Save results', required=.false., act='store_true', def='.false.')
-      call cli%add(switch='--plots', switch_ab='-p', help='Save plots', required=.false., act='store_true', def='.false.')
-      call cli%add(switch='--output', help='Output files basename', required=.false., act='store', def='output')
-      call cli%add(switch='--errors_analysis', help='Peform errors analysis', required=.false., act='store_true', def='.false.')
-      call cli%add(switch='--verbose', help='Verbose output', required=.false., act='store_true', def='.false.')
+                    examples    = ["$EXECUTABLE interpolate -i JS --results",    &
+                                   "$EXECUTABLE interpolate -i JS-Z -r     ",    &
+                                   "$EXECUTABLE reconstruct -i JS-M        ",    &
+                                   "$EXECUTABLE reconstruct -i all -p -r   "])
+
+      call cli%add_group(group='interpolate', description='perform WENO interpolation')
+      call cli%add      (group='interpolate', switch='--x_target', switch_ab='-x',                                         &
+                         help='WENO interpolation target point coordinate',                                                &
+                         required=.true., def='0', act='store')
+      call cli%add      (group='interpolate', switch='--interpolator', switch_ab='-i',                                     &
+                         help='WENO interpolator type', required=.false.,                                                  &
+                         def='JS', act='store', choices='all,JS,M-JS,M-Z,Z')
+      call cli%add      (group='interpolate', switch='--points_number', switch_ab='-pn', nargs='+',                        &
+                         help='Number of points used to discretize the domain',                                            &
+                         required=.false., act='store', def='50 100')
+      call cli%add      (group='interpolate', switch='--stencils', switch_ab='-s', nargs='+',                              &
+                         help='Stencils dimensions (and number)', required=.false., act='store',                           &
+                         def='2 3 4 5 6 7 8 9', choices='2, 3, 4, 5, 6, 7, 8, 9')
+      call cli%add      (group='interpolate', switch='--eps', help='Small epsilon to avoid zero-division',                 &
+                         required=.false., act='store', def='1.e-6')
+      call cli%add      (group='interpolate', switch='--output_dir', help='Output directory', required=.false.,            &
+                         act='store', def='./')
+      call cli%add      (group='interpolate', switch='--results', switch_ab='-r', help='Save results', required=.false.,   &
+                         act='store_true', def='.false.')
+      call cli%add      (group='interpolate', switch='--plots', switch_ab='-p', help='Save plots', required=.false.,       &
+                         act='store_true', def='.false.')
+      call cli%add      (group='interpolate', switch='--output', help='Output files basename', required=.false.,           &
+                         act='store', def='output')
+      call cli%add      (group='interpolate', switch='--errors_analysis', help='Peform errors analysis', required=.false., &
+                         act='store_true', def='.false.')
+      call cli%add      (group='interpolate', switch='--verbose', help='Verbose output', required=.false.,                 &
+                         act='store_true', def='.false.')
+
+      call cli%add_group(group='reconstruct', description='perform WENO reconstruction')
+      call cli%add      (group='reconstruct', switch='--interpolator', switch_ab='-i',                                     &
+                         help='WENO interpolator type', required=.false.,                                                  &
+                         def='JS', act='store', choices='all,JS,M-JS,M-Z,Z')
+      call cli%add      (group='reconstruct', switch='--points_number', switch_ab='-pn', nargs='+',                        &
+                         help='Number of points used to discretize the domain',                                            &
+                         required=.false., act='store', def='50 100')
+      call cli%add      (group='reconstruct', switch='--stencils', switch_ab='-s', nargs='+',                              &
+                         help='Stencils dimensions (and number)', required=.false., act='store',                           &
+                         def='2 3 4 5 6 7 8 9', choices='2, 3, 4, 5, 6, 7, 8, 9')
+      call cli%add      (group='reconstruct', switch='--eps', help='Small epsilon to avoid zero-division',                 &
+                         required=.false., act='store', def='1.e-6')
+      call cli%add      (group='reconstruct', switch='--output_dir', help='Output directory', required=.false.,            &
+                         act='store', def='./')
+      call cli%add      (group='reconstruct', switch='--results', switch_ab='-r', help='Save results', required=.false.,   &
+                         act='store_true', def='.false.')
+      call cli%add      (group='reconstruct', switch='--plots', switch_ab='-p', help='Save plots', required=.false.,       &
+                         act='store_true', def='.false.')
+      call cli%add      (group='reconstruct', switch='--output', help='Output files basename', required=.false.,           &
+                         act='store', def='output')
+      call cli%add      (group='reconstruct', switch='--errors_analysis', help='Peform errors analysis', required=.false., &
+                         act='store_true', def='.false.')
+      call cli%add      (group='reconstruct', switch='--verbose', help='Verbose output', required=.false.,                 &
+                         act='store_true', def='.false.')
     endassociate
     endsubroutine set_cli
 
@@ -81,16 +123,44 @@ contains
     !< Parse Command Line Interface and check its validity.
 
     call self%cli%parse(error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='-i', val=self%interpolator_type, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get_varying(switch='-pn', val=self%points_number, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get_varying(switch='-s', val=self%S, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='--eps', val=self%eps, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='--output_dir', val=self%output_dir, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='-r', val=self%results, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='-p', val=self%plots, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='--output', val=self%output_bname, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='--errors_analysis', val=self%errors_analysis, error=self%error) ; if (self%error/=0) stop
-    call self%cli%get(switch='--verbose', val=self%verbose, error=self%error) ; if (self%error/=0) stop
+    if (self%cli%run_command(group='interpolate')) then
+      self%interpolate=.true.
+      call self%cli%get(group='interpolate', switch='-x', val=self%x_target, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get(group='interpolate', switch='-i', val=self%interpolator_type, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get_varying(group='interpolate', switch='-pn', val=self%points_number, error=self%error)
+      if (self%error/=0) stop
+      call self%cli%get_varying(group='interpolate', switch='-s', val=self%S, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get(group='interpolate', switch='--eps', val=self%eps, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get(group='interpolate', switch='--output_dir', val=self%output_dir, error=self%error)
+      if (self%error/=0) stop
+      call self%cli%get(group='interpolate', switch='-r', val=self%results, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get(group='interpolate', switch='-p', val=self%plots, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get(group='interpolate', switch='--output', val=self%output_bname, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get(group='interpolate', switch='--errors_analysis', val=self%errors_analysis, error=self%error)
+      if (self%error/=0) stop
+      call self%cli%get(group='interpolate', switch='--verbose', val=self%verbose, error=self%error) ; if (self%error/=0) stop
+    elseif (self%cli%run_command(group='reconstruct')) then
+      self%interpolate=.false.
+      call self%cli%get(group='reconstruct', switch='-i', val=self%interpolator_type, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get_varying(group='reconstruct', switch='-pn', val=self%points_number, error=self%error)
+      if (self%error/=0) stop
+      call self%cli%get_varying(group='reconstruct', switch='-s', val=self%S, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get(group='reconstruct', switch='--eps', val=self%eps, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get(group='reconstruct', switch='--output_dir', val=self%output_dir, error=self%error)
+      if (self%error/=0) stop
+      call self%cli%get(group='reconstruct', switch='-r', val=self%results, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get(group='reconstruct', switch='-p', val=self%plots, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get(group='reconstruct', switch='--output', val=self%output_bname, error=self%error) ; if (self%error/=0) stop
+      call self%cli%get(group='reconstruct', switch='--errors_analysis', val=self%errors_analysis, error=self%error)
+      if (self%error/=0) stop
+      call self%cli%get(group='reconstruct', switch='--verbose', val=self%verbose, error=self%error) ; if (self%error/=0) stop
+    else
+#ifndef DEBUG
+      ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
+      call self%cli%print_usage
+      error stop 'error: action not present; choose the correct action between "interpolate" and "reconstruct"'
+#endif
+    endif
 
     self%pn_number = size(self%points_number, dim=1)
     self%S_number = size(self%S, dim=1)
