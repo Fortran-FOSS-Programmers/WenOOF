@@ -50,8 +50,8 @@ contains
     error stop 'error: x_target must be between -0.5 and 0.5, that represent left and right cell interfaces'
   endif
   allocate(stencil(1-S:S-1))
-  do i=0,2*S-2
-    stencil(i) = 1.0_RPP - S + i
+  do i=1,2*S-1
+    stencil(-S+i) = 1.0_RPP - S + i
   enddo
   call factory%create(interpolator_type='interpolator-'//interpolator_type, &
                       S=S,                                                  &
