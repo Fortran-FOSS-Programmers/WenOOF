@@ -18,3 +18,15 @@
   path = src/third_party/FACE
   url = https://github.com/szaghi/FACE
   branch = master
+[submodule "src/third_party/FORESEER"]
+  path = src/third_party/FORESEER
+  url = https://github.com/szaghi/FORESEER
+  branch = master
+[submodule "src/third_party/FLOw"]
+  path = src/third_party/FLOw
+  url = https://github.com/szaghi/FLOw
+  branch = master
+[submodule "src/third_party/VecFor"]
+  path = src/third_party/VecFor
+  url = https://github.com/szaghi/VecFor
+  branch = master
