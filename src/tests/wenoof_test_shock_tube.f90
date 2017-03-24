@@ -296,20 +296,13 @@ contains
   class(euler_1d),  intent(in) :: lhs      !< Left hand side.
   class(integrand), intent(in) :: rhs      !< Right hand side.
   real(R8P)                    :: error    !< Error estimation.
-  real(R8P), allocatable       :: U_lhs(:) !< Serialized conservative variables.
-  real(R8P), allocatable       :: U_rhs(:) !< Serialized conservative variables.
   integer(I4P)                 :: i        !< Space counter.
-  integer(I4P)                 :: v        !< Variables counter.
 
   select type(rhs)
   class is (euler_1d)
      error = 0._R8P
      do i=1, lhs%Ni
-       U_lhs = lhs%U(i)%array()
-       U_rhs = rhs%U(i)%array()
-       do v=1, size(U_lhs, dim=1)
-         error = error + (U_lhs(v) - U_rhs(v)) ** 2 / U_lhs(v) ** 2
-       enddo
+        error = error + (lhs%U(i)%density - rhs%U(i)%density) ** 2 / lhs%U(i)%density ** 2
      enddo
      error = sqrt(error)
   endselect
@@ -423,15 +416,10 @@ contains
      lhs%Dx         = rhs%Dx
      lhs%eos        = rhs%eos
      if (allocated(rhs%U)) then
-        if (allocated(lhs%U)) deallocate(lhs%U) ; allocate(lhs%U(1:lhs%Ni))
-        select type(rhs)
-        class is(euler_1d)
-           if (allocated(rhs%U)) then
-              do i=1, lhs%Ni
-                 lhs%U(i) = rhs%U(i)
-              enddo
-           endif
-        endselect
+        if (allocated(lhs%U)) deallocate(lhs%U) ; allocate(lhs%U(1-lhs%Ng:lhs%Ni+lhs%Ng))
+        do i=1, lhs%Ni
+           lhs%U(i) = rhs%U(i)
+        enddo
      endif
      if (allocated(rhs%BC_L)) lhs%BC_L = rhs%BC_L
      if (allocated(rhs%BC_R)) lhs%BC_R = rhs%BC_R
@@ -440,7 +428,6 @@ contains
         allocate(lhs%interpolator, source=rhs%interpolator)
      endif
      if (associated(rhs%reconstruct_interfaces)) lhs%reconstruct_interfaces => rhs%reconstruct_interfaces
-     ! if (associated(rhs%riemann_solver)) lhs%riemann_solver => rhs%riemann_solver
      if (allocated(rhs%riemann_solver)) then
         if (allocated(lhs%riemann_solver)) deallocate(lhs%riemann_solver) ; allocate(lhs%riemann_solver, source=rhs%riemann_solver)
      endif
@@ -680,7 +667,7 @@ program foreseer_test_shock_tube
 !< WenOOF test: shock tube tester, 1D Euler equation.
 
 use flap, only : command_line_interface
-use foodie, only : tvd_runge_kutta_integrator
+use foodie, only : tvd_runge_kutta_integrator, emd_runge_kutta_integrator
 use flow, only : conservative_compressible, primitive_compressible,                              &
                  conservative_to_primitive_compressible, primitive_to_conservative_compressible, &
                  eos_compressible
@@ -691,7 +678,9 @@ use vecfor, only : ex, vector
 implicit none
 integer(I4P)                     :: weno_order                !< WENO reconstruction order.
 character(len=:), allocatable    :: weno_variables            !< Variables set on which WENO reconstruction is done.
-type(tvd_runge_kutta_integrator) :: rk_integrator             !< Runge-Kutta integrator.
+character(len=:), allocatable    :: rk_scheme                 !< Runge-Kutta scheme type: TVD, embedded.
+type(emd_runge_kutta_integrator) :: emd_rk_integrator         !< Embedded Runge-Kutta integrator.
+type(tvd_runge_kutta_integrator) :: tvd_rk_integrator         !< TVD Runge-Kutta integrator.
 integer(I4P)                     :: rk_stages_number          !< Runge-Kutta stages number.
 type(euler_1d), allocatable      :: rk_stage(:)               !< Runge-Kutta stages.
 real(R8P)                        :: dt                        !< Time step.
@@ -715,24 +704,48 @@ logical                          :: verbose                   !< Flag for activa
 integer(I4P)                     :: s                         !< Schemes counter.
 
 call parse_command_line_interface
-do s=1, size(riemann_solver_schemes, dim=1)
-   if (verbose) print "(A)", 'Use Riemann Problem solver "'//trim(adjustl(riemann_solver_schemes(s)))//'"'
-   call initialize(riemann_solver_scheme=riemann_solver_schemes(s))
-   call save_time_serie(filename='euler_1D-'//&
-                                 trim(adjustl(s_scheme))//'-'//&
-                                 trim(adjustl(t_scheme))//'-'//&
-                                 trim(adjustl(riemann_solver_schemes(s)))//'.dat', t=t)
-   step = 0
-   time_loop: do
-      step = step + 1
-      dt = domain%dt(steps_max=steps_max, t_max=t_max, t=t, CFL=CFL)
-      call rk_integrator%integrate(U=domain, stage=rk_stage, dt=dt, t=t)
-      t = t + dt
-      call save_time_serie(t=t)
-      if (verbose) print "(A)", 'step = '//str(n=step)//', time step = '//str(n=dt)//', time = '//str(n=t)
-      if ((t == t_max).or.(step == steps_max)) exit time_loop
-   enddo time_loop
-enddo
+select case(rk_scheme)
+case('tvd')
+   do s=1, size(riemann_solver_schemes, dim=1)
+      if (verbose) print "(A)", 'Use Riemann Problem solver "'//trim(adjustl(riemann_solver_schemes(s)))//'"'
+      call initialize(riemann_solver_scheme=riemann_solver_schemes(s))
+      call save_time_serie(filename='euler_1D-'//&
+                                    trim(adjustl(s_scheme))//'-'//&
+                                    trim(adjustl(t_scheme))//'-'//&
+                                    trim(adjustl(riemann_solver_schemes(s)))//'.dat', t=t)
+      step = 0
+      t = 0._R8P
+      tvd_time_loop: do
+         step = step + 1
+         dt = domain%dt(steps_max=steps_max, t_max=t_max, t=t, CFL=CFL)
+         call tvd_rk_integrator%integrate(U=domain, stage=rk_stage, dt=dt, t=t)
+         t = t + dt
+         call save_time_serie(t=t)
+         if (verbose) print "(A)", 'step = '//str(n=step)//', time step = '//str(n=dt)//', time = '//str(n=t)
+         if ((t == t_max).or.(step == steps_max)) exit tvd_time_loop
+      enddo tvd_time_loop
+   enddo
+case('emd')
+   do s=1, size(riemann_solver_schemes, dim=1)
+      if (verbose) print "(A)", 'Use Riemann Problem solver "'//trim(adjustl(riemann_solver_schemes(s)))//'"'
+      call initialize(riemann_solver_scheme=riemann_solver_schemes(s))
+      call save_time_serie(filename='euler_1D-'//&
+                                    trim(adjustl(s_scheme))//'-'//&
+                                    trim(adjustl(t_scheme))//'-'//&
+                                    trim(adjustl(riemann_solver_schemes(s)))//'.dat', t=t)
+      step = 0
+      t = 0._R8P
+      emd_time_loop: do
+         step = step + 1
+         dt = domain%dt(steps_max=steps_max, t_max=t_max, t=t, CFL=CFL)
+         call emd_rk_integrator%integrate(U=domain, stage=rk_stage, dt=dt, t=t)
+         t = t + dt
+         call save_time_serie(t=t)
+         if (verbose) print "(A)", 'step = '//str(n=step)//', time step = '//str(n=dt)//', time = '//str(n=t)
+         if ((t == t_max).or.(step == steps_max)) exit emd_time_loop
+      enddo emd_time_loop
+   enddo
+endselect
 
 contains
    subroutine initialize(riemann_solver_scheme)
@@ -742,7 +755,12 @@ contains
    integer(I4P)                              :: i                     !< Space counter.
 
    if (allocated(rk_stage)) deallocate(rk_stage) ; allocate(rk_stage(1:rk_stages_number))
-   call rk_integrator%init(stages=rk_stages_number)
+   select case(rk_scheme)
+   case('tvd')
+      call tvd_rk_integrator%init(stages=rk_stages_number)
+   case('emd')
+      call emd_rk_integrator%init(stages=rk_stages_number, tolerance=1.e-12_R8P)
+   endselect
    t = 0._R8P
    if (allocated(x)) deallocate(x) ; allocate(x(1:Ni))
    if (allocated(initial_state)) deallocate(initial_state) ; allocate(initial_state(1:Ni))
@@ -791,7 +809,8 @@ contains
              'weno-cons-1,weno-cons-3,weno-cons-5,weno-cons-7,weno-cons-9,weno-cons-11,weno-cons-13,weno-cons-15,weno-cons-17,'// &
              'weno-prim-1,weno-prim-3,weno-prim-5,weno-prim-7,weno-prim-9,weno-prim-11,weno-prim-13,weno-prim-15,weno-prim-17')
    call cli%add(switch='--t-scheme', help='Time intergation scheme', required=.false., act='store', def='tvd-rk-1', &
-                choices='tvd-rk-1,tvd-rk-2,tvd-rk-3,tvd-rk-5')
+                choices='tvd-rk-1,tvd-rk-2,tvd-rk-3,tvd-rk-5,'// &
+                        'emd-rk-2,emd-rk-6,emd-rk-7,emd-rk-9,emd-rk-17')
    call cli%add(switch='--cfl', help='CFL value', required=.false., act='store', def='0.7')
    call cli%add(switch='--tserie', switch_ab='-t', help='Save time-serie-result', required=.false., act='store_true', def='.false.')
    call cli%add(switch='--verbose', help='Verbose output', required=.false., act='store_true', def='.false.')
@@ -819,16 +838,9 @@ contains
    endselect
    weno_order = cton(buffer(11:), knd=1_I4P)
 
-   select case(trim(adjustl(t_scheme)))
-   case('tvd-rk-1')
-      rk_stages_number = 1
-   case('tvd-rk-2')
-      rk_stages_number = 2
-   case('tvd-rk-3')
-      rk_stages_number = 3
-   case('tvd-rk-5')
-      rk_stages_number = 5
-   endselect
+   buffer = trim(adjustl(t_scheme))
+   rk_scheme = buffer(1:3)
+   rk_stages_number = cton(buffer(8:), knd=1_I4P)
 
    if (trim(adjustl(riemann_solver_scheme))=='all') then
       riemann_solver_schemes = ['exact', 'hllc ', 'llf  ', 'pvl  ', 'roe  ']
