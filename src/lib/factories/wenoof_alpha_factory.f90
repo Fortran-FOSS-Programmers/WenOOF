@@ -2,6 +2,7 @@
 module wenoof_alpha_factory
 !< Wenoof alpha factory.
 
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 #ifdef r16p
 use penf, only: I_P, RPP=>R16P
 #else
@@ -92,6 +93,9 @@ contains
     endselect
   case('reconstructor-Z')
     allocate(alpha_rec_z_constructor :: constructor)
+ case default
+    write(stderr, '(A)') 'error: interpolator type "'//trim(adjustl(interpolator_type))//'" is unknown!'
+    stop
   endselect
   call constructor%create(S=S, eps=eps)
   endsubroutine create_constructor

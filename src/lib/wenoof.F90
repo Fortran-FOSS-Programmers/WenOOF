@@ -29,9 +29,9 @@ contains
   real(RPP),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero-div.
   type(objects_factory)                                         :: factory                    !< The factory.
 
-  call factory%create(interpolator_type='reconstructor-'//interpolator_type, &
-                      S=S,                                                   &
-                      interpolator=interpolator,                             &
+  call factory%create(interpolator_type=interpolator_type, &
+                      S=S,                                 &
+                      interpolator=interpolator,           &
                       eps=eps)
   endsubroutine wenoof_create_reconstructor
 
@@ -53,11 +53,11 @@ contains
   do i=1,2*S-1
     stencil(-S+i) = 1.0_RPP - S + i
   enddo
-  call factory%create(interpolator_type='interpolator-'//interpolator_type, &
-                      S=S,                                                  &
-                      interpolator=interpolator,                            &
-                      stencil=stencil,                                      &
-                      x_target=x_target,                                    &
+  call factory%create(interpolator_type=interpolator_type, &
+                      S=S,                                 &
+                      interpolator=interpolator,           &
+                      stencil=stencil,                     &
+                      x_target=x_target,                   &
                       eps=eps)
   endsubroutine wenoof_create_interpolator
 endmodule wenoof
