@@ -181,9 +181,9 @@ contains
 
   pure subroutine compute_kappa_int(self, stencil, x_target)
   !< Compute kappa.
-  class(kappa_rec_js), intent(inout) :: self        !< Kappa.
-  real(RPP),           intent(in)    :: stencil(:)  !< Stencil used for interpolation, [1-S:S-1].
-  real(RPP),           intent(in)    :: x_target    !< Coordinate of the interpolation point.
+  class(kappa_rec_js), intent(inout) :: self                !< Kappa.
+  real(RPP),           intent(in)    :: stencil(1-self%S:)  !< Stencil used for interpolation, [1-S:S-1].
+  real(RPP),           intent(in)    :: x_target            !< Coordinate of the interpolation point.
 
   ! Empty Subroutine
   endsubroutine compute_kappa_int

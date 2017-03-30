@@ -75,13 +75,13 @@ contains
 
   pure subroutine compute_kappa_int(self, stencil, x_target)
   !< Compute kappa.
-  class(kappa_int_js), intent(inout) :: self            !< Kappa.
-  real(RPP),           intent(in)    :: stencil(:)      !< Stencil used for interpolation, [1-S:S-1].
-  real(RPP),           intent(in)    :: x_target        !< Coordinate of the interpolation point.
-  real(RPP),           allocatable   :: coeff(:)        !< Interpolation coefficients on the whole stencil.
-  real(RPP)                          :: prod            !< Temporary variable.
-  real(RPP)                          :: coeff_t         !< Temporary variable.
-  integer(I_P)                       :: i, j, k         !< Counters.
+  class(kappa_int_js), intent(inout) :: self                 !< Kappa.
+  real(RPP),           intent(in)    :: stencil(1-self%S:)   !< Stencil used for interpolation, [1-S:S-1].
+  real(RPP),           intent(in)    :: x_target             !< Coordinate of the interpolation point.
+  real(RPP),           allocatable   :: coeff(:)             !< Interpolation coefficients on the whole stencil.
+  real(RPP)                          :: prod                 !< Temporary variable.
+  real(RPP)                          :: coeff_t              !< Temporary variable.
+  integer(I_P)                       :: i, j, k              !< Counters.
 
   associate(S => self%S, val => self%values_rank_1, interp => self%interpolations)
     if(x_target==-0.5_RPP) then

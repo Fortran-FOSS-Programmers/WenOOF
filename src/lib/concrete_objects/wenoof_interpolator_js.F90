@@ -49,12 +49,14 @@ contains
   !< Create interpolator.
   class(interpolator_js),         intent(inout) :: self        !< Interpolator.
   class(base_object_constructor), intent(in)    :: constructor !< Constructor.
+  type(interpolations_factory)                  :: i_factory   !< Inteprolations factory.
   type(weights_factory)                         :: w_factory   !< Weights factory.
 
   call self%destroy
   call self%create_(constructor=constructor)
   select type(constructor)
   class is(interpolator_object_constructor)
+    call i_factory%create(constructor=constructor%interpolations_constructor, object=self%interpolations)
     call w_factory%create(constructor=constructor%weights_constructor, object=self%weights)
   endselect
   endsubroutine create
@@ -83,7 +85,7 @@ contains
   !< Interpolate values (providing also debug values).
   class(interpolator_js), intent(inout) :: self                 !< Interpolator.
   real(RPP),              intent(in)    :: stencil(1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
-  real(RPP),              intent(out)   :: interpolation        !< Result of the interpolation, [1:2].
+  real(RPP),              intent(out)   :: interpolation        !< Result of the interpolation.
   real(RPP),              intent(out)   :: si(0:)               !< Computed values of smoothness indicators [1:2, 0:S-1].
   real(RPP),              intent(out)   :: weights(0:)          !< Weights of the stencils, [1:2, 0:S-1].
 
@@ -107,7 +109,7 @@ contains
   !< Interpolate values (without providing debug values).
   class(interpolator_js), intent(inout) :: self                 !< Interpolator.
   real(RPP),              intent(in)    :: stencil(1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
-  real(RPP),              intent(out)   :: interpolation        !< Result of the interpolation, [1:2].
+  real(RPP),              intent(out)   :: interpolation        !< Result of the interpolation.
   integer(I_P)                          :: s                    !< Counters.
 
   call self%interpolations%compute(stencil=stencil)

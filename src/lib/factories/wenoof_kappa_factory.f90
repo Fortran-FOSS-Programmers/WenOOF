@@ -68,5 +68,9 @@ contains
   constructor%stencil = stencil
   constructor%x_target = x_target
   call constructor%create(S=S)
+  select type(constructor)
+  type is(kappa_int_js_constructor)
+    allocate(constructor%interpolations_constructor, source=interpolations_constructor)
+  endselect
   endsubroutine create_constructor_int
 endmodule wenoof_kappa_factory

@@ -3,9 +3,9 @@ module wenoof_kappa_object
 !< Abstract Kappa (optimal, linear weights of stencil interpolations) object.
 
 #ifdef r16p
-use penf, only: RPP=>R16P
+use penf, only: I_P, RPP=>R16P
 #else
-use penf, only: RPP=>R8P
+use penf, only: I_P, RPP=>R8P
 #endif
 use wenoof_base_object
 
@@ -42,10 +42,10 @@ abstract interface
 
   pure subroutine compute_kappa_int_interface(self, stencil, x_target)
   !< Compute kappa.
-  import :: kappa_object, RPP
-  class(kappa_object), intent(inout) :: self        !< Kappa.
-  real(RPP),           intent(in)    :: stencil(:)  !< Stencil used for interpolation, [1-S:S-1].
-  real(RPP),           intent(in)    :: x_target    !< Coordinate of the interpolation point.
+  import :: kappa_object, I_P, RPP
+  class(kappa_object), intent(inout) :: self               !< Kappa.
+  real(RPP),           intent(in)    :: stencil(1-self%S:) !< Stencil used for interpolation, [1-S:S-1].
+  real(RPP),           intent(in)    :: x_target           !< Coordinate of the interpolation point.
   endsubroutine compute_kappa_int_interface
 endinterface
 
