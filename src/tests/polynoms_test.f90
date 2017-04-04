@@ -403,7 +403,7 @@ contains
                             linewidth=2,                                                &
                             ylim=[-1.1_RPP, 1.1_RPP])
           call plt%add_plot(x=self%solution(pn, s)%x_int(1:self%ui%points_number(pn)), &
-                            y=self%solution(pn, s)%interpolations(:),                  &
+                            y=self%solution(pn, s)%interpolation(:),                   &
                             label='WENO interpolation',                                &
                             linestyle='ro',                                            &
                             markersize=6,                                              &
