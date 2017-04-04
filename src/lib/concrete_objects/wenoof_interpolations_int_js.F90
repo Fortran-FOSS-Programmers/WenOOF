@@ -46,6 +46,7 @@ contains
   class(interpolations_int_js),   intent(inout) :: self        !< Interpolations.
   class(base_object_constructor), intent(in)    :: constructor !< Interpolations constructor.
   real(RPP)                                     :: prod        !< Temporary variable.
+  real(RPP)                                     :: c_sum       !< Temporary variable.
   integer(I_P)                                  :: i, j, k     !< Counters.
 
   call self%destroy
@@ -321,14 +322,17 @@ contains
       else
         ! internal point
         do k=0,S-1  !stencils loop
-          do j=0,S-1  !values loop
+          c_sum = 0._RPP
+          do j=0,S-2  !values loop
             prod = 1._RPP
             do i=0,S-1
               if (i==j) cycle
               prod = prod * ((x_target - stencil(-S+k+i+1)) / (stencil(-S+k+j+1) - stencil(-S+k+i+1)))
             enddo
             c(j,k) = prod
+            c_sum = c_sum + prod
           enddo
+          c(S-1,k) = 1._RPP - c_sum
         enddo
       endif
     endassociate
