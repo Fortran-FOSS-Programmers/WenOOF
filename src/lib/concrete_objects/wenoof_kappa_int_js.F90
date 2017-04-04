@@ -80,6 +80,7 @@ contains
   real(RPP),           allocatable   :: coeff(:)             !< Interpolation coefficients on the whole stencil.
   real(RPP)                          :: prod                 !< Temporary variable.
   real(RPP)                          :: coeff_t              !< Temporary variable.
+  real(RPP)                          :: val_sum              !< Temporary variable.
   integer(I_P)                       :: i, j, k              !< Counters.
 
   associate(S => self%S, val => self%values_rank_1, interp => self%interpolations)
@@ -208,7 +209,8 @@ contains
       enddo
       select type(interp)
         type is(interpolations_int_js)
-          do j = 0,S-1
+          val_sum = 0._RPP
+          do j = 0,S-2
             coeff_t = 0._RPP
             k = j
             do i = 0,j-1
@@ -216,7 +218,9 @@ contains
               k = k - 1
             enddo
             val(j) = (coeff(j) - coeff_t) / interp%coef(0,j)
+            val_sum = val_sum + val(j)
           enddo
+          val(S-1) = 1._RPP - val_sum
       endselect
       deallocate(coeff)
     endif
