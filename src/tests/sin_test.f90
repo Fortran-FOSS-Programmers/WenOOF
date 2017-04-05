@@ -218,7 +218,7 @@ contains
       do pn=1, self%ui%pn_number
         do i=1, self%ui%points_number(pn)
           stencil_i(:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))
-          call interpolator%interpolate(stencil=stencil_i,                                     &
+          call interpolator%interpolate(stencil=stencil_i,                                   &
                                         interpolation=self%solution(pn, s)%interpolation(i), &
                                         si=self%solution(pn, s)%si_i(i, 0:self%ui%S(s)-1),   &
                                         weights=self%solution(pn, s)%weights_i(i, 0:self%ui%S(s)-1))
