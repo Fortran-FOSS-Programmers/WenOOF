@@ -78,7 +78,8 @@ contains
   class(kappa_int_js), intent(inout) :: self                 !< Kappa.
   real(RPP),           intent(in)    :: stencil(1-self%S:)   !< Stencil used for interpolation, [1-S:S-1].
   real(RPP),           intent(in)    :: x_target             !< Coordinate of the interpolation point.
-  real(RPP),           allocatable   :: coeff(:)             !< Interpolation coefficients on the whole stencil.
+  real(RPP)                          :: coeff(0:2*self%S-2)  !< Interpolation coefficients on the whole stencil.
+  real(RPP)                          :: ffeoc(0:2*self%S-2)  !< Temporary variable.
   real(RPP)                          :: prod                 !< Temporary variable.
   real(RPP)                          :: coeff_t              !< Temporary variable.
   real(RPP)                          :: val_sum              !< Temporary variable.
@@ -199,15 +200,15 @@ contains
       endselect
     else
       ! internal point
-      allocate(coeff(0:2*S-2))
       do j=0,2*S-2  !values loop
         prod = 1._RPP
         do i=0,2*S-2
           if (i==j) cycle
           prod = prod * ((x_target - stencil(-S+i+1)) / (stencil(-S+j+1) - stencil(-S+i+1)))
         enddo
-        coeff(j) = prod
+        ffeoc(j) = prod
       enddo
+      coeff = ffeoc(2*S-2:0:-1)
       select type(interp)
         type is(interpolations_int_js)
           val_sum = 0._RPP
@@ -223,7 +224,6 @@ contains
           enddo
           val(S-1) = 1._RPP - val_sum
       endselect
-      deallocate(coeff)
     endif
   endassociate
   endsubroutine compute_kappa_int
