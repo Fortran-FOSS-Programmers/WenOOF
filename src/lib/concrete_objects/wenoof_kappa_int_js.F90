@@ -60,6 +60,7 @@ contains
   select type(constructor)
   type is(kappa_int_js_constructor)
     associate(interpolations_constructor=>constructor%interpolations_constructor)
+      call i_factory%create(constructor=interpolations_constructor, object=self%interpolations)
       call self%compute(stencil=constructor%stencil, x_target=constructor%x_target)
     endassociate
   endselect
