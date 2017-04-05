@@ -17,6 +17,7 @@ $EXDIRS      = FACE/src/tests FACE/src/third_party/
                FLAP/src/tests/ FLAP/src/third_party/
                PENF/src/tests/ PENF/src/third_party/
                FOODIE/src/tests FOODIE/src/third_party/
+               FLOw/src FLOw/src/tests FLOw/src/third_party/
                pyplot-fortran/src/tests/
                FORESEER/src/tests/
 
