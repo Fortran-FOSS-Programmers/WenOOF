@@ -75,15 +75,15 @@ contains
 
   pure subroutine compute_kappa_int(self, stencil, x_target)
   !< Compute kappa.
-  class(kappa_int_js), intent(inout) :: self                 !< Kappa.
-  real(RPP),           intent(in)    :: stencil(1-self%S:)   !< Stencil used for interpolation, [1-S:S-1].
-  real(RPP),           intent(in)    :: x_target             !< Coordinate of the interpolation point.
-  real(RPP)                          :: coeff(0:2*self%S-2)  !< Interpolation coefficients on the whole stencil.
-  real(RPP)                          :: ffeoc(0:2*self%S-2)  !< Temporary variable.
-  real(RPP)                          :: prod                 !< Temporary variable.
-  real(RPP)                          :: coeff_t              !< Temporary variable.
-  real(RPP)                          :: val_sum              !< Temporary variable.
-  integer(I_P)                       :: i, j, k              !< Counters.
+  class(kappa_int_js), intent(inout) :: self                        !< Kappa.
+  real(RPP),           intent(in)    :: stencil(1-self%S:)          !< Stencil used for interpolation, [1-S:S-1].
+  real(RPP),           intent(in)    :: x_target                    !< Coordinate of the interpolation point.
+  real(RPP)                          :: coeff(0:2*self%S-2)         !< Interpolation coefficients on the whole stencil.
+  real(RPP)                          :: coef(0:self%S-1,0:self%S-1) !< Temporary variable.
+  real(RPP)                          :: prod                        !< Temporary variable.
+  real(RPP)                          :: coeff_t                     !< Temporary variable.
+  real(RPP)                          :: val_sum                     !< Temporary variable.
+  integer(I_P)                       :: i, j, k                     !< Counters.
 
   associate(S => self%S, val => self%values_rank_1, interp => self%interpolations)
     if(x_target==-0.5_RPP) then
@@ -198,28 +198,38 @@ contains
           val(7) =    85._RPP/8192._RPP   ! stencil 7
           val(8) =    17._RPP/65536._RPP  ! stencil 8
       endselect
+    elseif((x_target>-self%eps).and.(x_target<self%eps)) then
+    elseif(x_target==0._RPP) then
+      val = 1._RPP / S
     else
       ! internal point
-      do j=0,2*S-2  !values loop
+      val_sum = 0._RPP
+      do j=0,2*S-3  !values loop
         prod = 1._RPP
         do i=0,2*S-2
           if (i==j) cycle
           prod = prod * ((x_target - stencil(-S+i+1)) / (stencil(-S+j+1) - stencil(-S+i+1)))
         enddo
-        ffeoc(j) = prod
+        coeff(j) = prod
+        val_sum = val_sum + coeff(j)
       enddo
-      coeff = ffeoc(2*S-2:0:-1)
+      coeff(2*S-2) = 1._RPP - val_sum
       select type(interp)
         type is(interpolations_int_js)
           val_sum = 0._RPP
+          do k=0,S-1
+            do j=0,S-1
+              coef(j,k) = interp%coef(S-1-j,S-1-k)
+            enddo
+          enddo
           do j = 0,S-2
             coeff_t = 0._RPP
             k = j
             do i = 0,j-1
-              coeff_t = coeff_t + val(i) * interp%coef(k,i)
+              coeff_t = coeff_t + val(i) * coef(k,i)
               k = k - 1
             enddo
-            val(j) = (coeff(j) - coeff_t) / interp%coef(0,j)
+            val(j) = (coeff(j) - coeff_t) / coef(0,j)
             val_sum = val_sum + val(j)
           enddo
           val(S-1) = 1._RPP - val_sum
