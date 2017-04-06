@@ -198,7 +198,6 @@ contains
           val(7) =    85._RPP/8192._RPP   ! stencil 7
           val(8) =    17._RPP/65536._RPP  ! stencil 8
       endselect
-    elseif((x_target>-self%eps).and.(x_target<self%eps)) then
     elseif(x_target==0._RPP) then
       val = 1._RPP / S
     else
