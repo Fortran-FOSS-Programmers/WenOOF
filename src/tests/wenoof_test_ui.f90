@@ -171,7 +171,6 @@ contains
   !< Loop over available interpolators.
   class(test_ui), intent(in)  :: self          !< Test UI.
   character(99),  intent(out) :: interpolator  !< Interpolator name.
-  character(99)               :: approximation !< Approximation type.
   logical                     :: again         !< Flag continuing the loop.
   integer(I_P), save          :: i = 0         !< Counter.
 

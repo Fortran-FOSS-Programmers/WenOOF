@@ -66,7 +66,6 @@ contains
   subroutine execute(self)
   !< Execute test(s).
   class(test), intent(inout) :: self !< Test.
-  integer(I_P)               :: s    !< Counter.
 
   call self%ui%get
   if (trim(adjustl(self%ui%interpolator_type))/='all') then
@@ -196,8 +195,6 @@ contains
   subroutine perform(self)
   !< Perform the test.
   class(test), intent(inout)              :: self           !< Test.
-  real(RPP), allocatable                  :: error(:)       !< Error (norm L2) with respect the exact solution.
-  real(RPP), allocatable                  :: order(:)       !< Observed order based on subsequent refined solutions.
   class(interpolator_object), allocatable :: interpolator   !< WENO interpolator.
   real(RPP), allocatable                  :: stencil_i(:)   !< Stencils used for interpolation.
   real(RPP), allocatable                  :: stencil_r(:,:) !< Stencils used for reconstruction.
