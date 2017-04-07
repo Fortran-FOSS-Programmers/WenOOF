@@ -68,13 +68,25 @@ contains
   class(test), intent(inout) :: self !< Test.
 
   call self%ui%get
-  if (trim(adjustl(self%ui%interpolator_type))/='all') then
-    call self%perform
+  if (self%ui%interpolate.and.self%ui%reconstruct) then
+    call subexecute
+    self%ui%interpolate = .false.
+    call subexecute
   else
-    do while(self%ui%loop_interpolator(interpolator=self%ui%interpolator_type))
-      call self%perform
-    enddo
+    call subexecute
   endif
+  contains
+     subroutine subexecute
+     !< Subexecute test(s).
+
+     if (trim(adjustl(self%ui%interpolator_type))/='all') then
+       call self%perform
+     else
+       do while(self%ui%loop_interpolator(interpolator=self%ui%interpolator_type))
+         call self%perform
+       enddo
+     endif
+     endsubroutine subexecute
   endsubroutine execute
 
   ! private methods
