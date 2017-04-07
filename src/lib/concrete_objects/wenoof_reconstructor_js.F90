@@ -34,18 +34,20 @@ type, extends(interpolator_object) :: reconstructor_js
   !< 7, 8, 9 stencils composed of 2, 3, 4, 5, 6, 7, 8, 9 values, respectively.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create               !< Create reconstructor.
-    procedure, pass(self) :: description          !< Return reconstructor string-description.
-    procedure, pass(self) :: destroy              !< Destroy reconstructor.
-    procedure, pass(self) :: interpolate_debug    !< Interpolate values (providing also debug values).
-    procedure, pass(self) :: interpolate_standard !< Interpolate values (without providing debug values).
+    procedure, pass(self) :: create                                      !< Create reconstructor.
+    procedure, pass(self) :: description                                 !< Return reconstructor string-description.
+    procedure, pass(self) :: destroy                                     !< Destroy reconstructor.
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_1_standard !< Interpolate values (without providing debug values).
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_2_standard !< Interpolate values (without providing debug values).
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_1_debug    !< Interpolate values (providing also debug values).
+    procedure, pass(self) :: interpolate_with_stencil_of_rank_2_debug    !< Interpolate values (providing also debug values).
 endtype reconstructor_js
 
 contains
   ! public deferred methods
   subroutine create(self, constructor)
-  !< Create interpolator.
-  class(reconstructor_js),        intent(inout) :: self        !< Interpolator.
+  !< Create reconstructor.
+  class(reconstructor_js),        intent(inout) :: self        !< Reconstructor.
   class(base_object_constructor), intent(in)    :: constructor !< Constructor.
   type(interpolations_factory)                  :: i_factory   !< Inteprolations factory.
   type(weights_factory)                         :: w_factory   !< Weights factory.
@@ -67,9 +69,6 @@ contains
 
   string = 'Jiang-Shu reconstructor:'//nl
   string = string//'  - S   = '//trim(str(self%S))//nl
-  string = string//'  - f1  = '//trim(str(self%f1))//nl
-  string = string//'  - f2  = '//trim(str(self%f2))//nl
-  string = string//'  - ff  = '//trim(str(self%ff))//nl
   string = string//self%weights%description()
   endfunction description
 
@@ -82,7 +81,18 @@ contains
   if (allocated(self%weights)) deallocate(self%weights)
   endsubroutine destroy
 
-  pure subroutine interpolate_debug(self, stencil, interpolation, si, weights)
+  pure subroutine interpolate_with_stencil_of_rank_1_debug(self, stencil, interpolation, si, weights)
+  !< Interpolate values (providing also debug values).
+  class(reconstructor_js), intent(inout) :: self                 !< Reconstructor.
+  real(RPP),               intent(in)    :: stencil(1 - self%S:) !< Stencil of the interpolation [1-S:-1+S].
+  real(RPP),               intent(out)   :: interpolation        !< Result of the interpolation.
+  real(RPP),               intent(out)   :: si(0:)               !< Computed values of smoothness indicators [0:S-1].
+  real(RPP),               intent(out)   :: weights(0:)          !< Weights of the stencils, [0:S-1].
+
+  ! Empty subroutine.
+  endsubroutine interpolate_with_stencil_of_rank_1_debug
+
+  pure subroutine interpolate_with_stencil_of_rank_2_debug(self, stencil, interpolation, si, weights)
   !< Interpolate values (providing also debug values).
   class(reconstructor_js), intent(inout) :: self                     !< Reconstructor.
   real(RPP),               intent(in)    :: stencil(1:, 1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
@@ -90,12 +100,22 @@ contains
   real(RPP),               intent(out)   :: si(1:, 0:)               !< Computed values of smoothness indicators [1:2, 0:S-1].
   real(RPP),               intent(out)   :: weights(1:, 0:)          !< Weights of the stencils, [1:2, 0:S-1].
 
-  call self%interpolate_standard(stencil=stencil, interpolation=interpolation)
-  si = self%weights%smoothness_indicators()
-  weights = self%weights%values
-  endsubroutine interpolate_debug
+  call self%interpolate(stencil=stencil, interpolation=interpolation)
+  call self%weights%smoothness_indicators_of_rank_2(si=si)
+  !si = self%weights%smoothness_indicators()
+  weights = self%weights%values_rank_2
+  endsubroutine interpolate_with_stencil_of_rank_2_debug
 
-  pure subroutine interpolate_standard(self, stencil, interpolation)
+  pure subroutine interpolate_with_stencil_of_rank_1_standard(self, stencil, interpolation)
+  !< Interpolate values (without providing debug values).
+  class(reconstructor_js), intent(inout) :: self                 !< Reconstructor.
+  real(RPP),               intent(in)    :: stencil(1 - self%S:) !< Stencil of the interpolation [1-S:-1+S].
+  real(RPP),               intent(out)   :: interpolation        !< Result of the interpolation.
+
+  ! Empty subroutine.
+  endsubroutine interpolate_with_stencil_of_rank_1_standard
+
+  pure subroutine interpolate_with_stencil_of_rank_2_standard(self, stencil, interpolation)
   !< Interpolate values (without providing debug values).
   class(reconstructor_js), intent(inout) :: self                     !< Reconstructor.
   real(RPP),               intent(in)    :: stencil(1:, 1 - self%S:) !< Stencil of the interpolation [1:2, 1-S:-1+S].
@@ -106,10 +126,9 @@ contains
   call self%weights%compute(stencil=stencil)
   interpolation = 0._RPP
   do s=0, self%S - 1 ! stencils loop
-    do f=self%f1, self%f2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      interpolation(f + self%ff) = interpolation(f + self%ff) + &
-                                   self%weights%values(f + self%ff, s) * self%interpolations%values(f, s)
+    do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      interpolation(f) = interpolation(f) + self%weights%values_rank_2(f, s) * self%interpolations%values_rank_2(f, s)
     enddo
   enddo
-  endsubroutine interpolate_standard
+  endsubroutine interpolate_with_stencil_of_rank_2_standard
 endmodule wenoof_reconstructor_js

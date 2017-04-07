@@ -31,12 +31,14 @@ type, extends(kappa_object):: kappa_rec_js
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
+  real(RPP), allocatable :: values(:,:) !< Kappa coefficients values [1:2,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create kappa.
-    procedure, pass(self) :: compute     !< Compute kappa.
-    procedure, pass(self) :: description !< Return kappa string-description.
-    procedure, pass(self) :: destroy     !< Destroy kappa.
+    procedure, pass(self) :: create              !< Create kappa.
+    procedure, pass(self) :: compute_kappa_rec   !< Compute kappa.
+    procedure, pass(self) :: compute_kappa_int   !< Compute kappa.
+    procedure, pass(self) :: description         !< Return kappa string-description.
+    procedure, pass(self) :: destroy             !< Destroy kappa.
 endtype kappa_rec_js
 
 contains
@@ -50,16 +52,16 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(1:2, 0:self%S - 1))
-  self%values = 0._RPP
+  allocate(self%values_rank_2(1:2, 0:self%S - 1))
+  self%values_rank_2 = 0._RPP
   call self%compute
   endsubroutine create
 
-  pure subroutine compute(self)
+  pure subroutine compute_kappa_rec(self)
   !< Compute kappa.
   class(kappa_rec_js), intent(inout) :: self !< Kappa.
 
-  associate(val => self%values)
+  associate(val => self%values_rank_2)
     select case(self%S)
       case(2) ! 3rd order
         ! 1 => left interface (i-1/2)
@@ -175,7 +177,16 @@ contains
         val(2, 8) =    9._RPP/24310._RPP ! stencil 8
     endselect
   endassociate
-  endsubroutine compute
+  endsubroutine compute_kappa_rec
+
+  pure subroutine compute_kappa_int(self, stencil, x_target)
+  !< Compute kappa.
+  class(kappa_rec_js), intent(inout) :: self                !< Kappa.
+  real(RPP),           intent(in)    :: stencil(1-self%S:)  !< Stencil used for interpolation, [1-S:S-1].
+  real(RPP),           intent(in)    :: x_target            !< Coordinate of the interpolation point.
+
+  ! Empty Subroutine
+  endsubroutine compute_kappa_int
 
   pure function description(self) result(string)
   !< Return string-description of kappa.
@@ -193,6 +204,6 @@ contains
   class(kappa_rec_js), intent(inout) :: self !< Kappa.
 
   call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
+  if (allocated(self%values_rank_2)) deallocate(self%values_rank_2)
   endsubroutine destroy
 endmodule wenoof_kappa_rec_js
