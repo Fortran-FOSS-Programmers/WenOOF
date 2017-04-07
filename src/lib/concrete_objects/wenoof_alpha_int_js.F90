@@ -31,10 +31,11 @@ type, extends(alpha_object) :: alpha_int_js
   !< ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create                        !< Create alpha.
-    procedure, pass(self) :: compute => compute_alpha_int  !< Compute alpha.
-    procedure, pass(self) :: description                   !< Return alpha string-description.
-    procedure, pass(self) :: destroy                       !< Destroy alpha.
+    procedure, pass(self) :: create              !< Create alpha.
+    procedure, pass(self) :: compute_interpolate !< Compute alpha (interpolate).
+    procedure, pass(self) :: compute_reconstruct !< Compute alpha (reconstruct).
+    procedure, pass(self) :: description         !< Return alpha string-description.
+    procedure, pass(self) :: destroy             !< Destroy alpha.
 endtype alpha_int_js
 
 contains
@@ -53,21 +54,28 @@ contains
   endassociate
   endsubroutine create
 
-  pure subroutine compute_alpha_int(self, beta, kappa)
+  pure subroutine compute_interpolate(self, beta, kappa, values)
   !< Compute alpha.
-  class(alpha_int_js), intent(inout) :: self  !< Alpha coefficient.
-  class(beta_object),  intent(in)    :: beta  !< Beta coefficients.
-  class(kappa_object), intent(in)    :: kappa !< Kappa coefficients.
-  integer(I_P)                       :: s1    !< Counter.
+  class(alpha_int_js), intent(in)  :: self       !< Alpha coefficient.
+  real(RPP),           intent(in)  :: beta(0:)   !< Beta [0:S-1].
+  real(RPP),           intent(in)  :: kappa(0:)  !< Kappa [0:S-1].
+  real(RPP),           intent(out) :: values(0:) !< Alpha values [0:S-1].
+  integer(I_P)                     :: s1         !< Counter.
 
-  associate(val => self%values_rank_1, val_sum => self%values_sum_rank_1)
-    val_sum = 0._RPP
-    do s1=0, self%S - 1 ! stencil loops
-      val(s1) = kappa%values_rank_1(s1)/(self%eps + beta%values_rank_1(s1)) ** self%S
-      val_sum = val_sum + val(s1)
-    enddo
-  endassociate
-  endsubroutine compute_alpha_int
+  do s1=0, self%S - 1 ! stencil loops
+    values(s1) = kappa(s1) / (self%eps + beta(s1)) ** self%S
+  enddo
+  endsubroutine compute_interpolate
+
+  pure subroutine compute_reconstruct(self, beta, kappa, values)
+  !< Compute alpha.
+  class(alpha_int_js), intent(in)  :: self          !< Alpha coefficient.
+  real(RPP),           intent(in)  :: beta(1:,0:)   !< Beta [1:2,0:S-1].
+  real(RPP),           intent(in)  :: kappa(1:,0:)  !< Kappa [1:2,0:S-1].
+  real(RPP),           intent(out) :: values(1:,0:) !< Alpha values [1:2,0:S-1].
+
+  ! Empty procedure.
+  endsubroutine compute_reconstruct
 
   pure function description(self) result(string)
   !< Return alpha string-descripition.

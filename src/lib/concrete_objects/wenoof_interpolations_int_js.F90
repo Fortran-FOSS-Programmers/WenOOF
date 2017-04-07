@@ -32,11 +32,11 @@ type, extends(interpolations_object) :: interpolations_int_js
   real(RPP), allocatable :: coef(:,:)   !< Polynomial coefficients [0:S-1,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create                         !< Create interpolations.
-    procedure, pass(self) :: compute_with_stencil_of_rank_1 !< Compute interpolations.
-    procedure, pass(self) :: compute_with_stencil_of_rank_2 !< Compute interpolations.
-    procedure, pass(self) :: description                    !< Return interpolations string-description.
-    procedure, pass(self) :: destroy                        !< Destroy interpolations.
+    procedure, pass(self) :: create                 !< Create interpolations.
+    procedure, pass(self) :: compute_stencil_rank_1 !< Compute interpolations.
+    procedure, pass(self) :: compute_stencil_rank_2 !< Compute interpolations.
+    procedure, pass(self) :: description            !< Return interpolations string-description.
+    procedure, pass(self) :: destroy                !< Destroy interpolations.
 endtype interpolations_int_js
 
 contains
@@ -346,7 +346,7 @@ contains
   endselect
   endsubroutine create
 
-  pure subroutine compute_with_stencil_of_rank_1(self, stencil)
+  pure subroutine compute_stencil_rank_1(self, stencil)
   !< Compute interpolations.
   class(interpolations_int_js), intent(inout) :: self               !< Interpolations.
   real(RPP),                    intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
@@ -361,15 +361,16 @@ contains
     enddo
   enddo
   endassociate
-  endsubroutine compute_with_stencil_of_rank_1
+  endsubroutine compute_stencil_rank_1
 
-  pure subroutine compute_with_stencil_of_rank_2(self, stencil)
+  pure subroutine compute_stencil_rank_2(self, stencil, values)
   !< Compute interpolations.
-  class(interpolations_int_js), intent(inout) :: self                  !< Interpolations.
-  real(RPP),                    intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  class(interpolations_int_js), intent(in)  :: self                  !< Interpolations.
+  real(RPP),                    intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(RPP),                    intent(out) :: values(1:, 0:)        !< Interpolations values.
 
   ! Empty Subroutine.
-  endsubroutine compute_with_stencil_of_rank_2
+  endsubroutine compute_stencil_rank_2
 
   pure function description(self) result(string)
   !< Return interpolations string-description.

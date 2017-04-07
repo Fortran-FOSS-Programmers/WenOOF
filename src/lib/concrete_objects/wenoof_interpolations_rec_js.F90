@@ -35,11 +35,11 @@ type, extends(interpolations_object) :: interpolations_rec_js
   real(RPP), allocatable :: coef(:,:,:) !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create                             !< Create interpolations.
-    procedure, pass(self) :: compute_with_stencil_of_rank_1     !< Compute interpolations.
-    procedure, pass(self) :: compute_with_stencil_of_rank_2     !< Compute interpolations.
-    procedure, pass(self) :: description                        !< Return interpolations string-description.
-    procedure, pass(self) :: destroy                            !< Destroy interpolations.
+    procedure, pass(self) :: create                 !< Create interpolations.
+    procedure, pass(self) :: compute_stencil_rank_1 !< Compute interpolations.
+    procedure, pass(self) :: compute_stencil_rank_2 !< Compute interpolations.
+    procedure, pass(self) :: description            !< Return interpolations string-description.
+    procedure, pass(self) :: destroy                !< Destroy interpolations.
 endtype interpolations_rec_js
 
 contains
@@ -51,8 +51,6 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values_rank_2(1:2, 0:self%S - 1))
-  self%values_rank_2 = 0._RPP
   allocate(self%coef(1:2, 0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
     select case(self%S)
@@ -451,33 +449,32 @@ contains
   endassociate
   endsubroutine create
 
-  pure subroutine compute_with_stencil_of_rank_1(self, stencil)
+  pure subroutine compute_stencil_rank_1(self, stencil)
   !< Compute interpolations.
   class(interpolations_rec_js), intent(inout) :: self               !< Interpolations.
   real(RPP),                    intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
 
   ! Empty Subroutine.
-  endsubroutine compute_with_stencil_of_rank_1
+  endsubroutine compute_stencil_rank_1
 
-  pure subroutine compute_with_stencil_of_rank_2(self, stencil)
+  pure subroutine compute_stencil_rank_2(self, stencil, values)
   !< Compute interpolations.
-  class(interpolations_rec_js), intent(inout) :: self                  !< Interpolations.
-  real(RPP),                    intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P)                                :: s1                    !< Counter.
-  integer(I_P)                                :: s2                    !< Counter.
-  integer(I_P)                                :: f                     !< Counter.
+  class(interpolations_rec_js), intent(in)  :: self                  !< Interpolations.
+  real(RPP),                    intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(RPP),                    intent(out) :: values(1:, 0:)        !< Interpolations values.
+  integer(I_P)                              :: s1                    !< Counter.
+  integer(I_P)                              :: s2                    !< Counter.
+  integer(I_P)                              :: f                     !< Counter.
 
-  associate(val => self%values_rank_2)
-  val = 0._RPP
+  values = 0._RPP
   do s1=0, self%S - 1 ! stencils loop
     do s2=0, self%S - 1 ! values loop
       do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-        val(f, s1) = val(f, s1) + self%coef(f, s2, s1) * stencil(f, -s2 + s1)
+        values(f, s1) = values(f, s1) + self%coef(f, s2, s1) * stencil(f, -s2 + s1)
       enddo
     enddo
   enddo
-  endassociate
-  endsubroutine compute_with_stencil_of_rank_2
+  endsubroutine compute_stencil_rank_2
 
   pure function description(self) result(string)
   !< Return interpolations string-description.
@@ -495,7 +492,6 @@ contains
   class(interpolations_rec_js), intent(inout) :: self !< Interpolations.
 
   call self%destroy_
-  if (allocated(self%values_rank_2)) deallocate(self%values_rank_2)
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
 endmodule wenoof_interpolations_rec_js

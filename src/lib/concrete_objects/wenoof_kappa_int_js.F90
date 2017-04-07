@@ -70,7 +70,7 @@ contains
   !< Compute kappa.
   class(kappa_int_js), intent(inout) :: self !< Kappa.
 
-  ! Empty subroutine
+  ! Empty procedure.
   endsubroutine compute_kappa_rec
 
   pure subroutine compute_kappa_int(self, stencil, x_target)

@@ -33,11 +33,11 @@ type, extends(beta_object) :: beta_int_js
   real(RPP), allocatable :: coef(:,:,:) !< Beta coefficients [0:S-1,0:S-1,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create                             !< Create beta.
-    procedure, pass(self) :: compute_with_stencil_of_rank_1     !< Compute beta.
-    procedure, pass(self) :: compute_with_stencil_of_rank_2     !< Compute beta.
-    procedure, pass(self) :: description                        !< Return beta string-description.
-    procedure, pass(self) :: destroy                            !< Destroy beta.
+    procedure, pass(self) :: create                 !< Create beta.
+    procedure, pass(self) :: compute_stencil_rank_1 !< Compute beta.
+    procedure, pass(self) :: compute_stencil_rank_2 !< Compute beta.
+    procedure, pass(self) :: description            !< Return beta string-description.
+    procedure, pass(self) :: destroy                !< Destroy beta.
 endtype beta_int_js
 
 contains
@@ -2372,7 +2372,7 @@ contains
   endassociate
   endsubroutine create
 
-  pure subroutine compute_with_stencil_of_rank_1(self, stencil)
+  pure subroutine compute_stencil_rank_1(self, stencil)
   !< Compute beta.
   class(beta_int_js), intent(inout) :: self               !< Beta.
   real(RPP),          intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
@@ -2388,15 +2388,16 @@ contains
       enddo
     enddo
   endassociate
-  endsubroutine compute_with_stencil_of_rank_1
+  endsubroutine compute_stencil_rank_1
 
-  pure subroutine compute_with_stencil_of_rank_2(self, stencil)
+  pure subroutine compute_stencil_rank_2(self, stencil, values)
   !< Compute beta.
-  class(beta_int_js), intent(inout) :: self                  !< Beta.
-  real(RPP),          intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  class(beta_int_js), intent(in)  :: self                  !< Beta.
+  real(RPP),          intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(RPP),          intent(out) :: values(1:,0:)         !< Beta values [1:2,0:S-1].
 
   ! Empty subroutine.
-  endsubroutine compute_with_stencil_of_rank_2
+  endsubroutine compute_stencil_rank_2
 
   pure function description(self) result(string)
   !< Return beta string-description.

@@ -45,14 +45,14 @@ type, extends(weights_object):: weights_rec_js
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
-  class(alpha_object), allocatable :: alpha       !< Alpha coefficients (non linear weights).
-  class(beta_object),  allocatable :: beta        !< Beta coefficients (smoothness indicators).
-  class(kappa_object), allocatable :: kappa       !< kappa coefficients (optimal, linear weights).
+  class(alpha_object), allocatable :: alpha !< Alpha coefficients (non linear weights).
+  class(beta_object),  allocatable :: beta  !< Beta coefficients (smoothness indicators).
+  class(kappa_object), allocatable :: kappa !< kappa coefficients (optimal, linear weights).
   contains
     ! deferred public methods
     procedure, pass(self) :: create                          !< Create weights.
-    procedure, pass(self) :: compute_with_stencil_of_rank_1  !< Compute weights.
-    procedure, pass(self) :: compute_with_stencil_of_rank_2  !< Compute weights.
+    procedure, pass(self) :: compute_stencil_rank_1          !< Compute weights.
+    procedure, pass(self) :: compute_stencil_rank_2          !< Compute weights.
     procedure, pass(self) :: description                     !< Return weights string-description.
     procedure, pass(self) :: destroy                         !< Destroy weights.
     procedure, pass(self) :: smoothness_indicators_of_rank_1 !< Return smoothness indicators.
@@ -71,8 +71,6 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values_rank_2(1:2, 0:self%S - 1))
-  self%values_rank_2 = 0._RPP
   select type(constructor)
   type is(weights_rec_js_constructor)
     associate(alpha_constructor=>constructor%alpha_constructor, &
@@ -106,28 +104,30 @@ contains
   endselect
   endsubroutine create
 
-  pure subroutine compute_with_stencil_of_rank_1(self, stencil)
+  pure subroutine compute_stencil_rank_1(self, stencil)
   !< Compute weights.
   class(weights_rec_js), intent(inout) :: self               !< Weights.
   real(RPP),             intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
 
   ! Empty routine.
-  endsubroutine compute_with_stencil_of_rank_1
+  endsubroutine compute_stencil_rank_1
 
-  pure subroutine compute_with_stencil_of_rank_2(self, stencil)
+  pure subroutine compute_stencil_rank_2(self, stencil, values)
   !< Compute weights.
-  class(weights_rec_js), intent(inout) :: self                  !< Weights.
-  real(RPP),             intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P)                         :: f, s                  !< Counters.
+  class(weights_rec_js), intent(in)  :: self                  !< Weights.
+  real(RPP),             intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(RPP),             intent(out) :: values(1:,0:)         !< Weights values of stencil interpolations.
+  real(RPP)                          :: beta(1:2,0:self%S-1)  !< Beta values.
+  integer(I_P)                       :: f, s                  !< Counters.
 
-  call self%beta%compute(stencil=stencil)
-  call self%alpha%compute(beta=self%beta, kappa=self%kappa)
+  call self%beta%compute(stencil=stencil, values=beta)
+  ! call self%alpha%compute(beta=self%beta, kappa=self%kappa)
   do s=0, self%S - 1 ! stencils loop
     do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      self%values_rank_2(f, s) = self%alpha%values_rank_2(f, s) / self%alpha%values_sum_rank_2(f)
+      values(f, s) = self%alpha%values_rank_2(f, s) / self%alpha%values_sum_rank_2(f)
     enddo
   enddo
-  endsubroutine compute_with_stencil_of_rank_2
+  endsubroutine compute_stencil_rank_2
 
   pure function description(self) result(string)
   !< Return string-description of weights.
@@ -145,7 +145,6 @@ contains
   class(weights_rec_js), intent(inout) :: self !< Weights.
 
   call self%destroy_
-  if (allocated(self%values_rank_2)) deallocate(self%values_rank_2)
   if (allocated(self%alpha)) deallocate(self%alpha)
   if (allocated(self%beta)) deallocate(self%beta)
   if (allocated(self%kappa)) deallocate(self%kappa)
