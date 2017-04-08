@@ -5,7 +5,7 @@ module wenoof_interpolator_factory
 use penf, only: I_P
 use wenoof_interpolations_object
 use wenoof_interpolator_object
-! use wenoof_interpolator_js
+use wenoof_interpolator_js
 use wenoof_reconstructor_js
 use wenoof_weights_object
 
@@ -28,8 +28,8 @@ contains
   class(interpolator_object), allocatable, intent(out) :: object      !< Object.
 
   select type(constructor)
-  ! type is(interpolator_js_constructor)
-    ! allocate(interpolator_js :: object)
+  type is(interpolator_js_constructor)
+    allocate(interpolator_js :: object)
   type is(reconstructor_js_constructor)
     allocate(reconstructor_js :: object)
   class default
@@ -39,20 +39,23 @@ contains
   endsubroutine create
 
   subroutine create_constructor(interpolator_type, S, interpolations_constructor, weights_constructor, &
-                                constructor, face_left, face_right)
+                                constructor)
   !< Create an instance of concrete extension of [[weights_object_constructor]].
   character(*),                                        intent(in)           :: interpolator_type          !< Type of interpolator.
   integer(I_P),                                        intent(in)           :: S                          !< Stencils dimension.
   class(interpolations_object_constructor),            intent(in)           :: interpolations_constructor !< Interpolations const.
   class(weights_object_constructor),                   intent(in)           :: weights_constructor        !< Weights constructor.
   class(interpolator_object_constructor), allocatable, intent(out)          :: constructor                !< Constructor.
-  logical,                                             intent(in), optional :: face_left                  !< Activate left interp.
-  logical,                                             intent(in), optional :: face_right                 !< Activate right interp.
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')
-    ! @TODO implement this
-    error stop 'interpolator-JS to be implemented'
+    allocate(interpolator_js_constructor :: constructor)
+  case('interpolator-M-JS')
+    allocate(interpolator_js_constructor :: constructor)
+  case('interpolator-M-Z')
+    allocate(interpolator_js_constructor :: constructor)
+  case('interpolator-Z')
+    allocate(interpolator_js_constructor :: constructor)
   case('reconstructor-JS')
     allocate(reconstructor_js_constructor :: constructor)
   case('reconstructor-M-JS')
@@ -62,8 +65,11 @@ contains
   case('reconstructor-Z')
     allocate(reconstructor_js_constructor :: constructor)
   endselect
-  call constructor%create(S=S, face_left=face_left, face_right=face_right)
+  call constructor%create(S=S)
   select type(constructor)
+  type is(interpolator_js_constructor)
+    allocate(constructor%interpolations_constructor, source=interpolations_constructor)
+    allocate(constructor%weights_constructor, source=weights_constructor)
   type is(reconstructor_js_constructor)
     allocate(constructor%interpolations_constructor, source=interpolations_constructor)
     allocate(constructor%weights_constructor, source=weights_constructor)

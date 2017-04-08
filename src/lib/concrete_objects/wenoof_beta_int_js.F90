@@ -1,11 +1,10 @@
 !< Jiang-Shu and Gerolymos-Senechal-Vallet Beta coefficients (smoothness indicators of stencil interpolations) object.
-module wenoof_beta_rec_js
+module wenoof_beta_int_js
 !< Jiang-Shu and Gerolymos-Senechal-Vallet Beta coefficients (smoothness indicators of stencil interpolations) object.
 !<
-!< @note The provided beta object implements the smoothness indicators defined in *Efficient Implementation
-!< of Weighted ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
-!< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
-!< doi:10.1016/j.jcp.2009.07.039
+!< @note The provided interpolations implement the Lagrange interpolations defined in *High Order Weighted Essentially
+!< Nonoscillatory Schemes for Convection Dominated Problems*, Chi-Wang Shu, SIAM Review, 2009, vol. 51, pp. 82--126,
+!< doi:10.1137/070679065.
 
 #ifdef r16p
 use penf, only: I_P, RPP=>R16P
@@ -17,20 +16,19 @@ use wenoof_beta_object
 
 implicit none
 private
-public :: beta_rec_js
-public :: beta_rec_js_constructor
+public :: beta_int_js
+public :: beta_int_js_constructor
 
-type, extends(beta_object_constructor) :: beta_rec_js_constructor
+type, extends(beta_object_constructor) :: beta_int_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet beta object constructor.
-endtype beta_rec_js_constructor
+endtype beta_int_js_constructor
 
-type, extends(beta_object) :: beta_rec_js
+type, extends(beta_object) :: beta_int_js
   !< Jiang-Shu and Gerolymos-Senechal-Vallet Beta coefficients (smoothness indicators of stencil interpolations) object.
   !<
-  !< @note The provided beta object implements the smoothness indicators defined in *Efficient Implementation of Weighted ENO
-  !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
-  !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
-  !< doi:10.1016/j.jcp.2009.07.039
+  !< @note The provided interpolations implement the Lagrange interpolations defined in *High Order Weighted Essentially
+  !< Nonoscillatory Schemes for Convection Dominated Problems*, Chi-Wang Shu, SIAM Review, 2009, vol. 51, pp. 82--126,
+  !< doi:10.1137/070679065.
   private
   real(RPP), allocatable :: coef(:,:,:) !< Beta coefficients [0:S-1,0:S-1,0:S-1].
   contains
@@ -40,19 +38,19 @@ type, extends(beta_object) :: beta_rec_js
     procedure, pass(self) :: compute_with_stencil_of_rank_2     !< Compute beta.
     procedure, pass(self) :: description                        !< Return beta string-description.
     procedure, pass(self) :: destroy                            !< Destroy beta.
-endtype beta_rec_js
+endtype beta_int_js
 
 contains
   ! public deferred methods
   subroutine create(self, constructor)
   !< Create beta.
-  class(beta_rec_js),              intent(inout) :: self        !< Beta.
+  class(beta_int_js),              intent(inout) :: self        !< Beta.
   class(base_object_constructor),  intent(in)    :: constructor !< Beta constructor.
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values_rank_2(1:2, 0:self%S - 1))
-  self%values_rank_2 = 0._RPP
+  allocate(self%values_rank_1(0:self%S - 1))
+  self%values_rank_1 = 0._RPP
   allocate(self%coef(0:self%S - 1, 0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
     select case(self%S)
@@ -91,415 +89,415 @@ contains
       c(0,2,2) =   0._RPP       ; c(1,2,2) =   0._RPP       ; c(2,2,2) =  10._RPP/3._RPP
     case(4) ! 7th order
       ! stencil 0
-      !              i*i              ;            (i-1)*i              ;            (i-2)*i
-      c(0,0,0) =  2107._RPP / 240._RPP; c(1,0,0) = -1567._RPP /  40._RPP; c(2,0,0) =  3521._RPP / 120._RPP
+      !              i*i               ;             (i-1)*i              ;            (i-2)*i
+      c(0,0,0) = 25729._RPP / 2880._RPP; c(1,0,0) = -6383._RPP /  160._RPP; c(2,0,0) = 14369._RPP / 480._RPP
       !          (i-3)*i
-      c(3,0,0) =  -309._RPP /  40._RPP
-      !               /               ;            (i-1)*(i-1)          ;            (i-2)*(i-1)
-      c(0,1,0) =     0._RPP           ; c(1,1,0) = 11003._RPP / 240._RPP; c(2,1,0) = -8623._RPP / 120._RPP
+      c(3,0,0) =-11389._RPP / 1440._RPP
+      !               /                ;            (i-1)*(i-1)           ;            (i-2)*(i-1)
+      c(0,1,0) =     0._RPP            ; c(1,1,0) = 44747._RPP /  960._RPP; c(2,1,0) =-35047._RPP / 480._RPP
       !          (i-3)*(i-1)
-      c(3,1,0) =  2321._RPP / 120._RPP
-      !               /               ;                 /               ;            (i-2)*(i-2)
-      c(0,2,0) =     0._RPP           ; c(1,2,0) =     0._RPP           ; c(2,2,0) =  7043._RPP / 240._RPP
+      c(3,1,0) =  9449._RPP /  480._RPP
+      !               /                ;                 /                ;            (i-2)*(i-2)
+      c(0,2,0) =     0._RPP            ; c(1,2,0) =     0._RPP            ; c(2,2,0) = 28547._RPP / 960._RPP
       !          (i-3)*(i-2)
-      c(3,2,0) =  -647._RPP /  40._RPP
-      !               /               ;                 /               ;                 /
-      c(0,3,0) =     0._RPP           ; c(1,3,0) =     0._RPP           ; c(2,3,0) =     0._RPP
+      c(3,2,0) = -2623._RPP /  160._RPP
+      !                /               ;                 /                ;                 /
+      c(0,3,0) =     0._RPP            ; c(1,3,0) =     0._RPP            ; c(2,3,0) =     0._RPP
       !          (i-3)*(i-3)
-      c(3,3,0) =   547._RPP / 240._RPP
+      c(3,3,0) =  6649._RPP / 2880._RPP
       ! stencil 1
-      !          (i+1)*(i+1)          ;                i*(i+1)          ;            (i-1)*(i+1)
-      c(0,0,1) =   547._RPP / 240._RPP; c(1,0,1) = -1261._RPP / 120._RPP; c(2,0,1) =   961._RPP / 120._RPP
+      !          (i+1)*(i+1)           ;                i*(i+1)           ;            (i-1)*(i+1)
+      c(0,0,1) =  6649._RPP / 2880._RPP; c(1,0,1) = -5069._RPP /  480._RPP; c(2,0,1) =  1283._RPP / 160._RPP
       !          (i-2)*(i+1)
-      c(3,0,1) =  -247._RPP / 120._RPP
-      !               /               ;                i*i              ;            (i-1)*i
-      c(0,1,1) =     0._RPP           ; c(1,1,1) =  3443._RPP / 240._RPP; c(2,1,1) = -2983._RPP / 120._RPP
+      c(3,0,1) = -2989._RPP / 1440._RPP
+      !               /                ;                i*i               ;            (i-1)*i
+      c(0,1,1) =     0._RPP            ; c(1,1,1) = 13667._RPP /  960._RPP; c(2,1,1) =-11767._RPP / 480._RPP
       !          (i-2)*i
-      c(3,1,1) =   267._RPP /  40._RPP
-      !               /               ;                 /               ;            (i-1)*(i-1)
-      c(0,2,1) =     0._RPP           ; c(1,2,1) =     0._RPP           ; c(2,2,1) =  2843._RPP / 240._RPP
+      c(3,1,1) =  3169._RPP /  480._RPP
+      !               /                ;                 /                ;            (i-1)*(i-1)
+      c(0,2,1) =     0._RPP            ; c(1,2,1) =     0._RPP            ; c(2,2,1) = 11147._RPP / 960._RPP
       !          (i-2)*(i-1)
-      c(3,2,1) =  -821._RPP / 120._RPP
-      !               /               ;                 /               ;                 /
-      c(0,3,1) =     0._RPP           ; c(1,3,1) =     0._RPP           ; c(2,3,1) =     0._RPP
+      c(3,2,1) = -3229._RPP /  480._RPP
+      !               /                ;                 /                ;                 /
+      c(0,3,1) =     0._RPP            ; c(1,3,1) =     0._RPP            ; c(2,3,1) =     0._RPP
       !          (i-2)*(i-2)
-      c(3,3,1) =    89._RPP /  80._RPP
+      c(3,3,1) =  3169._RPP / 2880._RPP
       ! stencil 2
-      !          (i+2)*(i+2)          ;            (i+1)*(i+2)          ;                i*(i+2)
-      c(0,0,2) =    89._RPP /  80._RPP; c(1,0,2) =  -821._RPP / 120._RPP; c(2,0,2) =   267._RPP /  40._RPP
+      !          (i+2)*(i+2)           ;            (i+1)*(i+2)           ;                i*(i+2)
+      c(0,0,2) =  3169._RPP / 2880._RPP; c(1,0,2) = -3229._RPP /  480._RPP; c(2,0,2) =  3169._RPP / 480._RPP
       !          (i-1)*(i+2)
-      c(3,0,2) =  -247._RPP / 120._RPP
-      !               /               ;            (i+1)*(i+1)          ;                i*(i+1)
-      c(0,1,2) =     0._RPP           ; c(1,1,2) =  2843._RPP / 240._RPP; c(2,1,2) = -2983._RPP / 120._RPP
+      c(3,0,2) = -2989._RPP / 1440._RPP
+      !               /                ;            (i+1)*(i+1)           ;                i*(i+1)
+      c(0,1,2) =     0._RPP            ; c(1,1,2) = 11147._RPP /  960._RPP; c(2,1,2) =-11767._RPP / 480._RPP
       !          (i-1)*(i+1)
-      c(3,1,2) =   961._RPP / 120._RPP
-      !               /               ;                 /               ;                i*i
-      c(0,2,2) =     0._RPP           ; c(1,2,2) =     0._RPP           ; c(2,2,2) =  3443._RPP / 240._RPP
+      c(3,1,2) =  1283._RPP /  160._RPP
+      !               /                ;                 /                ;                i*i
+      c(0,2,2) =     0._RPP            ; c(1,2,2) =     0._RPP            ; c(2,2,2) = 13667._RPP / 960._RPP
       !          (i-1)*i
-      c(3,2,2) = -1261._RPP / 120._RPP
-      !               /               ;                 /               ;                 /
-      c(0,3,2) =     0._RPP           ; c(1,3,2) =     0._RPP           ; c(2,3,2) =     0._RPP
+      c(3,2,2) = -5069._RPP /  480._RPP
+      !               /                ;                 /                ;                 /
+      c(0,3,2) =     0._RPP            ; c(1,3,2) =     0._RPP            ; c(2,3,2) =     0._RPP
       !          (i-1)*(i-1)
-      c(3,3,2) =   547._RPP / 240._RPP
+      c(3,3,2) =  6649._RPP / 2880._RPP
       ! stencil 3
-      !          (i+3)*(i+3)          ;            (i+2)*(i+3)          ;            (i+1)*(i+3)
-      c(0,0,3) =   547._RPP / 240._RPP; c(1,0,3) =  -647._RPP /  40._RPP; c(2,0,3) =  2321._RPP / 120._RPP
+      !          (i+3)*(i+3)           ;            (i+2)*(i+3)           ;            (i+1)*(i+3)
+      c(0,0,3) =  6649._RPP / 2880._RPP; c(1,0,3) = -2623._RPP /  160._RPP; c(2,0,3) =  9449._RPP / 480._RPP
       !              i*(i+3)
-      c(3,0,3) =  -309._RPP /  40._RPP
-      !               /               ;            (i+2)*(i+2)          ;      (i+1)*(i+2)
-      c(0,1,3) =     0._RPP           ; c(1,1,3) =  7043._RPP / 240._RPP; c(2,1,3) = -8623._RPP / 120._RPP
+      c(3,0,3) =-11389._RPP / 1440._RPP
+      !               /                ;            (i+2)*(i+2)           ;      (i+1)*(i+2)
+      c(0,1,3) =     0._RPP            ; c(1,1,3) = 28547._RPP /  960._RPP; c(2,1,3) =-35047._RPP / 480._RPP
       !              i*(i+2)
-      c(3,1,3) =  3521._RPP / 120._RPP
-      !               /               ;                 /               ;      (i+1)*(i+1)
-      c(0,2,3) =     0._RPP           ; c(1,2,3) =     0._RPP           ; c(2,2,3) = 11003._RPP / 240._RPP
+      c(3,1,3) = 14369._RPP /  480._RPP
+      !               /                ;                 /                ;      (i+1)*(i+1)
+      c(0,2,3) =     0._RPP            ; c(1,2,3) =     0._RPP            ; c(2,2,3) = 44747._RPP / 960._RPP
       !              i*(i+1)
-      c(3,2,3) = -1567._RPP /  40._RPP
+      c(3,2,3) = -6383._RPP /  160._RPP
       !               /               ;                 /               ;           /
       c(0,3,3) =     0._RPP           ; c(1,3,3) =     0._RPP           ; c(2,3,3) =     0._RPP
       !              i*i
-      c(3,3,3) =  2107._RPP / 240._RPP
+      c(3,3,3) = 25729._RPP / 2880._RPP
     case(5) ! 9th order
       ! stencil 0
-      !              i*i                 ;             (i-1)*i                ;             (i-2)*i
-      c(0,0,0) =   53959._RPP / 2520._RPP; c(1,0,0) = -649501._RPP / 5040._RPP; c(2,0,0) =  252941._RPP / 1680._RPP
-      !          (i-3)*i                 ;             (i-4)*i
-      c(3,0,0) = -411487._RPP / 5040._RPP; c(4,0,0) =   86329._RPP / 5040._RPP
-      !               /                  ;             (i-1)*(i-1)            ;             (i-2)*(i-1)
-      c(0,1,0) =       0._RPP            ; c(1,1,0) = 1020563._RPP / 5040._RPP; c(2,1,0) =  -68391._RPP /  140._RPP
-      !          (i-3)*(i-1)             ;             (i-4)*(i-1)
-      c(3,1,0) =  679229._RPP / 2520._RPP; c(4,1,0) = -288007._RPP / 5040._RPP
-      !               /                  ;                  /                 ;             (i-2)*(i-2)
-      c(0,2,0) =       0._RPP            ; c(1,2,0) =       0._RPP            ; c(2,2,0) =  507131._RPP / 1680._RPP
-      !          (i-3)*(i-2)             ;             (i-4)*(i-2)
-      c(3,2,0) = -142033._RPP /  420._RPP; c(4,2,0) =  121621._RPP / 1680._RPP
-      !               /                  ;                  /                 ;                  /
-      c(0,3,0) =       0._RPP            ; c(1,3,0) =       0._RPP            ; c(2,3,0) =       0._RPP
-      !          (i-3)*(i-3)             ;             (i-4)*(i-3)
-      c(3,3,0) =  482963._RPP / 5040._RPP; c(4,3,0) = -208501._RPP / 5040._RPP
-      !               /                  ;                  /                 ;                  /
-      c(0,4,0) =       0._RPP            ; c(1,4,0) =       0._RPP            ; c(2,4,0) =       0._RPP
-      !               /                  ;             (i-4)*(i-4)
-      c(3,4,0) =       0._RPP            ; c(4,4,0) =   11329._RPP / 2520._RPP
+      !               i*i                  ;              (i-1)*i                 ;             (i-2)*i
+      c(0,0,0) =   668977._RPP / 30240._RPP; c(1,0,0) = -8055511._RPP / 60480._RPP; c(2,0,0) = 3141559._RPP / 20160._RPP
+      !           (i-3)*i                  ;              (i-4)*i
+      c(3,0,0) = -5121853._RPP / 60480._RPP; c(4,0,0) =  1076779._RPP / 60480._RPP
+      !                /                   ;              (i-1)*(i-1)             ;             (i-2)*(i-1)
+      c(0,1,0) =        0._RPP             ; c(1,1,0) = 12627689._RPP / 60480._RPP; c(2,1,0) =-2536843._RPP /  5040._RPP
+      !           (i-3)*(i-1)              ;             (i-4)*(i-1)
+      c(3,1,0) =  8405471._RPP / 30240._RPP; c(4,1,0) = -3568693._RPP / 60480._RPP
+      !                /                   ;                  /                   ;             (i-2)*(i-2)
+      c(0,2,0) =        0._RPP             ; c(1,2,0) =        0._RPP             ; c(2,2,0) = 2085371._RPP /  6720._RPP
+      !           (i-3)*(i-2)              ;             (i-4)*(i-2)
+      c(3,2,0) = -1751863._RPP /  5040._RPP; c(4,2,0) =  1501039._RPP / 20160._RPP
+      !                /                   ;                  /                   ;                  /
+      c(0,3,0) =        0._RPP             ; c(1,3,0) =        0._RPP             ; c(2,3,0) =       0._RPP
+      !           (i-3)*(i-3)              ;             (i-4)*(i-3)
+      c(3,3,0) =  5951369._RPP / 60480._RPP; c(4,3,0) = -2569471._RPP / 60480._RPP
+      !                /                   ;                  /                   ;                  /
+      c(0,4,0) =        0._RPP             ; c(1,4,0) =        0._RPP             ; c(2,4,0) =       0._RPP
+      !                /                   ;             (i-4)*(i-4)
+      c(3,4,0) =        0._RPP             ; c(4,4,0) =   139567._RPP / 30240._RPP
       ! stencil 1
-      !          (i+1)*(i+1)             ;                 i*(i+1)            ;             (i-1)*(i+1)
-      c(0,0,1) =   11329._RPP / 2520._RPP; c(1,0,1) = -140251._RPP / 5040._RPP; c(2,0,1) =   55051._RPP / 1680._RPP
-      !          (i-2)*(i+1)             ;             (i-3)*(i+1)
-      c(3,0,1) =  -88297._RPP / 5040._RPP; c(4,0,1) =   18079._RPP / 5040._RPP
-      !               /                  ;                 i*i                ;             (i-1)*i
-      c(0,1,1) =       0._RPP            ; c(1,1,1) =  242723._RPP / 5040._RPP; c(2,1,1) =  -25499._RPP /  210._RPP
-      !          (i-2)*i                 ;             (i-3)*i
-      c(3,1,1) =  168509._RPP / 2520._RPP; c(4,1,1) =  -70237._RPP / 5040._RPP
-      !               /                  ;                  /                 ;             (i-1)*(i-1)
-      c(0,2,1) =       0._RPP            ; c(1,2,1) =       0._RPP            ; c(2,2,1) =  135431._RPP / 1680._RPP
-      !          (i-2)*(i-1)             ;             (i-3)*(i-1)
-      c(3,2,1) =   -3229._RPP /   35._RPP; c(4,2,1) =   33071._RPP / 1680._RPP
-      !               /                  ;                  /                 ;                  /
-      c(0,3,1) =       0._RPP            ; c(1,3,1) =       0._RPP            ; c(2,3,1) =       0._RPP
-      !          (i-2)*(i-2)             ;             (i-3)*(i-2)
-      c(3,3,1) =  138563._RPP / 5040._RPP; c(4,3,1) =  -60871._RPP / 5040._RPP
-      !               /                  ;                  /                 ;                  /
-      c(0,4,1) =       0._RPP            ; c(1,4,1) =       0._RPP            ; c(2,4,1) =       0._RPP
-      !               /                  ;             (i-3)*(i-3)
-      c(3,4,1) =       0._RPP            ; c(4,4,1) =    1727._RPP / 1260._RPP
+      !           (i+1)*(i+1)              ;                 i*(i+1)              ;             (i-1)*(i+1)
+      c(0,0,1) =   139567._RPP / 30240._RPP; c(1,0,1) = -1714561._RPP / 60480._RPP; c(2,0,1) =  671329._RPP / 20160._RPP
+      !           (i-2)*(i+1)              ;             (i-3)*(i+1)
+      c(3,0,1) = -1079563._RPP / 60480._RPP; c(4,0,1) =   221869._RPP / 60480._RPP
+      !                /                   ;                 i*i                  ;             (i-1)*i
+      c(0,1,1) =        0._RPP             ; c(1,1,1) =  2932409._RPP / 60480._RPP; c(2,1,1) = -306569._RPP /  2520._RPP
+      !           (i-2)*i                  ;             (i-3)*i
+      c(3,1,1) =  2027351._RPP / 30240._RPP; c(4,1,1) =  -847303._RPP / 60480._RPP
+      !                /                   ;                  /                   ;             (i-1)*(i-1)
+      c(0,2,1) =        0._RPP             ; c(1,2,1) =        0._RPP             ; c(2,2,1) =  539351._RPP /  6720._RPP
+      !           (i-2)*(i-1)              ;             (i-3)*(i-1)
+      c(3,2,1) =   -57821._RPP /   630._RPP; c(4,2,1) =   395389._RPP / 20160._RPP
+      !                /                   ;                  /                   ;                  /
+      c(0,3,1) =        0._RPP             ; c(1,3,1) =        0._RPP             ; c(2,3,1) =       0._RPP
+      !           (i-2)*(i-2)              ;             (i-3)*(i-2)
+      c(3,3,1) =  1650569._RPP / 60480._RPP; c(4,3,1) =  -725461._RPP / 60480._RPP
+      !                /                   ;                  /                   ;                  /
+      c(0,4,1) =        0._RPP             ; c(1,4,1) =        0._RPP             ; c(2,4,1) =       0._RPP
+      !                /                   ;             (i-3)*(i-3)
+      c(3,4,1) =        0._RPP             ; c(4,4,1) =    20591._RPP / 15120._RPP
       ! stencil 2
-      !          (i+2)*(i+2)             ;             (i+1)*(i+2)            ;                 i*(i+2)
-      c(0,0,2) =    1727._RPP / 1260._RPP; c(1,0,2) =  -51001._RPP / 5040._RPP; c(2,0,2) =    7547._RPP /  560._RPP
-      !          (i-1)*(i+2)             ;             (i-2)*(i+2)
-      c(3,0,2) =  -38947._RPP / 5040._RPP; c(4,0,2) =    8209._RPP / 5040._RPP
-      !               /                  ;             (i+1)*(i+1)            ;                 i*(i+1)
-      c(0,1,2) =       0._RPP            ; c(1,1,2) =  104963._RPP / 5040._RPP; c(2,1,2) =  -24923._RPP /  420._RPP
-      !          (i-1)*(i+1)             ;             (i-2)*(i+1)
-      c(3,1,2) =   89549._RPP / 2520._RPP; c(4,1,2) =  -38947._RPP / 5040._RPP
-      !               /                  ;                  /                 ;                 i*i
-      c(0,2,2) =       0._RPP            ; c(1,2,2) =       0._RPP            ; c(2,2,2) =   77051._RPP / 1680._RPP
-      !          (i-1)*i                 ;             (i-2)*i
-      c(3,2,2) =  -24923._RPP /  420._RPP; c(4,2,2) =    7547._RPP /  560._RPP
-      !               /                  ;                  /                 ;                  /
-      c(0,3,2) =       0._RPP            ; c(1,3,2) =       0._RPP            ; c(2,3,2) =       0._RPP
-      !          (i-1)*(i-1)             ;             (i-2)*(i-1)
-      c(3,3,2) =  104963._RPP / 5040._RPP; c(4,3,2) =  -51001._RPP / 5040._RPP
-      !               /                  ;                  /                 ;                  /
-      c(0,4,2) =       0._RPP            ; c(1,4,2) =       0._RPP            ; c(2,4,2) =       0._RPP
-      !               /                  ;             (i-2)*(i-2)
-      c(3,4,2) =       0._RPP            ; c(4,4,2) =    1727._RPP / 1260._RPP
+      !           (i+2)*(i+2)              ;             (i+1)*(i+2)              ;                 i*(i+2)
+      c(0,0,2) =    20591._RPP / 15120._RPP; c(1,0,2) =  -601771._RPP / 60480._RPP; c(2,0,2) =  266659._RPP /  20160._RPP
+      !           (i-1)*(i+2)              ;             (i-2)*(i+2)
+      c(3,0,2) =  -461113._RPP / 60480._RPP; c(4,0,2) =    98179._RPP / 60480._RPP
+      !                /                   ;             (i+1)*(i+1)              ;                 i*(i+1)
+      c(0,1,2) =        0._RPP             ; c(1,1,2) =  1228889._RPP / 60480._RPP; c(2,1,2) = -291313._RPP /   5040._RPP
+      !           (i-1)*(i+1)              ;             (i-2)*(i+1)
+      c(3,1,2) =  1050431._RPP / 30240._RPP; c(4,1,2) =  -461113._RPP / 60480._RPP
+      !                /                   ;                  /                   ;                 i*i
+      c(0,2,2) =        0._RPP             ; c(1,2,2) =        0._RPP             ; c(2,2,2) =   299531._RPP / 6720._RPP
+      !           (i-1)*i                  ;             (i-2)*i
+      c(3,2,2) =  -291313._RPP /  5040._RPP; c(4,2,2) =   266659._RPP / 20160._RPP
+      !                /                   ;                  /                   ;                  /
+      c(0,3,2) =        0._RPP             ; c(1,3,2) =        0._RPP             ; c(2,3,2) =       0._RPP
+      !           (i-1)*(i-1)              ;             (i-2)*(i-1)
+      c(3,3,2) =  1228889._RPP / 60480._RPP; c(4,3,2) =  -601771._RPP / 60480._RPP
+      !                /                   ;                  /                   ;                  /
+      c(0,4,2) =        0._RPP             ; c(1,4,2) =        0._RPP             ; c(2,4,2) =       0._RPP
+      !                /                   ;             (i-2)*(i-2)
+      c(3,4,2) =        0._RPP             ; c(4,4,2) =    20591._RPP / 15120._RPP
       ! stencil 3
-      !          (i+3)*(i+3)             ;             (i+2)*(i+3)            ;             (i+1)*(i+3)
-      c(0,0,3) =    1727._RPP / 1260._RPP; c(1,0,3) =  -60871._RPP / 5040._RPP; c(2,0,3) =   33071._RPP / 1680._RPP
-      !              i*(i+3)             ;             (i-1)*(i+3)
-      c(3,0,3) =  -70237._RPP / 5040._RPP; c(4,0,3) =   18079._RPP / 5040._RPP
-      !               /                  ;             (i+2)*(i+2)            ;             (i+1)*(i+2)
-      c(0,1,3) =       0._RPP            ; c(1,1,3) =  138563._RPP / 5040._RPP; c(2,1,3) =   -3229._RPP /   35._RPP
-      !              i*(i+2)             ;             (i-1)*(i+2)
-      c(3,1,3) =  168509._RPP / 2520._RPP; c(4,1,3) =  -88297._RPP / 5040._RPP
-      !               /                  ;                  /                 ;             (i+1)*(i+1)
-      c(0,2,3) =       0._RPP            ; c(1,2,3) =       0._RPP            ; c(2,2,3) =  135431._RPP / 1680._RPP
-      !              i*(i+1)             ;             (i-1)*(i+1)
-      c(3,2,3) =  -25499._RPP /  210._RPP; c(4,2,3) =   55051._RPP / 1680._RPP
-      !               /                  ;                  /                 ;                  /
-      c(0,3,3) =       0._RPP            ; c(1,3,3) =       0._RPP            ; c(2,3,3) =       0._RPP
-      !              i*i                 ;             (i-1)*i
-      c(3,3,3) =  242723._RPP / 5040._RPP; c(4,3,3) = -140251._RPP / 5040._RPP
-      !               /                  ;                  /                 ;                  /
-      c(0,4,3) =       0._RPP            ; c(1,4,3) =       0._RPP            ; c(2,4,3) =       0._RPP
-      !               /                  ;             (i-1)*(i-1)
-      c(3,4,3) =       0._RPP            ; c(4,4,3) =   11329._RPP / 2520._RPP
+      !           (i+3)*(i+3)              ;             (i+2)*(i+3)              ;             (i+1)*(i+3)
+      c(0,0,3) =    20591._RPP / 15120._RPP; c(1,0,3) =  -725461._RPP / 60480._RPP; c(2,0,3) =  395389._RPP / 20160._RPP
+      !               i*(i+3)              ;             (i-1)*(i+3)
+      c(3,0,3) =  -847303._RPP / 60480._RPP; c(4,0,3) =   221869._RPP / 60480._RPP
+      !                /                   ;             (i+2)*(i+2)              ;             (i+1)*(i+2)
+      c(0,1,3) =        0._RPP             ; c(1,1,3) =  1650569._RPP / 60480._RPP; c(2,1,3) =  -57821._RPP /   630._RPP
+      !               i*(i+2)              ;             (i-1)*(i+2)
+      c(3,1,3) =  2027351._RPP / 30240._RPP; c(4,1,3) = -1079563._RPP / 60480._RPP
+      !                /                   ;                  /                   ;             (i+1)*(i+1)
+      c(0,2,3) =        0._RPP             ; c(1,2,3) =        0._RPP             ; c(2,2,3) =  539351._RPP /  6720._RPP
+      !               i*(i+1)              ;             (i-1)*(i+1)
+      c(3,2,3) =  -306569._RPP /  2520._RPP; c(4,2,3) =   671329._RPP / 20160._RPP
+      !                /                   ;                  /                   ;                  /
+      c(0,3,3) =        0._RPP             ; c(1,3,3) =        0._RPP             ; c(2,3,3) =       0._RPP
+      !               i*i                  ;             (i-1)*i
+      c(3,3,3) =  2932409._RPP / 60480._RPP; c(4,3,3) = -1714561._RPP / 60480._RPP
+      !                /                   ;                  /                   ;                  /
+      c(0,4,3) =        0._RPP             ; c(1,4,3) =        0._RPP             ; c(2,4,3) =       0._RPP
+      !                /                   ;             (i-1)*(i-1)
+      c(3,4,3) =        0._RPP             ; c(4,4,3) =   139567._RPP / 30240._RPP
       ! stencil 4
-      !          (i+4)*(i+4)             ;             (i+3)*(i+4)            ;             (i+2)*(i+4)
-      c(0,0,4) =   11329._RPP / 2520._RPP; c(1,0,4) = -208501._RPP / 5040._RPP; c(2,0,4) =  121621._RPP / 1680._RPP
-      !          (i+1)*(i+4)             ;                 i*(i+4)
-      c(3,0,4) = -288007._RPP / 5040._RPP; c(4,0,4) =   86329._RPP / 5040._RPP
-      !               /                  ;             (i+3)*(i+3)            ;             (i+2)*(i+3)
-      c(0,1,4) =       0._RPP            ; c(1,1,4) =  482963._RPP / 5040._RPP; c(2,1,4) = -142033._RPP /  420._RPP
-      !          (i+1)*(i+3)             ;                 i*(i+3)
-      c(3,1,4) =  679229._RPP / 2520._RPP; c(4,1,4) = -411487._RPP / 5040._RPP
-      !               /                  ;                  /                 ;             (i+1)*(i+2)
-      c(0,2,4) =       0._RPP            ; c(1,2,4) =       0._RPP            ; c(2,2,4) =  507131._RPP / 1680._RPP
-      !          (i+1)*(i+2)             ;                 i*(i+2)
-      c(3,2,4) =  -68391._RPP /  140._RPP; c(4,2,4) =  252941._RPP / 1680._RPP
-      !               /                  ;                  /                 ;                  /
-      c(0,3,4) =       0._RPP            ; c(1,3,4) =       0._RPP            ; c(2,3,4) =       0._RPP
-      !          (i+1)*(i+1)             ;                 i*(i+1)
-      c(3,3,4) = 1020563._RPP / 5040._RPP; c(4,3,4) = -649501._RPP / 5040._RPP
-      !               /                  ;                  /                 ;                  /
-      c(0,4,4) =       0._RPP            ; c(1,4,4) =       0._RPP            ; c(2,4,4) =       0._RPP
-      !               /                  ;                 i*i
-      c(3,4,4) =       0._RPP            ; c(4,4,4) =   53959._RPP / 2520._RPP
+      !           (i+4)*(i+4)              ;             (i+3)*(i+4)              ;             (i+2)*(i+4)
+      c(0,0,4) =   139567._RPP / 30240._RPP; c(1,0,4) = -2569471._RPP / 60480._RPP; c(2,0,4) = 1501039._RPP / 20160._RPP
+      !           (i+1)*(i+4)              ;                 i*(i+4)
+      c(3,0,4) = -3568693._RPP / 60480._RPP; c(4,0,4) =  1076779._RPP / 60480._RPP
+      !                /                   ;             (i+3)*(i+3)              ;             (i+2)*(i+3)
+      c(0,1,4) =        0._RPP             ; c(1,1,4) =  5951369._RPP / 60480._RPP; c(2,1,4) =-1751863._RPP /  5040._RPP
+      !           (i+1)*(i+3)              ;                 i*(i+3)
+      c(3,1,4) =  8405471._RPP / 30240._RPP; c(4,1,4) = -5121853._RPP / 60480._RPP
+      !                /                   ;                  /                   ;             (i+2)*(i+2)
+      c(0,2,4) =        0._RPP             ; c(1,2,4) =        0._RPP             ; c(2,2,4) = 2085371._RPP /  6720._RPP
+      !           (i+1)*(i+2)              ;                 i*(i+2)
+      c(3,2,4) = -2536843._RPP /  5040._RPP; c(4,2,4) =  3141559._RPP / 20160._RPP
+      !                /                   ;                  /                   ;                  /
+      c(0,3,4) =        0._RPP             ; c(1,3,4) =        0._RPP             ; c(2,3,4) =       0._RPP
+      !           (i+1)*(i+1)              ;                 i*(i+1)
+      c(3,3,4) = 12627689._RPP / 60480._RPP; c(4,3,4) = -8055511._RPP / 60480._RPP
+      !                /                   ;                  /                   ;                  /
+      c(0,4,4) =        0._RPP             ; c(1,4,4) =        0._RPP             ; c(2,4,4) =       0._RPP
+      !                /                   ;                 i*i
+      c(3,4,4) =        0._RPP             ; c(4,4,4) =   668977._RPP / 30240._RPP
     case(6) ! 11th order
       ! stencil 0
-      !                 i*i                  ;                (i-1)*i                 ;                 (i-2)*i
-      c(0,0,0) =   6150211._RPP / 120960._RPP; c(1,0,0) =  -2966279._RPP /   7560._RPP; c(2,0,0) =   4762921._RPP /   7560._RPP
-      !             (i-3)*i                  ;                (i-4)*i                 ;                 (i-5)*i
-      c(3,0,0) = -15848531._RPP /  30240._RPP; c(4,0,0) =   2706017._RPP /  12096._RPP; c(5,0,0) =   -235637._RPP /   6048._RPP
+      !                  i*i                 ;                (i-1)*i                  ;                 (i-2)*i
+      c(0,0,0) = 373189088._RPP/ 7027375._RPP; c(1,0,0) = -157371280._RPP/  384113._RPP; c(2,0,0) =  497902688._RPP/  756325._RPP
+      !              (i-3)*i                 ;                (i-4)*i                  ;                (i-5)*i
+      c(3,0,0) =-427867945._RPP/  780329._RPP; c(4,0,0) =  295095211._RPP/ 1259192._RPP; c(5,0,0) = -131759526._RPP/ 3224383._RPP
 
-      !                  /                   ;                (i-1)*(i-1)             ;                 (i-2)*(i-1)
-      c(0,1,0) =         0._RPP              ; c(1,1,0) =  31617079._RPP /  40320._RPP; c(2,1,0) = -25980937._RPP /  10080._RPP
-      !             (i-3)*(i-1)              ;                (i-4)*(i-1)             ;                 (i-5)*(i-1)
-      c(3,1,0) =  32862709._RPP /  15120._RPP; c(4,1,0) =  -1048211._RPP /   1120._RPP; c(5,1,0) =    661145._RPP /   4032._RPP
+      !                  /                   ;                (i-1)*(i-1)              ;                (i-2)*(i-1)
+      c(0,1,0) =         0._RPP              ; c(1,1,0) =  498196769._RPP/  609968._RPP; c(2,1,0) = -497421494._RPP/  185427._RPP
+      !             (i-3)*(i-1)              ;                (i-4)*(i-1)              ;                (i-5)*(i-1)
+      c(3,1,0) =1150428332._RPP/  508385._RPP; c(4,1,0) = -674462631._RPP/  691651._RPP; c(5,1,0) =  112453613._RPP/  657635._RPP
 
-      !                  /                   ;                     /                  ;                 (i-2)*(i-2)
-      c(0,2,0) =         0._RPP              ; c(1,2,0) =         0._RPP              ; c(2,2,0) =  21703781._RPP /  10080._RPP
-      !              (i-3)*(i-2)             ;                (i-4)*(i-2)             ;                 (i-5)*(i-2)
-      c(3,2,0) =  -6937561._RPP /   1890._RPP; c(4,2,0) =   2674951._RPP /   1680._RPP; c(5,2,0) =   -314063._RPP /   1120._RPP
+      !                  /                   ;                     /                   ;                (i-2)*(i-2)
+      c(0,2,0) =         0._RPP              ; c(1,2,0) =          0._RPP              ; c(2,2,0) = 2292397033._RPP/ 1024803._RPP
+      !             (i-3)*(i-2)              ;                (i-4)*(i-2)              ;                (i-5)*(i-2)
+      c(3,2,0) =-378281867._RPP/   99229._RPP; c(4,2,0) = 1328498639._RPP/  803154._RPP; c(5,2,0) = -115324682._RPP/  395671._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,3,0) =         0._RPP              ; c(1,3,0) =         0._RPP              ; c(2,3,0) =         0._RPP
-      !             (i-3)*(i-3)              ;                (i-4)*(i-3)             ;                 (i-5)*(i-3)
-      c(3,3,0) =  47689393._RPP /  30240._RPP; c(4,3,0) = -41615261._RPP /  30240._RPP; c(5,3,0) =   1840141._RPP /   7560._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,3,0) =         0._RPP              ; c(1,3,0) =          0._RPP              ; c(2,3,0) =          0._RPP
+      !             (i-3)*(i-3)              ;                (i-4)*(i-3)              ;                (i-5)*(i-3)
+      c(3,3,0) =1406067637._RPP/  859229._RPP; c(4,3,0) =-2146148426._RPP/ 1503065._RPP; c(5,3,0) =  586668707._RPP/ 2322432._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,4,0) =         0._RPP              ; c(1,4,0) =         0._RPP              ; c(2,4,0) =         0._RPP
-      !                  /                   ;                (i-4)*(i-4)             ;                 (i-5)*(i-4)
-      c(3,4,0) =         0._RPP              ; c(4,4,0) =  12160229._RPP /  40320._RPP; c(5,4,0) =   -539591._RPP /   5040._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,4,0) =         0._RPP              ; c(1,4,0) =          0._RPP              ; c(2,4,0) =         0._RPP
+      !                  /                   ;                (i-4)*(i-4)              ;                (i-5)*(i-4)
+      c(3,4,0) =         0._RPP              ; c(4,4,0) =  453375035._RPP/ 1449454._RPP; c(5,4,0) = -504893127._RPP/ 4547012._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,5,0) =         0._RPP              ; c(1,5,0) =         0._RPP              ; c(2,5,0) =         0._RPP
-      !                  /                   ;                     /                  ;                 (i-5)*(i-5)
-      c(3,5,0) =         0._RPP              ; c(4,5,0) =         0._RPP              ; c(5,5,0) =    384187._RPP /  40320._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,5,0) =         0._RPP              ; c(1,5,0) =          0._RPP              ; c(2,5,0) =          0._RPP
+      !                  /                   ;                     /                   ;                (i-5)*(i-5)
+      c(3,5,0) =         0._RPP              ; c(4,5,0) =          0._RPP              ; c(5,5,0) =  105552913._RPP/10682745._RPP
       ! stencil 1
-      !             (i+1)*(i+1)              ;                    i*(i+1)             ;                 (i-1)*(i+1)
-      c(0,0,1) =    384187._RPP /  40320._RPP; c(1,0,1) =  -1139749._RPP /  15120._RPP; c(2,0,1) =     61427._RPP /   504._RPP;
-      !             (i-2)*(i+1)              ;                (i-3)*(i+1)             ;                 (i-4)*(i+1)
-      c(3,0,1) =  -1015303._RPP /  10080._RPP; c(4,0,1) =   2567287._RPP /  60480._RPP; c(5,0,1) =    -73379._RPP / 10080._RPP;
+      !             (i+1)*(i+1)              ;                    i*(i+1)              ;                (i-1)*(i+1)
+      c(0,0,1) = 105552913._RPP/10682745._RPP; c(1,0,1) = -338120165._RPP/ 4351341._RPP; c(2,0,1) =  356490569._RPP/ 2842289._RPP
+      !             (i-2)*(i+1)              ;                (i-3)*(i+1)              ;                (i-4)*(i+1)
+      c(3,0,1) =-146902225._RPP/ 1415767._RPP; c(4,0,1) =  195395281._RPP/ 4459947._RPP; c(5,0,1) =  -24044484._RPP/ 3193217._RPP
 
-      !                  /                   ;                    i*i                 ;                 (i-1)*i
-      c(0,1,1) =         0._RPP              ; c(1,1,1) =  19365967._RPP / 120960._RPP; c(2,1,1) = -16306061._RPP /  30240._RPP
-      !             (i-2)*i                  ;                (i-3)*i                 ;                 (i-4)*i
-      c(3,1,1) =   6881719._RPP /  15120._RPP; c(4,1,1) =  -5877617._RPP /  30240._RPP; c(5,1,1) =   2033509._RPP /  60480._RPP
+      !                  /                   ;                    i*i                  ;                (i-1)*i
+      c(0,1,1) =         0._RPP              ; c(1,1,1) =  169505788._RPP/ 1035915._RPP; c(2,1,1) =-2984991531._RPP/ 5434265._RPP
+      !             (i-2)*i                  ;                (i-3)*i                  ;                (i-4)*i
+      c(3,1,1) = 771393469._RPP/ 1663855._RPP; c(4,1,1) = -270758311._RPP/ 1365867._RPP; c(5,1,1) =   26449004._RPP/  769961._RPP
 
-      !                  /                   ;                     /                  ;                 (i-1)*(i-1)
-      c(0,2,1) =         0._RPP              ; c(1,2,1) =         0._RPP              ; c(2,2,1) =   4721851._RPP /  10080._RPP
-      !             (i-2)*(i-1)              ;                (i-3)*(i-1)             ;                 (i-4)*(i-1)
-      c(3,2,1) =   -169859._RPP /    210._RPP; c(4,2,1) =   5300629._RPP /  15120._RPP; c(5,2,1) =    -68601._RPP /   1120._RPP
+      !                  /                   ;                     /                   ;                (i-1)*(i-1)
+      c(0,2,1) =         0._RPP              ; c(1,2,1) =          0._RPP              ; c(2,2,1) =  471933572._RPP/  993629._RPP
+      !             (i-2)*(i-1)              ;                (i-3)*(i-1)              ;                (i-4)*(i-1)
+      c(3,2,1) =-479783044._RPP/  585775._RPP; c(4,2,1) =  840802608._RPP/ 2367661._RPP; c(5,2,1) = -347085621._RPP/ 5587817._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,3,1) =         0._RPP              ; c(1,3,1) =         0._RPP              ; c(2,3,1) =         0._RPP
-      !             (i-2)*(i-2)              ;                (i-3)*(i-2)             ;                 (i-4)*(i-2)
-      c(3,3,1) =   1197047._RPP /   3360._RPP; c(4,3,1) =  -9478331._RPP /  30240._RPP; c(5,3,1) =    139471._RPP /   2520._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,3,1) =         0._RPP              ; c(1,3,1) =          0._RPP              ; c(2,3,1) =          0._RPP
+      !             (i-2)*(i-2)              ;                (i-3)*(i-2)              ;                (i-4)*(i-2)
+      c(3,3,1) =1031953342._RPP/ 2867575._RPP; c(4,3,1) = -288641753._RPP/  912148._RPP; c(5,3,1) =  315600562._RPP/ 5645537._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,4,1) =         0._RPP              ; c(1,4,1) =         0._RPP              ; c(2,4,1) =         0._RPP
-      !                  /                   ;                (i-3)*(i-3)             ;                 (i-4)*(i-3)
-      c(3,4,1) =         0._RPP              ; c(4,4,1) =   8449957._RPP / 120960._RPP; c(5,4,1) =   -188483._RPP /   7560._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,4,1) =         0._RPP              ; c(1,4,1) =          0._RPP              ; c(2,4,1) =          0._RPP
+      !                  /                   ;                (i-3)*(i-3)              ;                (i-4)*(i-3)
+      c(3,4,1) =         0._RPP              ; c(4,4,1) =  142936745._RPP/ 2029182._RPP; c(5,4,1) = -109600459._RPP/ 4359925._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,5,1) =         0._RPP              ; c(1,5,1) =         0._RPP              ; c(2,5,1) =         0._RPP
-      !                  /                   ;                     /                  ;                 (i-4)*(i-4)
-      c(3,5,1) =         0._RPP              ; c(4,5,1) =         0._RPP              ; c(5,5,1) =     90593._RPP /  40320._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,5,1) =         0._RPP              ; c(1,5,1) =          0._RPP              ; c(2,5,1) =          0._RPP
+      !                  /                   ;                     /                   ;                (i-4)*(i-4)
+      c(3,5,1) =         0._RPP              ; c(4,5,1) =          0._RPP              ; c(5,5,1) =   30913579._RPP/13651507._RPP
       ! stencil 2
-      !             (i+2)*(i+2)              ;                (i+1)*(i+2)             ;                     i*(i+2)
-      c(0,0,2) =     90593._RPP /  40320._RPP; c(1,0,2) =     -1240._RPP /     63._RPP; c(2,0,2) =    255397._RPP /   7560._RPP
-      !             (i-1)*(i+2)              ;                (i-2)*(i+2)             ;                 (i-3)*(i+2)
-      c(3,0,2) =   -288521._RPP /  10080._RPP; c(4,0,2) =    243127._RPP /  20160._RPP; c(5,0,2) =    -12281._RPP /   6048._RPP
+      !             (i+2)*(i+2)              ;                (i+1)*(i+2)              ;                    i*(i+2)
+      c(0,0,2) =  30913579._RPP/13651507._RPP; c(1,0,2) =  -87214523._RPP/ 4439774._RPP; c(2,0,2) =   99590409._RPP/ 2965471._RPP
+      !             (i-1)*(i+2)              ;                (i-2)*(i+2)              ;                (i-3)*(i+2)
+      c(3,0,2) = -95644735._RPP/ 3360137._RPP; c(4,0,2) =   79135747._RPP/ 6577234._RPP; c(5,0,2) =  -28962993._RPP/14228092._RPP
 
-      !                  /                   ;                (i+1)*(i+1)             ;                     i*(i+1)
-      c(0,1,2) =         0._RPP              ; c(1,1,2) =   1884439._RPP /  40320._RPP; c(2,1,2) =  -5106971._RPP /  30240._RPP
-      !             (i-1)*(i+1)              ;                (i-2)*(i+1)             ;                (i-3)*(i+1)
-      c(3,1,2) =    248681._RPP /   1680._RPP; c(4,1,2) =   -643999._RPP /  10080._RPP; c(5,1,2) =    662503._RPP /  60480._RPP
+      !                  /                   ;                (i+1)*(i+1)              ;                    i*(i+1)
+      c(0,1,2) =         0._RPP              ; c(1,1,2) =   24025059._RPP/  519766._RPP; c(2,1,2) = -370146220._RPP/ 2226351._RPP
+      !             (i-1)*(i+1)              ;                (i-2)*(i+1)              ;                (i-3)*(i+1)
+      c(3,1,2) =  87743770._RPP/  602579._RPP; c(4,1,2) =-1512485867._RPP/24006092._RPP; c(5,1,2) =  251883319._RPP/23224320._RPP
 
-      !                  /                   ;                     /                  ;                    i*i
-      c(0,2,2) =         0._RPP              ; c(1,2,2) =         0._RPP              ; c(2,2,2) =   4877743._RPP /  30240._RPP
-      !             (i-1)*i                  ;                (i-2)*i                 ;                (i-3)*i
-      c(3,2,2) =   -559651._RPP /   1890._RPP; c(4,2,2) =   1991239._RPP /  15120._RPP; c(5,2,2) =   -139633._RPP /   6048._RPP
+      !                  /                   ;                     /                   ;                    i*i
+      c(0,2,2) =         0._RPP              ; c(1,2,2) =          0._RPP              ; c(2,2,2) =  200449727._RPP/  1269707._RPP
+      !             (i-1)*i                  ;                (i-2)*i                  ;                (i-3)*i
+      c(3,2,2) =-274966489._RPP/  950662._RPP; c(4,2,2) =  201365679._RPP/ 1563055._RPP; c(5,2,2) =  -61673356._RPP/ 2721737._RPP
 
-      !                  /                   ;                     /                  ;                     /
-      c(0,3,2) =         0._RPP              ; c(1,3,2) =         0._RPP              ; c(2,3,2) =         0._RPP
-      !             (i-1)*(i-1)              ;                (i-2)*(i-1)             ;                (i-3)*(i-1)
-      c(3,3,2) =    159219._RPP /   1120._RPP; c(4,3,2) =  -1323367._RPP /  10080._RPP; c(5,3,2) =    178999._RPP /   7560._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,3,2) =         0._RPP              ; c(1,3,2) =          0._RPP              ; c(2,3,2) =          0._RPP
+      !             (i-1)*(i-1)              ;                (i-2)*(i-1)              ;                (i-3)*(i-1)
+      c(3,3,2) = 586743463._RPP/ 4237706._RPP; c(4,3,2) = -723607356._RPP/ 5654437._RPP; c(5,3,2) =  268747951._RPP/11612160._RPP
 
-      !                  /                   ;                     /                  ;                     /
-      c(0,4,2) =         0._RPP              ; c(1,4,2) =         0._RPP              ; c(2,4,2) =         0._RPP
-      !                  /                   ;                (i-2)*(i-2)             ;                (i-3)*(i-2)
-      c(3,4,2) =         0._RPP              ; c(4,4,2) =    141661._RPP /   4480._RPP; c(5,4,2) =   -178747._RPP /  15120._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,4,2) =         0._RPP              ; c(1,4,2) =          0._RPP              ; c(2,4,2) =          0._RPP
+      !                  /                   ;                (i-2)*(i-2)              ;                (i-3)*(i-2)
+      c(3,4,2) =         0._RPP              ; c(4,4,2) =  113243845._RPP/ 3672222._RPP; c(5,4,2) =  -74146214._RPP/ 6413969._RPP
 
-      !                  /                   ;                     /                  ;                     /
-      c(0,5,2) =         0._RPP              ; c(1,5,2) =         0._RPP              ; c(2,5,2) =         0._RPP
-      !                  /                   ;                     /                  ;                (i-3)*(i-3)
-      c(3,5,2) =         0._RPP              ; c(4,5,2) =         0._RPP              ; c(5,5,2) =    139633._RPP / 120960._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,5,2) =         0._RPP              ; c(1,5,2) =          0._RPP              ; c(2,5,2) =          0._RPP
+      !                  /                   ;                     /                   ;                (i-3)*(i-3)
+      c(3,5,2) =         0._RPP              ; c(4,5,2) =          0._RPP              ; c(5,5,2) =   15418339._RPP/13608685._RPP
       ! stencil 3
-      !             (i+3)*(i+3)              ;                (i+2)*(i+3)             ;                 (i+1)*(i+3)
-      c(0,0,3) =    139633._RPP / 120960._RPP; c(1,0,3) =   -178747._RPP /  15120._RPP; c(2,0,3) =    178999._RPP /   7560._RPP
-      !                 i*(i+3)              ;                (i-1)*(i+3)             ;                 (i-2)*(i+3)
-      c(3,0,3) =   -139633._RPP /   6048._RPP; c(4,0,3) =    662503._RPP /  60480._RPP; c(5,0,3) =    -12281._RPP /   6048._RPP
+      !             (i+3)*(i+3)              ;                (i+2)*(i+3)              ;                (i+1)*(i+3)
+      c(0,0,3) =  15418339._RPP/13608685._RPP; c(1,0,3) =  -74146214._RPP/ 6413969._RPP; c(2,0,3) =  268747951._RPP/11612160._RPP
+      !                 i*(i+3)              ;                (i-1)*(i+3)              ;                (i-2)*(i+3)
+      c(3,0,3) = -61673356._RPP/ 2721737._RPP; c(4,0,3) =  251883319._RPP/23224320._RPP; c(5,0,3) =  -28962993._RPP/14228092._RPP
 
-      !                  /                   ;                (i+2)*(i+2)             ;                 (i+1)*(i+2)
-      c(0,1,3) =         0._RPP              ; c(1,1,3) =    141661._RPP /   4480._RPP; c(2,1,3) =  -1323367._RPP /  10080._RPP
-      !                 i*(i+2)              ;                (i-1)*(i+2)             ;                 (i-2)*(i+2)
-      c(3,1,3) =   1991239._RPP /  15120._RPP; c(4,1,3) =   -643999._RPP /  10080._RPP; c(5,1,3) =    243127._RPP /  20160._RPP
+      !                  /                   ;                (i+2)*(i+2)              ;                (i+1)*(i+2)
+      c(0,1,3) =         0._RPP              ; c(1,1,3) =  113243845._RPP/ 3672222._RPP; c(2,1,3) = -723607356._RPP/ 5654437._RPP
+      !                 i*(i+2)              ;                (i-1)*(i+2)              ;                (i-2)*(i+2)
+      c(3,1,3) = 201365679._RPP/ 1563055._RPP; c(4,1,3) =-1512485867._RPP/24006092._RPP; c(5,1,3) =   79135747._RPP/ 6577234._RPP
 
-      !                  /                   ;                     /                  ;                    i*(i+1)
-      c(0,2,3) =         0._RPP              ; c(1,2,3) =         0._RPP              ; c(2,2,3) =    159219._RPP /   1120._RPP
-      !                 i*(i+1)              ;                (i-1)*(i+1)             ;                (i-2)*(i+1)
-      c(3,2,3) =   -559651._RPP /   1890._RPP; c(4,2,3) =    248681._RPP /   1680._RPP; c(5,2,3) =   -288521._RPP /  10080._RPP
+      !                  /                   ;                     /                   ;                (i+1)*(i+1)
+      c(0,2,3) =         0._RPP              ; c(1,2,3) =          0._RPP              ; c(2,2,3) =  586743463._RPP/ 4237706._RPP
+      !                 i*(i+1)              ;                (i-1)*(i+1)              ;                (i-2)*(i+1)
+      c(3,2,3) =-274966489._RPP/  950662._RPP; c(4,2,3) =   87743770._RPP/  602579._RPP; c(5,2,3) =  -95644735._RPP/ 3360137._RPP
 
-      !                  /                   ;                     /                  ;                     /
-      c(0,3,3) =         0._RPP              ; c(1,3,3) =         0._RPP              ; c(2,3,3) =         0._RPP
-      !                 i*i                  ;                (i-1)*i                 ;                (i-2)*i
-      c(3,3,3) =   4877743._RPP /  30240._RPP; c(4,3,3) =  -5106971._RPP /  30240._RPP; c(5,3,3) =    255397._RPP /   7560._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,3,3) =         0._RPP              ; c(1,3,3) =          0._RPP              ; c(2,3,3) =          0._RPP
+      !                 i*i                  ;                (i-1)*i                  ;                (i-2)*i
+      c(3,3,3) = 200449727._RPP/ 1269707._RPP; c(4,3,3) = -370146220._RPP/ 2226351._RPP; c(5,3,3) =   99590409._RPP/ 2965471._RPP
 
-      !                  /                   ;                     /                  ;                     /
-      c(0,4,3) =         0._RPP              ; c(1,4,3) =         0._RPP              ; c(2,4,3) =         0._RPP
-      !                  /                   ;                (i-1)*(i-1)             ;                (i-2)*(i-1)
-      c(3,4,3) =         0._RPP              ; c(4,4,3) =   1884439._RPP /  40320._RPP; c(5,4,3) =     -1240._RPP /     63._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,4,3) =         0._RPP              ; c(1,4,3) =          0._RPP              ; c(2,4,3) =          0._RPP
+      !                  /                   ;                (i-1)*(i-1)              ;                (i-2)*(i-1)
+      c(3,4,3) =         0._RPP              ; c(4,4,3) =   24025059._RPP/  519766._RPP; c(5,4,3) =  -87214523._RPP/ 4439774._RPP
 
-      !                  /                   ;                     /                  ;                     /
-      c(0,5,3) =         0._RPP              ; c(1,5,3) =         0._RPP              ; c(2,5,3) =         0._RPP
-      !                  /                   ;                     /                  ;                (i-2)*(i-2)
-      c(3,5,3) =         0._RPP              ; c(4,5,3) =         0._RPP              ; c(5,5,3) =     90593._RPP /  40320._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,5,3) =         0._RPP              ; c(1,5,3) =          0._RPP              ; c(2,5,3) =          0._RPP
+      !                  /                   ;                     /                   ;                (i-2)*(i-2)
+      c(3,5,3) =         0._RPP              ; c(4,5,3) =          0._RPP              ; c(5,5,3) =   30913579._RPP/13651507._RPP
       ! stencil 4
-      !             (i+4)*(i+4)              ;                (i+3)*(i+4)             ;                 (i+2)*(i+4)
-      c(0,0,4) =     90593._RPP /  40320._RPP; c(1,0,4) =   -188483._RPP /   7560._RPP; c(2,0,4) =    139471._RPP /   2520._RPP
-      !             (i+1)*(i+4)              ;                    i*(i+4)             ;                 (i-1)*(i+4)
-      c(3,0,4) =    -68601._RPP /   1120._RPP; c(4,0,4) =   2033509._RPP /  60480._RPP; c(5,0,4) =    -73379._RPP /  10080._RPP
+      !             (i+4)*(i+4)              ;                (i+3)*(i+4)              ;                (i+2)*(i+4)
+      c(0,0,4) =  30913579._RPP/13651507._RPP; c(1,0,4) = -109600459._RPP/ 4359925._RPP; c(2,0,4) =  315600562._RPP/ 5645537._RPP
+      !             (i+1)*(i+4)              ;                    i*(i+4)              ;                (i-1)*(i+4)
+      c(3,0,4) =-347085621._RPP/ 5587817._RPP; c(4,0,4) =   26449004._RPP/  769961._RPP; c(5,0,4) =  -24044484._RPP/ 3193217._RPP
 
-      !                  /                   ;                (i+3)*(i+3)             ;                 (i+2)*(i+3)
-      c(0,1,4) =         0._RPP              ; c(1,1,4) =   8449957._RPP / 120960._RPP; c(2,1,4) =  -9478331._RPP /  30240._RPP
-      !             (i+1)*(i+3)              ;                    i*(i+3)             ;                 (i-1)*(i+3)
-      c(3,1,4) =   5300629._RPP /  15120._RPP; c(4,1,4) =  -5877617._RPP /  30240._RPP; c(5,1,4) =   2567287._RPP /  60480._RPP
+      !                  /                   ;                (i+3)*(i+3)              ;                (i+2)*(i+3)
+      c(0,1,4) =         0._RPP              ; c(1,1,4) =  142936745._RPP/ 2029182._RPP; c(2,1,4) = -288641753._RPP/  912148._RPP
+      !             (i+1)*(i+3)              ;                    i*(i+3)              ;                (i-1)*(i+3)
+      c(3,1,4) = 840802608._RPP/ 2367661._RPP; c(4,1,4) = -270758311._RPP/ 1365867._RPP; c(5,1,4) =  195395281._RPP/ 4459947._RPP
 
-      !                  /                   ;                     /                  ;                 (i+2)*(i+2)
-      c(0,2,4) =         0._RPP              ; c(1,2,4) =         0._RPP              ; c(2,2,4) =   1197047._RPP /   3360._RPP
-      !             (i+1)*(i+2)              ;                    i*(i+2)             ;                 (i-1)*(i+2)
-      c(3,2,4) =   -169859._RPP /    210._RPP; c(4,2,4) =   6881719._RPP /  15120._RPP; c(5,2,4) =  -1015303._RPP /  10080._RPP
+      !                  /                   ;                     /                   ;                (i+2)*(i+2)
+      c(0,2,4) =         0._RPP              ; c(1,2,4) =          0._RPP              ; c(2,2,4) = 1031953342._RPP/ 2867575._RPP
+      !             (i+1)*(i+2)              ;                    i*(i+2)              ;                (i-1)*(i+2)
+      c(3,2,4) =-479783044._RPP/  585775._RPP; c(4,2,4) =  771393469._RPP/ 1663855._RPP; c(5,2,4) = -146902225._RPP/ 1415767._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,3,4) =         0._RPP              ; c(1,3,4) =         0._RPP              ; c(2,3,4) =         0._RPP
-      !             (i+1)*(i+1)              ;                    i*(i+1)             ;                 (i-1)*(i+1)
-      c(3,3,4) =   4721851._RPP /  10080._RPP; c(4,3,4) = -16306061._RPP /  30240._RPP; c(5,3,4) =     61427._RPP /    504._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,3,4) =         0._RPP              ; c(1,3,4) =          0._RPP              ; c(2,3,4) =          0._RPP
+      !             (i+1)*(i+1)              ;                    i*(i+1)              ;                (i-1)*(i+1)
+      c(3,3,4) = 471933572._RPP/  993629._RPP; c(4,3,4) =-2984991531._RPP/ 5434265._RPP; c(5,3,4) =  356490569._RPP/ 2842289._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,4,4) =         0._RPP              ; c(1,4,4) =         0._RPP              ; c(2,4,4) =         0._RPP
-      !                  /                   ;                    i*i                 ;                 (i-1)*i
-      c(3,4,4) =         0._RPP              ; c(4,4,4) =  19365967._RPP / 120960._RPP; c(5,4,4) =  -1139749._RPP /  15120._RPP
+      !                  /                   ;                     /                   ;                      /
+      c(0,4,4) =         0._RPP              ; c(1,4,4) =          0._RPP              ; c(2,4,4) =          0._RPP
+      !                  /                   ;                    i*i                  ;                (i-1)*i
+      c(3,4,4) =         0._RPP              ; c(4,4,4) =  169505788._RPP/ 1035915._RPP; c(5,4,4) = -338120165._RPP/ 4351341._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,5,4) =         0._RPP              ; c(1,5,4) =         0._RPP              ; c(2,5,4) =         0._RPP
-      !                  /                   ;                     /                  ;                 (i-1)*(i-1)
-      c(3,5,4) =         0._RPP              ; c(4,5,4) =         0._RPP              ; c(5,5,4) =    384187._RPP /  40320._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,5,4) =         0._RPP              ; c(1,5,4) =          0._RPP              ; c(2,5,4) =          0._RPP
+      !                  /                   ;                     /                   ;                (i-1)*(i-1)
+      c(3,5,4) =         0._RPP              ; c(4,5,4) =          0._RPP              ; c(5,5,4) =  105552913._RPP/10682745._RPP
       ! stencil 5
-      !             (i+5)*(i+5)              ;                (i+4)*(i+5)             ;                 (i+3)*(i+5)
-      c(0,0,5) =    384187._RPP /  40320._RPP; c(1,0,5) =   -539591._RPP /   5040._RPP; c(2,0,5) =   1840141._RPP /   7560._RPP
-      !             (i+2)*(i+5)              ;                (i+1)*(i+5)             ;                     i*(i+5)
-      c(3,0,5) =   -314063._RPP /   1120._RPP; c(4,0,5) =    661145._RPP /   4032._RPP; c(5,0,5) =   -235637._RPP /   6048._RPP
+      !             (i+5)*(i+5)              ;                (i+4)*(i+5)              ;                (i+3)*(i+5)
+      c(0,0,5) = 105552913._RPP/10682745._RPP; c(1,0,5) = -504893127._RPP/ 4547012._RPP; c(2,0,5) =  586668707._RPP/ 2322432._RPP
+      !             (i+2)*(i+5)              ;                (i+1)*(i+5)              ;                    i*(i+5)
+      c(3,0,5) =-115324682._RPP/  395671._RPP; c(4,0,5) =  112453613._RPP/  657635._RPP; c(5,0,5) = -131759526._RPP/ 3224383._RPP
 
-      !                  /                   ;                (i+4)*(i+3)             ;                 (i+3)*(i+3)
-      c(0,1,5) =         0._RPP              ; c(1,1,5) =  12160229._RPP /  40320._RPP; c(2,1,5) = -41615261._RPP /  30240._RPP
-      !             (i+2)*(i+3)              ;                (i+1)*(i+3)             ;                     i*(i+3)
-      c(3,1,5) =   2674951._RPP /   1680._RPP; c(4,1,5) =  -1048211._RPP /   1120._RPP; c(5,1,5) =   2706017._RPP /  12096._RPP
+      !                  /                   ;                (i+4)*(i+3)              ;                (i+3)*(i+3)
+      c(0,1,5) =         0._RPP              ; c(1,1,5) =  453375035._RPP/ 1449454._RPP; c(2,1,5) =-2146148426._RPP/ 1503065._RPP
+      !             (i+2)*(i+3)              ;                (i+1)*(i+3)              ;                    i*(i+3)
+      c(3,1,5) =1328498639._RPP/  803154._RPP; c(4,1,5) = -674462631._RPP/  691651._RPP; c(5,1,5) =  295095211._RPP/ 1259192._RPP
 
-      !                  /                   ;                     /                  ;                 (i+3)*(i+2)
-      c(0,2,5) =         0._RPP              ; c(1,2,5) =         0._RPP              ; c(2,2,5) =  47689393._RPP /  30240._RPP
-      !             (i+2)*(i+2)              ;                (i+1)*(i+2)             ;                     i*(i+2)
-      c(3,2,5) =  -6937561._RPP /   1890._RPP; c(4,2,5) =  32862709._RPP /  15120._RPP; c(5,2,5) = -15848531._RPP /  30240._RPP
+      !                  /                   ;                     /                   ;                (i+3)*(i+2)
+      c(0,2,5) =         0._RPP              ; c(1,2,5) =          0._RPP              ; c(2,2,5) = 1406067637._RPP/  859229._RPP
+      !             (i+2)*(i+2)              ;                (i+1)*(i+2)              ;                    i*(i+2)
+      c(3,2,5) =-378281867._RPP/   99229._RPP; c(4,2,5) = 1150428332._RPP/  508385._RPP; c(5,2,5) = -427867945._RPP/  780329._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,3,5) =         0._RPP              ; c(1,3,5) =         0._RPP              ; c(2,3,5) =         0._RPP
-      !             (i+2)*(i+1)              ;                (i+1)*(i+1)             ;                     i*(i+1)
-      c(3,3,5) =  21703781._RPP /  10080._RPP; c(4,3,5) = -25980937._RPP /  10080._RPP; c(5,3,5) =   4762921._RPP /   7560._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,3,5) =         0._RPP              ; c(1,3,5) =          0._RPP              ; c(2,3,5) =          0._RPP
+      !             (i+2)*(i+1)              ;                (i+1)*(i+1)              ;                    i*(i+1)
+      c(3,3,5) =2292397033._RPP/ 1024803._RPP; c(4,3,5) = -497421494._RPP/  185427._RPP; c(5,3,5) =  497902668._RPP/  756325._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,4,5) =         0._RPP              ; c(1,4,5) =         0._RPP              ; c(2,4,5) =         0._RPP
-      !                  /                   ;                (i+1)*i                 ;                     i*i
-      c(3,4,5) =         0._RPP              ; c(4,4,5) =  31617079._RPP /  40320._RPP; c(5,4,5) =  -2966279._RPP /   7560._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,4,5) =         0._RPP              ; c(1,4,5) =          0._RPP              ; c(2,4,5) =          0._RPP
+      !                  /                   ;                (i+1)*i                  ;                    i*i
+      c(3,4,5) =         0._RPP              ; c(4,4,5) =  498196769._RPP/  609968._RPP; c(5,4,5) = -157371280._RPP/  384113._RPP
 
-      !                  /                   ;                     /                  ;                      /
-      c(0,5,5) =         0._RPP              ; c(1,5,5) =         0._RPP              ; c(2,5,5) =         0._RPP
-      !                  /                   ;                     /                  ;                     i*(i-1)
-      c(3,5,5) =         0._RPP              ; c(4,5,5) =         0._RPP              ; c(5,5,5) =   6150211._RPP / 120960._RPP
+      !                  /                   ;                     /                   ;                     /
+      c(0,5,5) =         0._RPP              ; c(1,5,5) =          0._RPP              ; c(2,5,5) =          0._RPP
+      !                  /                   ;                     /                   ;                    i*(i-1)
+      c(3,5,5) =         0._RPP              ; c(4,5,5) =          0._RPP              ; c(5,5,5) =  373189088._RPP/ 7027375._RPP
     case(7) ! 13th order
       ! stencil 0
       !                   i*i                   ;                   (i-1)*i
-      c(0,0,0) =     897207163._RPP/7484400._RPP; c(1,0,0) = -22763092357._RPP/19958400._RPP
+      c(0,0,0) =     307570060._RPP/2438487._RPP; c(1,0,0) = -842151863._RPP/702281._RPP
       !                  (i-2)*i                ;                   (i-3)*i
-      c(2,0,0) =  46808583631._RPP/19958400._RPP; c(3,0,0) = -39645439643._RPP/14968800._RPP
+      c(2,0,0) =  1025357155._RPP/415733._RPP; c(3,0,0) = -882134137._RPP/316505._RPP
       !                  (i-4)*i                ;                   (i-5)*i
-      c(4,0,0) =    8579309749._RPP/4989600._RPP; c(5,0,0) =   -2416885043._RPP/3991680._RPP
+      c(4,0,0) =    2375865880._RPP/1312047._RPP; c(5,0,0) =   -418267211._RPP/655432._RPP
       !                  (i-6)*i
-      c(6,0,0) =   5391528799._RPP/59875200._RPP
+      c(6,0,0) =   65647731._RPP/691205._RPP
 
       !                    /                    ;                   (i-1)*(i-1)
-      c(0,1,0) =                          0._RPP; c(1,1,0) =    6182612731._RPP/2217600._RPP
+      c(0,1,0) =                          0._RPP; c(1,1,0) =    1267010831._RPP/433225._RPP
       !                  (i-2)*(i-1)            ;                   (i-3)*(i-1)
-      c(2,1,0) =    -8623431623._RPP/739200._RPP; c(3,1,0) =   66440049371._RPP/4989600._RPP
+      c(2,1,0) =    -2727583905._RPP/223057._RPP; c(3,1,0) =   2854637563._RPP/204507._RPP
       !                  (i-4)*(i-1)            ;                   (i-5)*(i-1)
-      c(4,1,0) =  -19308505679._RPP/2217600._RPP; c(5,1,0) =    3417057367._RPP/1108800._RPP
+      c(4,1,0) =  -550697211._RPP/60310._RPP; c(5,1,0) =    803154527._RPP/248375._RPP
       !                  (i-6)*(i-1)
-      c(6,1,0) =  -9181961959._RPP/19958400._RPP
+      c(6,1,0) =  -299800985._RPP/620702._RPP
 
       !                    /                    ;                     /
       c(0,2,0) =                          0._RPP; c(1,2,0) =                          0._RPP
       !                  (i-2)*(i-2)            ;                   (i-3)*(i-2)
-      c(2,2,0) =     1369404749._RPP/110880._RPP; c(3,2,0) =   -28364892607._RPP/997920._RPP
+      c(2,2,0) =     2398154453._RPP/185516._RPP; c(3,2,0) =   -485497721._RPP/16325._RPP
       !                  (i-4)*(i-2)            ;                   (i-5)*(i-2)
-      c(4,2,0) =     8290771913._RPP/443520._RPP; c(5,2,0) =  -14734178999._RPP/2217600._RPP
+      c(4,2,0) =     3315206316._RPP/169489._RPP; c(5,2,0) =  -1068783425._RPP/153683._RPP
       !                  (i-6)*(i-2)
-      c(6,2,0) =    4964771899._RPP/4989600._RPP
+      c(6,2,0) =    412399715._RPP/395812._RPP
 
       !                    /                    ;                     /
       c(0,3,0) =                          0._RPP; c(1,3,0) =                          0._RPP
       !                    /                    ;                   (i-3)*(i-3)
-      c(2,3,0) =                          0._RPP; c(3,3,0) =   49256859919._RPP/2993760._RPP
+      c(2,3,0) =                          0._RPP; c(3,3,0) =   2558389867._RPP/148729._RPP
       !                  (i-4)*(i-3)            ;                   (i-5)*(i-3)
-      c(4,3,0) =   -21693002767._RPP/997920._RPP; c(5,3,0) =   38683385051._RPP/4989600._RPP
+      c(4,3,0) =   -1833856939._RPP/80705._RPP; c(5,3,0) =   2369766527._RPP/292389._RPP
       !                  (i-6)*(i-3)
-      c(6,3,0) = -17425032203._RPP/14968800._RPP
+      c(6,3,0) = -219701291._RPP/180490._RPP
 
       !                    /                    ;                     /
       c(0,4,0) =                          0._RPP; c(1,4,0) =                          0._RPP
       !                    /                    ;                     /
       c(2,4,0) =                          0._RPP; c(3,4,0) =                          0._RPP
       !                  (i-4)*(i-4)            ;                   (i-5)*(i-4)
-      c(4,4,0) =       199730921._RPP/27720._RPP; c(5,4,0) =    -3809437823._RPP/739200._RPP
+      c(4,4,0) =       384888217._RPP/51123._RPP; c(5,4,0) =    -3101495154._RPP/576017._RPP
       !                  (i-6)*(i-4)
-      c(6,4,0) =  15476926351._RPP/19958400._RPP
+      c(6,4,0) =  562957181._RPP/694753._RPP
 
       !                    /                    ;                     /
       c(0,5,0) =                          0._RPP; c(1,5,0) =                          0._RPP
       !                    /                    ;                     /
       c(2,5,0) =                          0._RPP; c(3,5,0) =                          0._RPP
       !                    /                    ;                   (i-5)*(i-5)
-      c(4,5,0) =                          0._RPP; c(5,5,0) =    2047941883._RPP/2217600._RPP
+      c(4,5,0) =                          0._RPP; c(5,5,0) =    368117849._RPP/381597._RPP
       !                  (i-6)*(i-5)
-      c(6,5,0) = -5556669277._RPP/19958400._RPP
+      c(6,5,0) = -484093752._RPP/1664533._RPP
 
       !                    /                    ;                     /
       c(0,6,0) =                          0._RPP; c(1,6,0) =                          0._RPP
@@ -508,61 +506,61 @@ contains
       !                    /                    ;                     /
       c(4,6,0) =                          0._RPP; c(5,6,0) =                          0._RPP
       !                  (i-6)*(i-6)
-      c(6,6,0) =      62911297._RPP/2993760._RPP
+      c(6,6,0) =      118739219._RPP/5409702._RPP
       ! stencil 1
       !                  (i+1)*(i+1)            ;                    i*(i+1)
-      c(0,0,1) =      62911297._RPP/2993760._RPP; c(1,0,1) =  -4074544787._RPP/19958400._RPP
+      c(0,0,1) =      118739219._RPP/5409702._RPP; c(1,0,1) =  -258813979._RPP/1219012._RPP
       !                  (i-1)*(i+1)            ;                   (i-2)*(i+1)
-      c(2,0,1) =    2811067067._RPP/6652800._RPP; c(3,0,1) =  -7124638253._RPP/14968800._RPP
+      c(2,0,1) =    451414666._RPP/1028589._RPP; c(3,0,1) =  -219042731._RPP/442919._RPP
       !                  (i-3)*(i+1)            ;                   (i-4)*(i+1)
-      c(4,0,1) =    1531307249._RPP/4989600._RPP; c(5,0,1) =    -712745603._RPP/6652800._RPP
+      c(4,0,1) =    200564827._RPP/628331._RPP; c(5,0,1) =    -1157045253._RPP/10370330._RPP
       !                  (i-5)*(i+1)
-      c(6,0,1) =    945155329._RPP/59875200._RPP
+      c(6,0,1) =    43003346._RPP/2612319._RPP
 
       !                    /                    ;                       i*(i-1)
-      c(0,1,1) =                          0._RPP; c(1,1,1) =      127942497._RPP/246400._RPP
+      c(0,1,1) =                          0._RPP; c(1,1,1) =      151821033._RPP/282817._RPP
       !                  (i-1)*(i-1)            ;                   (i-2)*(i-1)
-      c(2,1,1) =  -14684933057._RPP/6652800._RPP; c(3,1,1) =   12601009501._RPP/4989600._RPP
+      c(2,1,1) =  -2876116249._RPP/1263255._RPP; c(3,1,1) =   6598378479._RPP/2533904._RPP
       !                  (i-3)*(i-1)            ;                   (i-4)*(i-1)
-      c(4,1,1) =     -405382961._RPP/246400._RPP; c(5,1,1) =    1924032511._RPP/3326400._RPP
+      c(4,1,1) =     -448069659._RPP/263978._RPP; c(5,1,1) =    1029357835._RPP/1723277._RPP
       !                  (i-5)*(i-1)
-      c(6,1,1) =    -341910757._RPP/3991680._RPP
+      c(6,1,1) =    -265505701._RPP/2998139._RPP
 
       !                    /                    ;                    /
       c(0,2,1) =                          0._RPP; c(1,2,1) =                          0._RPP
       !                  (i-1)*(i-2)            ;                   (i-3)*(i-2)
-      c(2,2,1) =      796358777._RPP/332640._RPP; c(3,2,1) =     -616410313._RPP/110880._RPP
+      c(2,2,1) =      3295939303._RPP/1339169._RPP; c(3,2,1) =     -952714155._RPP/166894._RPP
       !                  (i-4)*(i-2)            ;                   (i-5)*(i-2)
-      c(4,2,1) =    4868089189._RPP/1330560._RPP; c(5,2,1) =   -8619440987._RPP/6652800._RPP
+      c(4,2,1) =    656116894._RPP/174649._RPP; c(5,2,1) =   -577579349._RPP/433921._RPP
       !                  (i-6)*(i-2)
-      c(6,2,1) =     320782183._RPP/1663200._RPP
+      c(6,2,1) =     265135851._RPP/1336964._RPP
 
       !                    /                    ;                     /
       c(0,3,1) =                          0._RPP; c(1,3,1) =                          0._RPP
       !                    /                    ;                   (i-2)*(i-3)
-      c(2,3,1) =                          0._RPP; c(3,3,1) =    9780057169._RPP/2993760._RPP
+      c(2,3,1) =                          0._RPP; c(3,3,1) =    353679247._RPP/105637._RPP
       !                  (i-3)*(i-3)            ;                   (i-4)*(i-3)
-      c(4,3,1) =    -4330640057._RPP/997920._RPP; c(5,3,1) =      857838469._RPP/554400._RPP
+      c(4,3,1) =    -1397796418._RPP/314477._RPP; c(5,3,1) =      498890606._RPP/314761._RPP
       !                  (i-5)*(i-3)
-      c(6,3,1) =  -3465607493._RPP/14968800._RPP
+      c(6,3,1) =  -246865952._RPP/1040433._RPP
 
       !                    /                    ;                     /
       c(0,4,1) =                          0._RPP; c(1,4,1) =                          0._RPP
       !                    /                    ;                     /
       c(2,4,1) =                          0._RPP; c(3,4,1) =                          0._RPP
       !                  (i-3)*(i-4)            ;                   (i-4)*(i-4)
-      c(4,4,1) =        53678683._RPP/36960._RPP; c(5,4,1) =   -6932480657._RPP/6652800._RPP
+      c(4,4,1) =        1142129285._RPP/768659._RPP; c(5,4,1) =   -185662673._RPP/174204._RPP
       !                  (i-5)*(i-4)
-      c(6,4,1) =  3126718481._RPP/19958400._RPP
+      c(6,4,1) =  1743860591._RPP/10881504._RPP
 
       !                    /                    ;                     /
       c(0,5,1) =                          0._RPP; c(1,5,1) =                          0._RPP
       !                    /                    ;                     /
       c(2,5,1) =                          0._RPP; c(3,5,1) =                          0._RPP
       !                    /                    ;                   (i-5)*(i-5)
-      c(4,5,1) =                          0._RPP; c(5,5,1) =    1250007643._RPP/6652800._RPP
+      c(4,5,1) =                          0._RPP; c(5,5,1) =    393580372._RPP/2049353._RPP
       !                  (i-6)*(i-5)
-      c(6,5,1) =    -377474689._RPP/6652800._RPP
+      c(6,5,1) =    -483420287._RPP/8336284._RPP
 
       !                    /                    ;                     /
       c(0,6,1) =                          0._RPP; c(1,6,1) =                          0._RPP
@@ -571,61 +569,61 @@ contains
       !                    /                    ;                     /
       c(4,6,1) =                          0._RPP; c(5,6,1) =                          0._RPP
       !                  (i-6)*(i-5)
-      c(6,6,1) =     64361771._RPP/14968800._RPP
+      c(6,6,1) =     76695443._RPP/17458022._RPP
       ! stencil 2
       !                  (i+2)*i                ;                   (i+1)*i
-      c(0,0,2) =     64361771._RPP/14968800._RPP; c(1,0,2) =   -295455983._RPP/6652800._RPP
+      c(0,0,2) =     76695443._RPP/17458022._RPP; c(1,0,2) =   -303410983._RPP/6736159._RPP
       !                      i*i                ;                   (i-1)*i
-      c(2,0,2) =   1894705391._RPP/19958400._RPP; c(3,0,2) = -1618284323._RPP/14968800._RPP
+      c(2,0,2) =   305770890._RPP/3186613._RPP; c(3,0,2) = -337645273._RPP/3091776._RPP
       !                  (i-2)*i                ;                   (i-3)*i
-      c(4,0,2) =     115524053._RPP/1663200._RPP; c(5,0,2) =    -95508139._RPP/3991680._RPP
+      c(4,0,2) =     164871587._RPP/2347023._RPP; c(5,0,2) =    -205305705._RPP/8465339._RPP
       !                  (i-4)*i
-      c(6,0,2) =       8279479._RPP/2395008._RPP
+      c(6,0,2) =       77150072._RPP/21955151._RPP
 
       !                    /                    ;                   (i+1)*(i-1)
-      c(0,1,2) =                          0._RPP; c(1,1,2) =     806338417._RPP/6652800._RPP
+      c(0,1,2) =                          0._RPP; c(1,1,2) =     266980515._RPP/2188712._RPP
       !                      i*(i-1)            ;                   (i-1)*(i-1)
-      c(2,1,2) =   -3573798407._RPP/6652800._RPP; c(3,1,2) =    1042531337._RPP/1663200._RPP
+      c(2,1,2) =   -470895955._RPP/874781._RPP; c(3,1,2) =    337717185._RPP/538487._RPP
       !                  (i-2)*(i-1)            ;                   (i-3)*(i-1)
-      c(4,1,2) =   -2725575317._RPP/6652800._RPP; c(5,1,2) =     475321093._RPP/3326400._RPP
+      c(4,1,2) =   -1002866209._RPP/2445347._RPP; c(5,1,2) =     154914521._RPP/1081252._RPP
       !                  (i-4)*(i-1)
-      c(6,1,2) =      -15401629._RPP/739200._RPP
+      c(6,1,2) =      -98152843._RPP/4687720._RPP
 
       !                    /                    ;                    /
       c(0,2,2) =                          0._RPP; c(1,2,2) =                          0._RPP
           !                  i*(i-1)            ;                   (i-1)*(i-2)
-      c(2,2,2) =        34187317._RPP/55440._RPP; c(3,2,2) =    -1476618887._RPP/997920._RPP
+      c(2,2,2) =        576629617._RPP/938378._RPP; c(3,2,2) =    -631316405._RPP/429286._RPP
       !                  (i-2)*(i-2)            ;                   (i-3)*(i-2)
-      c(4,2,2) =    1312114459._RPP/1330560._RPP; c(5,2,2) =    -773749439._RPP/2217600._RPP
+      c(4,2,2) =    750365573._RPP/765885._RPP; c(5,2,2) =    -251896262._RPP/725959._RPP
       !                  (i-4)*(i-2)
-      c(6,2,2) =     256556849._RPP/4989600._RPP
+      c(6,2,2) =     143992467._RPP/2811164._RPP
 
       !                    /                    ;                     /
       c(0,3,2) =                          0._RPP; c(1,3,2) =                          0._RPP
       !                    /                    ;                   (i-1)*(i-3)
-      c(2,3,2) =                          0._RPP; c(3,3,2) =    2726585359._RPP/2993760._RPP
+      c(2,3,2) =                          0._RPP; c(3,3,2) =    449371687._RPP/498274._RPP
       !                  (i-2)*(i-3)            ;                   (i-3)*(i-3)
-      c(4,3,2) =     -412424029._RPP/332640._RPP; c(5,3,2) =    2224538011._RPP/4989600._RPP
+      c(4,3,2) =     -660635886._RPP/538753._RPP; c(5,3,2) =    13260333719._RPP/30064515._RPP
       !                  (i-4)*(i-3)
-      c(6,3,2) =   -995600723._RPP/14968800._RPP
+      c(6,3,2) =   -177311125._RPP/2691566._RPP
 
       !                    /                    ;                     /
       c(0,4,2) =                          0._RPP; c(1,4,2) =                          0._RPP
       !                    /                    ;                     /
       c(2,4,2) =                          0._RPP; c(3,4,2) =                          0._RPP
       !                  (i-2)*(i-4)            ;                   (i-3)*(i-4)
-      c(4,4,2) =      143270957._RPP/332640._RPP; c(5,4,2) =   -2096571887._RPP/6652800._RPP
+      c(4,4,2) =      787491691._RPP/1852394._RPP; c(5,4,2) =   -393831298._RPP/1266551._RPP
       !                  (i-4)*(i-4)
-      c(6,4,2) =     105706999._RPP/2217600._RPP
+      c(6,4,2) =     85769455._RPP/1822342._RPP
 
       !                    /                    ;                     /
       c(0,5,2) =                          0._RPP; c(1,5,2) =                          0._RPP
       !                    /                    ;                     /
       c(2,5,2) =                          0._RPP; c(3,5,2) =                          0._RPP
       !                    /                    ;                   (i-3)*(i-5)
-      c(4,5,2) =                          0._RPP; c(5,5,2) =     130013563._RPP/2217600._RPP
+      c(4,5,2) =                          0._RPP; c(5,5,2) =     309673793._RPP/5357421._RPP
       !                  (i-4)*(i-5)
-      c(6,5,2) =   -359321429._RPP/19958400._RPP
+      c(6,5,2) =   -86513123._RPP/4872070._RPP
 
       !                    /                    ;                     /
       c(0,6,2) =                          0._RPP; c(1,6,2) =                          0._RPP
@@ -634,61 +632,61 @@ contains
       !                    /                    ;                     /
       c(4,6,2) =                          0._RPP; c(5,6,2) =                          0._RPP
       !                  (i-4)*(i-5)
-      c(6,6,2) =       2627203._RPP/1871100._RPP
+      c(6,6,2) =       20823809._RPP/15031645._RPP
       ! stencil 3
       !                  (i+3)*i                ;                   (i+2)*i
-      c(0,0,3) =       2627203._RPP/1871100._RPP; c(1,0,3) =  -323333323._RPP/19958400._RPP
+      c(0,0,3) =       20823809._RPP/15031645._RPP; c(1,0,3) =  -85952276._RPP/5412389._RPP
       !                  (i+1)*i                ;                       i*i
-      c(2,0,3) =    761142961._RPP/19958400._RPP; c(3,0,3) =  -701563133._RPP/14968800._RPP
+      c(2,0,3) =    97747719._RPP/2624408._RPP; c(3,0,3) =  -77947404._RPP/1703711._RPP
       !                  (i-1)*i                ;                   (i-2)*i
-      c(4,0,3) =     158544319._RPP/4989600._RPP; c(5,0,3) =  -225623953._RPP/19958400._RPP
+      c(4,0,3) =     78098218._RPP/2511469._RPP; c(5,0,3) =  -31210580._RPP/2807109._RPP
       !                  (i-3)*i
-      c(6,0,3) =     99022657._RPP/59875200._RPP
+      c(6,0,3) =     29187600._RPP/17822477._RPP
 
       !                    /                    ;                   (i+1)*(i-1)
-      c(0,1,3) =                          0._RPP; c(1,1,3) =     108444169._RPP/2217600._RPP
+      c(0,1,3) =                          0._RPP; c(1,1,3) =     151133283._RPP/3169976._RPP
       !                      i*(i-1)            ;                   (i-1)*(i-1)
-      c(2,1,3) =     -176498513._RPP/739200._RPP; c(3,1,3) =    1506944981._RPP/4989600._RPP
+      c(2,1,3) =     -735436149._RPP/3170423._RPP; c(3,1,3) =    212799192._RPP/725717._RPP
       !                  (i-2)*(i-1)            ;                   (i-3)*(i-1)
-      c(4,1,3) =    -464678369._RPP/2217600._RPP; c(5,1,3) =      84263749._RPP/1108800._RPP
+      c(4,1,3) =    -7192946466._RPP/35277791._RPP; c(5,1,3) =      143433946._RPP/1930931._RPP
       !                  (i-4)*(i-1)
-      c(6,1,3) =   -225623953._RPP/19958400._RPP
+      c(6,1,3) =   -31210580._RPP/2807109._RPP
 
       !                    /                    ;                    /
       c(0,2,3) =                          0._RPP; c(1,2,3) =                          0._RPP
           !                  i*(i-1)            ;                   (i-1)*(i-2)
-      c(2,2,3) =        16790707._RPP/55440._RPP; c(3,2,3) =     -790531177._RPP/997920._RPP
+      c(2,2,3) =        330842346._RPP/1128355._RPP; c(3,2,3) =     -478256390._RPP/624157._RPP
       !                  (i-2)*(i-2)            ;                   (i-3)*(i-2)
-      c(4,2,3) =      250523543._RPP/443520._RPP; c(5,2,3) =    -464678369._RPP/2217600._RPP
+      c(4,2,3) =      1046376941._RPP/1911720._RPP; c(5,2,3) =    -7192946466._RPP/35277791._RPP
       !                  (i-4)*(i-2)
-      c(6,2,3) =     158544319._RPP/4989600._RPP
+      c(6,2,3) =     78098218._RPP/2511469._RPP
 
       !                    /                    ;                     /
       c(0,3,3) =                          0._RPP; c(1,3,3) =                          0._RPP
       !                    /                    ;                   (i-1)*(i-3)
-      c(2,3,3) =                          0._RPP; c(3,3,3) =    1607739169._RPP/2993760._RPP
+      c(2,3,3) =                          0._RPP; c(3,3,3) =    1393876129._RPP/2686891._RPP
       !                  (i-2)*(i-3)            ;                   (i-3)*(i-3)
-      c(4,3,3) =     -790531177._RPP/997920._RPP; c(5,3,3) =    1506944981._RPP/4989600._RPP
+      c(4,3,3) =     -478256390._RPP/624157._RPP; c(5,3,3) =    212799192._RPP/725717._RPP
       !                  (i-4)*(i-3)
-      c(6,3,3) =   -701563133._RPP/14968800._RPP
+      c(6,3,3) =   -77947404._RPP/1703711._RPP
 
       !                    /                    ;                     /
       c(0,4,3) =                          0._RPP; c(1,4,3) =                          0._RPP
       !                    /                    ;                     /
       c(2,4,3) =                          0._RPP; c(3,4,3) =                          0._RPP
       !                  (i-2)*(i-4)            ;                   (i-3)*(i-4)
-      c(4,4,3) =        16790707._RPP/55440._RPP; c(5,4,3) =     -176498513._RPP/739200._RPP
+      c(4,4,3) =        330842346._RPP/1128355._RPP; c(5,4,3) =     -735436149._RPP/3170423._RPP
       !                  (i-4)*(i-4)
-      c(6,4,3) =    761142961._RPP/19958400._RPP
+      c(6,4,3) =    97747719._RPP/2624408._RPP
 
       !                    /                    ;                     /
       c(0,5,3) =                          0._RPP; c(1,5,3) =                          0._RPP
       !                    /                    ;                     /
       c(2,5,3) =                          0._RPP; c(3,5,3) =                          0._RPP
       !                    /                    ;                   (i-3)*(i-5)
-      c(4,5,3) =                          0._RPP; c(5,5,3) =     108444169._RPP/2217600._RPP
+      c(4,5,3) =                          0._RPP; c(5,5,3) =     151133283._RPP/3169976._RPP
       !                  (i-4)*(i-5)
-      c(6,5,3) =   -323333323._RPP/19958400._RPP
+      c(6,5,3) =   -85952276._RPP/5412389._RPP
 
       !                    /                    ;                     /
       c(0,6,3) =                          0._RPP; c(1,6,3) =                          0._RPP
@@ -697,61 +695,61 @@ contains
       !                    /                    ;                     /
       c(4,6,3) =                          0._RPP; c(5,6,3) =                          0._RPP
       !                  (i-4)*(i-5)
-      c(6,6,3) =       2627203._RPP/1871100._RPP
+      c(6,6,3) =       20823809._RPP/15031645._RPP
       ! stencil 4
       !                  (i+3)*i                ;                   (i+2)*i
-      c(0,0,4) =       2627203._RPP/1871100._RPP; c(1,0,4) =  -359321429._RPP/19958400._RPP
+      c(0,0,4) =       20823809._RPP/15031645._RPP; c(1,0,4) =  -86513123._RPP/4872070._RPP
       !                  (i+1)*i                ;                       i*i
-      c(2,0,4) =     105706999._RPP/2217600._RPP; c(3,0,4) =  -995600723._RPP/14968800._RPP
+      c(2,0,4) =     85769455._RPP/1822342._RPP; c(3,0,4) =  -177311125._RPP/2691566._RPP
       !                  (i-1)*i                ;                   (i-2)*i
-      c(4,0,4) =     256556849._RPP/4989600._RPP; c(5,0,4) =     -15401629._RPP/739200._RPP
+      c(4,0,4) =     143992467._RPP/2811164._RPP; c(5,0,4) =     -98152843._RPP/4687720._RPP
       !                  (i-3)*i
-      c(6,0,4) =       8279479._RPP/2395008._RPP
+      c(6,0,4) =       77150072._RPP/21955151._RPP
 
       !                    /                    ;                   (i+1)*(i-1)
-      c(0,1,4) =                          0._RPP; c(1,1,4) =     130013563._RPP/2217600._RPP
+      c(0,1,4) =                          0._RPP; c(1,1,4) =     309673793._RPP/5357421._RPP
       !                      i*(i-1)            ;                   (i-1)*(i-1)
-      c(2,1,4) =   -2096571887._RPP/6652800._RPP; c(3,1,4) =    2224538011._RPP/4989600._RPP
+      c(2,1,4) =   -393831298._RPP/1266551._RPP; c(3,1,4) =    13260333719._RPP/30064515._RPP
       !                  (i-2)*(i-1)            ;                   (i-3)*(i-1)
-      c(4,1,4) =    -773749439._RPP/2217600._RPP; c(5,1,4) =     475321093._RPP/3326400._RPP
+      c(4,1,4) =    -251896262._RPP/725959._RPP; c(5,1,4) =     154914521._RPP/1081252._RPP
       !                  (i-4)*(i-1)
-      c(6,1,4) =     -95508139._RPP/3991680._RPP
+      c(6,1,4) =     -205305705._RPP/8465339._RPP
 
       !                    /                    ;                    /
       c(0,2,4) =                          0._RPP; c(1,2,4) =                          0._RPP
           !                  i*(i-1)            ;                   (i-1)*(i-2)
-      c(2,2,4) =      143270957._RPP/332640._RPP; c(3,2,4) =     -412424029._RPP/332640._RPP
+      c(2,2,4) =      787491691._RPP/1852394._RPP; c(3,2,4) =     -660635886._RPP/538753._RPP
       !                  (i-2)*(i-2)            ;                   (i-3)*(i-2)
-      c(4,2,4) =    1312114459._RPP/1330560._RPP; c(5,2,4) =   -2725575317._RPP/6652800._RPP
+      c(4,2,4) =    750365573._RPP/765885._RPP; c(5,2,4) =   -1002866209._RPP/2445347._RPP
       !                  (i-4)*(i-2)
-      c(6,2,4) =     115524053._RPP/1663200._RPP
+      c(6,2,4) =     164871587._RPP/2347023._RPP
 
       !                    /                    ;                     /
       c(0,3,4) =                          0._RPP; c(1,3,4) =                          0._RPP
       !                    /                    ;                   (i-1)*(i-3)
-      c(2,3,4) =                          0._RPP; c(3,3,4) =    2726585359._RPP/2993760._RPP
+      c(2,3,4) =                          0._RPP; c(3,3,4) =    449371687._RPP/498274._RPP
       !                  (i-2)*(i-3)            ;                   (i-3)*(i-3)
-      c(4,3,4) =    -1476618887._RPP/997920._RPP; c(5,3,4) =    1042531337._RPP/1663200._RPP
+      c(4,3,4) =    -631316405._RPP/429286._RPP; c(5,3,4) =    337717185._RPP/538487._RPP
       !                  (i-4)*(i-3)
-      c(6,3,4) =  -1618284323._RPP/14968800._RPP
+      c(6,3,4) =  -337645273._RPP/3091776._RPP
 
       !                    /                    ;                     /
       c(0,4,4) =                          0._RPP; c(1,4,4) =                          0._RPP
       !                    /                    ;                     /
       c(2,4,4) =                          0._RPP; c(3,4,4) =                          0._RPP
       !                  (i-2)*(i-4)            ;                   (i-3)*(i-4)
-      c(4,4,4) =        34187317._RPP/55440._RPP; c(5,4,4) =   -3573798407._RPP/6652800._RPP
+      c(4,4,4) =        576629617._RPP/938378._RPP; c(5,4,4) =   -470895955._RPP/874781._RPP
       !                  (i-4)*(i-4)
-      c(6,4,4) =   1894705391._RPP/19958400._RPP
+      c(6,4,4) =   305770890._RPP/3186613._RPP
 
       !                    /                    ;                     /
       c(0,5,4) =                          0._RPP; c(1,5,4) =                          0._RPP
       !                    /                    ;                     /
       c(2,5,4) =                          0._RPP; c(3,5,4) =                          0._RPP
       !                    /                    ;                   (i-3)*(i-5)
-      c(4,5,4) =                          0._RPP; c(5,5,4) =     806338417._RPP/6652800._RPP
+      c(4,5,4) =                          0._RPP; c(5,5,4) =     266980515._RPP/2188712._RPP
       !                  (i-4)*(i-5)
-      c(6,5,4) =    -295455983._RPP/6652800._RPP
+      c(6,5,4) =    -303410983._RPP/6736159._RPP
 
       !                    /                    ;                     /
       c(0,6,4) =                          0._RPP; c(1,6,4) =                          0._RPP
@@ -760,61 +758,61 @@ contains
       !                    /                    ;                     /
       c(4,6,4) =                          0._RPP; c(5,6,4) =                          0._RPP
       !                  (i-4)*(i-5)
-      c(6,6,4) =     64361771._RPP/14968800._RPP
+      c(6,6,4) =     76695443._RPP/17458022._RPP
       ! stencil 5
       !                  (i+3)*i                ;                   (i+2)*i
-      c(0,0,5) =     64361771._RPP/14968800._RPP; c(1,0,5) =    -377474689._RPP/6652800._RPP
+      c(0,0,5) =     76695443._RPP/17458022._RPP; c(1,0,5) =    -483420287._RPP/8336284._RPP
       !                  (i+1)*i                ;                       i*i
-      c(2,0,5) =   3126718481._RPP/19958400._RPP; c(3,0,5) =  -3465607493._RPP/14968800._RPP
+      c(2,0,5) =   1743860591._RPP/10881504._RPP; c(3,0,5) =  -246865952._RPP/1040433._RPP
       !                  (i-1)*i                ;                   (i-2)*i
-      c(4,0,5) =     320782183._RPP/1663200._RPP; c(5,0,5) =    -341910757._RPP/3991680._RPP
+      c(4,0,5) =     265135851._RPP/1336964._RPP; c(5,0,5) =    -265505701._RPP/2998139._RPP
       !                  (i-3)*i
-      c(6,0,5) =    945155329._RPP/59875200._RPP
+      c(6,0,5) =    43003346._RPP/2612319._RPP
 
       !                    /                    ;                   (i+1)*(i-1)
-      c(0,1,5) =                          0._RPP; c(1,1,5) =    1250007643._RPP/6652800._RPP
+      c(0,1,5) =                          0._RPP; c(1,1,5) =    393580372._RPP/2049353._RPP
       !                      i*(i-1)            ;                   (i-1)*(i-1)
-      c(2,1,5) =   -6932480657._RPP/6652800._RPP; c(3,1,5) =      857838469._RPP/554400._RPP
+      c(2,1,5) =   -185662673._RPP/174204._RPP; c(3,1,5) =      498890606._RPP/314761._RPP
       !                  (i-2)*(i-1)            ;                   (i-3)*(i-1)
-      c(4,1,5) =   -8619440987._RPP/6652800._RPP; c(5,1,5) =    1924032511._RPP/3326400._RPP
+      c(4,1,5) =   -577579349._RPP/433921._RPP; c(5,1,5) =    1029357835._RPP/1723277._RPP
       !                  (i-4)*(i-1)
-      c(6,1,5) =    -712745603._RPP/6652800._RPP
+      c(6,1,5) =    -1157045253._RPP/10370330._RPP
 
       !                    /                    ;                    /
       c(0,2,5) =                          0._RPP; c(1,2,5) =                          0._RPP
           !                  i*(i-1)            ;                   (i-1)*(i-2)
-      c(2,2,5) =        53678683._RPP/36960._RPP; c(3,2,5) =    -4330640057._RPP/997920._RPP
+      c(2,2,5) =        1142129285._RPP/768659._RPP; c(3,2,5) =    -1397796418._RPP/314477._RPP
       !                  (i-2)*(i-2)            ;                   (i-3)*(i-2)
-      c(4,2,5) =    4868089189._RPP/1330560._RPP; c(5,2,5) =     -405382961._RPP/246400._RPP
+      c(4,2,5) =    656116894._RPP/174649._RPP; c(5,2,5) =     -448069659._RPP/263978._RPP
       !                  (i-4)*(i-2)
-      c(6,2,5) =    1531307249._RPP/4989600._RPP
+      c(6,2,5) =    200564827._RPP/628331._RPP
 
       !                    /                    ;                     /
       c(0,3,5) =                          0._RPP; c(1,3,5) =                          0._RPP
       !                    /                    ;                   (i-1)*(i-3)
-      c(2,3,5) =                          0._RPP; c(3,3,5) =    9780057169._RPP/2993760._RPP
+      c(2,3,5) =                          0._RPP; c(3,3,5) =    353679247._RPP/105637._RPP
       !                  (i-2)*(i-3)            ;                   (i-3)*(i-3)
-      c(4,3,5) =     -616410313._RPP/110880._RPP; c(5,3,5) =   12601009501._RPP/4989600._RPP
+      c(4,3,5) =     -952714155._RPP/166894._RPP; c(5,3,5) =   6598378479._RPP/2533904._RPP
       !                  (i-4)*(i-3)
-      c(6,3,5) =  -7124638253._RPP/14968800._RPP
+      c(6,3,5) =  -219042731._RPP/442919._RPP
 
       !                    /                    ;                     /
       c(0,4,5) =                          0._RPP; c(1,4,5) =                          0._RPP
       !                    /                    ;                     /
       c(2,4,5) =                          0._RPP; c(3,4,5) =                          0._RPP
       !                  (i-2)*(i-4)            ;                   (i-3)*(i-4)
-      c(4,4,5) =      796358777._RPP/332640._RPP; c(5,4,5) =  -14684933057._RPP/6652800._RPP
+      c(4,4,5) =      3295939303._RPP/1339169._RPP; c(5,4,5) =  -2876116249._RPP/1263255._RPP
       !                  (i-4)*(i-4)
-      c(6,4,5) =    2811067067._RPP/6652800._RPP
+      c(6,4,5) =    451414666._RPP/1028589._RPP
 
       !                    /                    ;                     /
       c(0,5,5) =                          0._RPP; c(1,5,5) =                          0._RPP
       !                    /                    ;                     /
       c(2,5,5) =                          0._RPP; c(3,5,5) =                          0._RPP
       !                    /                    ;                   (i-3)*(i-5)
-      c(4,5,5) =                          0._RPP; c(5,5,5) =      127942497._RPP/246400._RPP
+      c(4,5,5) =                          0._RPP; c(5,5,5) =      151821033._RPP/282817._RPP
       !                  (i-4)*(i-5)
-      c(6,5,5) =  -4074544787._RPP/19958400._RPP
+      c(6,5,5) =  -258813979._RPP/1219012._RPP
 
       !                    /                    ;                     /
       c(0,6,5) =                          0._RPP; c(1,6,5) =                          0._RPP
@@ -823,61 +821,61 @@ contains
       !                    /                    ;                     /
       c(4,6,5) =                          0._RPP; c(5,6,5) =                          0._RPP
       !                  (i-4)*(i-5)
-      c(6,6,5) =      62911297._RPP/2993760._RPP
+      c(6,6,5) =      118739219._RPP/5409702._RPP
       ! stencil 6
       !                  (i+3)*i                ;                   (i+2)*i
-      c(0,0,6) =      62911297._RPP/2993760._RPP; c(1,0,6) =  -5556669277._RPP/19958400._RPP
+      c(0,0,6) =      118739219._RPP/5409702._RPP; c(1,0,6) =  -484093752._RPP/1664533._RPP
       !                  (i+1)*i                ;                       i*i
-      c(2,0,6) =  15476926351._RPP/19958400._RPP; c(3,0,6) = -17425032203._RPP/14968800._RPP
+      c(2,0,6) =  562957181._RPP/694753._RPP; c(3,0,6) = -219701291._RPP/180490._RPP
       !                  (i-1)*i                ;                   (i-2)*i
-      c(4,0,6) =    4964771899._RPP/4989600._RPP; c(5,0,6) =  -9181961959._RPP/19958400._RPP
+      c(4,0,6) =    412399715._RPP/395812._RPP; c(5,0,6) =  -299800985._RPP/620702._RPP
       !                  (i-3)*i
-      c(6,0,6) =   5391528799._RPP/59875200._RPP
+      c(6,0,6) =   65647731._RPP/691205._RPP
 
       !                    /                    ;                   (i+1)*(i-1)
-      c(0,1,6) =                          0._RPP; c(1,1,6) =    2047941883._RPP/2217600._RPP
+      c(0,1,6) =                          0._RPP; c(1,1,6) =    368117849._RPP/381597._RPP
       !                      i*(i-1)            ;                   (i-1)*(i-1)
-      c(2,1,6) =    -3809437823._RPP/739200._RPP; c(3,1,6) =   38683385051._RPP/4989600._RPP
+      c(2,1,6) =    -3101495154._RPP/576017._RPP; c(3,1,6) =   2369766527._RPP/292389._RPP
       !                  (i-2)*(i-1)            ;                   (i-3)*(i-1)
-      c(4,1,6) =  -14734178999._RPP/2217600._RPP; c(5,1,6) =    3417057367._RPP/1108800._RPP
+      c(4,1,6) =  -1068783425._RPP/153683._RPP; c(5,1,6) =    803154527._RPP/248375._RPP
       !                  (i-4)*(i-1)
-      c(6,1,6) =   -2416885043._RPP/3991680._RPP
+      c(6,1,6) =   -418267211._RPP/655432._RPP
 
       !                    /                    ;                    /
       c(0,2,6) =                          0._RPP; c(1,2,6) =                          0._RPP
           !                  i*(i-1)            ;                   (i-1)*(i-2)
-      c(2,2,6) =       199730921._RPP/27720._RPP; c(3,2,6) =   -21693002767._RPP/997920._RPP
+      c(2,2,6) =       384888217._RPP/51123._RPP; c(3,2,6) =   -1833856939._RPP/80705._RPP
       !                  (i-2)*(i-2)            ;                   (i-3)*(i-2)
-      c(4,2,6) =     8290771913._RPP/443520._RPP; c(5,2,6) =   -19308505679._RPP/2217600._RPP
+      c(4,2,6) =     3315206316._RPP/169489._RPP; c(5,2,6) =   -550697211._RPP/60310._RPP
       !                  (i-4)*(i-2)
-      c(6,2,6) =    8579309749._RPP/4989600._RPP
+      c(6,2,6) =    2375865880._RPP/1312047._RPP
 
       !                    /                    ;                     /
       c(0,3,6) =                          0._RPP; c(1,3,6) =                          0._RPP
       !                    /                    ;                   (i-1)*(i-3)
-      c(2,3,6) =                          0._RPP; c(3,3,6) =   49256859919._RPP/2993760._RPP
+      c(2,3,6) =                          0._RPP; c(3,3,6) =   2558389867._RPP/148729._RPP
       !                  (i-2)*(i-3)            ;                   (i-3)*(i-3)
-      c(4,3,6) =   -28364892607._RPP/997920._RPP; c(5,3,6) =   66440049371._RPP/4989600._RPP
+      c(4,3,6) =   -485497721._RPP/16325._RPP; c(5,3,6) =   2854637563._RPP/204507._RPP
       !                  (i-4)*(i-3)
-      c(6,3,6) = -39645439643._RPP/14968800._RPP
+      c(6,3,6) = -882134137._RPP/316505._RPP
 
       !                    /                    ;                     /
       c(0,4,6) =                          0._RPP; c(1,4,6) =                          0._RPP
       !                    /                    ;                     /
       c(2,4,6) =                          0._RPP; c(3,4,6) =                          0._RPP
       !                  (i-2)*(i-4)            ;                   (i-3)*(i-4)
-      c(4,4,6) =     1369404749._RPP/110880._RPP; c(5,4,6) =    -8623431623._RPP/739200._RPP
+      c(4,4,6) =     2398154453._RPP/185516._RPP; c(5,4,6) =    -2727583905._RPP/223057._RPP
       !                  (i-4)*(i-4)
-      c(6,4,6) =  46808583631._RPP/19958400._RPP
+      c(6,4,6) =  1025357155._RPP/415733._RPP
 
       !                    /                    ;                     /
       c(0,5,6) =                          0._RPP; c(1,5,6) =                          0._RPP
       !                    /                    ;                     /
       c(2,5,6) =                          0._RPP; c(3,5,6) =                          0._RPP
       !                    /                    ;                   (i-3)*(i-5)
-      c(4,5,6) =                          0._RPP; c(5,5,6) =    6182612731._RPP/2217600._RPP
+      c(4,5,6) =                          0._RPP; c(5,5,6) =    1267010831._RPP/433225._RPP
       !                  (i-4)*(i-5)
-      c(6,5,6) = -22763092357._RPP/19958400._RPP
+      c(6,5,6) = -842151863._RPP/702281._RPP
 
       !                    /                    ;                     /
       c(0,6,6) =                          0._RPP; c(1,6,6) =                          0._RPP
@@ -886,62 +884,62 @@ contains
       !                    /                    ;                     /
       c(4,6,6) =                          0._RPP; c(5,6,6) =                          0._RPP
       !                  (i-4)*(i-5)
-      c(6,6,6) =     897207163._RPP/7484400._RPP
+      c(6,6,6) =     307570060._RPP/2438487._RPP
     case(8) ! 15th order
       ! stencil 0
       !                    /                              ;                      /
-      c(0,0,0) =     5870785406797._RPP/  20756736000._RPP; c(1,0,0) =    -3130718954431._RPP/    972972000._RPP
+      c(0,0,0) =     561955582._RPP/  1878967._RPP; c(1,0,0) =    -1353623375._RPP/    398213._RPP
       !                    /                              ;                      /
-      c(2,0,0) =    36019630238453._RPP/   4447872000._RPP; c(3,0,0) =    -9030771744409._RPP/    778377600._RPP
+      c(2,0,0) =    1512171950._RPP/   176773._RPP; c(3,0,0) =    -1384199219._RPP/    112909._RPP
       !                    /                              ;                      /
-      c(4,0,0) =     7028987165449._RPP/    691891200._RPP; c(5,0,0) =    -5269260407953._RPP/    972972000._RPP
+      c(4,0,0) =     1191775685._RPP/    110969._RPP; c(5,0,0) =    -6701525420._RPP/    1169941._RPP
       !                    /                              ;                      /
-      c(6,0,0) =    50528822994577._RPP/  31135104000._RPP; c(7,0,0) =     -819100494587._RPP/   3891888000._RPP
+      c(6,0,0) =    1730988313._RPP/  1007913._RPP; c(7,0,0) =     -167817292._RPP/   753123._RPP
 
       !                    /                              ;                      /
-      c(0,1,0) =                                    0._RPP; c(1,1,0) =   581791881407369._RPP/  62270208000._RPP
+      c(0,1,0) =                                    0._RPP; c(1,1,0) =   5230798390._RPP/  531001._RPP
       !                    /                              ;                      /
-      c(2,1,0) =  -185432400549349._RPP/   3891888000._RPP; c(3,1,0) =   428668917728281._RPP/   6227020800._RPP
+      c(2,1,0) =  -6783346413._RPP/   135128._RPP; c(3,1,0) =   2653665219._RPP/   36590._RPP
       !                    /                              ;                      /
-      c(4,1,0) =     -393303816739._RPP/      6486480._RPP; c(5,1,0) =  1010731494899387._RPP/  31135104000._RPP
+      c(4,1,0) =     -2650855638._RPP/      41489._RPP; c(5,1,0) =  3436464517._RPP/  100426._RPP
       !                    /                              ;                      /
-      c(6,1,0) =   -12661520644021._RPP/   1297296000._RPP; c(7,1,0) =    39509061792127._RPP/  31135104000._RPP
+      c(6,1,0) =   -8115803171._RPP/   788565._RPP; c(7,1,0) =    1606637628._RPP/  1200199._RPP
 
       !                    /                              ;                      /
       c(0,2,0) =                                    0._RPP; c(1,2,0) =                                    0._RPP
       !                    /                              ;                      /
-      c(2,2,0) =  1272280750118197._RPP/  20756736000._RPP; c(3,2,0) =    -6306477584539._RPP/     35380800._RPP
+      c(2,2,0) =  3382169379._RPP/  52433._RPP; c(3,2,0) =    -4461330800._RPP/     23793._RPP
       !                    /                              ;                      /
-      c(4,2,0) =   982150494698309._RPP/   6227020800._RPP; c(5,2,0) =  -109928049802589._RPP/   1297296000._RPP
+      c(4,2,0) =   2354499851._RPP/   14191._RPP; c(5,2,0) =  -9679034365._RPP/   108568._RPP
       !                    /                              ;                      /
-      c(6,2,0) =   795325997722517._RPP/  31135104000._RPP; c(7,2,0) =    -6476591199161._RPP/   1945944000._RPP
+      c(6,2,0) =   4477231643._RPP/  166549._RPP; c(7,2,0) =    -2034860005._RPP/   580787._RPP
 
       !                    /                              ;                      /
       c(0,3,0) =                                    0._RPP; c(1,3,0) =                                    0._RPP
       !                    /                              ;                      /
-      c(2,3,0) =                                    0._RPP; c(3,3,0) =     5896382977423._RPP/     45287424._RPP
+      c(2,3,0) =                                    0._RPP; c(3,3,0) =     5383551615._RPP/     39332._RPP
       !                    /                              ;                      /
-      c(4,3,0) =   -35999233471051._RPP/    155675520._RPP; c(5,3,0) =   775760249154827._RPP/   6227020800._RPP
+      c(4,3,0) =   -10453320754._RPP/    43009._RPP; c(5,3,0) =   7936751861._RPP/   60613._RPP
       !                    /                              ;                      /
-      c(6,3,0) =    -4882688924777._RPP/    129729600._RPP; c(7,3,0) =    10196716797013._RPP/   2075673600._RPP
+      c(6,3,0) =    -3946887082._RPP/    99757._RPP; c(7,3,0) =    1168472761._RPP/   226223._RPP
 
       !                    /                              ;                      /
       c(0,4,0) =                                    0._RPP; c(1,4,0) =                                    0._RPP
       !                    /                              ;                      /
       c(2,4,0) =                                    0._RPP; c(3,4,0) =                                    0._RPP
       !                    /                              ;                      /
-      c(4,4,0) =    23315424178373._RPP/    226437120._RPP; c(5,4,0) =     -983492927359._RPP/      8845200._RPP
+      c(4,4,0) =    15685259234._RPP/    144989._RPP; c(5,4,0) =     -2087501693._RPP/      17871._RPP
       !                    /                              ;                      /
-      c(6,4,0) =    41910140004779._RPP/   1245404160._RPP; c(7,4,0) =    -3423798156193._RPP/    778377600._RPP
+      c(6,4,0) =    12211598186._RPP/   345407._RPP; c(7,4,0) =    -1774088813._RPP/    383858._RPP
 
       !                    /                              ;                      /
       c(0,5,0) =                                    0._RPP; c(1,5,0) =                                    0._RPP
       !                    /                              ;                      /
       c(2,5,0) =                                    0._RPP; c(3,5,0) =                                    0._RPP
       !                    /                              ;                      /
-      c(4,5,0) =                                    0._RPP; c(5,5,0) =   624177436330267._RPP/  20756736000._RPP
+      c(4,5,0) =                                    0._RPP; c(5,5,0) =   5633451919._RPP/  178362._RPP
       !                    /                              ;                      /
-      c(6,5,0) =   -70944310593109._RPP/   3891888000._RPP; c(7,5,0) =    10610581100123._RPP/   4447872000._RPP
+      c(6,5,0) =   -1307164757._RPP/   68276._RPP; c(7,5,0) =    4932843539._RPP/   1968706._RPP
 
       !                    /                              ;                      /
       c(0,6,0) =                                    0._RPP; c(1,6,0) =                                    0._RPP
@@ -950,7 +948,7 @@ contains
       !                    /                              ;                      /
       c(4,6,0) =                                    0._RPP; c(5,6,0) =                                    0._RPP
       !                    /                              ;                      /
-      c(6,6,0) =   172229708657639._RPP/  62270208000._RPP; c(7,6,0) =    -1410106709147._RPP/   1945944000._RPP
+      c(6,6,0) =   1285415788._RPP/  442547._RPP; c(7,6,0) =    -508083143._RPP/   667663._RPP
 
       !                    /                              ;                      /
       c(0,7,0) =                                    0._RPP; c(1,7,0) =                                    0._RPP
@@ -959,62 +957,62 @@ contains
       !                    /                              ;                      /
       c(4,7,0) =                                    0._RPP; c(5,7,0) =                                    0._RPP
       !                    /                              ;                      /
-      c(6,7,0) =                                    0._RPP; c(7,7,0) =      986005096387._RPP/  20756736000._RPP
+      c(6,7,0) =                                    0._RPP; c(7,7,0) =      151567467._RPP/  3038449._RPP
 
       ! stencil 1
       !                    /                              ;                      /
-      c(0,0,1) =      986005096387._RPP/  20756736000._RPP; c(1,0,1) =    -1069457397287._RPP/   1945944000._RPP
+      c(0,0,1) =      151567467._RPP/  3038449._RPP; c(1,0,1) =    -464902845._RPP/   808102._RPP
       !                    /                              ;                      /
-      c(2,0,1) =    43315366304381._RPP/  31135104000._RPP; c(3,0,1) =    -1550584925161._RPP/    778377600._RPP
+      c(2,0,1) =    234353207._RPP/  161088._RPP; c(3,0,1) =    -2546573797._RPP/    1222381._RPP
       !                    /                              ;                      /
-      c(4,0,1) =      721470910481._RPP/    415134720._RPP; c(5,0,1) =    -1793558121581._RPP/   1945944000._RPP
+      c(4,0,1) =      847040497._RPP/    465789._RPP; c(5,0,1) =    -12689783695._RPP/   13147542._RPP
       !                    /                              ;                      /
-      c(6,0,1) =     1221480056521._RPP/   4447872000._RPP; c(7,0,1) =     -137801870867._RPP/   3891888000._RPP
+      c(6,0,1) =     362054965._RPP/   1257877._RPP; c(7,0,1) =     -115902052._RPP/   3120403._RPP
 
       !                    /                              ;                      /
-      c(0,1,1) =                                    0._RPP; c(1,1,1) =   102080471419559._RPP/  62270208000._RPP
+      c(0,1,1) =                                    0._RPP; c(1,1,1) =   960477863._RPP/  562021._RPP
       !                    /                              ;                      /
-      c(2,1,1) =   -32903428273669._RPP/   3891888000._RPP; c(3,1,1) =    76273513229143._RPP/   6227020800._RPP
+      c(2,1,1) =   -2039339988._RPP/   231781._RPP; c(3,1,1) =    3431063476._RPP/   269267._RPP
       !                    /                              ;                      /
-      c(4,1,1) =    -1397571412901._RPP/    129729600._RPP; c(5,1,1) =   178922840432597._RPP/  31135104000._RPP
+      c(4,1,1) =    -3161084857._RPP/    282001._RPP; c(5,1,1) =   4037906091._RPP/  674921._RPP
       !                    /                              ;                      /
-      c(6,1,1) =    -2230862726341._RPP/   1297296000._RPP; c(7,1,1) =     6925711076497._RPP/  31135104000._RPP
+      c(6,1,1) =    -850151296._RPP/   474539._RPP; c(7,1,1) =     513945629._RPP/  2216079._RPP
 
       !                    /                              ;                      /
       c(0,2,1) =                                    0._RPP; c(1,2,1) =                                    0._RPP
       !                    /                              ;                      /
-      c(2,2,1) =   229456135916827._RPP/  20756736000._RPP; c(3,2,1) =      -11450077957._RPP/       353808._RPP
+      c(2,2,1) =   4802121175._RPP/  418404._RPP; c(3,2,1) =      -2609137409._RPP/       77728._RPP
       !                    /                              ;                      /
-      c(4,2,1) =   178559835040523._RPP/   6227020800._RPP; c(5,2,1) =   -19952704102349._RPP/   1297296000._RPP
+      c(4,2,1) =   4919628784._RPP/   165435._RPP; c(5,2,1) =   -2029186932._RPP/   127189._RPP
       !                    /                              ;                      /
-      c(6,2,1) =   143887855797947._RPP/  31135104000._RPP; c(7,2,1) =     -583488131053._RPP/    972972000._RPP
+      c(6,2,1) =   2674480859._RPP/  557634._RPP; c(7,2,1) =     -724803819._RPP/    1163906._RPP
 
       !                    /                              ;                      /
       c(0,3,1) =                                    0._RPP; c(1,3,1) =                                    0._RPP
       !                    /                              ;                      /
-      c(2,3,1) =                                    0._RPP; c(3,3,1) =     5407733702789._RPP/    226437120._RPP
+      c(2,3,1) =                                    0._RPP; c(3,3,1) =     3485486425._RPP/    140912._RPP
       !                    /                              ;                      /
-      c(4,3,1) =    -6630479776771._RPP/    155675520._RPP; c(5,3,1) =   142950967195973._RPP/   6227020800._RPP
+      c(4,3,1) =    -5435379710._RPP/    123283._RPP; c(5,3,1) =   1773946113._RPP/   74654._RPP
       !                    /                              ;                      /
-      c(6,3,1) =     -224563041869._RPP/     32432400._RPP; c(7,3,1) =       41566759079._RPP/     46126080._RPP
+      c(6,3,1) =     -1907782262._RPP/     266123._RPP; c(7,3,1) =       779780282._RPP/     835427._RPP
 
       !                    /                              ;                      /
       c(0,4,1) =                                    0._RPP; c(1,4,1) =                                    0._RPP
       !                    /                              ;                      /
       c(2,4,1) =                                    0._RPP; c(3,4,1) =                                    0._RPP
       !                    /                              ;                      /
-      c(4,4,1) =     4322531771339._RPP/    226437120._RPP; c(5,4,1) =      -29244985495._RPP/      1415232._RPP
+      c(4,4,1) =     3163565270._RPP/    160241._RPP; c(5,4,1) =      -1674462641._RPP/      78375._RPP
       !                    /                              ;                      /
-      c(6,4,1) =    38941083744793._RPP/   6227020800._RPP; c(7,4,1) =      -90744192823._RPP/    111196800._RPP
+      c(6,4,1) =    2349626332._RPP/   363399._RPP; c(7,4,1) =      -1403389204._RPP/    1662883._RPP
 
       !                    /                              ;                      /
       c(0,5,1) =                                    0._RPP; c(1,5,1) =                                    0._RPP
       !                    /                              ;                      /
       c(2,5,1) =                                    0._RPP; c(3,5,1) =                                    0._RPP
       !                    /                              ;                      /
-      c(4,5,1) =                                    0._RPP; c(5,5,1) =   116487285372277._RPP/  20756736000._RPP
+      c(4,5,1) =                                    0._RPP; c(5,5,1) =   3171324093._RPP/  546871._RPP
       !                    /                              ;                      /
-      c(6,5,1) =   -13257668940469._RPP/   3891888000._RPP; c(7,5,1) =    13873328286131._RPP/  31135104000._RPP
+      c(6,5,1) =   -686664647._RPP/   195106._RPP; c(7,5,1) =    281051417._RPP/  610454._RPP
 
       !                    /                              ;                      /
       c(0,6,1) =                                    0._RPP; c(1,6,1) =                                    0._RPP
@@ -1023,7 +1021,7 @@ contains
       !                    /                              ;                      /
       c(4,6,1) =                                    0._RPP; c(5,6,1) =                                    0._RPP
       !                    /                              ;                      /
-      c(6,6,1) =    32268504444809._RPP/  62270208000._RPP; c(7,6,1) =     -132173819131._RPP/    972972000._RPP
+      c(6,6,1) =    48179335._RPP/  90019._RPP; c(7,6,1) =     -255613952._RPP/    1821943._RPP
 
       !                    /                              ;                      /
       c(0,7,1) =                                    0._RPP; c(1,7,1) =                                    0._RPP
@@ -1032,62 +1030,62 @@ contains
       !                    /                              ;                      /
       c(4,7,1) =                                    0._RPP; c(5,7,1) =                                    0._RPP
       !                    /                              ;                      /
-      c(6,7,1) =                                    0._RPP; c(7,7,1) =       26446172491._RPP/   2965248000._RPP
+      c(6,7,1) =                                    0._RPP; c(7,7,1) =       79932001._RPP/   8679360._RPP
 
       ! stencil 2
       !                    /                              ;                      /
-      c(0,0,2) =       26446172491._RPP/   2965248000._RPP; c(1,0,2) =     -104391937861._RPP/    972972000._RPP
+      c(0,0,2) =       79932001._RPP/   8679360._RPP; c(1,0,2) =     -655235691._RPP/    5945464._RPP
       !                    /                              ;                      /
-      c(2,0,2) =     8624638348211._RPP/  31135104000._RPP; c(3,0,2) =     -310726966393._RPP/    778377600._RPP
+      c(2,0,2) =     205707004._RPP/  724801._RPP; c(3,0,2) =     -559020701._RPP/    1367726._RPP
       !                    /                              ;                      /
-      c(4,0,2) =      721220745563._RPP/   2075673600._RPP; c(5,0,2) =      -25412164549._RPP/    138996000._RPP
+      c(4,0,2) =      610690841._RPP/   1715763._RPP; c(5,0,2) =      -179578697._RPP/    957716._RPP
       !                    /                              ;                      /
-      c(6,0,2) =     1677021138577._RPP/  31135104000._RPP; c(7,0,2) =      -26674345787._RPP/   3891888000._RPP
+      c(6,0,2) =     112959697._RPP/  2041527._RPP; c(7,0,2) =      -44754099._RPP/   6344939._RPP
 
       !                    /                              ;                      /
-      c(0,1,2) =                                    0._RPP; c(1,1,2) =    20863031646089._RPP/  62270208000._RPP
+      c(0,1,2) =                                    0._RPP; c(1,1,2) =    403846727._RPP/  1180353._RPP
       !                    /                              ;                      /
-      c(2,1,2) =    -6905100758509._RPP/   3891888000._RPP; c(3,1,2) =     3240510296069._RPP/   1245404160._RPP
+      c(2,1,2) =    -1032899132._RPP/   571995._RPP; c(3,1,2) =     554363127._RPP/   209623._RPP
       !                    /                              ;                      /
-      c(4,1,2) =      -37187936869._RPP/     16216200._RPP; c(5,1,2) =    37913679009467._RPP/  31135104000._RPP
+      c(4,1,2) =      -699001320._RPP/     299911._RPP; c(5,1,2) =    324962019._RPP/  262375._RPP
       !                    /                              ;                      /
-      c(6,1,2) =     -468561665821._RPP/   1297296000._RPP; c(7,1,2) =     1438198790527._RPP/  31135104000._RPP
+      c(6,1,2) =     -649079478._RPP/   1764673._RPP; c(7,1,2) =     129766396._RPP/  2754429._RPP
 
       !                    /                              ;                      /
       c(0,2,2) =                                    0._RPP; c(1,2,2) =                                    0._RPP
       !                    /                              ;                      /
-      c(2,2,2) =    49883478342517._RPP/  20756736000._RPP; c(3,2,2) =     -253865691211._RPP/     35380800._RPP
+      c(2,2,2) =    5814856284._RPP/  2387539._RPP; c(3,2,2) =     -1300201595._RPP/     179203._RPP
       !                    /                              ;                      /
-      c(4,2,2) =    39896100785477._RPP/   6227020800._RPP; c(5,2,2) =    -4456767285989._RPP/   1297296000._RPP
+      c(4,2,2) =    1056954815._RPP/   163259._RPP; c(5,2,2) =    -8089971196._RPP/   2329825._RPP
       !                    /                              ;                      /
-      c(6,2,2) =    31959522170837._RPP/  31135104000._RPP; c(7,2,2) =     -256879392281._RPP/   1945944000._RPP
+      c(6,2,2) =    501175243._RPP/  482649._RPP; c(7,2,2) =     -270604594._RPP/   2024029._RPP
 
       !                    /                              ;                      /
       c(0,3,2) =                                    0._RPP; c(1,3,2) =                                    0._RPP
       !                    /                              ;                      /
-      c(2,3,2) =                                    0._RPP; c(3,3,2) =     1231949387723._RPP/    226437120._RPP
+      c(2,3,2) =                                    0._RPP; c(3,3,2) =     7318753887._RPP/    1334341._RPP
       !                    /                              ;                      /
-      c(4,3,2) =    -1532094364651._RPP/    155675520._RPP; c(5,3,2) =    33191727291659._RPP/   6227020800._RPP
+      c(4,3,2) =    -823868037._RPP/    83150._RPP; c(5,3,2) =    4782113096._RPP/   891381._RPP
       !                    /                              ;                      /
-      c(6,3,2) =      -41643930661._RPP/     25945920._RPP; c(7,3,2) =      431000077397._RPP/   2075673600._RPP
+      c(6,3,2) =      -694807489._RPP/     429931._RPP; c(7,3,2) =      430661427._RPP/   2058148._RPP
 
       !                    /                              ;                      /
       c(0,4,2) =                                    0._RPP; c(1,4,2) =                                    0._RPP
       !                    /                              ;                      /
       c(2,4,2) =                                    0._RPP; c(3,4,2) =                                    0._RPP
       !                    /                              ;                      /
-      c(4,4,2) =      203912134273._RPP/     45287424._RPP; c(5,4,2) =       -5445142127._RPP/      1105650._RPP
+      c(4,4,2) =      1492354285._RPP/     329872._RPP; c(5,4,2) =       -799191084._RPP/      161641._RPP
       !                    /                              ;                      /
-      c(6,4,2) =     9306913817431._RPP/   6227020800._RPP; c(7,4,2) =     -151441370209._RPP/    778377600._RPP
+      c(6,4,2) =     559782185._RPP/   373076._RPP; c(7,4,2) =     -114044024._RPP/    583601._RPP
 
       !                    /                              ;                      /
       c(0,5,2) =                                    0._RPP; c(1,5,2) =                                    0._RPP
       !                    /                              ;                      /
       c(2,5,2) =                                    0._RPP; c(3,5,2) =                                    0._RPP
       !                    /                              ;                      /
-      c(4,5,2) =                                    0._RPP; c(5,5,2) =    28199161918747._RPP/  20756736000._RPP
+      c(4,5,2) =                                    0._RPP; c(5,5,2) =    257028097._RPP/  188691._RPP
       !                    /                              ;                      /
-      c(6,5,2) =    -3233549114749._RPP/   3891888000._RPP; c(7,5,2) =     3388533713021._RPP/  31135104000._RPP
+      c(6,5,2) =    -493139495._RPP/   592214._RPP; c(7,5,2) =     401318077._RPP/  3678649._RPP
 
       !                    /                              ;                      /
       c(0,6,2) =                                    0._RPP; c(1,6,2) =                                    0._RPP
@@ -1096,7 +1094,7 @@ contains
       !                    /                              ;                      /
       c(4,6,2) =                                    0._RPP; c(5,6,2) =                                    0._RPP
       !                    /                              ;                      /
-      c(6,6,2) =     7965255985319._RPP/  62270208000._RPP; c(7,6,2) =      -65611168187._RPP/   1945944000._RPP
+      c(6,6,2) =     629957047._RPP/  4917482._RPP; c(7,6,2) =      -141509768._RPP/   4191221._RPP
 
       !                    /                              ;                      /
       c(0,7,2) =                                    0._RPP; c(1,7,2) =                                    0._RPP
@@ -1105,62 +1103,62 @@ contains
       !                    /                              ;                      /
       c(4,7,2) =                                    0._RPP; c(5,7,2) =                                    0._RPP
       !                    /                              ;                      /
-      c(6,7,2) =                                    0._RPP; c(7,7,2) =       46388292547._RPP/  20756736000._RPP
+      c(6,7,2) =                                    0._RPP; c(7,7,2) =       35501666._RPP/  15868715._RPP
 
       ! stencil 3
       !                    /                              ;                      /
-      c(0,0,3) =       46388292547._RPP/  20756736000._RPP; c(1,0,3) =      -56245265927._RPP/   1945944000._RPP
+      c(0,0,3) =       35501666._RPP/  15868715._RPP; c(1,0,3) =      -63831289._RPP/   2220847._RPP
       !                    /                              ;                      /
-      c(2,0,3) =     2458417783421._RPP/  31135104000._RPP; c(3,0,3) =      -18415814357._RPP/    155675520._RPP
+      c(2,0,3) =     268720507._RPP/  3437558._RPP; c(3,0,3) =      -134406712._RPP/    1150037._RPP
       !                    /                              ;                      /
-      c(4,0,3) =       72812006087._RPP/    691891200._RPP; c(5,0,3) =     -108473646221._RPP/   1945944000._RPP
+      c(4,0,3) =       148443265._RPP/    1427854._RPP; c(5,0,3) =     -103772319._RPP/   1881526._RPP
       !                    /                              ;                      /
-      c(6,0,3) =      508082860927._RPP/  31135104000._RPP; c(7,0,3) =       -7942541267._RPP/   3891888000._RPP
+      c(6,0,3) =      141070919._RPP/  8713488._RPP; c(7,0,3) =       -21873377._RPP/   10764442._RPP
 
       !                    /                              ;                      /
-      c(0,1,3) =                                    0._RPP; c(1,1,3) =     6047605530599._RPP/  62270208000._RPP
+      c(0,1,3) =                                    0._RPP; c(1,1,3) =     204776677._RPP/  2133916._RPP
       !                    /                              ;                      /
-      c(2,1,3) =    -2129103852829._RPP/   3891888000._RPP; c(3,1,3) =     5227966881367._RPP/   6227020800._RPP
+      c(2,1,3) =    -234383777._RPP/   435589._RPP; c(3,1,3) =     3507914221._RPP/   4258272._RPP
       !                    /                              ;                      /
-      c(4,1,3) =      -98765696693._RPP/    129729600._RPP; c(5,1,3) =    12752830987157._RPP/  31135104000._RPP
+      c(4,1,3) =      -311872754._RPP/    417681._RPP; c(5,1,3) =    422372886._RPP/  1050263._RPP
       !                    /                              ;                      /
-      c(6,1,3) =     -157580595421._RPP/   1297296000._RPP; c(7,1,3) =      478185649297._RPP/  31135104000._RPP
+      c(6,1,3) =     -386869123._RPP/   3236626._RPP; c(7,1,3) =      69576681._RPP/  4589819._RPP
 
       !                    /                              ;                      /
       c(0,2,3) =                                    0._RPP; c(1,2,3) =                                    0._RPP
       !                    /                              ;                      /
-      c(2,2,3) =    16476387815707._RPP/  20756736000._RPP; c(3,2,3) =       -5527715497._RPP/      2211300._RPP
+      c(2,2,3) =    360251831._RPP/  463656._RPP; c(3,2,3) =       -809595667._RPP/      331812._RPP
       !                    /                              ;                      /
-      c(4,2,3) =    14416393946891._RPP/   6227020800._RPP; c(5,2,3) =    -1644079167749._RPP/   1297296000._RPP
+      c(4,2,3) =    1441974426._RPP/   638695._RPP; c(5,2,3) =    -84200903._RPP/   68084._RPP
       !                    /                              ;                      /
-      c(6,2,3) =    11870432980667._RPP/  31135104000._RPP; c(7,2,3) =      -47469340603._RPP/    972972000._RPP
+      c(6,2,3) =    693020919._RPP/  1859333._RPP; c(7,2,3) =      -398300903._RPP/    8329274._RPP
 
       !                    /                              ;                      /
       c(0,3,3) =                                    0._RPP; c(1,3,3) =                                    0._RPP
       !                    /                              ;                      /
-      c(2,3,3) =                                    0._RPP; c(3,3,3) =      457249528517._RPP/    226437120._RPP
+      c(2,3,3) =                                    0._RPP; c(3,3,3) =      755335167._RPP/    384508._RPP
       !                    /                              ;                      /
-      c(4,3,3) =     -595915721251._RPP/    155675520._RPP; c(5,3,3) =      532071643661._RPP/    249080832._RPP
+      c(4,3,3) =     -1353219397._RPP/    363901._RPP; c(5,3,3) =      520921076._RPP/    250961._RPP
       !                    /                              ;                      /
-      c(6,3,3) =      -10590149653._RPP/     16216200._RPP; c(7,3,3) =       25116366157._RPP/    296524800._RPP
+      c(6,3,3) =      -543724576._RPP/     855585._RPP; c(7,3,3) =       200885069._RPP/    2431769._RPP
 
       !                    /                              ;                      /
       c(0,4,3) =                                    0._RPP; c(1,4,3) =                                    0._RPP
       !                    /                              ;                      /
       c(2,4,3) =                                    0._RPP; c(3,4,3) =                                    0._RPP
       !                    /                              ;                      /
-      c(4,4,3) =      420341161931._RPP/    226437120._RPP; c(5,4,3) =      -74851467823._RPP/     35380800._RPP
+      c(4,4,3) =      1014659207._RPP/    563712._RPP; c(5,4,3) =      -1022198433._RPP/     498364._RPP
       !                    /                              ;                      /
-      c(6,4,3) =     4100880843289._RPP/   6227020800._RPP; c(7,4,3) =      -67513265377._RPP/    778377600._RPP
+      c(6,4,3) =     379000051._RPP/   592915._RPP; c(7,4,3) =      -65777185._RPP/    779772._RPP
 
       !                    /                              ;                      /
       c(0,5,3) =                                    0._RPP; c(1,5,3) =                                    0._RPP
       !                    /                              ;                      /
       c(2,5,3) =                                    0._RPP; c(3,5,3) =                                    0._RPP
       !                    /                              ;                      /
-      c(4,5,3) =                                    0._RPP; c(5,5,3) =    12780967457077._RPP/  20756736000._RPP
+      c(4,5,3) =                                    0._RPP; c(5,5,3) =    789836795._RPP/  1323609._RPP
       !                    /                              ;                      /
-      c(6,5,3) =    -1521688484269._RPP/   3891888000._RPP; c(7,5,3) =     1631589107891._RPP/  31135104000._RPP
+      c(6,5,3) =    -540913157._RPP/   1426197._RPP; c(7,5,3) =     108380895._RPP/  2128121._RPP
 
       !                    /                              ;                      /
       c(0,6,3) =                                    0._RPP; c(1,6,3) =                                    0._RPP
@@ -1169,7 +1167,7 @@ contains
       !                    /                              ;                      /
       c(4,6,3) =                                    0._RPP; c(5,6,3) =                                    0._RPP
       !                    /                              ;                      /
-      c(6,6,3) =     3944861897609._RPP/  62270208000._RPP; c(7,6,3) =       -2407377043._RPP/    138996000._RPP
+      c(6,6,3) =     358821925._RPP/  5833643._RPP; c(7,6,3) =       -39287533._RPP/    2331609._RPP
 
       !                    /                              ;                      /
       c(0,7,3) =                                    0._RPP; c(1,7,3) =                                    0._RPP
@@ -1178,62 +1176,62 @@ contains
       !                    /                              ;                      /
       c(4,7,3) =                                    0._RPP; c(5,7,3) =                                    0._RPP
       !                    /                              ;                      /
-      c(6,7,3) =                                    0._RPP; c(7,7,3) =       25116366157._RPP/  20756736000._RPP
+      c(6,7,3) =                                    0._RPP; c(7,7,3) =       12431715._RPP/  10534253._RPP
 
       ! stencil 4
       !                    /                              ;                      /
-      c(0,0,4) =       25116366157._RPP/  20756736000._RPP; c(1,0,4) =       -2407377043._RPP/    138996000._RPP
+      c(0,0,4) =       12431715._RPP/  10534253._RPP; c(1,0,4) =       -39287533._RPP/    2331609._RPP
       !                    /                              ;                      /
-      c(2,0,4) =     1631589107891._RPP/  31135104000._RPP; c(3,0,4) =      -67513265377._RPP/    778377600._RPP
+      c(2,0,4) =     108380895._RPP/  2128121._RPP; c(3,0,4) =      -65777185._RPP/    779772._RPP
       !                    /                              ;                      /
-      c(4,0,4) =       25116366157._RPP/    296524800._RPP; c(5,0,4) =      -47469340603._RPP/    972972000._RPP
+      c(4,0,4) =       200885069._RPP/    2431769._RPP; c(5,0,4) =      -398300903._RPP/    8329274._RPP
       !                    /                              ;                      /
-      c(6,0,4) =      478185649297._RPP/  31135104000._RPP; c(7,0,4) =       -7942541267._RPP/   3891888000._RPP
+      c(6,0,4) =      69576681._RPP/  4589819._RPP; c(7,0,4) =       -21873377._RPP/   10764442._RPP
 
       !                    /                              ;                      /
-      c(0,1,4) =                                    0._RPP; c(1,1,4) =     3944861897609._RPP/  62270208000._RPP
+      c(0,1,4) =                                    0._RPP; c(1,1,4) =     358821925._RPP/  5833643._RPP
       !                    /                              ;                      /
-      c(2,1,4) =    -1521688484269._RPP/   3891888000._RPP; c(3,1,4) =     4100880843289._RPP/   6227020800._RPP
+      c(2,1,4) =    -540913157._RPP/   1426197._RPP; c(3,1,4) =     379000051._RPP/   592915._RPP
       !                    /                              ;                      /
-      c(4,1,4) =      -10590149653._RPP/     16216200._RPP; c(5,1,4) =    11870432980667._RPP/  31135104000._RPP
+      c(4,1,4) =      -543724576._RPP/     855585._RPP; c(5,1,4) =    693020919._RPP/  1859333._RPP
       !                    /                              ;                      /
-      c(6,1,4) =     -157580595421._RPP/   1297296000._RPP; c(7,1,4) =      508082860927._RPP/  31135104000._RPP
+      c(6,1,4) =     -386869123._RPP/   3236626._RPP; c(7,1,4) =      141070919._RPP/  8713488._RPP
 
       !                    /                              ;                      /
       c(0,2,4) =                                    0._RPP; c(1,2,4) =                                    0._RPP
       !                    /                              ;                      /
-      c(2,2,4) =    12780967457077._RPP/  20756736000._RPP; c(3,2,4) =      -74851467823._RPP/     35380800._RPP
+      c(2,2,4) =    789836795._RPP/  1323609._RPP; c(3,2,4) =      -1022198433._RPP/     498364._RPP
       !                    /                              ;                      /
-      c(4,2,4) =      532071643661._RPP/    249080832._RPP; c(5,2,4) =    -1644079167749._RPP/   1297296000._RPP
+      c(4,2,4) =      520921076._RPP/    250961._RPP; c(5,2,4) =    -84200903._RPP/   68084._RPP
       !                    /                              ;                      /
-      c(6,2,4) =    12752830987157._RPP/  31135104000._RPP; c(7,2,4) =     -108473646221._RPP/   1945944000._RPP
+      c(6,2,4) =    422372886._RPP/  1050263._RPP; c(7,2,4) =     -103772319._RPP/   1881526._RPP
 
       !                    /                              ;                      /
       c(0,3,4) =                                    0._RPP; c(1,3,4) =                                    0._RPP
       !                    /                              ;                      /
-      c(2,3,4) =                                    0._RPP; c(3,3,4) =      420341161931._RPP/    226437120._RPP
+      c(2,3,4) =                                    0._RPP; c(3,3,4) =      1014659207._RPP/    563712._RPP
       !                    /                              ;                      /
-      c(4,3,4) =     -595915721251._RPP/    155675520._RPP; c(5,3,4) =    14416393946891._RPP/   6227020800._RPP
+      c(4,3,4) =     -1353219397._RPP/    363901._RPP; c(5,3,4) =    1441974426._RPP/   638695._RPP
       !                    /                              ;                      /
-      c(6,3,4) =      -98765696693._RPP/    129729600._RPP; c(7,3,4) =       72812006087._RPP/    691891200._RPP
+      c(6,3,4) =      -311872754._RPP/    417681._RPP; c(7,3,4) =       148443265._RPP/    1427854._RPP
 
       !                    /                              ;                      /
       c(0,4,4) =                                    0._RPP; c(1,4,4) =                                    0._RPP
       !                    /                              ;                      /
       c(2,4,4) =                                    0._RPP; c(3,4,4) =                                    0._RPP
       !                    /                              ;                      /
-      c(4,4,4) =      457249528517._RPP/    226437120._RPP; c(5,4,4) =       -5527715497._RPP/      2211300._RPP
+      c(4,4,4) =      755335167._RPP/    384508._RPP; c(5,4,4) =       -809595667._RPP/      331812._RPP
       !                    /                              ;                      /
-      c(6,4,4) =     5227966881367._RPP/   6227020800._RPP; c(7,4,4) =      -18415814357._RPP/    155675520._RPP
+      c(6,4,4) =     3507914221._RPP/   4258272._RPP; c(7,4,4) =      -134406712._RPP/    1150037._RPP
 
       !                    /                              ;                      /
       c(0,5,4) =                                    0._RPP; c(1,5,4) =                                    0._RPP
       !                    /                              ;                      /
       c(2,5,4) =                                    0._RPP; c(3,5,4) =                                    0._RPP
       !                    /                              ;                      /
-      c(4,5,4) =                                    0._RPP; c(5,5,4) =    16476387815707._RPP/  20756736000._RPP
+      c(4,5,4) =                                    0._RPP; c(5,5,4) =    360251831._RPP/  463656._RPP
       !                    /                              ;                      /
-      c(6,5,4) =    -2129103852829._RPP/   3891888000._RPP; c(7,5,4) =     2458417783421._RPP/  31135104000._RPP
+      c(6,5,4) =    -234383777._RPP/   435589._RPP; c(7,5,4) =     268720507._RPP/  3437558._RPP
 
       !                    /                              ;                      /
       c(0,6,4) =                                    0._RPP; c(1,6,4) =                                    0._RPP
@@ -1242,7 +1240,7 @@ contains
       !                    /                              ;                      /
       c(4,6,4) =                                    0._RPP; c(5,6,4) =                                    0._RPP
       !                    /                              ;                      /
-      c(6,6,4) =     6047605530599._RPP/  62270208000._RPP; c(7,6,4) =      -56245265927._RPP/   1945944000._RPP
+      c(6,6,4) =     204776677._RPP/  2133916._RPP; c(7,6,4) =      -63831289._RPP/   2220847._RPP
 
       !                    /                              ;                      /
       c(0,7,4) =                                    0._RPP; c(1,7,4) =                                    0._RPP
@@ -1251,61 +1249,61 @@ contains
       !                    /                              ;                      /
       c(4,7,4) =                                    0._RPP; c(5,7,4) =                                    0._RPP
       !                    /                              ;                      /
-      c(6,7,4) =                                    0._RPP; c(7,7,4) =       46388292547._RPP/  20756736000._RPP
+      c(6,7,4) =                                    0._RPP; c(7,7,4) =       35501666._RPP/  15868715._RPP
       ! stencil 5
       !                    /                              ;                     /
-      c(0,0,5) =       46388292547._RPP/  20756736000._RPP; c(1,0,5) =      -65611168187._RPP/   1945944000._RPP
+      c(0,0,5) =       35501666._RPP/  15868715._RPP; c(1,0,5) =      -141509768._RPP/   4191221._RPP
       !                    /                              ;                     /
-      c(2,0,5) =     3388533713021._RPP/  31135104000._RPP; c(3,0,5) =     -151441370209._RPP/    778377600._RPP
+      c(2,0,5) =     401318077._RPP/  3678649._RPP; c(3,0,5) =     -114044024._RPP/    583601._RPP
       !                    /                              ;                     /
-      c(4,0,5) =      431000077397._RPP/   2075673600._RPP; c(5,0,5) =     -256879392281._RPP/   1945944000._RPP
+      c(4,0,5) =      430661427._RPP/   2058148._RPP; c(5,0,5) =     -270604594._RPP/   2024029._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,0,5) =     1438198790527._RPP/  31135104000._RPP; c(7,0,5) =      -26674345787._RPP/   3891888000._RPP
+      c(6,0,5) =     129766396._RPP/  2754429._RPP; c(7,0,5) =      -44754099._RPP/   6344939._RPP
 
       !                    /                              ;                     /
-      c(0,1,5) =                                    0._RPP; c(1,1,5) =     7965255985319._RPP/  62270208000._RPP
+      c(0,1,5) =                                    0._RPP; c(1,1,5) =     629957047._RPP/  4917482._RPP
       !                    /                              ;                     /
-      c(2,1,5) =    -3233549114749._RPP/   3891888000._RPP; c(3,1,5) =     9306913817431._RPP/   6227020800._RPP
+      c(2,1,5) =    -493139495._RPP/   592214._RPP; c(3,1,5) =     559782185._RPP/   373076._RPP
       !                    /                              ;                     /
-      c(4,1,5) =      -41643930661._RPP/     25945920._RPP; c(5,1,5) =    31959522170837._RPP/  31135104000._RPP
+      c(4,1,5) =      -694807489._RPP/     429931._RPP; c(5,1,5) =    501175243._RPP/  482649._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,1,5) =     -468561665821._RPP/   1297296000._RPP; c(7,1,5) =     1677021138577._RPP/  31135104000._RPP
+      c(6,1,5) =     -649079478._RPP/   1764673._RPP; c(7,1,5) =     112959697._RPP/  2041527._RPP
 
       !                    /                              ;                     /
       c(0,2,5) =                                    0._RPP; c(1,2,5) =                                    0._RPP
       !                    /                              ;                     /
-      c(2,2,5) =    28199161918747._RPP/  20756736000._RPP; c(3,2,5) =       -5445142127._RPP/      1105650._RPP
+      c(2,2,5) =    257028097._RPP/  188691._RPP; c(3,2,5) =       -799191084._RPP/      161641._RPP
       !                    /                              ;                     /
-      c(4,2,5) =    33191727291659._RPP/   6227020800._RPP; c(5,2,5) =    -4456767285989._RPP/   1297296000._RPP
+      c(4,2,5) =    4782113096._RPP/   891381._RPP; c(5,2,5) =    -8089971196._RPP/   2329825._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,2,5) =    37913679009467._RPP/  31135104000._RPP; c(7,2,5) =      -25412164549._RPP/    138996000._RPP
+      c(6,2,5) =    324962019._RPP/  262375._RPP; c(7,2,5) =      -179578697._RPP/    957716._RPP
 
       !                    /                              ;                     /
       c(0,3,5) =                                    0._RPP; c(1,3,5) =                                    0._RPP
       !                    /                              ;                     /
-      c(2,3,5) =                                    0._RPP; c(3,3,5) =      203912134273._RPP/     45287424._RPP
+      c(2,3,5) =                                    0._RPP; c(3,3,5) =      1492354285._RPP/     329872._RPP
       !                    /                              ;                     /
-      c(4,3,5) =    -1532094364651._RPP/    155675520._RPP; c(5,3,5) =    39896100785477._RPP/   6227020800._RPP
+      c(4,3,5) =    -823868037._RPP/    83150._RPP; c(5,3,5) =    1056954815._RPP/   163259._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,3,5) =      -37187936869._RPP/     16216200._RPP; c(7,3,5) =      721220745563._RPP/   2075673600._RPP
+      c(6,3,5) =      -699001320._RPP/     299911._RPP; c(7,3,5) =      610690841._RPP/   1715763._RPP
 
       !                    /                              ;                     /
       c(0,4,5) =                                    0._RPP; c(1,4,5) =                                    0._RPP
       !                    /                              ;                     /
       c(2,4,5) =                                    0._RPP; c(3,4,5) =                                    0._RPP
       !                    /                              ;                     /
-      c(4,4,5) =     1231949387723._RPP/    226437120._RPP; c(5,4,5) =     -253865691211._RPP/     35380800._RPP
+      c(4,4,5) =     7318753887._RPP/    1334341._RPP; c(5,4,5) =     -1300201595._RPP/     179203._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,4,5) =     3240510296069._RPP/   1245404160._RPP; c(7,4,5) =     -310726966393._RPP/    778377600._RPP
+      c(6,4,5) =     554363127._RPP/   209623._RPP; c(7,4,5) =     -559020701._RPP/    1367726._RPP
 
       !                    /                              ;                     /
       c(0,5,5) =                                    0._RPP; c(1,5,5) =                                    0._RPP
       !                    /                              ;                     /
       c(2,5,5) =                                    0._RPP; c(3,5,5) =                                    0._RPP
       !                    /                              ;                     /
-      c(4,5,5) =                                    0._RPP; c(5,5,5) =    49883478342517._RPP/  20756736000._RPP
+      c(4,5,5) =                                    0._RPP; c(5,5,5) =    5814856284._RPP/  2387539._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,5,5) =    -6905100758509._RPP/   3891888000._RPP; c(7,5,5) =     8624638348211._RPP/  31135104000._RPP
+      c(6,5,5) =    -1032899132._RPP/   571995._RPP; c(7,5,5) =     205707004._RPP/  724801._RPP
 
       !                    /                              ;                     /
       c(0,6,5) =                                    0._RPP; c(1,6,5) =                                    0._RPP
@@ -1314,7 +1312,7 @@ contains
       !                    /                              ;                     /
       c(4,6,5) =                                    0._RPP; c(5,6,5) =                                    0._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,6,5) =    20863031646089._RPP/  62270208000._RPP; c(7,6,5) =     -104391937861._RPP/    972972000._RPP
+      c(6,6,5) =    403846727._RPP/  1180353._RPP; c(7,6,5) =     -655235691._RPP/    5945464._RPP
 
       !                    /                              ;                     /
       c(0,7,5) =                                    0._RPP; c(1,7,5) =                                    0._RPP
@@ -1323,62 +1321,62 @@ contains
       !                    /                              ;                     /
       c(4,7,5) =                                    0._RPP; c(5,7,5) =                                    0._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,7,5) =                                    0._RPP; c(7,7,5) =       26446172491._RPP/   2965248000._RPP
+      c(6,7,5) =                                    0._RPP; c(7,7,5) =       79932001._RPP/   8679360._RPP
 
       ! stencil 6
       !                    /                              ;                     /
-      c(0,0,6) =       26446172491._RPP/   2965248000._RPP; c(1,0,6) =     -132173819131._RPP/    972972000._RPP
+      c(0,0,6) =       79932001._RPP/   8679360._RPP; c(1,0,6) =     -255613952._RPP/    1821943._RPP
       !                    /                              ;                     /
-      c(2,0,6) =    13873328286131._RPP/  31135104000._RPP; c(3,0,6) =      -90744192823._RPP/    111196800._RPP
+      c(2,0,6) =    281051417._RPP/  610454._RPP; c(3,0,6) =      -1403389204._RPP/    1662883._RPP
       !                    /                              ;                     /
-      c(4,0,6) =       41566759079._RPP/     46126080._RPP; c(5,0,6) =     -583488131053._RPP/    972972000._RPP
+      c(4,0,6) =       779780282._RPP/     835427._RPP; c(5,0,6) =     -724803819._RPP/    1163906._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,0,6) =     6925711076497._RPP/  31135104000._RPP; c(7,0,6) =     -137801870867._RPP/   3891888000._RPP
+      c(6,0,6) =     513945629._RPP/  2216079._RPP; c(7,0,6) =     -115902052._RPP/   3120403._RPP
 
       !                    /                              ;                     /
-      c(0,1,6) =                                    0._RPP; c(1,1,6) =    32268504444809._RPP/  62270208000._RPP
+      c(0,1,6) =                                    0._RPP; c(1,1,6) =    48179335._RPP/  90019._RPP
       !                    /                              ;                     /
-      c(2,1,6) =   -13257668940469._RPP/   3891888000._RPP; c(3,1,6) =    38941083744793._RPP/   6227020800._RPP
+      c(2,1,6) =   -686664647._RPP/   195106._RPP; c(3,1,6) =    2349626332._RPP/   363399._RPP
       !                    /                              ;                     /
-      c(4,1,6) =     -224563041869._RPP/     32432400._RPP; c(5,1,6) =   143887855797947._RPP/  31135104000._RPP
+      c(4,1,6) =     -1907782262._RPP/     266123._RPP; c(5,1,6) =   2674480859._RPP/  557634._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,1,6) =    -2230862726341._RPP/   1297296000._RPP; c(7,1,6) =     1221480056521._RPP/   4447872000._RPP
+      c(6,1,6) =    -850151296._RPP/   474539._RPP; c(7,1,6) =     362054965._RPP/   1257877._RPP
 
       !                    /                              ;                     /
       c(0,2,6) =                                    0._RPP; c(1,2,6) =                                    0._RPP
       !                    /                              ;                     /
-      c(2,2,6) =   116487285372277._RPP/  20756736000._RPP; c(3,2,6) =      -29244985495._RPP/      1415232._RPP
+      c(2,2,6) =   3171324093._RPP/  546871._RPP; c(3,2,6) =      -1674462641._RPP/      78375._RPP
       !                    /                              ;                     /
-      c(4,2,6) =   142950967195973._RPP/   6227020800._RPP; c(5,2,6) =   -19952704102349._RPP/   1297296000._RPP
+      c(4,2,6) =   1773946113._RPP/   74654._RPP; c(5,2,6) =   -2029186932._RPP/   127189._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,2,6) =   178922840432597._RPP/  31135104000._RPP; c(7,2,6) =    -1793558121581._RPP/   1945944000._RPP
+      c(6,2,6) =   4037906091._RPP/  674921._RPP; c(7,2,6) =    -12689783695._RPP/   13147542._RPP
 
       !                    /                              ;                     /
       c(0,3,6) =                                    0._RPP; c(1,3,6) =                                    0._RPP
       !                    /                              ;                     /
-      c(2,3,6) =                                    0._RPP; c(3,3,6) =     4322531771339._RPP/    226437120._RPP
+      c(2,3,6) =                                    0._RPP; c(3,3,6) =     3163565270._RPP/    160241._RPP
       !                    /                              ;                     /
-      c(4,3,6) =    -6630479776771._RPP/    155675520._RPP; c(5,3,6) =   178559835040523._RPP/   6227020800._RPP
+      c(4,3,6) =    -5435379710._RPP/    123283._RPP; c(5,3,6) =   4919628784._RPP/   165435._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,3,6) =    -1397571412901._RPP/    129729600._RPP; c(7,3,6) =      721470910481._RPP/    415134720._RPP
+      c(6,3,6) =    -3161084857._RPP/    282001._RPP; c(7,3,6) =      847040497._RPP/    465789._RPP
 
       !                    /                              ;                     /
       c(0,4,6) =                                    0._RPP; c(1,4,6) =                                    0._RPP
       !                    /                              ;                     /
       c(2,4,6) =                                    0._RPP; c(3,4,6) =                                    0._RPP
       !                    /                              ;                     /
-      c(4,4,6) =     5407733702789._RPP/    226437120._RPP; c(5,4,6) =      -11450077957._RPP/       353808._RPP
+      c(4,4,6) =     3485486425._RPP/    140912._RPP; c(5,4,6) =      -2609137409._RPP/       77728._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,4,6) =    76273513229143._RPP/   6227020800._RPP; c(7,4,6) =    -1550584925161._RPP/    778377600._RPP
+      c(6,4,6) =    3431063476._RPP/   269267._RPP; c(7,4,6) =    -2546573797._RPP/    1222381._RPP
 
       !                    /                              ;                     /
       c(0,5,6) =                                    0._RPP; c(1,5,6) =                                    0._RPP
       !                    /                              ;                     /
       c(2,5,6) =                                    0._RPP; c(3,5,6) =                                    0._RPP
       !                    /                              ;                     /
-      c(4,5,6) =                                    0._RPP; c(5,5,6) =   229456135916827._RPP/  20756736000._RPP
+      c(4,5,6) =                                    0._RPP; c(5,5,6) =   4802121175._RPP/  418404._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,5,6) =   -32903428273669._RPP/   3891888000._RPP; c(7,5,6) =    43315366304381._RPP/  31135104000._RPP
+      c(6,5,6) =   -2039339988._RPP/   231781._RPP; c(7,5,6) =    234353207._RPP/  161088._RPP
 
       !                    /                              ;                     /
       c(0,6,6) =                                    0._RPP; c(1,6,6) =                                    0._RPP
@@ -1387,7 +1385,7 @@ contains
       !                    /                              ;                     /
       c(4,6,6) =                                    0._RPP; c(5,6,6) =                                    0._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,6,6) =   102080471419559._RPP/  62270208000._RPP; c(7,6,6) =    -1069457397287._RPP/   1945944000._RPP
+      c(6,6,6) =   960477863._RPP/  562021._RPP; c(7,6,6) =    -464902845._RPP/   808102._RPP
 
       !                    /                              ;                     /
       c(0,7,6) =                                    0._RPP; c(1,7,6) =                                    0._RPP
@@ -1396,62 +1394,62 @@ contains
       !                    /                              ;                     /
       c(4,7,6) =                                    0._RPP; c(5,7,6) =                                    0._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,7,6) =                                    0._RPP; c(7,7,6) =      986005096387._RPP/  20756736000._RPP
+      c(6,7,6) =                                    0._RPP; c(7,7,6) =      151567467._RPP/  3038449._RPP
 
       ! stencil 7
       !                    /                              ;                     /
-      c(0,0,7) =      986005096387._RPP/  20756736000._RPP; c(1,0,7) =    -1410106709147._RPP/   1945944000._RPP
+      c(0,0,7) =      151567467._RPP/  3038449._RPP; c(1,0,7) =    -508083143._RPP/   667663._RPP
       !                    /                              ;                     /
-      c(2,0,7) =    10610581100123._RPP/   4447872000._RPP; c(3,0,7) =    -3423798156193._RPP/    778377600._RPP
+      c(2,0,7) =    4932843539._RPP/   1968706._RPP; c(3,0,7) =    -1774088813._RPP/    383858._RPP
       !                    /                              ;                     /
-      c(4,0,7) =    10196716797013._RPP/   2075673600._RPP; c(5,0,7) =    -6476591199161._RPP/   1945944000._RPP
+      c(4,0,7) =    1168472761._RPP/   226223._RPP; c(5,0,7) =    -2034860005._RPP/   580787._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,0,7) =    39509061792127._RPP/  31135104000._RPP; c(7,0,7) =     -819100494587._RPP/   3891888000._RPP
+      c(6,0,7) =    1606637628._RPP/  1200199._RPP; c(7,0,7) =     -167817292._RPP/   753123._RPP
 
       !                    /                              ;                     /
-      c(0,1,7) =                                    0._RPP; c(1,1,7) =   172229708657639._RPP/  62270208000._RPP
+      c(0,1,7) =                                    0._RPP; c(1,1,7) =   1285415788._RPP/  442547._RPP
       !                    /                              ;                     /
-      c(2,1,7) =   -70944310593109._RPP/   3891888000._RPP; c(3,1,7) =    41910140004779._RPP/   1245404160._RPP
+      c(2,1,7) =   -1307164757._RPP/   68276._RPP; c(3,1,7) =    12211598186._RPP/   345407._RPP
       !                    /                              ;                     /
-      c(4,1,7) =    -4882688924777._RPP/    129729600._RPP; c(5,1,7) =   795325997722517._RPP/  31135104000._RPP
+      c(4,1,7) =    -3946887082._RPP/    99757._RPP; c(5,1,7) =   4477231643._RPP/  166549._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,1,7) =   -12661520644021._RPP/   1297296000._RPP; c(7,1,7) =    50528822994577._RPP/  31135104000._RPP
+      c(6,1,7) =   -8115803171._RPP/   788565._RPP; c(7,1,7) =    1730988313._RPP/  1007913._RPP
 
       !                    /                              ;                     /
       c(0,2,7) =                                    0._RPP; c(1,2,7) =                                    0._RPP
       !                    /                              ;                     /
-      c(2,2,7) =   624177436330267._RPP/  20756736000._RPP; c(3,2,7) =     -983492927359._RPP/      8845200._RPP
+      c(2,2,7) =   5633451919._RPP/  178362._RPP; c(3,2,7) =     -2087501693._RPP/      17871._RPP
       !                    /                              ;                     /
-      c(4,2,7) =   775760249154827._RPP/   6227020800._RPP; c(5,2,7) =  -109928049802589._RPP/   1297296000._RPP
+      c(4,2,7) =   7936751861._RPP/   60613._RPP; c(5,2,7) =  -9679034365._RPP/   108568._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,2,7) =  1010731494899387._RPP/  31135104000._RPP; c(7,2,7) =    -5269260407953._RPP/    972972000._RPP
+      c(6,2,7) =  3436464517._RPP/  100426._RPP; c(7,2,7) =    -6701525420._RPP/    1169941._RPP
 
       !                    /                              ;                     /
       c(0,3,7) =                                    0._RPP; c(1,3,7) =                                    0._RPP
       !                    /                              ;                     /
-      c(2,3,7) =                                    0._RPP; c(3,3,7) =    23315424178373._RPP/    226437120._RPP
+      c(2,3,7) =                                    0._RPP; c(3,3,7) =    15685259234._RPP/    144989._RPP
       !                    /                              ;                     /
-      c(4,3,7) =   -35999233471051._RPP/    155675520._RPP; c(5,3,7) =   982150494698309._RPP/   6227020800._RPP
+      c(4,3,7) =   -10453320754._RPP/    43009._RPP; c(5,3,7) =   2354499851._RPP/   14191._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,3,7) =     -393303816739._RPP/      6486480._RPP; c(7,3,7) =     7028987165449._RPP/    691891200._RPP
+      c(6,3,7) =     -2650855638._RPP/      41489._RPP; c(7,3,7) =     1191775685._RPP/    110969._RPP
 
       !                    /                              ;                     /
       c(0,4,7) =                                    0._RPP; c(1,4,7) =                                    0._RPP
       !                    /                              ;                     /
       c(2,4,7) =                                    0._RPP; c(3,4,7) =                                    0._RPP
       !                    /                              ;                     /
-      c(4,4,7) =     5896382977423._RPP/     45287424._RPP; c(5,4,7) =    -6306477584539._RPP/     35380800._RPP
+      c(4,4,7) =     5383551615._RPP/     39332._RPP; c(5,4,7) =    -4461330800._RPP/     23793._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,4,7) =   428668917728281._RPP/   6227020800._RPP; c(7,4,7) =    -9030771744409._RPP/    778377600._RPP
+      c(6,4,7) =   2653665219._RPP/   36590._RPP; c(7,4,7) =    -1384199219._RPP/    112909._RPP
 
       !                    /                              ;                     /
       c(0,5,7) =                                    0._RPP; c(1,5,7) =                                    0._RPP
       !                    /                              ;                     /
       c(2,5,7) =                                    0._RPP; c(3,5,7) =                                    0._RPP
       !                    /                              ;                     /
-      c(4,5,7) =                                    0._RPP; c(5,5,7) =  1272280750118197._RPP/  20756736000._RPP
+      c(4,5,7) =                                    0._RPP; c(5,5,7) =  3382169379._RPP/  52433._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,5,7) =  -185432400549349._RPP/   3891888000._RPP; c(7,5,7) =    36019630238453._RPP/   4447872000._RPP
+      c(6,5,7) =  -6783346413._RPP/   135128._RPP; c(7,5,7) =    1512171950._RPP/   176773._RPP
 
       !                    /                              ;                     /
       c(0,6,7) =                                    0._RPP; c(1,6,7) =                                    0._RPP
@@ -1460,7 +1458,7 @@ contains
       !                    /                              ;                     /
       c(4,6,7) =                                    0._RPP; c(5,6,7) =                                    0._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,6,7) =   581791881407369._RPP/  62270208000._RPP; c(7,6,7) =    -3130718954431._RPP/    972972000._RPP
+      c(6,6,7) =   5230798390._RPP/  531001._RPP; c(7,6,7) =    -1353623375._RPP/    398213._RPP
 
       !                    /                              ;                     /
       c(0,7,7) =                                    0._RPP; c(1,7,7) =                                    0._RPP
@@ -1469,74 +1467,74 @@ contains
       !                    /                              ;                     /
       c(4,7,7) =                                    0._RPP; c(5,7,7) =                                    0._RPP
       !                  (i-4)*(i-5)                      ;
-      c(6,7,7) =                                    0._RPP; c(7,7,7) =     5870785406797._RPP/  20756736000._RPP
+      c(6,7,7) =                                    0._RPP; c(7,7,7) =     561955582._RPP/  1878967._RPP
     case(9) ! 17th order
       ! stencil 0
       !                    /                               ;                     /
-      c(0,0,0) =    109471139332699._RPP/ 163459296000._RPP;c(1,0,0) =   -894628364420801._RPP/ 100590336000._RPP
+      c(0,0,0) =    191906863._RPP/ 270061._RPP;c(1,0,0) =   -1291706883._RPP/ 137012._RPP
       !                    /                               ;                     /
-      c(2,0,0) =  34709567828765989._RPP/1307674368000._RPP;c(3,0,0) = -12083632055537503._RPP/ 261534873600._RPP
+      c(2,0,0) =  1051885279._RPP/37394._RPP;c(3,0,0) = -6519672839._RPP/ 133134._RPP
       !                    /                               ;                     /
-      c(4,0,0) =    534237095117903._RPP/  10461394944._RPP;c(5,0,0) = -47841342141981299._RPP/1307674368000._RPP
+      c(4,0,0) =    8028408627._RPP/  148285._RPP;c(5,0,0) = -12858081715._RPP/331389._RPP
       !                    /                               ;                     /
-      c(6,0,0) =  21644628077515483._RPP/1307674368000._RPP;c(7,0,0) =  -5644399400246309._RPP/1307674368000._RPP
+      c(6,0,0) =  7116193241._RPP/405236._RPP;c(7,0,0) =  -1382011106._RPP/301683._RPP
       !                    /                               ;                     /
-      c(8,0,0) =    129739906408601._RPP/ 261534873600._RPP
+      c(8,0,0) =    380112881._RPP/ 721737._RPP
 
       !                    /                               ;                     /
-      c(0,1,0) =                                     0._RPP;c(1,1,0) =   5602753233305651._RPP/ 186810624000._RPP
+      c(0,1,0) =                                     0._RPP;c(1,1,0) =   2789709824._RPP/ 87891._RPP
       !                    /                               ;                     /
-      c(2,1,0) = -59111412950734301._RPP/ 326918592000._RPP;c(3,1,0) = 207178084258860569._RPP/ 653837184000._RPP
+      c(2,1,0) = -2523726139._RPP/ 13197._RPP;c(3,1,0) = 10624327325._RPP/ 31707._RPP
       !                    /                               ;                     /
-      c(4,1,0) = -46020384090357023._RPP/ 130767436800._RPP;c(5,1,0) = 165445178916726479._RPP/ 653837184000._RPP
+      c(4,1,0) = -14121568547._RPP/ 37942._RPP;c(5,1,0) = 13666821827._RPP/ 51060._RPP
       !                    /                               ;                     /
-      c(6,1,0) = -37531036453047161._RPP/ 326918592000._RPP;c(7,1,0) =    137189721025309._RPP/   4572288000._RPP
+      c(6,1,0) = -7097325924._RPP/ 58429._RPP;c(7,1,0) =    962141663._RPP/   30298._RPP
       !                    /                               ;                     /
-      c(8,1,0) =  -4517524574525093._RPP/1307674368000._RPP
+      c(8,1,0) =  -1039356853._RPP/284187._RPP
 
       !                    /                               ;                     /
       c(0,2,0) =                                     0._RPP;c(1,2,0) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,2,0) =   4660712172178939._RPP/  16982784000._RPP;c(3,2,0) = -45148728224254817._RPP/  46702656000._RPP
+      c(2,2,0) =   958711850795._RPP/  3306139._RPP;c(3,2,0) = -32612776236._RPP/  31939._RPP
       !                    /                               ;                     /
-      c(4,2,0) =    228786920178433._RPP/    212284800._RPP;c(5,2,0) = -36294580012168613._RPP/  46702656000._RPP
+      c(4,2,0) =    29334155111._RPP/    25771._RPP;c(5,2,0) = -13491549889._RPP/  16436._RPP
       !                    /                               ;                     /
-      c(6,2,0) =  33008527082236991._RPP/  93405312000._RPP;c(7,2,0) = -30250052825497529._RPP/ 326918592000._RPP
+      c(6,2,0) =  8640690184._RPP/  23145._RPP;c(7,2,0) = -7469836609._RPP/ 76401._RPP
       !                    /                               ;                     /
-      c(8,2,0) =  13952443929995611._RPP/1307674368000._RPP
+      c(8,2,0) =  2160095091._RPP/191558._RPP
 
       !                    /                               ;                     /
       c(0,3,0) =                                     0._RPP;c(1,3,0) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,3,0) =                                     0._RPP;c(3,3,0) = 159646773711558347._RPP/ 186810624000._RPP
+      c(2,3,0) =                                     0._RPP;c(3,3,0) = 26479157148._RPP/ 29351._RPP
       !                    /                               ;                     /
-      c(4,3,0) =  -7140074733899851._RPP/   3736212480._RPP;c(5,3,0) =  25802513458691833._RPP/  18681062400._RPP
+      c(4,3,0) =  -34046474687._RPP/   16880._RPP;c(5,3,0) =  25425670807._RPP/  17442._RPP
       !                    /                               ;                     /
-      c(6,3,0) = -29387187771747941._RPP/  46702656000._RPP;c(7,3,0) = 107887390486248143._RPP/ 653837184000._RPP
+      c(6,3,0) = -13534679320._RPP/  20379._RPP;c(7,3,0) = 8534140303._RPP/ 48995._RPP
       !                    /                               ;                     /
-      c(8,3,0) = -24911758529750003._RPP/1307674368000._RPP
+      c(8,3,0) = -16400242834._RPP/815393._RPP
 
       !                    /                               ;                     /
       c(0,4,0) =                                     0._RPP;c(1,4,0) =                                     0._RPP
       !                    /                               ;                     /
       c(2,4,0) =                                     0._RPP;c(3,4,0) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,4,0) =   8001879703767347._RPP/   7472424960._RPP;c(5,4,0) =  -5794119024433483._RPP/   3736212480._RPP
+      c(4,4,0) =   7211727349._RPP/   6383._RPP;c(5,4,0) =  -32852743324._RPP/   20081._RPP
       !                    /                               ;                     /
-      c(6,4,0) =    150205347326833._RPP/    212284800._RPP;c(7,4,0) = -24293471434588703._RPP/ 130767436800._RPP
+      c(6,4,0) =    9817971019._RPP/    13153._RPP;c(7,4,0) = -29831101642._RPP/ 152201._RPP
       !                    /                               ;                     /
-      c(8,4,0) =   1123058785015051._RPP/  52306974720._RPP
+      c(8,4,0) =   1211629703._RPP/  53483._RPP
 
       !                    /                               ;                     /
       c(0,5,0) =                                     0._RPP;c(1,5,0) =                                     0._RPP
       !                    /                               ;                     /
       c(2,5,0) =                                     0._RPP;c(3,5,0) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,5,0) =                                     0._RPP;c(5,5,0) = 105045730109557451._RPP/ 186810624000._RPP
+      c(4,5,0) =                                     0._RPP;c(5,5,0) = 181942554161._RPP/ 306771._RPP
       !                    /                               ;                     /
-      c(6,5,0) = -23993743892557601._RPP/  46702656000._RPP;c(7,5,0) =  88287149743355417._RPP/ 653837184000._RPP
+      c(6,5,0) = -10120501295._RPP/  18678._RPP;c(7,5,0) =  6203677189._RPP/ 43561._RPP
       !                    /                               ;                     /
-      c(8,5,0) =   -816990037454483._RPP/  52306974720._RPP
+      c(8,5,0) =   -800361473._RPP/  48582._RPP
 
       !                    /                               ;                     /
       c(0,6,0) =                                     0._RPP;c(1,6,0) =                                     0._RPP
@@ -1545,9 +1543,9 @@ contains
       !                    /                               ;                     /
       c(4,6,0) =                                     0._RPP;c(5,6,0) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,6,0) =   1994952741927931._RPP/  16982784000._RPP;c(7,6,0) = -20204125377340061._RPP/ 326918592000._RPP
+      c(6,6,0) =   9873545067._RPP/  79705._RPP;c(7,6,0) = -5910597075._RPP/ 90694._RPP
       !                    /                               ;                     /
-      c(8,6,0) =   9355064903078053._RPP/1307674368000._RPP
+      c(8,6,0) =   2005851423._RPP/265880._RPP
 
       !                    /                               ;                     /
       c(0,7,0) =                                     0._RPP;c(1,7,0) =                                     0._RPP
@@ -1556,9 +1554,9 @@ contains
       !                    /                               ;                     /
       c(4,7,0) =                                     0._RPP;c(5,7,0) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,7,0) =                                     0._RPP;c(7,7,0) =  10637354815456613._RPP/1307674368000._RPP
+      c(6,7,0) =                                     0._RPP;c(7,7,0) =  1207396129._RPP/140764._RPP
       !                    /                               ;                     /
-      c(8,7,0) =   -189555672759617._RPP/ 100590336000._RPP
+      c(8,7,0) =   -989259649._RPP/ 497859._RPP
 
       !                    /                               ;                     /
       c(0,8,0) =                                     0._RPP;c(1,8,0) =                                     0._RPP
@@ -1569,74 +1567,74 @@ contains
       !                    /                               ;                     /
       c(6,8,0) =                                     0._RPP;c(7,8,0) =                                     0._RPP
       !                    /                               ;                     /
-      c(8,8,0) =     17848737251203._RPP/ 163459296000._RPP
+      c(8,8,0) =     23000337._RPP/ 199768._RPP
 
       ! stencil 1
       !                    /                               ;                     /
-      c(0,0,1) =     17848737251203._RPP/ 163459296000._RPP;c(1,0,1) =   -147809125548479._RPP/ 100590336000._RPP
+      c(0,0,1) =     23000337._RPP/ 199768._RPP;c(1,0,1) =   -1605498941._RPP/ 1038640._RPP
       !                    /                               ;                     /
-      c(2,0,1) =   1152669616433567._RPP/ 261534873600._RPP;c(3,0,1) = -10036258935621221._RPP/1307674368000._RPP
+      c(2,0,1) =   1919279425._RPP/ 414313._RPP;c(3,0,1) = -351689199._RPP/43600._RPP
       !                    /                               ;                     /
-      c(4,0,1) =   2214259153735049._RPP/ 261534873600._RPP;c(5,0,1) =  -7906584673048973._RPP/1307674368000._RPP
+      c(4,0,1) =   2318146475._RPP/ 260443._RPP;c(5,0,1) =  -1432715713._RPP/225284._RPP
       !                    /                               ;                     /
-      c(6,0,1) =   3563951929254757._RPP/1307674368000._RPP;c(7,0,1) =     -7406462028919._RPP/  10461394944._RPP
+      c(6,0,1) =   1206026846._RPP/420471._RPP;c(7,0,1) =     -433682386._RPP/  581703._RPP
       !                    /                               ;                     /
-      c(8,0,1) =    105994418298211._RPP/1307674368000._RPP
+      c(8,0,1) =    192493416._RPP/2253847._RPP
 
       !                    /                               ;                     /
-      c(0,1,1) =                                     0._RPP;c(1,1,1) =   6603455065054091._RPP/1307674368000._RPP
+      c(0,1,1) =                                     0._RPP;c(1,1,1) =   8788336457._RPP/1659246._RPP
       !                    /                               ;                     /
-      c(2,1,1) = -10036779580858187._RPP/ 326918592000._RPP;c(3,1,1) =  35272568778872279._RPP/ 653837184000._RPP
+      c(2,1,1) = -6349489117._RPP/ 197436._RPP;c(3,1,1) =  17759778441._RPP/ 314408._RPP
       !                    /                               ;                     /
-      c(4,1,1) =  -7832368115834609._RPP/ 130767436800._RPP;c(5,1,1) =  28101378954880001._RPP/ 653837184000._RPP
+      c(4,1,1) =  -2463944763._RPP/ 39286._RPP;c(5,1,1) =  2631734550._RPP/ 58459._RPP
       !                    /                               ;                     /
-      c(6,1,1) =  -6356537203415423._RPP/ 326918592000._RPP;c(7,1,1) =     23159841631123._RPP/   4572288000._RPP
+      c(6,1,1) =  -684405583._RPP/ 33590._RPP;c(7,1,1) =     1632642660._RPP/   307433._RPP
       !                    /                               ;                     /
-      c(8,1,1) =   -760053376543163._RPP/1307674368000._RPP
+      c(8,1,1) =   -759205271._RPP/1245236._RPP
 
       !                    /                               ;                     /
       c(0,2,1) =                                     0._RPP;c(1,2,1) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,2,1) =    800572672346869._RPP/  16982784000._RPP;c(3,2,1) =  -7795675329471191._RPP/  46702656000._RPP
+      c(2,2,1) =    138686396638._RPP/  2813507._RPP;c(3,2,1) =  -12258216466._RPP/  70285._RPP
       !                    /                               ;                     /
-      c(4,2,1) =     39564077889589._RPP/    212284800._RPP;c(5,2,1) =  -1254519948165511._RPP/   9340531200._RPP
+      c(4,2,1) =     8450768743._RPP/    43407._RPP;c(5,2,1) =  -30871077827._RPP/   220014._RPP
       !                    /                               ;                     /
-      c(6,2,1) =   5694325930465457._RPP/  93405312000._RPP;c(7,2,1) =  -5205585064855199._RPP/ 326918592000._RPP
+      c(6,2,1) =   2904329890._RPP/  45589._RPP;c(7,2,1) =  -2519869819._RPP/ 151381._RPP
       !                    /                               ;                     /
-      c(8,2,1) =   2394338101248133._RPP/1307674368000._RPP
+      c(8,2,1) =   2064497172._RPP/1078127._RPP
 
       !                    /                               ;                     /
       c(0,3,1) =                                     0._RPP;c(1,3,1) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,3,1) =                                     0._RPP;c(3,3,1) =  27770723927721989._RPP/ 186810624000._RPP
+      c(2,3,1) =                                     0._RPP;c(3,3,1) =  7222761881._RPP/ 46553._RPP
       !                    /                               ;                     /
-      c(4,3,1) =  -6230647138120121._RPP/  18681062400._RPP;c(5,3,1) =  22533757546843859._RPP/  93405312000._RPP
+      c(4,3,1) =  -21436202114._RPP/  61611._RPP;c(5,3,1) =  21903079582._RPP/  87043._RPP
       !                    /                               ;                     /
-      c(6,3,1) =  -5129104009946051._RPP/  46702656000._RPP;c(7,3,1) =  18799624487562689._RPP/ 653837184000._RPP
+      c(6,3,1) =  -5737609802._RPP/  50081._RPP;c(7,3,1) =  2675355119._RPP/ 89174._RPP
       !                    /                               ;                     /
-      c(8,3,1) =  -4331747069079341._RPP/1307674368000._RPP
+      c(8,3,1) =  -1275601375._RPP/368936._RPP
 
       !                    /                               ;                     /
       c(0,4,1) =                                     0._RPP;c(1,4,1) =                                     0._RPP
       !                    /                               ;                     /
       c(2,4,1) =                                     0._RPP;c(3,4,1) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,4,1) =   1403304354475421._RPP/   7472424960._RPP;c(5,4,1) =  -5091060727437401._RPP/  18681062400._RPP
+      c(4,4,1) =   5232843359._RPP/   26730._RPP;c(5,4,1) =  -32956224478._RPP/  116041._RPP
       !                    /                               ;                     /
-      c(6,4,1) =     26403598814209._RPP/    212284800._RPP;c(7,4,1) =  -4266972749341649._RPP/ 130767436800._RPP
+      c(6,4,1) =     4693138545._RPP/    36209._RPP;c(7,4,1) =  -5136703769._RPP/ 151046._RPP
       !                    /                               ;                     /
-      c(8,4,1) =    984850182064169._RPP/ 261534873600._RPP
+      c(8,4,1) =    1990119523._RPP/ 506979._RPP
 
       !                    /                               ;                     /
       c(0,5,1) =                                     0._RPP;c(1,5,1) =                                     0._RPP
       !                    /                               ;                     /
       c(2,5,1) =                                     0._RPP;c(3,5,1) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,5,1) =                                     0._RPP;c(5,5,1) =  18518028023237957._RPP/ 186810624000._RPP
+      c(4,5,1) =                                     0._RPP;c(5,5,1) =  10194856899._RPP/ 98734._RPP
       !                    /                               ;                     /
-      c(6,5,1) =  -4234862610936119._RPP/  46702656000._RPP;c(7,5,1) =   3116380997521963._RPP/ 130767436800._RPP
+      c(6,5,1) =  -7652084383._RPP/  81028._RPP;c(7,5,1) =   1696424402._RPP/ 68349._RPP
       !                    /                               ;                     /
-      c(8,5,1) =  -3601784423075141._RPP/1307674368000._RPP
+      c(8,5,1) =  -557744521._RPP/194407._RPP
 
       !                    /                               ;                     /
       c(0,6,1) =                                     0._RPP;c(1,6,1) =                                     0._RPP
@@ -1645,9 +1643,9 @@ contains
       !                    /                               ;                     /
       c(4,6,1) =                                     0._RPP;c(5,6,1) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,6,1) =    352812369719413._RPP/  16982784000._RPP;c(7,6,1) =  -3575411646556907._RPP/ 326918592000._RPP
+      c(6,6,1) =    3171898228._RPP/  146643._RPP;c(7,6,1) =  -1486183058._RPP/ 130527._RPP
       !                    /                               ;                     /
-      c(8,6,1) =   1655072196501883._RPP/1307674368000._RPP
+      c(8,6,1) =   1414733955._RPP/1073627._RPP
 
       !                    /                               ;                     /
       c(0,7,1) =                                     0._RPP;c(1,7,1) =                                     0._RPP
@@ -1656,9 +1654,9 @@ contains
       !                    /                               ;                     /
       c(4,7,1) =                                     0._RPP;c(5,7,1) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,7,1) =                                     0._RPP;c(7,7,1) =    269247491159069._RPP/ 186810624000._RPP
+      c(6,7,1) =                                     0._RPP;c(7,7,1) =    550334507._RPP/ 366830._RPP
       !                    /                               ;                     /
-      c(8,7,1) =    -33593572337951._RPP/ 100590336000._RPP
+      c(8,7,1) =    -296572045._RPP/ 853161._RPP
 
       !                    /                               ;                     /
       c(0,8,1) =                                     0._RPP;c(1,8,1) =                                     0._RPP
@@ -1669,74 +1667,74 @@ contains
       !                    /                               ;                     /
       c(6,8,1) =                                     0._RPP;c(7,8,1) =                                     0._RPP
       !                    /                               ;                     /
-      c(8,8,1) =      3165355170121._RPP/ 163459296000._RPP
+      c(8,8,1) =      36409563._RPP/ 1806520._RPP
 
       ! stencil 2
       !                    /                               ;                     /
-      c(0,0,2) =      3165355170121._RPP/ 163459296000._RPP;c(1,0,2) =     -3844139848343._RPP/  14370048000._RPP
+      c(0,0,2) =      36409563._RPP/ 1806520._RPP;c(1,0,2) =     -699447262._RPP/  2521667._RPP
       !                    /                               ;                     /
-      c(2,0,2) =   1063191201446533._RPP/1307674368000._RPP;c(3,0,2) =  -1859899247394491._RPP/1307674368000._RPP
+      c(2,0,2) =   277579576._RPP/329887._RPP;c(3,0,2) =  -289784372._RPP/196989._RPP
       !                    /                               ;                     /
-      c(4,0,2) =    409921790776919._RPP/ 261534873600._RPP;c(5,0,2) =  -1457105112643091._RPP/1307674368000._RPP
+      c(4,0,2) =    306856831._RPP/ 189251._RPP;c(5,0,2) =  -61463934._RPP/53285._RPP
       !                    /                               ;                     /
-      c(6,0,2) =    652452925567483._RPP/1307674368000._RPP;c(7,0,2) =   -168172381487813._RPP/1307674368000._RPP
+      c(6,0,2) =    688214053._RPP/1331147._RPP;c(7,0,2) =   -173397370._RPP/1299717._RPP
       !                    /                               ;                     /
-      c(8,0,2) =     19094704104061._RPP/1307674368000._RPP
+      c(8,0,2) =     265338548._RPP/17495633._RPP
 
       !                    /                               ;                     /
-      c(0,1,2) =                                     0._RPP;c(1,1,2) =   1239990283564133._RPP/1307674368000._RPP
+      c(0,1,2) =                                     0._RPP;c(1,1,2) =   526012837._RPP/537300._RPP
       !                    /                               ;                     /
-      c(2,1,2) =  -1918610096603357._RPP/ 326918592000._RPP;c(3,1,2) =   1359891017166853._RPP/ 130767436800._RPP
+      c(2,1,2) =  -1651888798._RPP/ 273307._RPP;c(3,1,2) =   2363787227._RPP/ 220958._RPP
       !                    /                               ;                     /
-      c(4,1,2) =  -1512744281500799._RPP/ 130767436800._RPP;c(5,1,2) =   5414972538444239._RPP/ 653837184000._RPP
+      c(4,1,2) =  -10107954583._RPP/ 849559._RPP;c(5,1,2) =   5241495620._RPP/ 615127._RPP
       !                    /                               ;                     /
-      c(6,1,2) =  -1218782466526649._RPP/ 326918592000._RPP;c(7,1,2) =      4411553510173._RPP/   4572288000._RPP
+      c(6,1,2) =  -2367490577._RPP/ 616772._RPP;c(7,1,2) =      127754174._RPP/   128481._RPP
       !                    /                               ;                     /
-      c(8,1,2) =     -5748413034701._RPP/  52306974720._RPP
+      c(8,1,2) =     -264553111._RPP/  2333462._RPP
 
       !                    /                               ;                     /
       c(0,2,2) =                                     0._RPP;c(1,2,2) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,2,2) =    156622544328763._RPP/  16982784000._RPP;c(3,2,2) =  -1544964557143169._RPP/  46702656000._RPP
+      c(2,2,2) =    3248190394._RPP/  343067._RPP;c(3,2,2) =  -2028942806._RPP/  59843._RPP
       !                    /                               ;                     /
-      c(4,2,2) =      7883820528109._RPP/    212284800._RPP;c(5,2,2) =  -1250454991752101._RPP/  46702656000._RPP
+      c(4,2,2) =      1334723167._RPP/    35090._RPP;c(5,2,2) =  -765629878._RPP/  27919._RPP
       !                    /                               ;                     /
-      c(6,2,2) =   1131898542897407._RPP/  93405312000._RPP;c(7,2,2) =  -1029608247917273._RPP/ 326918592000._RPP
+      c(6,2,2) =   2097415117._RPP/  168915._RPP;c(7,2,2) =  -676787627._RPP/ 209575._RPP
       !                    /                               ;                     /
-      c(8,2,2) =    470643665358907._RPP/1307674368000._RPP
+      c(8,2,2) =    383212815._RPP/1037536._RPP
 
       !                    /                               ;                     /
       c(0,3,2) =                                     0._RPP;c(1,3,2) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,3,2) =                                     0._RPP;c(3,3,2) =   5599666272693707._RPP/ 186810624000._RPP
+      c(2,3,2) =                                     0._RPP;c(3,3,2) =   2631362108._RPP/ 85845._RPP
       !                    /                               ;                     /
-      c(4,3,2) =  -1267992294203351._RPP/  18681062400._RPP;c(5,3,2) =   4601782036044509._RPP/  93405312000._RPP
+      c(4,3,2) =  -4882065990._RPP/  70417._RPP;c(5,3,2) =   3655479387._RPP/  72668._RPP
       !                    /                               ;                     /
-      c(6,3,2) =   -209388842757121._RPP/   9340531200._RPP;c(7,3,2) =   3825435713279951._RPP/ 653837184000._RPP
+      c(6,3,2) =   -2468363819._RPP/   107827._RPP;c(7,3,2) =   1268411423._RPP/ 212206._RPP
       !                    /                               ;                     /
-      c(8,3,2) =   -877252492928723._RPP/1307674368000._RPP
+      c(8,3,2) =   -427576737._RPP/623480._RPP
 
       !                    /                               ;                     /
       c(0,4,2) =                                     0._RPP;c(1,4,2) =                                     0._RPP
       !                    /                               ;                     /
       c(2,4,2) =                                     0._RPP;c(3,4,2) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,4,2) =    289259235638771._RPP/   7472424960._RPP;c(5,4,2) =  -1056291616534871._RPP/  18681062400._RPP
+      c(4,4,2) =    11322353265._RPP/   286802._RPP;c(5,4,2) =  -7546651472._RPP/  130969._RPP
       !                    /                               ;                     /
-      c(6,4,2) =      5489435141989._RPP/    212284800._RPP;c(7,4,2) =   -886173785909759._RPP/ 130767436800._RPP
+      c(6,4,2) =      451561861._RPP/    17139._RPP;c(7,4,2) =   -2267814051._RPP/ 328385._RPP
       !                    /                               ;                     /
-      c(8,4,2) =    203891614104599._RPP/ 261534873600._RPP
+      c(8,4,2) =    537364516._RPP/ 676097._RPP
 
       !                    /                               ;                     /
       c(0,5,2) =                                     0._RPP;c(1,5,2) =                                     0._RPP
       !                    /                               ;                     /
       c(2,5,2) =                                     0._RPP;c(3,5,2) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,5,2) =                                     0._RPP;c(5,5,2) =   3878296682785739._RPP/ 186810624000._RPP
+      c(4,5,2) =                                     0._RPP;c(5,5,2) =   3256858005._RPP/ 154108._RPP
       !                    /                               ;                     /
-      c(6,5,2) =   -890937252684641._RPP/  46702656000._RPP;c(7,5,2) =   3281427995720729._RPP/ 653837184000._RPP
+      c(6,5,2) =   -5961122741._RPP/  307109._RPP;c(7,5,2) =   982680142._RPP/ 192447._RPP
       !                    /                               ;                     /
-      c(8,5,2) =   -757402017640571._RPP/1307674368000._RPP
+      c(8,5,2) =   -823497572._RPP/1397105._RPP
 
       !                    /                               ;                     /
       c(0,6,2) =                                     0._RPP;c(1,6,2) =                                     0._RPP
@@ -1745,9 +1743,9 @@ contains
       !                    /                               ;                     /
       c(4,6,2) =                                     0._RPP;c(5,6,2) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,6,2) =     74730821653819._RPP/  16982784000._RPP;c(7,6,2) =   -759598480120637._RPP/ 326918592000._RPP
+      c(6,6,2) =     2952652193._RPP/  659941._RPP;c(7,6,2) =   -1883344606._RPP/ 797417._RPP
       !                    /                               ;                     /
-      c(8,6,2) =     70341062456897._RPP/ 261534873600._RPP
+      c(8,6,2) =     329649921._RPP/ 1205744._RPP
 
       !                    /                               ;                     /
       c(0,7,2) =                                     0._RPP;c(1,7,2) =                                     0._RPP
@@ -1756,9 +1754,9 @@ contains
       !                    /                               ;                     /
       c(4,7,2) =                                     0._RPP;c(5,7,2) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,7,2) =                                     0._RPP;c(7,7,2) =    402355798141541._RPP/1307674368000._RPP
+      c(6,7,2) =                                     0._RPP;c(7,7,2) =    267692197._RPP/856297._RPP
       !                    /                               ;                     /
-      c(8,7,2) =     -1026441378647._RPP/  14370048000._RPP
+      c(8,7,2) =     -178701734._RPP/  2462661._RPP
 
       !                    /                               ;                     /
       c(0,8,2) =                                     0._RPP;c(1,8,2) =                                     0._RPP
@@ -1769,74 +1767,74 @@ contains
       !                    /                               ;                     /
       c(6,8,2) =                                     0._RPP;c(7,8,2) =                                     0._RPP
       !                    /                               ;                     /
-      c(8,8,2) =       679328101453._RPP/ 163459296000._RPP
+      c(8,8,2) =       14225607._RPP/ 3370285._RPP
 
       ! stencil 3
       !                    /                               ;                     /
-      c(0,0,3) =       679328101453._RPP/ 163459296000._RPP;c(1,0,3) =     -6056041731167._RPP/ 100590336000._RPP
+      c(0,0,3) =       14225607._RPP/ 3370285._RPP;c(1,0,3) =     -186193587._RPP/ 3061888._RPP
       !                    /                               ;                     /
-      c(2,0,3) =    247582660569403._RPP/1307674368000._RPP;c(3,0,3) =    -17694932119757._RPP/  52306974720._RPP
+      c(2,0,3) =    103779883._RPP/544689._RPP;c(3,0,3) =    -597649141._RPP/  1759029._RPP
       !                    /                               ;                     /
-      c(4,0,3) =     19690918384021._RPP/  52306974720._RPP;c(5,0,3) =   -350067382006253._RPP/1307674368000._RPP
+      c(4,0,3) =     348597468._RPP/  922523._RPP;c(5,0,3) =   -709458479._RPP/2638758._RPP
       !                    /                               ;                     /
-      c(6,0,3) =    155614950712261._RPP/1307674368000._RPP;c(7,0,3) =    -39587674152443._RPP/1307674368000._RPP
+      c(6,0,3) =    184615935._RPP/1542601._RPP;c(7,0,3) =    -417266048._RPP/13678797._RPP
       !                    /                               ;                     /
-      c(8,0,3) =       883416230471._RPP/ 261534873600._RPP
+      c(8,0,3) =      33222819._RPP/ 9738314._RPP
 
       !                    /                               ;                     /
-      c(0,1,3) =                                     0._RPP;c(1,1,3) =    293675114165963._RPP/1307674368000._RPP
+      c(0,1,3) =                                     0._RPP;c(1,1,3) =    308180301._RPP/1366333._RPP
       !                    /                               ;                     /
-      c(2,1,3) =   -472662830894411._RPP/ 326918592000._RPP;c(3,1,3) =   1720297891825367._RPP/ 653837184000._RPP
+      c(2,1,3) =   -522065981._RPP/ 360998._RPP;c(3,1,3) =   5590654438._RPP/ 2129495._RPP
       !                    /                               ;                     /
-      c(4,1,3) =   -388442316668753._RPP/ 130767436800._RPP;c(5,1,3) =   1397141337414593._RPP/ 653837184000._RPP
+      c(4,1,3) =   -787874261._RPP/ 266082._RPP;c(5,1,3) =   1034492709._RPP/ 485618._RPP
       !                    /                               ;                     /
-      c(6,1,3) =   -313421131078079._RPP/ 326918592000._RPP;c(7,1,3) =      1123540717459._RPP/   4572288000._RPP
+      c(6,1,3) =   -931274285._RPP/ 973468._RPP;c(7,1,3) =      544135101._RPP/   2215768._RPP
       !                    /                               ;                     /
-      c(8,1,3) =    -36073774922459._RPP/1307674368000._RPP
+      c(8,1,3) =    -243832589._RPP/8827552._RPP
 
       !                    /                               ;                     /
       c(0,2,3) =                                     0._RPP;c(1,2,3) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,2,3) =     40385614392181._RPP/  16982784000._RPP;c(3,2,3) =   -411721854332951._RPP/  46702656000._RPP
+      c(2,2,3) =     2349998749._RPP/  992475._RPP;c(3,2,3) =   -3054791233._RPP/  349036._RPP
       !                    /                               ;                     /
-      c(4,2,3) =      2145005788633._RPP/    212284800._RPP;c(5,2,3) =   -343655982425891._RPP/  46702656000._RPP
+      c(4,2,3) =      966000775._RPP/    96443._RPP;c(5,2,3) =   -828515195._RPP/  113623._RPP
       !                    /                               ;                     /
-      c(6,2,3) =    311458280689841._RPP/  93405312000._RPP;c(7,2,3) =   -281678601090911._RPP/ 326918592000._RPP
+      c(6,2,3) =    1033739711._RPP/  312683._RPP;c(7,2,3) =   -767075415._RPP/ 896921._RPP
       !                    /                               ;                     /
-      c(8,2,3) =    127326292586533._RPP/1307674368000._RPP
+      c(8,2,3) =    83373698._RPP/861333._RPP
 
       !                    /                               ;                     /
       c(0,3,3) =                                     0._RPP;c(1,3,3) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,3,3) =                                     0._RPP;c(3,3,3) =   1553225813426501._RPP/ 186810624000._RPP
+      c(2,3,3) =                                     0._RPP;c(3,3,3) =   1879971092._RPP/ 228557._RPP
       !                    /                               ;                     /
-      c(4,3,3) =    -72310955346373._RPP/   3736212480._RPP;c(5,3,3) =    266698467235063._RPP/  18681062400._RPP
+      c(4,3,3) =    -305554133._RPP/   15991._RPP;c(5,3,3) =    3662929022._RPP/  260087._RPP
       !                    /                               ;                     /
-      c(6,3,3) =   -305368847812163._RPP/  46702656000._RPP;c(7,3,3) =   1114386138224129._RPP/ 653837184000._RPP
+      c(6,3,3) =   -295058921._RPP/  45739._RPP;c(7,3,3) =   654146656._RPP/ 388723._RPP
       !                    /                               ;                     /
-      c(8,3,3) =   -253674820236749._RPP/1307674368000._RPP
+      c(8,3,3) =   -135160981._RPP/704829._RPP
 
       !                    /                               ;                     /
       c(0,4,3) =                                     0._RPP;c(1,4,3) =                                     0._RPP
       !                    /                               ;                     /
       c(2,4,3) =                                     0._RPP;c(3,4,3) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,4,3) =     85394018909597._RPP/   7472424960._RPP;c(5,4,3) =    -63811818908581._RPP/   3736212480._RPP
+      c(4,4,3) =     1548885060._RPP/   137633._RPP;c(5,4,3) =    -8099595796._RPP/   482187._RPP
       !                    /                               ;                     /
-      c(6,4,3) =      1679094624733._RPP/    212284800._RPP;c(7,4,3) =   -272139518377073._RPP/ 130767436800._RPP
+      c(6,4,3) =      1581790037._RPP/    203396._RPP;c(7,4,3) =   -6738238495._RPP/ 3291754._RPP
       !                    /                               ;                     /
-      c(8,4,3) =      2497209723185._RPP/  10461394944._RPP
+      c(8,4,3) =      85841095._RPP/  365273._RPP
 
       !                    /                               ;                     /
       c(0,5,3) =                                     0._RPP;c(1,5,3) =                                     0._RPP
       !                    /                               ;                     /
       c(2,5,3) =                                     0._RPP;c(3,5,3) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,5,3) =                                     0._RPP;c(5,5,3) =   1206964694318597._RPP/ 186810624000._RPP
+      c(4,5,3) =                                     0._RPP;c(5,5,3) =  4054421226._RPP/ 639143._RPP
       !                    /                               ;                     /
-      c(6,5,3) =   -282622107973367._RPP/  46702656000._RPP;c(7,5,3) =   1051238439516119._RPP/ 653837184000._RPP
+      c(6,5,3) =   -628691758._RPP/  105883._RPP;c(7,5,3) =   855538459._RPP/ 542278._RPP
       !                    /                               ;                     /
-      c(8,5,3) =    -48633489917473._RPP/ 261534873600._RPP
+      c(8,5,3) =    -185363617._RPP/ 1015232._RPP
 
       !                    /                               ;                     /
       c(0,6,3) =                                     0._RPP;c(1,6,3) =                                     0._RPP
@@ -1845,9 +1843,9 @@ contains
       !                    /                               ;                     /
       c(4,6,3) =                                     0._RPP;c(5,6,3) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,6,3) =     24324934655989._RPP/  16982784000._RPP;c(7,6,3) =   -251283767228651._RPP/ 326918592000._RPP
+      c(6,6,3) =     2253530669._RPP/  1605103._RPP;c(7,6,3) =   -491966393._RPP/ 653081._RPP
       !                    /                               ;                     /
-      c(8,6,3) =    117272649474139._RPP/1307674368000._RPP
+      c(8,6,3) =    67366110._RPP/766169._RPP
 
       !                    /                               ;                     /
       c(0,7,3) =                                     0._RPP;c(1,7,3) =                                     0._RPP
@@ -1856,9 +1854,9 @@ contains
       !                    /                               ;                     /
       c(4,7,3) =                                     0._RPP;c(5,7,3) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,7,3) =                                     0._RPP;c(7,7,3) =    136155780967307._RPP/1307674368000._RPP
+      c(6,7,3) =                                     0._RPP;c(7,7,3) =    193935861._RPP/1901234._RPP
       !                    /                               ;                     /
-      c(8,7,3) =     -2466233185151._RPP/ 100590336000._RPP
+      c(8,7,3) =     -28933143._RPP/ 1204235._RPP
 
       !                    /                               ;                     /
       c(0,8,3) =                                     0._RPP;c(1,8,3) =                                     0._RPP
@@ -1869,74 +1867,74 @@ contains
       !                    /                               ;                     /
       c(6,8,3) =                                     0._RPP;c(7,8,3) =                                     0._RPP
       !                    /                               ;                     /
-      c(8,8,3) =       238114846399._RPP/ 163459296000._RPP
+      c(8,8,3) =       25595175._RPP/ 17925332._RPP
 
       ! stencil 4
       !                    /                               ;                     /
-      c(0,0,4) =       238114846399._RPP/ 163459296000._RPP;c(1,0,4) =     -2297804363777._RPP/ 100590336000._RPP
+      c(0,0,4) =       25595175._RPP/ 17925332._RPP;c(1,0,4) =     -471882251._RPP/ 21169910._RPP
       !                    /                               ;                     /
-      c(2,0,4) =     20216075320673._RPP/ 261534873600._RPP;c(3,0,4) =   -192700060973723._RPP/1307674368000._RPP
+      c(2,0,4) =     48978927._RPP/ 651442._RPP;c(3,0,4) =   -81991005._RPP/573014._RPP
       !                    /                               ;                     /
-      c(4,0,4) =     45272942020727._RPP/ 261534873600._RPP;c(5,0,4) =   -167888314942259._RPP/1307674368000._RPP
+      c(4,0,4) =     323192477._RPP/ 1923068._RPP;c(5,0,4) =   -247486780._RPP/1982753._RPP
       !                    /                               ;                     /
-      c(6,0,4) =     76858903972891._RPP/1307674368000._RPP;c(7,0,4) =     -3976300410337._RPP/ 261534873600._RPP
+      c(6,0,4) =     179193514._RPP/3127239._RPP;c(7,0,4) =     -42281552._RPP/ 2841263._RPP
       !                    /                               ;                     /
-      c(8,0,4) =      2227506474493._RPP/1307674368000._RPP
+      c(8,0,4) =      21701959._RPP/12951510._RPP
 
       !                    /                               ;                     /
-      c(0,1,4) =                                     0._RPP;c(1,1,4) =    119979314906981._RPP/1307674368000._RPP
+      c(0,1,4) =                                     0._RPP;c(1,1,4) =    206821378._RPP/2319277._RPP
       !                    /                               ;                     /
-      c(2,1,4) =   -207359252612669._RPP/ 326918592000._RPP;c(3,1,4) =    161084839253509._RPP/ 130767436800._RPP
+      c(2,1,4) =   -257255959._RPP/ 418532._RPP;c(3,1,4) =    1066785823._RPP/ 895146._RPP
       !                    /                               ;                     /
-      c(4,1,4) =   -192310346872991._RPP/ 130767436800._RPP;c(5,1,4) =    723357784442063._RPP/ 653837184000._RPP
+      c(4,1,4) =   -659953893._RPP/ 463955._RPP;c(5,1,4) =    889068808._RPP/ 829823._RPP
       !                    /                               ;                     /
-      c(6,1,4) =   -167690675241113._RPP/ 326918592000._RPP;c(7,1,4) =       613753663261._RPP/   4572288000._RPP
+      c(6,1,4) =   -379006664._RPP/ 761061._RPP;c(7,1,4) =       145478651._RPP/   1112277._RPP
       !                    /                               ;                     /
-      c(8,1,4) =     -3976300410337._RPP/ 261534873600._RPP
+      c(8,1,4) =     -42281552._RPP/ 2841263._RPP
 
       !                    /                               ;                     /
       c(0,2,4) =                                     0._RPP;c(1,2,4) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,2,4) =     19010310966523._RPP/  16982784000._RPP;c(3,2,4) =   -207059158040897._RPP/  46702656000._RPP
+      c(2,2,4) =     467443989._RPP/  432139._RPP;c(3,2,4) =   -1014379655._RPP/  237166._RPP
       !                    /                               ;                     /
-      c(4,2,4) =      1143576251161._RPP/    212284800._RPP;c(5,2,4) =    -38450763316993._RPP/   9340531200._RPP
+      c(4,2,4) =      1427976276._RPP/    274865._RPP;c(5,2,4) =    -1288674710._RPP/   324261._RPP
       !                    /                               ;                     /
-      c(6,2,4) =    180786151740479._RPP/  93405312000._RPP;c(7,2,4) =   -167690675241113._RPP/ 326918592000._RPP
+      c(6,2,4) =    56509897._RPP/  30173._RPP;c(7,2,4) =   -379006664._RPP/ 761061._RPP
       !                    /                               ;                     /
-      c(8,2,4) =     76858903972891._RPP/1307674368000._RPP
+      c(8,2,4) =     179193514._RPP/3127239._RPP
 
       !                    /                               ;                     /
       c(0,3,4) =                                     0._RPP;c(1,3,4) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,3,4) =                                     0._RPP;c(3,3,4) =    836484368637131._RPP/ 186810624000._RPP
+      c(2,3,4) =                                     0._RPP;c(3,3,4) =   1224163507._RPP/ 283894._RPP
       !                    /                               ;                     /
-      c(4,3,4) =   -207139067201783._RPP/  18681062400._RPP;c(5,3,4) =    805195803373277._RPP/  93405312000._RPP
+      c(4,3,4) =   -1890391470._RPP/  177121._RPP;c(5,3,4) =    2682354099._RPP/  322987._RPP
       !                    /                               ;                     /
-      c(6,3,4) =    -38450763316993._RPP/   9340531200._RPP;c(7,3,4) =    723357784442063._RPP/ 653837184000._RPP
+      c(6,3,4) =    -1288674710._RPP/   324261._RPP;c(7,3,4) =    889068808._RPP/ 829823._RPP
       !                    /                               ;                     /
-      c(8,3,4) =   -167888314942259._RPP/1307674368000._RPP
+      c(8,3,4) =   -247486780._RPP/1982753._RPP
 
       !                    /                               ;                     /
       c(0,4,4) =                                     0._RPP;c(1,4,4) =                                     0._RPP
       !                    /                               ;                     /
       c(2,4,4) =                                     0._RPP;c(3,4,4) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,4,4) =     52297392889139._RPP/   7472424960._RPP;c(5,4,4) =   -207139067201783._RPP/  18681062400._RPP
+      c(4,4,4) =     7446840373._RPP/   1106172._RPP;c(5,4,4) =   -1890391470._RPP/  177121._RPP
       !                    /                               ;                     /
-      c(6,4,4) =      1143576251161._RPP/    212284800._RPP;c(7,4,4) =   -192310346872991._RPP/ 130767436800._RPP
+      c(6,4,4) =      1427976276._RPP/    274865._RPP;c(7,4,4) =   -659953893._RPP/ 463955._RPP
       !                    /                               ;                     /
-      c(8,4,4) =     45272942020727._RPP/ 261534873600._RPP
+      c(8,4,4) =     323192477._RPP/ 1923068._RPP
 
       !                    /                               ;                     /
       c(0,5,4) =                                     0._RPP;c(1,5,4) =                                     0._RPP
       !                    /                               ;                     /
       c(2,5,4) =                                     0._RPP;c(3,5,4) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,5,4) =                                     0._RPP;c(5,5,4) =    836484368637131._RPP/ 186810624000._RPP
+      c(4,5,4) =                                     0._RPP;c(5,5,4) =    1224163507._RPP/ 283894._RPP
       !                    /                               ;                     /
-      c(6,5,4) =   -207059158040897._RPP/  46702656000._RPP;c(7,5,4) =    161084839253509._RPP/ 130767436800._RPP
+      c(6,5,4) =   -1014379655._RPP/  237166._RPP;c(7,5,4) =    1066785823._RPP/ 895146._RPP
       !                    /                               ;                     /
-      c(8,5,4) =   -192700060973723._RPP/1307674368000._RPP
+      c(8,5,4) =   -81991005._RPP/573014._RPP
 
       !                    /                               ;                     /
       c(0,6,4) =                                     0._RPP;c(1,6,4) =                                     0._RPP
@@ -1945,9 +1943,9 @@ contains
       !                    /                               ;                     /
       c(4,6,4) =                                     0._RPP;c(5,6,4) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,6,4) =     19010310966523._RPP/  16982784000._RPP;c(7,6,4) =   -207359252612669._RPP/ 326918592000._RPP
+      c(6,6,4) =     467443989._RPP/  432139._RPP;c(7,6,4) =   -257255959._RPP/ 418532._RPP
       !                    /                               ;                     /
-      c(8,6,4) =     20216075320673._RPP/ 261534873600._RPP
+      c(8,6,4) =     48978927._RPP/ 651442._RPP
 
       !                    /                               ;                     /
       c(0,7,4) =                                     0._RPP;c(1,7,4) =                                     0._RPP
@@ -1956,9 +1954,9 @@ contains
       !                    /                               ;                     /
       c(4,7,4) =                                     0._RPP;c(5,7,4) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,7,4) =                                     0._RPP;c(7,7,4) =    119979314906981._RPP/1307674368000._RPP
+      c(6,7,4) =                                     0._RPP;c(7,7,4) =    206821378._RPP/2319277._RPP
       !                    /                               ;                     /
-      c(8,7,4) =     -2297804363777._RPP/ 100590336000._RPP
+      c(8,7,4) =     -471882251._RPP/ 21169910._RPP
 
       !                    /                               ;                     /
       c(0,8,4) =                                     0._RPP;c(1,8,4) =                                     0._RPP
@@ -1969,74 +1967,74 @@ contains
       !                    /                               ;                     /
       c(6,8,4) =                                     0._RPP;c(7,8,4) =                                     0._RPP
       !                    /                               ;                     /
-      c(8,8,4) =       238114846399._RPP/ 163459296000._RPP
+      c(8,8,4) =       25595175._RPP/ 17925332._RPP
 
       ! stencil 5
       !                    /                               ;                     /
-      c(0,0,5) =       238114846399._RPP/ 163459296000._RPP;c(1,0,5) =     -2466233185151._RPP/ 100590336000._RPP
+      c(0,0,5) =       25595175._RPP/ 17925332._RPP;c(1,0,5) =     -28933143._RPP/ 1204235._RPP
       !                    /                               ;                     /
-      c(2,0,5) =    117272649474139._RPP/1307674368000._RPP;c(3,0,5) =    -48633489917473._RPP/ 261534873600._RPP
+      c(2,0,5) =    67366110._RPP/766169._RPP;c(3,0,5) =    -185363617._RPP/ 1015232._RPP
       !                    /                               ;                     /
-      c(4,0,5) =      2497209723185._RPP/  10461394944._RPP;c(5,0,5) =   -253674820236749._RPP/1307674368000._RPP
+      c(4,0,5) =      85841095._RPP/  365273._RPP;c(5,0,5) =   -135160981._RPP/704829._RPP
       !                    /                               ;                     /
-      c(6,0,5) =    127326292586533._RPP/1307674368000._RPP;c(7,0,5) =    -36073774922459._RPP/1307674368000._RPP
+      c(6,0,5) =    83373698._RPP/861333._RPP;c(7,0,5) =    -243832589._RPP/8827552._RPP
       !                    /                               ;                     /
-      c(8,0,5) =       883416230471._RPP/ 261534873600._RPP
+      c(8,0,5) =       33222819._RPP/ 9738314._RPP
 
       !                    /                               ;                     /
-      c(0,1,5) =                                     0._RPP;c(1,1,5) =    136155780967307._RPP/1307674368000._RPP
+      c(0,1,5) =                                     0._RPP;c(1,1,5) =    193935861._RPP/1901234._RPP
       !                    /                               ;                     /
-      c(2,1,5) =   -251283767228651._RPP/ 326918592000._RPP;c(3,1,5) =   1051238439516119._RPP/ 653837184000._RPP
+      c(2,1,5) =   -491966393._RPP/ 653081._RPP;c(3,1,5) =   855538459._RPP/ 542278._RPP
       !                    /                               ;                     /
-      c(4,1,5) =   -272139518377073._RPP/ 130767436800._RPP;c(5,1,5) =   1114386138224129._RPP/ 653837184000._RPP
+      c(4,1,5) =   -6738238495._RPP/ 3291754._RPP;c(5,1,5) =   654146656._RPP/ 388723._RPP
       !                    /                               ;                     /
-      c(6,1,5) =   -281678601090911._RPP/ 326918592000._RPP;c(7,1,5) =      1123540717459._RPP/   4572288000._RPP
+      c(6,1,5) =   -767075415._RPP/ 896921._RPP;c(7,1,5) =      544135101._RPP/   2215768._RPP
       !                    /                               ;                     /
-      c(8,1,5) =    -39587674152443._RPP/1307674368000._RPP
+      c(8,1,5) =    -417266048._RPP/13678797._RPP
 
       !                    /                               ;                     /
       c(0,2,5) =                                     0._RPP;c(1,2,5) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,2,5) =     24324934655989._RPP/  16982784000._RPP;c(3,2,5) =   -282622107973367._RPP/  46702656000._RPP
+      c(2,2,5) =     2253530669._RPP/  1605103._RPP;c(3,2,5) =   -628691758._RPP/  105883._RPP
       !                    /                               ;                     /
-      c(4,2,5) =      1679094624733._RPP/    212284800._RPP;c(5,2,5) =   -305368847812163._RPP/  46702656000._RPP
+      c(4,2,5) =      1581790037._RPP/    203396._RPP;c(5,2,5) =   -295058921._RPP/  45739._RPP
       !                    /                               ;                     /
-      c(6,2,5) =    311458280689841._RPP/  93405312000._RPP;c(7,2,5) =   -313421131078079._RPP/ 326918592000._RPP
+      c(6,2,5) =    1033739711._RPP/  312683._RPP;c(7,2,5) =   -931274285._RPP/ 973468._RPP
       !                    /                               ;                     /
-      c(8,2,5) =    155614950712261._RPP/1307674368000._RPP
+      c(8,2,5) =    184615935._RPP/1542601._RPP
 
       !                    /                               ;                     /
       c(0,3,5) =                                     0._RPP;c(1,3,5) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,3,5) =                                     0._RPP;c(3,3,5) =   1206964694318597._RPP/ 186810624000._RPP
+      c(2,3,5) =                                     0._RPP;c(3,3,5) =   4054421226._RPP/ 639143._RPP
       !                    /                               ;                     /
-      c(4,3,5) =    -63811818908581._RPP/   3736212480._RPP;c(5,3,5) =    266698467235063._RPP/  18681062400._RPP
+      c(4,3,5) =    -8099595796._RPP/   482187._RPP;c(5,3,5) =    3662929022._RPP/  260087._RPP
       !                    /                               ;                     /
-      c(6,3,5) =   -343655982425891._RPP/  46702656000._RPP;c(7,3,5) =   1397141337414593._RPP/ 653837184000._RPP
+      c(6,3,5) =   -828515195._RPP/  113623._RPP;c(7,3,5) =   1034492709._RPP/ 485618._RPP
       !                    /                               ;                     /
-      c(8,3,5) =   -350067382006253._RPP/1307674368000._RPP
+      c(8,3,5) =   -709458479._RPP/2638758._RPP
 
       !                    /                               ;                     /
       c(0,4,5) =                                     0._RPP;c(1,4,5) =                                     0._RPP
       !                    /                               ;                     /
       c(2,4,5) =                                     0._RPP;c(3,4,5) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,4,5) =     85394018909597._RPP/   7472424960._RPP;c(5,4,5) =    -72310955346373._RPP/   3736212480._RPP
+      c(4,4,5) =     1548885060._RPP/   137633._RPP;c(5,4,5) =    -305554133._RPP/   15991._RPP
       !                    /                               ;                     /
-      c(6,4,5) =      2145005788633._RPP/    212284800._RPP;c(7,4,5) =   -388442316668753._RPP/ 130767436800._RPP
+      c(6,4,5) =      966000775._RPP/    96443._RPP;c(7,4,5) =   -787874261._RPP/ 266082._RPP
       !                    /                               ;                     /
-      c(8,4,5) =     19690918384021._RPP/  52306974720._RPP
+      c(8,4,5) =     348597468._RPP/  922523._RPP
 
       !                    /                               ;                     /
       c(0,5,5) =                                     0._RPP;c(1,5,5) =                                     0._RPP
       !                    /                               ;                     /
       c(2,5,5) =                                     0._RPP;c(3,5,5) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,5,5) =                                     0._RPP;c(5,5,5) =   1553225813426501._RPP/ 186810624000._RPP
+      c(4,5,5) =                                     0._RPP;c(5,5,5) =   1879971092._RPP/ 228557._RPP
       !                    /                               ;                     /
-      c(6,5,5) =   -411721854332951._RPP/  46702656000._RPP;c(7,5,5) =   1720297891825367._RPP/ 653837184000._RPP
+      c(6,5,5) =   -3054791233._RPP/  349036._RPP;c(7,5,5) =   5590654438._RPP/ 2129495._RPP
       !                    /                               ;                     /
-      c(8,5,5) =    -17694932119757._RPP/  52306974720._RPP
+      c(8,5,5) =    -597649141._RPP/  1759029._RPP
 
       !                    /                               ;                     /
       c(0,6,5) =                                     0._RPP;c(1,6,5) =                                     0._RPP
@@ -2045,9 +2043,9 @@ contains
       !                    /                               ;                     /
       c(4,6,5) =                                     0._RPP;c(5,6,5) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,6,5) =     40385614392181._RPP/  16982784000._RPP;c(7,6,5) =   -472662830894411._RPP/ 326918592000._RPP
+      c(6,6,5) =     2349998749._RPP/  992475._RPP;c(7,6,5) =   -522065981._RPP/ 360998._RPP
       !                    /                               ;                     /
-      c(8,6,5) =    247582660569403._RPP/1307674368000._RPP
+      c(8,6,5) =    103779883._RPP/544689._RPP
 
       !                    /                               ;                     /
       c(0,7,5) =                                     0._RPP;c(1,7,5) =                                     0._RPP
@@ -2056,9 +2054,9 @@ contains
       !                    /                               ;                     /
       c(4,7,5) =                                     0._RPP;c(5,7,5) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,7,5) =                                     0._RPP;c(7,7,5) =    293675114165963._RPP/1307674368000._RPP
+      c(6,7,5) =                                     0._RPP;c(7,7,5) =    308180301._RPP/1366333._RPP
       !                    /                               ;                     /
-      c(8,7,5) =     -6056041731167._RPP/ 100590336000._RPP
+      c(8,7,5) =     -186193587._RPP/ 3061888._RPP
 
       !                    /                               ;                     /
       c(0,8,5) =                                     0._RPP;c(1,8,5) =                                     0._RPP
@@ -2069,74 +2067,74 @@ contains
       !                    /                               ;                     /
       c(6,8,5) =                                     0._RPP;c(7,8,5) =                                     0._RPP
       !                    /                               ;                     /
-      c(8,8,5) =       679328101453._RPP/ 163459296000._RPP
+      c(8,8,5) =       14225607._RPP/ 3370285._RPP
 
       ! stencil 6
       !                    /                               ;                     /
-      c(0,0,6) =       679328101453._RPP/ 163459296000._RPP;c(1,0,6) =     -1026441378647._RPP/  14370048000._RPP
+      c(0,0,6) =       14225607._RPP/ 3370285._RPP;c(1,0,6) =     -178701734._RPP/  2462661._RPP
       !                    /                               ;                     /
-      c(2,0,6) =     70341062456897._RPP/ 261534873600._RPP;c(3,0,6) =   -757402017640571._RPP/1307674368000._RPP
+      c(2,0,6) =     329649921._RPP/ 1205744._RPP;c(3,0,6) =   -823497572._RPP/1397105._RPP
       !                    /                               ;                     /
-      c(4,0,6) =    203891614104599._RPP/ 261534873600._RPP;c(5,0,6) =   -877252492928723._RPP/1307674368000._RPP
+      c(4,0,6) =    537364516._RPP/ 676097._RPP;c(5,0,6) =   -427576737._RPP/623480._RPP
       !                    /                               ;                     /
-      c(6,0,6) =    470643665358907._RPP/1307674368000._RPP;c(7,0,6) =     -5748413034701._RPP/  52306974720._RPP
+      c(6,0,6) =    383212815._RPP/1037536._RPP;c(7,0,6) =     -264553111._RPP/  2333462._RPP
       !                    /                               ;                     /
-      c(8,0,6) =     19094704104061._RPP/1307674368000._RPP
+      c(8,0,6) =     265338548._RPP/17495633._RPP
 
       !                    /                               ;                     /
-      c(0,1,6) =                                     0._RPP;c(1,1,6) =    402355798141541._RPP/1307674368000._RPP
+      c(0,1,6) =                                     0._RPP;c(1,1,6) =    267692197._RPP/856297._RPP
       !                    /                               ;                     /
-      c(2,1,6) =   -759598480120637._RPP/ 326918592000._RPP;c(3,1,6) =   3281427995720729._RPP/ 653837184000._RPP
+      c(2,1,6) =   -1883344606._RPP/ 797417._RPP;c(3,1,6) =   982680142._RPP/ 192447._RPP
       !                    /                               ;                     /
-      c(4,1,6) =   -886173785909759._RPP/ 130767436800._RPP;c(5,1,6) =   3825435713279951._RPP/ 653837184000._RPP
+      c(4,1,6) =   -2267814051._RPP/ 328385._RPP;c(5,1,6) =   1268411423._RPP/ 212206._RPP
       !                    /                               ;                     /
-      c(6,1,6) =  -1029608247917273._RPP/ 326918592000._RPP;c(7,1,6) =      4411553510173._RPP/   4572288000._RPP
+      c(6,1,6) =  -676787627._RPP/ 209575._RPP;c(7,1,6) =     127754174._RPP/   128481._RPP
       !                    /                               ;                     /
-      c(8,1,6) =   -168172381487813._RPP/1307674368000._RPP
+      c(8,1,6) =   -173397370._RPP/1299717._RPP
 
       !                    /                               ;                     /
       c(0,2,6) =                                     0._RPP;c(1,2,6) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,2,6) =     74730821653819._RPP/  16982784000._RPP;c(3,2,6) =   -890937252684641._RPP/  46702656000._RPP
+      c(2,2,6) =     2952652193._RPP/  659941._RPP;c(3,2,6) =   -5961122741._RPP/  307109._RPP
       !                    /                               ;                     /
-      c(4,2,6) =      5489435141989._RPP/    212284800._RPP;c(5,2,6) =   -209388842757121._RPP/   9340531200._RPP
+      c(4,2,6) =      451561861._RPP/    17139._RPP;c(5,2,6) =   -2468363819._RPP/   107827._RPP
       !                    /                               ;                     /
-      c(6,2,6) =   1131898542897407._RPP/  93405312000._RPP;c(7,2,6) =  -1218782466526649._RPP/ 326918592000._RPP
+      c(6,2,6) =   2097415117._RPP/  168915._RPP;c(7,2,6) =  -2367490577._RPP/ 616772._RPP
       !                    /                               ;                     /
-      c(8,2,6) =    652452925567483._RPP/1307674368000._RPP
+      c(8,2,6) =    688214053._RPP/1331147._RPP
 
       !                    /                               ;                     /
       c(0,3,6) =                                     0._RPP;c(1,3,6) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,3,6) =                                     0._RPP;c(3,3,6) =   3878296682785739._RPP/ 186810624000._RPP
+      c(2,3,6) =                                     0._RPP;c(3,3,6) =   3256858005._RPP/ 154108._RPP
       !                    /                               ;                     /
-      c(4,3,6) =  -1056291616534871._RPP/  18681062400._RPP;c(5,3,6) =   4601782036044509._RPP/  93405312000._RPP
+      c(4,3,6) =  -7546651472._RPP/  130969._RPP;c(5,3,6) =   3655479387._RPP/  72668._RPP
       !                    /                               ;                     /
-      c(6,3,6) =  -1250454991752101._RPP/  46702656000._RPP;c(7,3,6) =   5414972538444239._RPP/ 653837184000._RPP
+      c(6,3,6) =  -765629878._RPP/  27919._RPP;c(7,3,6) =   5241495620._RPP/ 615127._RPP
       !                    /                               ;                     /
-      c(8,3,6) =  -1457105112643091._RPP/1307674368000._RPP
+      c(8,3,6) =  -61463934._RPP/53285._RPP
 
       !                    /                               ;                     /
       c(0,4,6) =                                     0._RPP;c(1,4,6) =                                     0._RPP
       !                    /                               ;                     /
       c(2,4,6) =                                     0._RPP;c(3,4,6) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,4,6) =    289259235638771._RPP/   7472424960._RPP;c(5,4,6) =  -1267992294203351._RPP/  18681062400._RPP
+      c(4,4,6) =    11322353265._RPP/   286802._RPP;c(5,4,6) =  -4882065990._RPP/  70417._RPP
       !                    /                               ;                     /
-      c(6,4,6) =      7883820528109._RPP/    212284800._RPP;c(7,4,6) =  -1512744281500799._RPP/ 130767436800._RPP
+      c(6,4,6) =      1334723167._RPP/    35090._RPP;c(7,4,6) =  -10107954583._RPP/ 849559._RPP
       !                    /                               ;                     /
-      c(8,4,6) =    409921790776919._RPP/ 261534873600._RPP
+      c(8,4,6) =    306856831._RPP/ 189251._RPP
 
       !                    /                               ;                     /
       c(0,5,6) =                                     0._RPP;c(1,5,6) =                                     0._RPP
       !                    /                               ;                     /
       c(2,5,6) =                                     0._RPP;c(3,5,6) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,5,6) =                                     0._RPP;c(5,5,6) =   5599666272693707._RPP/ 186810624000._RPP
+      c(4,5,6) =                                     0._RPP;c(5,5,6) =   2631362108._RPP/ 85845._RPP
       !                    /                               ;                     /
-      c(6,5,6) =  -1544964557143169._RPP/  46702656000._RPP;c(7,5,6) =   1359891017166853._RPP/ 130767436800._RPP
+      c(6,5,6) =  -2028942806._RPP/  59843._RPP;c(7,5,6) =   2363787227._RPP/ 220958._RPP
       !                    /                               ;                     /
-      c(8,5,6) =  -1859899247394491._RPP/1307674368000._RPP
+      c(8,5,6) =  -289784372._RPP/196989._RPP
 
       !                    /                               ;                     /
       c(0,6,6) =                                     0._RPP;c(1,6,6) =                                     0._RPP
@@ -2145,9 +2143,9 @@ contains
       !                    /                               ;                     /
       c(4,6,6) =                                     0._RPP;c(5,6,6) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,6,6) =    156622544328763._RPP/  16982784000._RPP;c(7,6,6) =  -1918610096603357._RPP/ 326918592000._RPP
+      c(6,6,6) =    3248190394._RPP/  343067._RPP;c(7,6,6) =  -1651888798._RPP/ 273307._RPP
       !                    /                               ;                     /
-      c(8,6,6) =   1063191201446533._RPP/1307674368000._RPP
+      c(8,6,6) =   277579576._RPP/329887._RPP
 
       !                    /                               ;                     /
       c(0,7,6) =                                     0._RPP;c(1,7,6) =                                     0._RPP
@@ -2156,9 +2154,9 @@ contains
       !                    /                               ;                     /
       c(4,7,6) =                                     0._RPP;c(5,7,6) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,7,6) =                                     0._RPP;c(7,7,6) =   1239990283564133._RPP/1307674368000._RPP
+      c(6,7,6) =                                     0._RPP;c(7,7,6) =   526012837._RPP/537300._RPP
       !                    /                               ;                     /
-      c(8,7,6) =     -3844139848343._RPP/  14370048000._RPP
+      c(8,7,6) =     -699447262._RPP/  2521667._RPP
 
       !                    /                               ;                     /
       c(0,8,6) =                                     0._RPP;c(1,8,6) =                                     0._RPP
@@ -2169,74 +2167,74 @@ contains
       !                    /                               ;                     /
       c(6,8,6) =                                     0._RPP;c(7,8,6) =                                     0._RPP
       !                    /                               ;                     /
-      c(8,8,6) =      3165355170121._RPP/ 163459296000._RPP
+      c(8,8,6) =      36409563._RPP/ 1806520._RPP
 
       ! stencil 7
       !                    /                               ;                     /
-      c(0,0,7) =      3165355170121._RPP/ 163459296000._RPP;c(1,0,7) =    -33593572337951._RPP/ 100590336000._RPP
+      c(0,0,7) =      36409563._RPP/ 1806520._RPP;c(1,0,7) =    -296572045._RPP/ 853161._RPP
       !                    /                               ;                     /
-      c(2,0,7) =   1655072196501883._RPP/1307674368000._RPP;c(3,0,7) =  -3601784423075141._RPP/1307674368000._RPP
+      c(2,0,7) =   1414733955._RPP/1073627._RPP;c(3,0,7) =  -557744521._RPP/194407._RPP
       !                    /                               ;                     /
-      c(4,0,7) =    984850182064169._RPP/ 261534873600._RPP;c(5,0,7) =  -4331747069079341._RPP/1307674368000._RPP
+      c(4,0,7) =    1990119523._RPP/ 506979._RPP;c(5,0,7) =  -1275601375._RPP/368936._RPP
       !                    /                               ;                     /
-      c(6,0,7) =   2394338101248133._RPP/1307674368000._RPP;c(7,0,7) =   -760053376543163._RPP/1307674368000._RPP
+      c(6,0,7) =   2064497172._RPP/1078127._RPP;c(7,0,7) =   -759205271._RPP/1245236._RPP
       !                    /                               ;                     /
-      c(8,0,7) =    105994418298211._RPP/1307674368000._RPP
+      c(8,0,7) =    192493416._RPP/2253847._RPP
 
       !                    /                               ;                     /
-      c(0,1,7) =                                     0._RPP;c(1,1,7) =    269247491159069._RPP/ 186810624000._RPP
+      c(0,1,7) =                                     0._RPP;c(1,1,7) =    550334507._RPP/ 366830._RPP
       !                    /                               ;                     /
-      c(2,1,7) =  -3575411646556907._RPP/ 326918592000._RPP;c(3,1,7) =   3116380997521963._RPP/ 130767436800._RPP
+      c(2,1,7) =  -1486183058._RPP/ 130527._RPP;c(3,1,7) =   1696424402._RPP/ 68349._RPP
       !                    /                               ;                     /
-      c(4,1,7) =  -4266972749341649._RPP/ 130767436800._RPP;c(5,1,7) =  18799624487562689._RPP/ 653837184000._RPP
+      c(4,1,7) =  -5136703769._RPP/ 151046._RPP;c(5,1,7) =  2675355119._RPP/ 89174._RPP
       !                    /                               ;                     /
-      c(6,1,7) =  -5205585064855199._RPP/ 326918592000._RPP;c(7,1,7) =     23159841631123._RPP/   4572288000._RPP
+      c(6,1,7) =  -2519869819._RPP/ 151381._RPP;c(7,1,7) =     1632642660._RPP/   307433._RPP
       !                    /                               ;                     /
-      c(8,1,7) =     -7406462028919._RPP/  10461394944._RPP
+      c(8,1,7) =     -433682386._RPP/  581703._RPP
 
       !                    /                               ;                     /
       c(0,2,7) =                                     0._RPP;c(1,2,7) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,2,7) =    352812369719413._RPP/  16982784000._RPP;c(3,2,7) =  -4234862610936119._RPP/  46702656000._RPP
+      c(2,2,7) =    3171898228._RPP/  146643._RPP;c(3,2,7) =  -7652084383._RPP/  81028._RPP
       !                    /                               ;                     /
-      c(4,2,7) =     26403598814209._RPP/    212284800._RPP;c(5,2,7) =  -5129104009946051._RPP/  46702656000._RPP
+      c(4,2,7) =     4693138545._RPP/    36209._RPP;c(5,2,7) =  -5737609802._RPP/  50081._RPP
       !                    /                               ;                     /
-      c(6,2,7) =   5694325930465457._RPP/  93405312000._RPP;c(7,2,7) =  -6356537203415423._RPP/ 326918592000._RPP
+      c(6,2,7) =   2904329890._RPP/  45589._RPP;c(7,2,7) =  -684405583._RPP/ 33590._RPP
       !                    /                               ;                     /
-      c(8,2,7) =   3563951929254757._RPP/1307674368000._RPP
+      c(8,2,7) =   1206026846._RPP/420471._RPP
 
       !                    /                               ;                     /
       c(0,3,7) =                                     0._RPP;c(1,3,7) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,3,7) =                                     0._RPP;c(3,3,7) =  18518028023237957._RPP/ 186810624000._RPP
+      c(2,3,7) =                                     0._RPP;c(3,3,7) =  10194856899._RPP/ 98734._RPP
       !                    /                               ;                     /
-      c(4,3,7) =  -5091060727437401._RPP/  18681062400._RPP;c(5,3,7) =  22533757546843859._RPP/  93405312000._RPP
+      c(4,3,7) =  -32956224478._RPP/  116041._RPP;c(5,3,7) =  21903079582._RPP/  87043._RPP
       !                    /                               ;                     /
-      c(6,3,7) =  -1254519948165511._RPP/   9340531200._RPP;c(7,3,7) =  28101378954880001._RPP/ 653837184000._RPP
+      c(6,3,7) =  -30871077827._RPP/   220014._RPP;c(7,3,7) =  2631734550._RPP/ 58459._RPP
       !                    /                               ;                     /
-      c(8,3,7) =  -7906584673048973._RPP/1307674368000._RPP
+      c(8,3,7) =  -1432715713._RPP/225284._RPP
 
       !                    /                               ;                     /
       c(0,4,7) =                                     0._RPP;c(1,4,7) =                                     0._RPP
       !                    /                               ;                     /
       c(2,4,7) =                                     0._RPP;c(3,4,7) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,4,7) =   1403304354475421._RPP/   7472424960._RPP;c(5,4,7) =  -6230647138120121._RPP/  18681062400._RPP
+      c(4,4,7) =   5232843359._RPP/   26730._RPP;c(5,4,7) =  -21436202114._RPP/  61611._RPP
       !                    /                               ;                     /
-      c(6,4,7) =     39564077889589._RPP/    212284800._RPP;c(7,4,7) =  -7832368115834609._RPP/ 130767436800._RPP
+      c(6,4,7) =     8450768743._RPP/    43407._RPP;c(7,4,7) =  -2463944763._RPP/ 39286._RPP
       !                    /                               ;                     /
-      c(8,4,7) =   2214259153735049._RPP/ 261534873600._RPP
+      c(8,4,7) =   2318146475._RPP/ 260443._RPP
 
       !                    /                               ;                     /
       c(0,5,7) =                                     0._RPP;c(1,5,7) =                                     0._RPP
       !                    /                               ;                     /
       c(2,5,7) =                                     0._RPP;c(3,5,7) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,5,7) =                                     0._RPP;c(5,5,7) =  27770723927721989._RPP/ 186810624000._RPP
+      c(4,5,7) =                                     0._RPP;c(5,5,7) =  7222761881._RPP/ 46553._RPP
       !                    /                               ;                     /
-      c(6,5,7) =  -7795675329471191._RPP/  46702656000._RPP;c(7,5,7) =  35272568778872279._RPP/ 653837184000._RPP
+      c(6,5,7) =  -12258216466._RPP/  70285._RPP;c(7,5,7) =  17759778441._RPP/ 314408._RPP
       !                    /                               ;                     /
-      c(8,5,7) = -10036258935621221._RPP/1307674368000._RPP
+      c(8,5,7) = -351689199._RPP/43600._RPP
 
       !                    /                               ;                     /
       c(0,6,7) =                                     0._RPP;c(1,6,7) =                                     0._RPP
@@ -2245,9 +2243,9 @@ contains
       !                    /                               ;                     /
       c(4,6,7) =                                     0._RPP;c(5,6,7) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,6,7) =    800572672346869._RPP/  16982784000._RPP;c(7,6,7) = -10036779580858187._RPP/ 326918592000._RPP
+      c(6,6,7) =    138686396638._RPP/  2813507._RPP;c(7,6,7) = -6349489117._RPP/ 197436._RPP
       !                    /                               ;                     /
-      c(8,6,7) =   1152669616433567._RPP/ 261534873600._RPP
+      c(8,6,7) =   1919279425._RPP/ 414313._RPP
 
       !                    /                               ;                     /
       c(0,7,7) =                                     0._RPP;c(1,7,7) =                                     0._RPP
@@ -2256,9 +2254,9 @@ contains
       !                    /                               ;                     /
       c(4,7,7) =                                     0._RPP;c(5,7,7) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,7,7) =                                     0._RPP;c(7,7,7) =   6603455065054091._RPP/1307674368000._RPP
+      c(6,7,7) =                                     0._RPP;c(7,7,7) =   8788336457._RPP/1659246._RPP
       !                    /                               ;                     /
-      c(8,7,7) =   -147809125548479._RPP/ 100590336000._RPP
+      c(8,7,7) =   -1605498941._RPP/ 1038640._RPP
 
       !                    /                               ;                     /
       c(0,8,7) =                                     0._RPP;c(1,8,7) =                                     0._RPP
@@ -2269,74 +2267,74 @@ contains
       !                    /                               ;                     /
       c(6,8,7) =                                     0._RPP;c(7,8,7) =                                     0._RPP
       !                    /                               ;                     /
-      c(8,8,7) =     17848737251203._RPP/ 163459296000._RPP
+      c(8,8,7) =     23000337._RPP/ 199768._RPP
 
       ! stencil 8
       !                    /                               ;                     /
-      c(0,0,8) =     17848737251203._RPP/ 163459296000._RPP;c(1,0,8) =   -189555672759617._RPP/ 100590336000._RPP
+      c(0,0,8) =     23000337._RPP/ 199768._RPP;c(1,0,8) =   -989259649._RPP/ 497859._RPP
       !                    /                               ;                     /
-      c(2,0,8) =   9355064903078053._RPP/1307674368000._RPP;c(3,0,8) =   -816990037454483._RPP/  52306974720._RPP
+      c(2,0,8) =   2005851423._RPP/265880._RPP;c(3,0,8) =   -800361473._RPP/  48582._RPP
       !                    /                               ;                     /
-      c(4,0,8) =   1123058785015051._RPP/  52306974720._RPP;c(5,0,8) = -24911758529750003._RPP/1307674368000._RPP
+      c(4,0,8) =   1211629703._RPP/  53483._RPP;c(5,0,8) = -16400242834._RPP/815393._RPP
       !                    /                               ;                     /
-      c(6,0,8) =  13952443929995611._RPP/1307674368000._RPP;c(7,0,8) =  -4517524574525093._RPP/1307674368000._RPP
+      c(6,0,8) =  2160095091._RPP/191558._RPP;c(7,0,8) =  -1039356853._RPP/284187._RPP
       !                    /                               ;                     /
-      c(8,0,8) =    129739906408601._RPP/ 261534873600._RPP
+      c(8,0,8) =    380112881._RPP/ 721737._RPP
 
       !                    /                               ;                     /
-      c(0,1,8) =                                     0._RPP;c(1,1,8) =  10637354815456613._RPP/1307674368000._RPP
+      c(0,1,8) =                                     0._RPP;c(1,1,8) =  1207396129._RPP/140764._RPP
       !                    /                               ;                     /
-      c(2,1,8) = -20204125377340061._RPP/ 326918592000._RPP;c(3,1,8) =  88287149743355417._RPP/ 653837184000._RPP
+      c(2,1,8) = -5910597075._RPP/ 90694._RPP;c(3,1,8) =  6203677189._RPP/ 43561._RPP
       !                    /                               ;                     /
-      c(4,1,8) = -24293471434588703._RPP/ 130767436800._RPP;c(5,1,8) = 107887390486248143._RPP/ 653837184000._RPP
+      c(4,1,8) = -29831101642._RPP/ 152201._RPP;c(5,1,8) = 8534140303._RPP/ 48995._RPP
       !                    /                               ;                     /
-      c(6,1,8) = -30250052825497529._RPP/ 326918592000._RPP;c(7,1,8) =    137189721025309._RPP/   4572288000._RPP
+      c(6,1,8) = -7469836609._RPP/ 76401._RPP;c(7,1,8) =    962141663._RPP/   30298._RPP
       !                    /                               ;                     /
-      c(8,1,8) =  -5644399400246309._RPP/1307674368000._RPP
+      c(8,1,8) =  -1382011106._RPP/301683._RPP
 
       !                    /                               ;                     /
       c(0,2,8) =                                     0._RPP;c(1,2,8) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,2,8) =   1994952741927931._RPP/  16982784000._RPP;c(3,2,8) = -23993743892557601._RPP/  46702656000._RPP
+      c(2,2,8) =   9873545067._RPP/  79705._RPP;c(3,2,8) = -10120501295._RPP/  18678._RPP
       !                    /                               ;                     /
-      c(4,2,8) =    150205347326833._RPP/    212284800._RPP;c(5,2,8) = -29387187771747941._RPP/  46702656000._RPP
+      c(4,2,8) =    9817971019._RPP/    13153._RPP;c(5,2,8) = -13534679320._RPP/  20379._RPP
       !                    /                               ;                     /
-      c(6,2,8) =  33008527082236991._RPP/  93405312000._RPP;c(7,2,8) = -37531036453047161._RPP/ 326918592000._RPP
+      c(6,2,8) =  8640690184._RPP/  23145._RPP;c(7,2,8) = -7097325924._RPP/ 58429._RPP
       !                    /                               ;                     /
-      c(8,2,8) =  21644628077515483._RPP/1307674368000._RPP
+      c(8,2,8) =  7116193241._RPP/405236._RPP
 
       !                    /                               ;                     /
       c(0,3,8) =                                     0._RPP;c(1,3,8) =                                     0._RPP
       !                    /                               ;                     /
-      c(2,3,8) =                                     0._RPP;c(3,3,8) = 105045730109557451._RPP/ 186810624000._RPP
+      c(2,3,8) =                                     0._RPP;c(3,3,8) = 181942554161._RPP/ 306771._RPP
       !                    /                               ;                     /
-      c(4,3,8) =  -5794119024433483._RPP/   3736212480._RPP;c(5,3,8) =  25802513458691833._RPP/  18681062400._RPP
+      c(4,3,8) =  -32852743324._RPP/   20081._RPP;c(5,3,8) =  25425670807._RPP/  17442._RPP
       !                    /                               ;                     /
-      c(6,3,8) = -36294580012168613._RPP/  46702656000._RPP;c(7,3,8) = 165445178916726479._RPP/ 653837184000._RPP
+      c(6,3,8) = -13491549889._RPP/  16436._RPP;c(7,3,8) = 13666821827._RPP/ 51060._RPP
       !                    /                               ;                     /
-      c(8,3,8) = -47841342141981299._RPP/1307674368000._RPP
+      c(8,3,8) = -12858081715._RPP/331389._RPP
 
       !                    /                               ;                     /
       c(0,4,8) =                                     0._RPP;c(1,4,8) =                                     0._RPP
       !                    /                               ;                     /
       c(2,4,8) =                                     0._RPP;c(3,4,8) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,4,8) =   8001879703767347._RPP/   7472424960._RPP;c(5,4,8) =  -7140074733899851._RPP/   3736212480._RPP
+      c(4,4,8) =   7211727349._RPP/   6383._RPP;c(5,4,8) =  -34046474687._RPP/   16880._RPP
       !                    /                               ;                     /
-      c(6,4,8) =    228786920178433._RPP/    212284800._RPP;c(7,4,8) = -46020384090357023._RPP/ 130767436800._RPP
+      c(6,4,8) =    29334155111._RPP/    25771._RPP;c(7,4,8) = -14121568547._RPP/ 37942._RPP
       !                    /                               ;                     /
-      c(8,4,8) =    534237095117903._RPP/  10461394944._RPP
+      c(8,4,8) =    8028408627._RPP/  148285._RPP
 
       !                    /                               ;                     /
       c(0,5,8) =                                     0._RPP;c(1,5,8) =                                     0._RPP
       !                    /                               ;                     /
       c(2,5,8) =                                     0._RPP;c(3,5,8) =                                     0._RPP
       !                    /                               ;                     /
-      c(4,5,8) =                                     0._RPP;c(5,5,8) = 159646773711558347._RPP/ 186810624000._RPP
+      c(4,5,8) =                                     0._RPP;c(5,5,8) = 26479157148._RPP/ 29351._RPP
       !                    /                               ;                     /
-      c(6,5,8) = -45148728224254817._RPP/  46702656000._RPP;c(7,5,8) = 207178084258860569._RPP/ 653837184000._RPP
+      c(6,5,8) = -32612776236._RPP/  31939._RPP;c(7,5,8) = 10624327325._RPP/ 31707._RPP
       !                    /                               ;                     /
-      c(8,5,8) = -12083632055537503._RPP/ 261534873600._RPP
+      c(8,5,8) = -6519672839._RPP/ 133134._RPP
 
       !                    /                               ;                     /
       c(0,6,8) =                                     0._RPP;c(1,6,8) =                                     0._RPP
@@ -2345,9 +2343,9 @@ contains
       !                    /                               ;                     /
       c(4,6,8) =                                     0._RPP;c(5,6,8) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,6,8) =   4660712172178939._RPP/  16982784000._RPP;c(7,6,8) = -59111412950734301._RPP/ 326918592000._RPP
+      c(6,6,8) =   958711850795._RPP/  3306139._RPP;c(7,6,8) = -2523726139._RPP/ 13197._RPP
       !                    /                               ;                     /
-      c(8,6,8) =  34709567828765989._RPP/1307674368000._RPP
+      c(8,6,8) =  1051885279._RPP/37394._RPP
 
       !                    /                               ;                     /
       c(0,7,8) =                                     0._RPP;c(1,7,8) =                                     0._RPP
@@ -2356,9 +2354,9 @@ contains
       !                    /                               ;                     /
       c(4,7,8) =                                     0._RPP;c(5,7,8) =                                     0._RPP
       !                    /                               ;                     /
-      c(6,7,8) =                                     0._RPP;c(7,7,8) =   5602753233305651._RPP/ 186810624000._RPP
+      c(6,7,8) =                                     0._RPP;c(7,7,8) =   2789709824._RPP/ 87891._RPP
       !                    /                               ;                     /
-      c(8,7,8) =   -894628364420801._RPP/ 100590336000._RPP
+      c(8,7,8) =   -1291706883._RPP/ 137012._RPP
 
       !                    /                               ;                     /
       c(0,8,8) =                                     0._RPP;c(1,8,8) =                                     0._RPP
@@ -2369,56 +2367,54 @@ contains
       !                    /                               ;                     /
       c(6,8,8) =                                     0._RPP;c(7,8,8) =                                     0._RPP
       !                    /                               ;                     /
-      c(8,8,8) =    109471139332699._RPP/ 163459296000._RPP
+      c(8,8,8) =    191906863._RPP/ 270061._RPP
     endselect
   endassociate
   endsubroutine create
 
   pure subroutine compute_with_stencil_of_rank_1(self, stencil)
   !< Compute beta.
-  class(beta_rec_js), intent(inout) :: self               !< Beta.
+  class(beta_int_js), intent(inout) :: self               !< Beta.
   real(RPP),          intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  integer(I_P)                      :: s1, s2, s3         !< Counters.
 
-  ! Empty routine.
-  endsubroutine compute_with_stencil_of_rank_1
-
-  pure subroutine compute_with_stencil_of_rank_2(self, stencil)
-  !< Compute beta.
-  class(beta_rec_js), intent(inout) :: self                  !< Beta.
-  real(RPP),          intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P)                      :: s1, s2, s3, f         !< Counters.
-
-  associate(val => self%values_rank_2)
+  associate(val => self%values_rank_1)
     do s1=0, self%S - 1 ! stencils loop
-      do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-        val(f, s1) = 0._RPP
-        do s2=0, self%S - 1
-          do s3=0, self%S - 1
-            val(f, s1) = val(f, s1) + self%coef(s3, s2, s1) * stencil(f, s1 - s3) * stencil(f, s1 - s2)
-          enddo
+      val(s1) = 0._RPP
+      do s2=0, self%S - 1
+        do s3=0, self%S - 1
+          val(s1) = val(s1) + self%coef(s3, s2, s1) * stencil(s1 - s3) * stencil(s1 - s2)
         enddo
       enddo
     enddo
   endassociate
+  endsubroutine compute_with_stencil_of_rank_1
+
+  pure subroutine compute_with_stencil_of_rank_2(self, stencil)
+  !< Compute beta.
+  class(beta_int_js), intent(inout) :: self                  !< Beta.
+  real(RPP),          intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+
+  ! Empty subroutine.
   endsubroutine compute_with_stencil_of_rank_2
 
   pure function description(self) result(string)
   !< Return beta string-description.
-  class(beta_rec_js), intent(in) :: self   !< Beta.
+  class(beta_int_js), intent(in) :: self   !< Beta.
   character(len=:), allocatable  :: string !< String-description.
 
 #ifndef DEBUG
   ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'beta_rec_js%description to be implemented, do not use!'
+  error stop 'beta_int_js%description to be implemented, do not use!'
 #endif
   endfunction description
 
   elemental subroutine destroy(self)
   !< Destroy beta.
-  class(beta_rec_js), intent(inout) :: self !< Beta.
+  class(beta_int_js), intent(inout) :: self !< Beta.
 
   call self%destroy_
-  if (allocated(self%values_rank_2)) deallocate(self%values_rank_2)
+  if (allocated(self%values_rank_1)) deallocate(self%values_rank_1)
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
-endmodule wenoof_beta_rec_js
+endmodule wenoof_beta_int_js

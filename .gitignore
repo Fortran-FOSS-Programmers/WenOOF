@@ -28,6 +28,9 @@
 *.dat
 *.png
 
+# gdb history
+.gdb_history
+
 # special directories
 doc/html/
 exe/
@@ -37,3 +40,4 @@ references/
 shared/
 static/
 wiki/
+venv/
