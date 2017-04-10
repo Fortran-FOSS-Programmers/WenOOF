@@ -2,10 +2,11 @@
 module wenoof_beta_factory
 !< Wenoof beta factory.
 
-use penf, only: I_P
-use wenoof_beta_object
-use wenoof_beta_rec_js
-use wenoof_beta_int_js
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
+use penf, only : I_P
+use wenoof_beta_object, only : beta_object, beta_object_constructor
+use wenoof_beta_rec_js, only : beta_rec_js, beta_rec_js_constructor
+use wenoof_beta_int_js, only : beta_int_js, beta_int_js_constructor
 
 implicit none
 private
@@ -59,6 +60,9 @@ contains
     allocate(beta_rec_js_constructor :: constructor)
   case('reconstructor-Z')
     allocate(beta_rec_js_constructor :: constructor)
+  case default
+    write(stderr, '(A)') 'error: interpolator type "'//trim(adjustl(interpolator_type))//'" is unknown!'
+    stop
   endselect
   call constructor%create(S=S)
   endsubroutine create_constructor

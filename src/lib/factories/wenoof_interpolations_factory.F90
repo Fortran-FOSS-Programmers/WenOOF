@@ -7,9 +7,9 @@ use penf, only: I_P, RPP=>R16P
 #else
 use penf, only: I_P, RPP=>R8P
 #endif
-use wenoof_interpolations_object
-use wenoof_interpolations_rec_js
-use wenoof_interpolations_int_js
+use wenoof_interpolations_object, only : interpolations_object, interpolations_object_constructor
+use wenoof_interpolations_rec_js, only : interpolations_rec_js, interpolations_rec_js_constructor
+use wenoof_interpolations_int_js, only : interpolations_int_js, interpolations_int_js_constructor
 
 implicit none
 private

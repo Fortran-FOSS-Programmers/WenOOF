@@ -7,18 +7,18 @@ use penf, only: I_P, RPP=>R16P
 #else
 use penf, only: I_P, RPP=>R8P
 #endif
-use wenoof_alpha_factory
-use wenoof_alpha_object
-use wenoof_beta_factory
-use wenoof_beta_object
-use wenoof_kappa_factory
-use wenoof_kappa_object
-use wenoof_interpolations_factory
-use wenoof_interpolations_object
-use wenoof_interpolator_factory
-use wenoof_interpolator_object
-use wenoof_weights_factory
-use wenoof_weights_object
+use wenoof_alpha_factory, only : alpha_factory
+use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
+use wenoof_beta_factory, only : beta_factory
+use wenoof_beta_object, only : beta_object, beta_object_constructor
+use wenoof_kappa_factory, only : kappa_factory
+use wenoof_kappa_object, only : kappa_object, kappa_object_constructor
+use wenoof_interpolations_factory, only : interpolations_factory
+use wenoof_interpolations_object, only : interpolations_object, interpolations_object_constructor
+use wenoof_interpolator_factory, only : interpolator_factory
+use wenoof_interpolator_object, only : interpolator_object, interpolator_object_constructor
+use wenoof_weights_factory, only : weights_factory
+use wenoof_weights_object, only : weights_object, weights_object_constructor
 
 implicit none
 private
