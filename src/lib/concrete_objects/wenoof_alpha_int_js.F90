@@ -10,10 +10,8 @@ use penf, only: I_P, RPP=>R16P, str
 #else
 use penf, only: I_P, RPP=>R8P, str
 #endif
-use wenoof_alpha_object
-use wenoof_base_object
-use wenoof_beta_object
-use wenoof_kappa_object
+use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
+use wenoof_base_object, only : base_object_constructor
 
 implicit none
 private
@@ -31,11 +29,11 @@ type, extends(alpha_object) :: alpha_int_js
   !< ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create              !< Create alpha.
-    procedure, pass(self) :: compute_interpolate !< Compute alpha (interpolate).
-    procedure, pass(self) :: compute_reconstruct !< Compute alpha (reconstruct).
-    procedure, pass(self) :: description         !< Return alpha string-description.
-    procedure, pass(self) :: destroy             !< Destroy alpha.
+    procedure, pass(self) :: create      !< Create alpha.
+    procedure, pass(self) :: compute_int !< Compute alpha (interpolate).
+    procedure, pass(self) :: compute_rec !< Compute alpha (reconstruct).
+    procedure, pass(self) :: description !< Return object string-description.
+    procedure, pass(self) :: destroy     !< Destroy alpha.
 endtype alpha_int_js
 
 contains
@@ -47,15 +45,10 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values_rank_1(0:self%S - 1))
-  associate(val => self%values_rank_1, val_sum => self%values_sum_rank_1)
-    val = 0._RPP
-    val_sum = 0._RPP
-  endassociate
   endsubroutine create
 
-  pure subroutine compute_interpolate(self, beta, kappa, values)
-  !< Compute alpha.
+  pure subroutine compute_int(self, beta, kappa, values)
+  !< Compute alpha (interpolate).
   class(alpha_int_js), intent(in)  :: self       !< Alpha coefficient.
   real(RPP),           intent(in)  :: beta(0:)   !< Beta [0:S-1].
   real(RPP),           intent(in)  :: kappa(0:)  !< Kappa [0:S-1].
@@ -65,27 +58,29 @@ contains
   do s1=0, self%S - 1 ! stencil loops
     values(s1) = kappa(s1) / (self%eps + beta(s1)) ** self%S
   enddo
-  endsubroutine compute_interpolate
+  endsubroutine compute_int
 
-  pure subroutine compute_reconstruct(self, beta, kappa, values)
-  !< Compute alpha.
+  pure subroutine compute_rec(self, beta, kappa, values)
+  !< Compute alpha (reconstruct).
   class(alpha_int_js), intent(in)  :: self          !< Alpha coefficient.
   real(RPP),           intent(in)  :: beta(1:,0:)   !< Beta [1:2,0:S-1].
   real(RPP),           intent(in)  :: kappa(1:,0:)  !< Kappa [1:2,0:S-1].
   real(RPP),           intent(out) :: values(1:,0:) !< Alpha values [1:2,0:S-1].
+  ! empty procedure
+  endsubroutine compute_rec
 
-  ! Empty procedure.
-  endsubroutine compute_reconstruct
+  pure function description(self, prefix) result(string)
+  !< Return object string-descripition.
+  class(alpha_int_js), intent(in)           :: self             !< Alpha coefficient.
+  character(len=*),    intent(in), optional :: prefix           !< Prefixing string.
+  character(len=:), allocatable             :: string           !< String-description.
+  character(len=:), allocatable             :: prefix_          !< Prefixing string, local variable.
+  character(len=1), parameter               :: NL=new_line('a') !< New line char.
 
-  pure function description(self) result(string)
-  !< Return alpha string-descripition.
-  class(alpha_int_js), intent(in) :: self             !< Alpha coefficient.
-  character(len=:), allocatable   :: string           !< String-description.
-  character(len=1), parameter     :: nl=new_line('a') !< New line char.
-
-  string = '    Jiang-Shu alpha coefficients for reconstructor:'//nl
-  string = string//'      - S   = '//trim(str(self%S))//nl
-  string = string//'      - eps = '//trim(str(self%eps))
+  prefix_ = '' ; if (present(prefix)) prefix_ = prefix
+  string = prefix_//'Jiang-Shu alpha coefficients object for interpolation:'//NL
+  string = prefix_//string//'  - S   = '//trim(str(self%S))//NL
+  string = prefix_//string//'  - eps = '//trim(str(self%eps))
   endfunction description
 
   elemental subroutine destroy(self)
@@ -93,6 +88,5 @@ contains
   class(alpha_int_js), intent(inout) :: self !< Alpha.
 
   call self%destroy_
-  if (allocated(self%values_rank_1)) deallocate(self%values_rank_1)
   endsubroutine destroy
 endmodule wenoof_alpha_int_js

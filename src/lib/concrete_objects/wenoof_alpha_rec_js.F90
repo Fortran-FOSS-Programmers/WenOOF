@@ -12,8 +12,6 @@ use penf, only: I_P, RPP=>R8P, str
 #endif
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
 use wenoof_base_object, only : base_object_constructor
-use wenoof_beta_object, only : beta_object
-use wenoof_kappa_object, only : kappa_object
 
 implicit none
 private
@@ -31,11 +29,11 @@ type, extends(alpha_object) :: alpha_rec_js
   !< ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create              !< Create alpha.
-    procedure, pass(self) :: compute_interpolate !< Compute alpha (interpolate).
-    procedure, pass(self) :: compute_reconstruct !< Compute alpha (reconstruct).
-    procedure, pass(self) :: description         !< Return alpha string-description.
-    procedure, pass(self) :: destroy             !< Destroy alpha.
+    procedure, pass(self) :: create      !< Create alpha.
+    procedure, pass(self) :: compute_int !< Compute alpha (interpolate).
+    procedure, pass(self) :: compute_rec !< Compute alpha (reconstruct).
+    procedure, pass(self) :: description !< Return object string-description.
+    procedure, pass(self) :: destroy     !< Destroy alpha.
 endtype alpha_rec_js
 
 contains
@@ -49,18 +47,17 @@ contains
   call self%create_(constructor=constructor)
   endsubroutine create
 
-  pure subroutine compute_interpolate_interface(self, beta, kappa, values)
-  !< Compute alpha.
+  pure subroutine compute_int(self, beta, kappa, values)
+  !< Compute alpha (interpolate).
   class(alpha_rec_js), intent(in)  :: self       !< Alpha coefficient.
   real(RPP),           intent(in)  :: beta(0:)   !< Beta [0:S-1].
   real(RPP),           intent(in)  :: kappa(0:)  !< Kappa [0:S-1].
   real(RPP),           intent(out) :: values(0:) !< Alpha values [0:S-1].
+  ! empty procedure
+  endsubroutine compute_int
 
-  ! Empty procedure.
-  endsubroutine compute_interpolate_interface
-
-  pure subroutine compute_reconstruct(self, beta, kappa, values)
-  !< Compute alpha.
+  pure subroutine compute_rec(self, beta, kappa, values)
+  !< Compute alpha (reconstruct).
   class(alpha_rec_js), intent(in)  :: self          !< Alpha coefficient.
   real(RPP),           intent(in)  :: beta(1:,0:)   !< Beta [1:2,0:S-1].
   real(RPP),           intent(in)  :: kappa(1:,0:)  !< Kappa [1:2,0:S-1].
@@ -72,17 +69,20 @@ contains
       values(f, s1) = kappa(f, s1) / (self%eps + beta(f, s1)) ** self%S
     enddo
   enddo
-  endsubroutine compute_reconstruct
+  endsubroutine compute_rec
 
-  pure function description(self) result(string)
-  !< Return alpha string-descripition.
-  class(alpha_rec_js), intent(in) :: self             !< Alpha coefficient.
-  character(len=:), allocatable   :: string           !< String-description.
-  character(len=1), parameter     :: nl=new_line('a') !< New line char.
+  pure function description(self, prefix) result(string)
+  !< Return object string-descripition.
+  class(alpha_rec_js), intent(in)           :: self             !< Alpha coefficient.
+  character(len=*),    intent(in), optional :: prefix           !< Prefixing string.
+  character(len=:), allocatable             :: string           !< String-description.
+  character(len=:), allocatable             :: prefix_          !< Prefixing string, local variable.
+  character(len=1), parameter               :: NL=new_line('a') !< New line char.
 
-  string = '    Jiang-Shu alpha coefficients for reconstructor:'//nl
-  string = string//'      - S   = '//trim(str(self%S))//nl
-  string = string//'      - eps = '//trim(str(self%eps))
+  prefix_ = '' ; if (present(prefix)) prefix_ = prefix
+  string = prefix_//'Jiang-Shu alpha coefficients object for reconstruction:'//NL
+  string = prefix_//string//'  - S   = '//trim(str(self%S))//NL
+  string = prefix_//string//'  - eps = '//trim(str(self%eps))
   endfunction description
 
   elemental subroutine destroy(self)

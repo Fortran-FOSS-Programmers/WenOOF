@@ -8,12 +8,12 @@ module wenoof_interpolations_rec_js
 !< doi:10.1016/j.jcp.2009.07.039
 
 #ifdef r16p
-use penf, only: I_P, RPP=>R16P
+use penf, only: I_P, RPP=>R16P, str
 #else
-use penf, only: I_P, RPP=>R8P
+use penf, only: I_P, RPP=>R8P, str
 #endif
-use wenoof_base_object
-use wenoof_interpolations_object
+use wenoof_base_object, only : base_object_constructor
+use wenoof_interpolations_object, only : interpolations_object, interpolations_object_constructor
 
 implicit none
 private
@@ -35,11 +35,11 @@ type, extends(interpolations_object) :: interpolations_rec_js
   real(RPP), allocatable :: coef(:,:,:) !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create                 !< Create interpolations.
-    procedure, pass(self) :: compute_stencil_rank_1 !< Compute interpolations.
-    procedure, pass(self) :: compute_stencil_rank_2 !< Compute interpolations.
-    procedure, pass(self) :: description            !< Return interpolations string-description.
-    procedure, pass(self) :: destroy                !< Destroy interpolations.
+    procedure, pass(self) :: create      !< Create interpolations.
+    procedure, pass(self) :: compute_int !< Compute interpolations (interpolate).
+    procedure, pass(self) :: compute_rec !< Compute interpolations (reconstruct).
+    procedure, pass(self) :: description !< Return object string-description.
+    procedure, pass(self) :: destroy     !< Destroy interpolations.
 endtype interpolations_rec_js
 
 contains
@@ -449,16 +449,16 @@ contains
   endassociate
   endsubroutine create
 
-  pure subroutine compute_stencil_rank_1(self, stencil)
-  !< Compute interpolations.
-  class(interpolations_rec_js), intent(inout) :: self               !< Interpolations.
-  real(RPP),                    intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  pure subroutine compute_int(self, stencil, values)
+  !< Compute interpolations (interpolate).
+  class(interpolations_rec_js), intent(in)  :: self               !< Interpolations.
+  real(RPP),                    intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(RPP),                    intent(out) :: values(0:)         !< Interpolations values.
+  ! empty procedure
+  endsubroutine compute_int
 
-  ! Empty Subroutine.
-  endsubroutine compute_stencil_rank_1
-
-  pure subroutine compute_stencil_rank_2(self, stencil, values)
-  !< Compute interpolations.
+  pure subroutine compute_rec(self, stencil, values)
+  !< Compute interpolations (reconstruct).
   class(interpolations_rec_js), intent(in)  :: self                  !< Interpolations.
   real(RPP),                    intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
   real(RPP),                    intent(out) :: values(1:, 0:)        !< Interpolations values.
@@ -474,17 +474,19 @@ contains
       enddo
     enddo
   enddo
-  endsubroutine compute_stencil_rank_2
+  endsubroutine compute_rec
 
-  pure function description(self) result(string)
-  !< Return interpolations string-description.
-  class(interpolations_rec_js), intent(in) :: self   !< Interpolations.
-  character(len=:), allocatable            :: string !< String-description.
+  pure function description(self, prefix) result(string)
+  !< Return object string-descripition.
+  class(interpolations_rec_js), intent(in)           :: self             !< Interpolations.
+  character(len=*),             intent(in), optional :: prefix           !< Prefixing string.
+  character(len=:), allocatable                      :: string           !< String-description.
+  character(len=:), allocatable                      :: prefix_          !< Prefixing string, local variable.
+  character(len=1), parameter                        :: NL=new_line('a') !< New line char.
 
-#ifndef DEBUG
-  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'interpolations_rec_js%description to be implemented, do not use!'
-#endif
+  prefix_ = '' ; if (present(prefix)) prefix_ = prefix
+  string = prefix_//'Jiang-Shu beta interpolations object for reconstruction:'//NL
+  string = prefix_//string//'  - S   = '//trim(str(self%S))
   endfunction description
 
   elemental subroutine destroy(self)

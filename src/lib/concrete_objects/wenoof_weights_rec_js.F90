@@ -12,19 +12,15 @@ use penf, only: I_P, RPP=>R16P, str
 #else
 use penf, only: I_P, RPP=>R8P, str
 #endif
-use wenoof_alpha_factory
-use wenoof_alpha_object
-use wenoof_alpha_rec_js
-use wenoof_alpha_rec_m
-use wenoof_alpha_rec_z
-use wenoof_base_object
-use wenoof_beta_factory
-use wenoof_beta_object
-use wenoof_beta_rec_js
-use wenoof_kappa_factory
-use wenoof_kappa_object
-use wenoof_kappa_rec_js
-use wenoof_weights_object
+use wenoof_alpha_factory,  only : alpha_factory
+use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
+use wenoof_base_object, only : base_object_constructor
+use wenoof_beta_factory, only : beta_factory
+use wenoof_beta_object, only : beta_object, beta_object_constructor
+use wenoof_kappa_factory, only : kappa_factory
+use wenoof_kappa_object, only : kappa_object, kappa_object_constructor
+use wenoof_kappa_rec_js, only : kappa_rec_js
+use wenoof_weights_object, only : weights_object, weights_object_constructor
 
 implicit none
 private
@@ -50,13 +46,13 @@ type, extends(weights_object):: weights_rec_js
   class(kappa_object), allocatable :: kappa !< kappa coefficients (optimal, linear weights).
   contains
     ! deferred public methods
-    procedure, pass(self) :: create                          !< Create weights.
-    procedure, pass(self) :: compute_stencil_rank_1          !< Compute weights.
-    procedure, pass(self) :: compute_stencil_rank_2          !< Compute weights.
-    procedure, pass(self) :: description                     !< Return weights string-description.
-    procedure, pass(self) :: destroy                         !< Destroy weights.
-    procedure, pass(self) :: smoothness_indicators_of_rank_1 !< Return smoothness indicators.
-    procedure, pass(self) :: smoothness_indicators_of_rank_2 !< Return smoothness indicators.
+    procedure, pass(self) :: create                    !< Create weights.
+    procedure, pass(self) :: compute_int               !< Compute weights (interpolate).
+    procedure, pass(self) :: compute_rec               !< Compute weights (reconstruct).
+    procedure, pass(self) :: description               !< Return object string-description.
+    procedure, pass(self) :: destroy                   !< Destroy weights.
+    procedure, pass(self) :: smoothness_indicators_int !< Return smoothness indicators (interpolate).
+    procedure, pass(self) :: smoothness_indicators_rec !< Return smoothness indicators (reconstruct).
 endtype weights_rec_js
 
 contains
@@ -76,68 +72,57 @@ contains
     associate(alpha_constructor=>constructor%alpha_constructor, &
               beta_constructor=>constructor%beta_constructor,   &
               kappa_constructor=>constructor%kappa_constructor)
-
       call a_factory%create(constructor=alpha_constructor, object=self%alpha)
-      ! select type(alpha_constructor)
-      ! type is(alpha_rec_js_constructor)
-      !   call factory%create(constructor=alpha_constructor, object=self%alpha)
-      ! type is(alpha_rec_m_constructor)
-      !   call factory%create(constructor=alpha_constructor, object=self%alpha)
-      ! type is(alpha_rec_z_constructor)
-      !   call factory%create(constructor=alpha_constructor, object=self%alpha)
-      ! endselect
-
       call b_factory%create(constructor=beta_constructor, object=self%beta)
-      ! select type(beta_constructor)
-      ! type is(beta_rec_js_constructor)
-      !   allocate(beta_rec_js :: self%beta)
-      !   call self%beta%create(constructor=beta_constructor)
-      ! endselect
-
       call k_factory%create(constructor=kappa_constructor, object=self%kappa)
-      ! select type(kappa_constructor)
-      ! type is(kappa_rec_js_constructor)
-      !   allocate(kappa_rec_js :: self%kappa)
-      !   call self%kappa%create(constructor=kappa_constructor)
-      ! endselect
     endassociate
   endselect
   endsubroutine create
 
-  pure subroutine compute_stencil_rank_1(self, stencil)
-  !< Compute weights.
-  class(weights_rec_js), intent(inout) :: self               !< Weights.
-  real(RPP),             intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  pure subroutine compute_int(self, stencil, values)
+  !< Compute weights (interpolate).
+  class(weights_rec_js), intent(in)  :: self               !< Weights.
+  real(RPP),             intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(RPP),             intent(out) :: values(0:)         !< Weights values.
+  ! empty procedure
+  endsubroutine compute_int
 
-  ! Empty routine.
-  endsubroutine compute_stencil_rank_1
-
-  pure subroutine compute_stencil_rank_2(self, stencil, values)
-  !< Compute weights.
+  pure subroutine compute_rec(self, stencil, values)
+  !< Compute weights (reconstruct).
   class(weights_rec_js), intent(in)  :: self                  !< Weights.
   real(RPP),             intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
   real(RPP),             intent(out) :: values(1:,0:)         !< Weights values of stencil interpolations.
+  real(RPP)                          :: alpha(1:2,0:self%S-1) !< Aplha values.
   real(RPP)                          :: beta(1:2,0:self%S-1)  !< Beta values.
+  real(RPP)                          :: alpha_sum(1:2)        !< Sum of aplha values.
   integer(I_P)                       :: f, s                  !< Counters.
 
   call self%beta%compute(stencil=stencil, values=beta)
-  ! call self%alpha%compute(beta=self%beta, kappa=self%kappa)
+  select type(kappa => self%kappa)
+  class is(kappa_rec_js)
+    call self%alpha%compute(beta=beta, kappa=kappa%values, values=alpha)
+  endselect
+  alpha_sum(1) = sum(alpha(1,:))
+  alpha_sum(2) = sum(alpha(2,:))
   do s=0, self%S - 1 ! stencils loop
     do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      values(f, s) = self%alpha%values_rank_2(f, s) / self%alpha%values_sum_rank_2(f)
+      values(f, s) = alpha(f, s) / alpha_sum(f)
     enddo
   enddo
-  endsubroutine compute_stencil_rank_2
+  endsubroutine compute_rec
 
-  pure function description(self) result(string)
-  !< Return string-description of weights.
-  class(weights_rec_js), intent(in) :: self             !< Weights.
-  character(len=:), allocatable     :: string           !< String-description.
-  character(len=1), parameter       :: nl=new_line('a') !< New line char.
+  pure function description(self, prefix) result(string)
+  !< Return object string-descripition.
+  class(weights_rec_js), intent(in)           :: self             !< Weights.
+  character(len=*),      intent(in), optional :: prefix           !< Prefixing string.
+  character(len=:), allocatable               :: string           !< String-description.
+  character(len=:), allocatable               :: prefix_          !< Prefixing string, local variable.
+  character(len=1), parameter                 :: NL=new_line('a') !< New line char.
 
-  string = '  Jiang-Shu weights:'//nl
-  string = string//'    - S   = '//trim(str(self%S))//nl
-  string = string//self%alpha%description()
+  prefix_ = '' ; if (present(prefix)) prefix_ = prefix
+  string = prefix_//'Jiang-Shu weights object for reconstruction:'//NL
+  string = prefix_//string//'  - S   = '//trim(str(self%S))
+  string = prefix_//string//self%alpha%description(prefix=prefix_//'  ')
   endfunction description
 
   elemental subroutine destroy(self)
@@ -150,23 +135,17 @@ contains
   if (allocated(self%kappa)) deallocate(self%kappa)
   endsubroutine destroy
 
-  pure subroutine smoothness_indicators_of_rank_1(self, si)
-  !< Return smoothness indicators..
+  pure subroutine smoothness_indicators_int(self, si)
+  !< Return smoothness indicators (interpolate).
   class(weights_rec_js),  intent(in)  :: self  !< Weights.
   real(RPP),              intent(out) :: si(:) !< Smoothness indicators.
+  ! empty procedure
+  endsubroutine smoothness_indicators_int
 
-  ! Empty routine
-  endsubroutine smoothness_indicators_of_rank_1
-
-  pure subroutine smoothness_indicators_of_rank_2(self, si)
-  !< Return smoothness indicators..
+  pure subroutine smoothness_indicators_rec(self, si)
+  !< Return smoothness indicators (reconstruct).
   class(weights_rec_js),  intent(in)  :: self    !< Weights.
   real(RPP),              intent(out) :: si(:,:) !< Smoothness indicators.
-
-  if (allocated(self%beta)) then
-    if (allocated(self%beta%values_rank_2)) then
-      si = self%beta%values_rank_2
-    endif
-  endif
-  endsubroutine smoothness_indicators_of_rank_2
+  ! TODO implement this
+  endsubroutine smoothness_indicators_rec
 endmodule wenoof_weights_rec_js
