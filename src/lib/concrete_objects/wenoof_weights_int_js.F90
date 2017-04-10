@@ -12,19 +12,15 @@ use penf, only: I_P, RPP=>R16P, str
 #else
 use penf, only: I_P, RPP=>R8P, str
 #endif
-use wenoof_alpha_factory
-use wenoof_alpha_object
-use wenoof_alpha_int_js
-use wenoof_alpha_int_m
-use wenoof_alpha_int_z
-use wenoof_base_object
-use wenoof_beta_factory
-use wenoof_beta_object
-use wenoof_beta_int_js
-use wenoof_kappa_factory
-use wenoof_kappa_object
-use wenoof_kappa_int_js
-use wenoof_weights_object
+use wenoof_alpha_factory,  only : alpha_factory
+use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
+use wenoof_base_object, only : base_object_constructor
+use wenoof_beta_factory, only : beta_factory
+use wenoof_beta_object, only : beta_object, beta_object_constructor
+use wenoof_kappa_factory, only : kappa_factory
+use wenoof_kappa_int_js, only : kappa_int_js
+use wenoof_kappa_object, only : kappa_object, kappa_object_constructor
+use wenoof_weights_object, only : weights_object, weights_object_constructor
 
 implicit none
 private
@@ -45,18 +41,18 @@ type, extends(weights_object):: weights_int_js
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
-  class(alpha_object), allocatable :: alpha     !< Alpha coefficients (non linear weights).
-  class(beta_object),  allocatable :: beta      !< Beta coefficients (smoothness indicators).
-  class(kappa_object), allocatable :: kappa     !< kappa coefficients (optimal, linear weights).
+  class(alpha_object), allocatable :: alpha !< Alpha coefficients (non linear weights).
+  class(beta_object),  allocatable :: beta  !< Beta coefficients (smoothness indicators).
+  class(kappa_object), allocatable :: kappa !< kappa coefficients (optimal, linear weights).
   contains
     ! deferred public methods
-    procedure, pass(self) :: create                          !< Create weights.
-    procedure, pass(self) :: compute_with_stencil_of_rank_1  !< Compute weights.
-    procedure, pass(self) :: compute_with_stencil_of_rank_2  !< Compute weights.
-    procedure, pass(self) :: description                     !< Return weights string-description.
-    procedure, pass(self) :: destroy                         !< Destroy weights.
-    procedure, pass(self) :: smoothness_indicators_of_rank_1 !< Return smoothness indicators.
-    procedure, pass(self) :: smoothness_indicators_of_rank_2 !< Return smoothness indicators.
+    procedure, pass(self) :: create                    !< Create weights.
+    procedure, pass(self) :: compute_int               !< Compute weights (interpolate).
+    procedure, pass(self) :: compute_rec               !< Compute weights (reconstruct).
+    procedure, pass(self) :: description               !< Return object string-description.
+    procedure, pass(self) :: destroy                   !< Destroy weights.
+    procedure, pass(self) :: smoothness_indicators_int !< Return smoothness indicators (interpolate).
+    procedure, pass(self) :: smoothness_indicators_rec !< Return smoothness indicators (reconstrcut).
 endtype weights_int_js
 
 contains
@@ -71,71 +67,59 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values_rank_1(0:self%S - 1))
-  self%values_rank_1 = 0._RPP
   select type(constructor)
   type is(weights_int_js_constructor)
     associate(alpha_constructor=>constructor%alpha_constructor, &
               beta_constructor=>constructor%beta_constructor,   &
               kappa_constructor=>constructor%kappa_constructor)
-
       call a_factory%create(constructor=alpha_constructor, object=self%alpha)
-      ! select type(alpha_constructor)
-      ! type is(alpha_rec_js_constructor)
-      !   call factory%create(constructor=alpha_constructor, object=self%alpha)
-      ! type is(alpha_rec_m_constructor)
-      !   call factory%create(constructor=alpha_constructor, object=self%alpha)
-      ! type is(alpha_rec_z_constructor)
-      !   call factory%create(constructor=alpha_constructor, object=self%alpha)
-      ! endselect
-
       call b_factory%create(constructor=beta_constructor, object=self%beta)
-      ! select type(beta_constructor)
-      ! type is(beta_rec_js_constructor)
-      !   allocate(beta_rec_js :: self%beta)
-      !   call self%beta%create(constructor=beta_constructor)
-      ! endselect
-
       call k_factory%create(constructor=kappa_constructor, object=self%kappa)
-      ! select type(kappa_constructor)
-      ! type is(kappa_rec_js_constructor)
-      !   allocate(kappa_rec_js :: self%kappa)
-      !   call self%kappa%create(constructor=kappa_constructor)
-      ! endselect
     endassociate
   endselect
   endsubroutine create
 
-  pure subroutine compute_with_stencil_of_rank_1(self, stencil)
+  pure subroutine compute_int(self, stencil, values)
   !< Compute weights.
-  class(weights_int_js), intent(inout) :: self               !< Weights.
-  real(RPP),             intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
-  integer(I_P)                         :: s                  !< Counters.
+  class(weights_int_js), intent(in)  :: self               !< Weights.
+  real(RPP),             intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(RPP),             intent(out) :: values(0:)         !< Weights values.
+  real(RPP)                          :: alpha(0:self%S-1)  !< Aplha values.
+  real(RPP)                          :: beta(0:self%S-1)   !< Beta values.
+  real(RPP)                          :: alpha_sum          !< Sum of aplha values.
+  integer(I_P)                       :: s                  !< Counters.
 
-  call self%beta%compute(stencil=stencil)
-  call self%alpha%compute(beta=self%beta, kappa=self%kappa)
+  call self%beta%compute(stencil=stencil, values=beta)
+  select type(kappa => self%kappa)
+  class is(kappa_int_js)
+    call self%alpha%compute(beta=beta, kappa=kappa%values, values=alpha)
+  endselect
+  alpha_sum = sum(alpha)
   do s=0, self%S - 1 ! stencils loop
-    self%values_rank_1(s) = self%alpha%values_rank_1(s) / self%alpha%values_sum_rank_1
+    values(s) = alpha(s) / alpha_sum
   enddo
-  endsubroutine compute_with_stencil_of_rank_1
+  endsubroutine compute_int
 
-  pure subroutine compute_with_stencil_of_rank_2(self, stencil)
+  pure subroutine compute_rec(self, stencil, values)
   !< Compute weights.
-  class(weights_int_js), intent(inout) :: self               !< Weights.
-  real(RPP),         intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  class(weights_int_js), intent(in)  :: self                  !< Weights.
+  real(RPP),             intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(RPP),             intent(out) :: values(1:,0:)         !< Weights values of stencil interpolations.
+  ! empty procedure
+  endsubroutine compute_rec
 
-  ! Empty routine.
-  endsubroutine compute_with_stencil_of_rank_2
+  pure function description(self, prefix) result(string)
+  !< Return object string-descripition.
+  class(weights_int_js), intent(in)           :: self             !< Weights.
+  character(len=*),      intent(in), optional :: prefix           !< Prefixing string.
+  character(len=:), allocatable               :: string           !< String-description.
+  character(len=:), allocatable               :: prefix_          !< Prefixing string, local variable.
+  character(len=1), parameter                 :: NL=new_line('a') !< New line char.
 
-  pure function description(self) result(string)
-  !< Return string-description of weights.
-  class(weights_int_js), intent(in) :: self             !< Weights.
-  character(len=:), allocatable :: string           !< String-description.
-  character(len=1), parameter   :: nl=new_line('a') !< New line char.
-
-  string = '  Jiang-Shu weights:'//nl
-  string = string//'    - S   = '//trim(str(self%S))//nl
-  string = string//self%alpha%description()
+  prefix_ = '' ; if (present(prefix)) prefix_ = prefix
+  string = prefix_//'Jiang-Shu weights object for interpolation:'//NL
+  string = prefix_//string//'  - S   = '//trim(str(self%S))
+  string = prefix_//string//self%alpha%description(prefix=prefix_//'  ')
   endfunction description
 
   elemental subroutine destroy(self)
@@ -143,29 +127,22 @@ contains
   class(weights_int_js), intent(inout) :: self !< Weights.
 
   call self%destroy_
-  if (allocated(self%values_rank_1)) deallocate(self%values_rank_1)
   if (allocated(self%alpha)) deallocate(self%alpha)
   if (allocated(self%beta)) deallocate(self%beta)
   if (allocated(self%kappa)) deallocate(self%kappa)
   endsubroutine destroy
 
-  pure subroutine smoothness_indicators_of_rank_1(self, si)
-  !< Return smoothness indicators..
+  pure subroutine smoothness_indicators_int(self, si)
+  !< Return smoothness indicators (interpolate).
   class(weights_int_js),  intent(in)  :: self  !< Weights.
   real(RPP),              intent(out) :: si(:) !< Smoothness indicators.
+  ! TODO implement this
+  endsubroutine smoothness_indicators_int
 
-  if (allocated(self%beta)) then
-    if (allocated(self%beta%values_rank_1)) then
-      si = self%beta%values_rank_1
-    endif
-  endif
-  endsubroutine smoothness_indicators_of_rank_1
-
-  pure subroutine smoothness_indicators_of_rank_2(self, si)
-  !< Return smoothness indicators..
+  pure subroutine smoothness_indicators_rec(self, si)
+  !< Return smoothness indicators (reconstruct).
   class(weights_int_js),  intent(in)  :: self    !< Weights.
   real(RPP),              intent(out) :: si(:,:) !< Smoothness indicators.
-
-  ! Empty routine
-  endsubroutine smoothness_indicators_of_rank_2
+  ! empty procedure
+  endsubroutine smoothness_indicators_rec
 endmodule wenoof_weights_int_js

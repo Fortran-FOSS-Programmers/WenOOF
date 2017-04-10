@@ -8,12 +8,12 @@ module wenoof_beta_rec_js
 !< doi:10.1016/j.jcp.2009.07.039
 
 #ifdef r16p
-use penf, only: I_P, RPP=>R16P
+use penf, only: I_P, RPP=>R16P, str
 #else
-use penf, only: I_P, RPP=>R8P
+use penf, only: I_P, RPP=>R8P, str
 #endif
-use wenoof_base_object
-use wenoof_beta_object
+use wenoof_base_object, only : base_object_constructor
+use wenoof_beta_object, only : beta_object, beta_object_constructor
 
 implicit none
 private
@@ -35,24 +35,22 @@ type, extends(beta_object) :: beta_rec_js
   real(RPP), allocatable :: coef(:,:,:) !< Beta coefficients [0:S-1,0:S-1,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create                             !< Create beta.
-    procedure, pass(self) :: compute_with_stencil_of_rank_1     !< Compute beta.
-    procedure, pass(self) :: compute_with_stencil_of_rank_2     !< Compute beta.
-    procedure, pass(self) :: description                        !< Return beta string-description.
-    procedure, pass(self) :: destroy                            !< Destroy beta.
+    procedure, pass(self) :: create      !< Create beta.
+    procedure, pass(self) :: compute_int !< Compute beta (interpolate).
+    procedure, pass(self) :: compute_rec !< Compute beta (reconstruct).
+    procedure, pass(self) :: description !< Return object string-description.
+    procedure, pass(self) :: destroy     !< Destroy beta.
 endtype beta_rec_js
 
 contains
   ! public deferred methods
   subroutine create(self, constructor)
   !< Create beta.
-  class(beta_rec_js),              intent(inout) :: self        !< Beta.
-  class(base_object_constructor),  intent(in)    :: constructor !< Beta constructor.
+  class(beta_rec_js),             intent(inout) :: self        !< Beta.
+  class(base_object_constructor), intent(in)    :: constructor !< Beta constructor.
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values_rank_2(1:2, 0:self%S - 1))
-  self%values_rank_2 = 0._RPP
   allocate(self%coef(0:self%S - 1, 0:self%S - 1, 0:self%S - 1))
   associate(c => self%coef)
     select case(self%S)
@@ -2374,43 +2372,44 @@ contains
   endassociate
   endsubroutine create
 
-  pure subroutine compute_with_stencil_of_rank_1(self, stencil)
-  !< Compute beta.
-  class(beta_rec_js), intent(inout) :: self               !< Beta.
-  real(RPP),          intent(in)    :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  pure subroutine compute_int(self, stencil, values)
+  !< Compute beta (interpolate).
+  class(beta_rec_js), intent(in)  :: self               !< Beta.
+  real(RPP),          intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(RPP),          intent(out) :: values(0:)         !< Beta values [0:S-1].
+  ! empty procedure
+  endsubroutine compute_int
 
-  ! Empty routine.
-  endsubroutine compute_with_stencil_of_rank_1
+  pure subroutine compute_rec(self, stencil, values)
+  !< Compute beta (reconstruct).
+  class(beta_rec_js), intent(in)  :: self                  !< Beta.
+  real(RPP),          intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(RPP),          intent(out) :: values(1:,0:)         !< Beta values [1:2,0:S-1].
+  integer(I_P)                    :: s1, s2, s3, f         !< Counters.
 
-  pure subroutine compute_with_stencil_of_rank_2(self, stencil)
-  !< Compute beta.
-  class(beta_rec_js), intent(inout) :: self                  !< Beta.
-  real(RPP),          intent(in)    :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  integer(I_P)                      :: s1, s2, s3, f         !< Counters.
-
-  associate(val => self%values_rank_2)
-    do s1=0, self%S - 1 ! stencils loop
-      do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-        val(f, s1) = 0._RPP
-        do s2=0, self%S - 1
-          do s3=0, self%S - 1
-            val(f, s1) = val(f, s1) + self%coef(s3, s2, s1) * stencil(f, s1 - s3) * stencil(f, s1 - s2)
-          enddo
+  do s1=0, self%S - 1 ! stencils loop
+    do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      values(f, s1) = 0._RPP
+      do s2=0, self%S - 1
+        do s3=0, self%S - 1
+          values(f, s1) = values(f, s1) + self%coef(s3, s2, s1) * stencil(f, s1 - s3) * stencil(f, s1 - s2)
         enddo
       enddo
     enddo
-  endassociate
-  endsubroutine compute_with_stencil_of_rank_2
+  enddo
+  endsubroutine compute_rec
 
-  pure function description(self) result(string)
-  !< Return beta string-description.
-  class(beta_rec_js), intent(in) :: self   !< Beta.
-  character(len=:), allocatable  :: string !< String-description.
+  pure function description(self, prefix) result(string)
+  !< Return object string-descripition.
+  class(beta_rec_js), intent(in)           :: self             !< Beta coefficient.
+  character(len=*),   intent(in), optional :: prefix           !< Prefixing string.
+  character(len=:), allocatable            :: string           !< String-description.
+  character(len=:), allocatable            :: prefix_          !< Prefixing string, local variable.
+  character(len=1), parameter              :: NL=new_line('a') !< New line char.
 
-#ifndef DEBUG
-  ! error stop in pure procedure is a F2015 feature not yet supported in debug mode
-  error stop 'beta_rec_js%description to be implemented, do not use!'
-#endif
+  prefix_ = '' ; if (present(prefix)) prefix_ = prefix
+  string = prefix_//'Jiang-Shu beta coefficients object for reconstruction:'//NL
+  string = prefix_//string//'  - S   = '//trim(str(self%S))
   endfunction description
 
   elemental subroutine destroy(self)
@@ -2418,7 +2417,6 @@ contains
   class(beta_rec_js), intent(inout) :: self !< Beta.
 
   call self%destroy_
-  if (allocated(self%values_rank_2)) deallocate(self%values_rank_2)
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
 endmodule wenoof_beta_rec_js

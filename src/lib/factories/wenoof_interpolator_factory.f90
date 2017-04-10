@@ -2,12 +2,13 @@
 module wenoof_interpolator_factory
 !< Wenoof interpolator factory.
 
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only: I_P
-use wenoof_interpolations_object
-use wenoof_interpolator_object
-use wenoof_interpolator_js
-use wenoof_reconstructor_js
-use wenoof_weights_object
+use wenoof_interpolations_object, only : interpolations_object_constructor
+use wenoof_interpolator_object, only : interpolator_object, interpolator_object_constructor
+use wenoof_interpolator_js, only : interpolator_js, interpolator_js_constructor
+use wenoof_reconstructor_js, only : reconstructor_js, reconstructor_js_constructor
+use wenoof_weights_object, only : weights_object_constructor
 
 implicit none
 private
@@ -41,29 +42,20 @@ contains
   subroutine create_constructor(interpolator_type, S, interpolations_constructor, weights_constructor, &
                                 constructor)
   !< Create an instance of concrete extension of [[weights_object_constructor]].
-  character(*),                                        intent(in)           :: interpolator_type          !< Type of interpolator.
-  integer(I_P),                                        intent(in)           :: S                          !< Stencils dimension.
-  class(interpolations_object_constructor),            intent(in)           :: interpolations_constructor !< Interpolations const.
-  class(weights_object_constructor),                   intent(in)           :: weights_constructor        !< Weights constructor.
-  class(interpolator_object_constructor), allocatable, intent(out)          :: constructor                !< Constructor.
+  character(*),                                        intent(in)  :: interpolator_type          !< Type of interpolator.
+  integer(I_P),                                        intent(in)  :: S                          !< Stencils dimension.
+  class(interpolations_object_constructor),            intent(in)  :: interpolations_constructor !< Interpolations const.
+  class(weights_object_constructor),                   intent(in)  :: weights_constructor        !< Weights constructor.
+  class(interpolator_object_constructor), allocatable, intent(out) :: constructor                !< Constructor.
 
   select case(trim(adjustl(interpolator_type)))
-  case('interpolator-JS')
+  case('interpolator-JS', 'interpolator-M-JS', 'interpolator-M-Z', 'interpolator-Z')
     allocate(interpolator_js_constructor :: constructor)
-  case('interpolator-M-JS')
-    allocate(interpolator_js_constructor :: constructor)
-  case('interpolator-M-Z')
-    allocate(interpolator_js_constructor :: constructor)
-  case('interpolator-Z')
-    allocate(interpolator_js_constructor :: constructor)
-  case('reconstructor-JS')
+  case('reconstructor-JS', 'reconstructor-M-JS', 'reconstructor-M-Z', 'reconstructor-Z')
     allocate(reconstructor_js_constructor :: constructor)
-  case('reconstructor-M-JS')
-    allocate(reconstructor_js_constructor :: constructor)
-  case('reconstructor-M-Z')
-    allocate(reconstructor_js_constructor :: constructor)
-  case('reconstructor-Z')
-    allocate(reconstructor_js_constructor :: constructor)
+  case default
+    write(stderr, '(A)') 'error: interpolator type "'//trim(adjustl(interpolator_type))//'" is unknown!'
+    stop
   endselect
   call constructor%create(S=S)
   select type(constructor)

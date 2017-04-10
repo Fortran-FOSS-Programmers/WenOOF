@@ -26,28 +26,28 @@ $EXDIRS      = FACE/src/tests FACE/src/third_party/
 # GNU
 [shared-gnu]
 template  = template-shared-gnu
-target    = wenoof.f90
+target    = wenoof.F90
 build_dir = ./shared/
 output    = libwenoof.so
 mklib     = shared
 
 [static-gnu]
 template  = template-static-gnu
-target    = wenoof.f90
+target    = wenoof.F90
 build_dir = ./static/
 output    = libwenoof.a
 mklib     = static
 
 [shared-gnu-debug]
 template  = template-shared-gnu-debug
-target    = wenoof.f90
+target    = wenoof.F90
 build_dir = ./shared/
 output    = libwenoof.so
 mklib     = shared
 
 [static-gnu-debug]
 template  = template-static-gnu-debug
-target    = wenoof.f90
+target    = wenoof.F90
 build_dir = ./static/
 output    = libwenoof.a
 mklib     = static
@@ -63,28 +63,28 @@ build_dir = ./exe/
 # Intel
 [shared-intel]
 template  = template-shared-intel
-target    = wenoof.f90
+target    = wenoof.F90
 build_dir = ./shared/
 output    = libwenoof.so
 mklib     = shared
 
 [static-intel]
 template  = template-static-intel
-target    = wenoof.f90
+target    = wenoof.F90
 build_dir = ./static/
 output    = libwenoof.a
 mklib     = static
 
 [shared-intel-debug]
 template  = template-shared-intel-debug
-target    = wenoof.f90
+target    = wenoof.F90
 build_dir = ./shared/
 output    = libwenoof.so
 mklib     = shared
 
 [static-intel-debug]
 template  = template-static-intel-debug
-target    = wenoof.f90
+target    = wenoof.F90
 build_dir = ./static/
 output    = libwenoof.a
 mklib     = static

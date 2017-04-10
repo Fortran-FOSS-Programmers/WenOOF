@@ -52,11 +52,12 @@ abstract interface
   class(base_object_constructor),  intent(in)    :: constructor !< Object constructor.
   endsubroutine create_interface
 
-  pure function description_interface(self) result(string)
+  pure function description_interface(self, prefix) result(string)
   !< Return object string-description.
   import :: base_object
-  class(base_object), intent(in) :: self   !< Object.
-  character(len=:), allocatable  :: string !< String-description.
+  class(base_object), intent(in)           :: self   !< Object.
+  character(len=*),   intent(in), optional :: prefix !< Prefixing string.
+  character(len=:), allocatable            :: string !< String-description.
   endfunction description_interface
 
   elemental subroutine destroy_interface(self)
