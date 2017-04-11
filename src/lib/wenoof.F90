@@ -8,8 +8,8 @@ use penf, only: I_P, RPP=>R16P
 #else
 use penf, only: I_P, RPP=>R8P
 #endif
-use wenoof_interpolator_object
-use wenoof_objects_factory
+use wenoof_interpolator_object, only : interpolator_object
+use wenoof_objects_factory, only : objects_factory
 
 implicit none
 private
@@ -53,7 +53,7 @@ contains
     error stop 'error: x_target must be between -0.5 and 0.5, that represent left and right cell interfaces'
   endif
   allocate(stencil(1-S:S-1))
-  do i=0,2*S-2
+  do i=0, 2 * S - 2
     stencil(-S+1+i) = 1.0_RPP - S + i
   enddo
   call factory%create(interpolator_type=interpolator_type, &

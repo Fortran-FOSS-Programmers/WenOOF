@@ -7,9 +7,7 @@ use penf, only: RPP=>R16P
 #else
 use penf, only: RPP=>R8P
 #endif
-use wenoof_base_object
-use wenoof_beta_object
-use wenoof_kappa_object
+use wenoof_base_object, only : base_object, base_object_constructor
 
 implicit none
 private
@@ -23,24 +21,32 @@ endtype alpha_object_constructor
 
 type, extends(base_object), abstract :: alpha_object
   !< Abstract alpha (non linear weights) object.
-  real(RPP), allocatable :: values_rank_1(:)      !< Alpha values [0:S-1].
-  real(RPP)              :: values_sum_rank_1     !< Sum of alpha coefficients.
-  real(RPP), allocatable :: values_rank_2(:,:)    !< Alpha values [1:2,0:S-1].
-  real(RPP), allocatable :: values_sum_rank_2(:)  !< Sum of alpha coefficients [1:2].
   contains
+    ! public methods
+    generic :: compute => compute_int, compute_rec !< Compute alpha.
     ! public deferred methods
-    procedure(compute_interface), pass(self), deferred :: compute !< Compute alpha.
+    procedure(compute_int_interface), pass(self), deferred :: compute_int !< Compute alpha (interpolate).
+    procedure(compute_rec_interface), pass(self), deferred :: compute_rec !< Compute alpha (reconstruct).
 endtype alpha_object
 
 abstract interface
   !< Abstract interfaces of [[alpha_object]].
-  pure subroutine compute_interface(self, beta, kappa)
-  !< Compute alpha.
-  import :: alpha_object, beta_object, kappa_object
-  class(alpha_object), intent(inout) :: self  !< Alpha.
-  class(beta_object),  intent(in)    :: beta  !< Beta.
-  class(kappa_object), intent(in)    :: kappa !< Kappa.
-  endsubroutine compute_interface
-endinterface
+  pure subroutine compute_int_interface(self, beta, kappa, values)
+  !< Compute alpha (interpolate).
+  import :: alpha_object, RPP
+  class(alpha_object), intent(in)  :: self       !< Alpha.
+  real(RPP),           intent(in)  :: beta(0:)   !< Beta [0:S-1].
+  real(RPP),           intent(in)  :: kappa(0:)  !< Kappa [0:S-1].
+  real(RPP),           intent(out) :: values(0:) !< Alpha values [0:S-1].
+  endsubroutine compute_int_interface
 
+  pure subroutine compute_rec_interface(self, beta, kappa, values)
+  !< Compute alpha (reconstruct).
+  import :: alpha_object, RPP
+  class(alpha_object), intent(in)  :: self          !< Alpha.
+  real(RPP),           intent(in)  :: beta(1:,0:)   !< Beta [1:2,0:S-1].
+  real(RPP),           intent(in)  :: kappa(1:,0:)  !< Kappa [1:2,0:S-1].
+  real(RPP),           intent(out) :: values(1:,0:) !< Alpha values [1:2,0:S-1].
+  endsubroutine compute_rec_interface
+endinterface
 endmodule wenoof_alpha_object

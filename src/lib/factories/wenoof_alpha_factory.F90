@@ -8,13 +8,13 @@ use penf, only: I_P, RPP=>R16P
 #else
 use penf, only: I_P, RPP=>R8P
 #endif
-use wenoof_alpha_object
-use wenoof_alpha_rec_js
-use wenoof_alpha_rec_m
-use wenoof_alpha_rec_z
-use wenoof_alpha_int_js
-use wenoof_alpha_int_m
-use wenoof_alpha_int_z
+use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
+use wenoof_alpha_int_js, only : alpha_int_js, alpha_int_js_constructor
+use wenoof_alpha_int_m, only : alpha_int_m, alpha_int_m_constructor
+use wenoof_alpha_int_z, only : alpha_int_z, alpha_int_z_constructor
+use wenoof_alpha_rec_js, only : alpha_rec_js, alpha_rec_js_constructor
+use wenoof_alpha_rec_m, only : alpha_rec_m, alpha_rec_m_constructor
+use wenoof_alpha_rec_z, only : alpha_rec_z, alpha_rec_z_constructor
 
 implicit none
 private
@@ -93,7 +93,7 @@ contains
     endselect
   case('reconstructor-Z')
     allocate(alpha_rec_z_constructor :: constructor)
- case default
+  case default
     write(stderr, '(A)') 'error: interpolator type "'//trim(adjustl(interpolator_type))//'" is unknown!'
     stop
   endselect

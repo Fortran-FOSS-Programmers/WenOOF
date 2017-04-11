@@ -7,10 +7,10 @@ use penf, only: I_P, RPP=>R16P
 #else
 use penf, only: I_P, RPP=>R8P
 #endif
-use wenoof_interpolations_object
-use wenoof_kappa_object
-use wenoof_kappa_rec_js
-use wenoof_kappa_int_js
+use wenoof_interpolations_object, only : interpolations_object_constructor
+use wenoof_kappa_object, only : kappa_object, kappa_object_constructor
+use wenoof_kappa_rec_js, only : kappa_rec_js, kappa_rec_js_constructor
+use wenoof_kappa_int_js, only : kappa_int_js, kappa_int_js_constructor
 
 implicit none
 private
@@ -21,10 +21,10 @@ type :: kappa_factory
   contains
     ! public methods
     procedure, nopass :: create                                          !< Create a concrete instance of [[kappa_object]].
-    procedure, nopass :: create_constructor_rec
-    procedure, nopass :: create_constructor_int
-    generic           :: create_constructor => create_constructor_rec, & !< Create a concrete instance
-                                               create_constructor_int    !< of [[kappa_object_constructor]].
+    procedure, nopass :: create_constructor_int                          !< Create [[kappa_object_constructor]] (interpolate).
+    procedure, nopass :: create_constructor_rec                          !< Create [[kappa_object_constructor]] (reconstruct).
+    generic           :: create_constructor => create_constructor_int, & !< Create a concrete instance
+                                               create_constructor_rec    !< of [[kappa_object_constructor]].
 endtype kappa_factory
 
 contains
@@ -64,12 +64,11 @@ contains
   class(kappa_object_constructor), allocatable, intent(out) :: constructor                !< Constructor.
 
   allocate(kappa_int_js_constructor :: constructor)
-  allocate(constructor%stencil(1-S:S-1))
-  constructor%stencil = stencil
-  constructor%x_target = x_target
-  call constructor%create(S=S)
   select type(constructor)
   type is(kappa_int_js_constructor)
+    constructor%stencil = stencil
+    constructor%x_target = x_target
+    call constructor%create(S=S)
     allocate(constructor%interpolations_constructor, source=interpolations_constructor)
   endselect
   endsubroutine create_constructor_int
