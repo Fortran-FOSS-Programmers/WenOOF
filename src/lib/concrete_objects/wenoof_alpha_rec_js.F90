@@ -81,8 +81,8 @@ contains
 
   prefix_ = '' ; if (present(prefix)) prefix_ = prefix
   string = prefix_//'Jiang-Shu alpha coefficients object for reconstruction:'//NL
-  string = prefix_//string//'  - S   = '//trim(str(self%S))//NL
-  string = prefix_//string//'  - eps = '//trim(str(self%eps))
+  string = string//prefix_//'  - S   = '//trim(str(self%S))//NL
+  string = string//prefix_//'  - eps = '//trim(str(self%eps))
   endfunction description
 
   elemental subroutine destroy(self)

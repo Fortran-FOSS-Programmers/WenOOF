@@ -71,8 +71,8 @@ contains
 
   prefix_ = '' ; if (present(prefix)) prefix_ = prefix
   string = prefix_//'Jiang-Shu reconstructor:'//NL
-  string = prefix_//string//'  - S   = '//trim(str(self%S))//NL
-  string = prefix_//string//self%weights%description(prefix=prefix_//'  ')
+  string = string//prefix_//'  - S   = '//trim(str(self%S))//NL
+  string = string//prefix_//self%weights%description(prefix=prefix_//'  ')
   endfunction description
 
   elemental subroutine destroy(self)
