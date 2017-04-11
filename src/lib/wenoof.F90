@@ -94,6 +94,7 @@ contains
     c = c + 1
   enddo
   if (-0.5_C_DOUBLE <= x_target .and. x_target <= 0.5_C_DOUBLE) then
+    if (verbose==1) print '(A,F23.15)', 'interpolate at ', x_target
     if (eps > 0._C_DOUBLE) then
       call wenoof_create(interpolator_type=interpolator_type_, S=S, x_target=x_target, interpolator=interpolator_c_wrap, eps=eps)
     else
