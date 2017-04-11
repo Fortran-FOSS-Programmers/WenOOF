@@ -246,7 +246,7 @@ contains
 
   prefix_ = '' ; if (present(prefix)) prefix_ = prefix
   string = prefix_//'Jiang-Shu kappa coefficients object for interpolation:'//NL
-  string = prefix_//string//'  - S   = '//trim(str(self%S))
+  string = string//prefix_//'  - S   = '//trim(str(self%S))
   endfunction description
 
   elemental subroutine destroy(self)

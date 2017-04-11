@@ -110,14 +110,14 @@ contains
 
   prefix_ = '' ; if (present(prefix)) prefix_ = prefix
   string = prefix_//'Jiang-Shu alpha coefficients object for interpolation:'//NL
-  string = prefix_//string//'  - S   = '//trim(str(self%S))//NL
-  string = prefix_//string//'  - eps = '//trim(str(self%eps))
+  string = string//prefix_//'  - S   = '//trim(str(self%S))//NL
+  string = string//prefix_//'  - eps = '//trim(str(self%eps))//NL
   associate(alpha_base=>self%alpha_base)
     select type(alpha_base)
     type is(alpha_rec_js)
-      string = prefix_//string//'  - base-mapped-alpha type = Jiang-Shu'
+      string = string//prefix_//'  - base-mapped-alpha type = Jiang-Shu'
     type is(alpha_rec_z)
-      string = prefix_//string//'  - base-mapped-alpha type = Bogeg'
+      string = string//prefix_//'  - base-mapped-alpha type = Bogeg'
     endselect
   endassociate
   endfunction description
