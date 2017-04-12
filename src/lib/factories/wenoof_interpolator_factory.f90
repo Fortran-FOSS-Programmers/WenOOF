@@ -3,7 +3,7 @@ module wenoof_interpolator_factory
 !< Wenoof interpolator factory.
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
-use penf, only: I_P
+use penf, only : I_P
 use wenoof_interpolations_object, only : interpolations_object_constructor
 use wenoof_interpolator_object, only : interpolator_object, interpolator_object_constructor
 use wenoof_interpolator_js, only : interpolator_js, interpolator_js_constructor

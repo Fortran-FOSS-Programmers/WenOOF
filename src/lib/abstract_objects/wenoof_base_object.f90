@@ -4,23 +4,19 @@ module wenoof_base_object
 !<
 !< Define a minimal, base, object that is used as ancestor of all objects, e.g. smoothness indicator, optimal weights, etc...
 
-#ifdef r16p
-use penf, only: I_P, RPP=>R16P
-#else
-use penf, only: I_P, RPP=>R8P
-#endif
+use penf, only : I_P, R_P
 
 implicit none
 private
 public :: base_object
 public :: base_object_constructor
 
-real(RPP), parameter :: EPS_DEF=10._RPP**(-6) !< Small epsilon to avoid division by zero, default value.
+real(R_P), parameter :: EPS_DEF=10._R_P**(-6) !< Small epsilon to avoid division by zero, default value.
 
 type, abstract :: base_object_constructor
   !< Abstract base object constructor.
   integer(I_P) :: S=0_I_P           !< Stencils dimension.
-  real(RPP)    :: eps=EPS_DEF       !< Small epsilon to avoid division by zero.
+  real(R_P)    :: eps=EPS_DEF       !< Small epsilon to avoid division by zero.
   contains
     procedure, pass(self) :: create => create_base_object_constructor
 endtype base_object_constructor
@@ -30,7 +26,7 @@ type, abstract :: base_object
   !<
   !< Define a minimal, base, object that is used as ancestor of all objects, e.g. smoothness indicator, optimal weights, etc...
   integer(I_P) :: S=0_I_P     !< Stencils dimension.
-  real(RPP)    :: eps=EPS_DEF !< Small epsilon to avoid division by zero.
+  real(R_P)    :: eps=EPS_DEF !< Small epsilon to avoid division by zero.
   contains
     ! public deferred methods
     procedure(create_interface),      pass(self), deferred :: create      !< Create object.
@@ -75,7 +71,7 @@ contains
   !< Create alpha constructor.
   class(base_object_constructor), intent(inout)        :: self       !< Constructor.
   integer(I_P),                   intent(in)           :: S          !< Stencils dimension.
-  real(RPP),                      intent(in), optional :: eps        !< Small epsilon to avoid division by zero.
+  real(R_P),                      intent(in), optional :: eps        !< Small epsilon to avoid division by zero.
 
   self%S = S
   if (present(eps)) self%eps = eps

@@ -2,11 +2,7 @@
 module wenoof_kappa_factory
 !< Wenoof kappa factory.
 
-#ifdef r16p
-use penf, only: I_P, RPP=>R16P
-#else
-use penf, only: I_P, RPP=>R8P
-#endif
+use penf, only : I_P, R_P
 use wenoof_interpolations_object, only : interpolations_object_constructor
 use wenoof_kappa_object, only : kappa_object, kappa_object_constructor
 use wenoof_kappa_rec_js, only : kappa_rec_js, kappa_rec_js_constructor
@@ -58,8 +54,8 @@ contains
   !< Create an instance of concrete extension of [[kappa_object_constructor]].
   character(*),                                 intent(in)  :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                                 intent(in)  :: S                          !< Stencils dimension.
-  real(RPP),                                    intent(in)  :: stencil(1-S:)              !< Stencil used for inter, [1-S:-1+S].
-  real(RPP),                                    intent(in)  :: x_target                   !< Coordinate of the interp point.
+  real(R_P),                                    intent(in)  :: stencil(1-S:)              !< Stencil used for inter, [1-S:-1+S].
+  real(R_P),                                    intent(in)  :: x_target                   !< Coordinate of the interp point.
   class(interpolations_object_constructor),     intent(in)  :: interpolations_constructor !< interpolations constructor.
   class(kappa_object_constructor), allocatable, intent(out) :: constructor                !< Constructor.
 

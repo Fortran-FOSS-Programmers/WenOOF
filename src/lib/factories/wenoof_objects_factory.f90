@@ -2,11 +2,7 @@
 module wenoof_objects_factory
 !< Wenoof factory.
 
-#ifdef r16p
-use penf, only: I_P, RPP=>R16P
-#else
-use penf, only: I_P, RPP=>R8P
-#endif
+use penf, only : I_P, R_P
 use wenoof_alpha_factory, only : alpha_factory
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
 use wenoof_beta_factory, only : beta_factory
@@ -113,7 +109,7 @@ contains
   character(*),                            intent(in)           :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                            intent(in)           :: S                          !< Stencils dimension.
   class(interpolator_object), allocatable, intent(out)          :: interpolator               !< Interpolator.
-  real(RPP),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero/div.
+  real(R_P),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero/div.
   class(alpha_object_constructor),          allocatable         :: alpha_constructor          !< Alpha constructor.
   class(beta_object_constructor),           allocatable         :: beta_constructor           !< Beta constructor.
   class(interpolations_object_constructor), allocatable         :: interpolations_constructor !< Interpolations constructor.
@@ -158,9 +154,9 @@ contains
   character(*),                            intent(in)           :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                            intent(in)           :: S                          !< Stencils dimension.
   class(interpolator_object), allocatable, intent(out)          :: interpolator               !< Interpolator.
-  real(RPP),                               intent(in)           :: stencil(1-S:)              !< Stencil used for inter, [1-S:-1+S].
-  real(RPP),                               intent(in)           :: x_target                   !< Coordinate of the interp point.
-  real(RPP),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero/div.
+  real(R_P),                               intent(in)           :: stencil(1-S:)              !< Stencil used for inter, [1-S:-1+S].
+  real(R_P),                               intent(in)           :: x_target                   !< Coordinate of the interp point.
+  real(R_P),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero/div.
   class(alpha_object_constructor),          allocatable         :: alpha_constructor          !< Alpha constructor.
   class(beta_object_constructor),           allocatable         :: beta_constructor           !< Beta constructor.
   class(interpolations_object_constructor), allocatable         :: interpolations_constructor !< Interpolations constructor.
@@ -229,7 +225,7 @@ contains
   character(*),                                 intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                 intent(in)           :: S                 !< Stencils dimension.
   class(alpha_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  real(RPP),                                    intent(in), optional :: eps               !< Small epsilon to avoid zero/division.
+  real(R_P),                                    intent(in), optional :: eps               !< Small epsilon to avoid zero/division.
   type(alpha_factory)                                                :: factory           !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type, &
@@ -254,8 +250,8 @@ contains
   !< Create an instance of concrete extension of [[kappa_object_constructor]].
   character(*),                                 intent(in)  :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                                 intent(in)  :: S                          !< Stencils dimension.
-  real(RPP),                                    intent(in)  :: stencil(1-S:)              !< Stencil used for inter, [1-S:-1+S].
-  real(RPP),                                    intent(in)  :: x_target                   !< Coordinate of the interp point.
+  real(R_P),                                    intent(in)  :: stencil(1-S:)              !< Stencil used for inter, [1-S:-1+S].
+  real(R_P),                                    intent(in)  :: x_target                   !< Coordinate of the interp point.
   class(interpolations_object_constructor),     intent(in)  :: interpolations_constructor !< interpolations constructor.
   class(kappa_object_constructor), allocatable, intent(out) :: constructor                !< Constructor.
   type(kappa_factory)                                       :: factory                    !< The factory.
@@ -296,8 +292,8 @@ contains
   !< Create an instance of concrete extension of [[interpolations_object_constructor]].
   character(*),                                          intent(in)  :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                          intent(in)  :: S                 !< Stencils dimension.
-  real(RPP),                                             intent(in)  :: stencil(1-S:)     !< Stencil used for inter, [1-S:-1+S].
-  real(RPP),                                             intent(in)  :: x_target          !< Coordinate of the interp point.
+  real(R_P),                                             intent(in)  :: stencil(1-S:)     !< Stencil used for inter, [1-S:-1+S].
+  real(R_P),                                             intent(in)  :: x_target          !< Coordinate of the interp point.
   class(interpolations_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
   type(interpolations_factory)                                       :: factory           !< The factory.
 

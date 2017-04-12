@@ -7,11 +7,7 @@ module wenoof_weights_rec_js
 !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
 !< doi:10.1016/j.jcp.2009.07.039
 
-#ifdef r16p
-use penf, only: I_P, RPP=>R16P, str
-#else
-use penf, only: I_P, RPP=>R8P, str
-#endif
+use penf, only : I_P, R_P, str
 use wenoof_alpha_factory,  only : alpha_factory
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
 use wenoof_base_object, only : base_object_constructor
@@ -82,19 +78,19 @@ contains
   pure subroutine compute_int(self, stencil, values)
   !< Compute weights (interpolate).
   class(weights_rec_js), intent(in)  :: self               !< Weights.
-  real(RPP),             intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
-  real(RPP),             intent(out) :: values(0:)         !< Weights values.
+  real(R_P),             intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(R_P),             intent(out) :: values(0:)         !< Weights values.
   ! empty procedure
   endsubroutine compute_int
 
   pure subroutine compute_rec(self, stencil, values)
   !< Compute weights (reconstruct).
   class(weights_rec_js), intent(in)  :: self                  !< Weights.
-  real(RPP),             intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  real(RPP),             intent(out) :: values(1:,0:)         !< Weights values of stencil interpolations.
-  real(RPP)                          :: alpha(1:2,0:self%S-1) !< Aplha values.
-  real(RPP)                          :: beta(1:2,0:self%S-1)  !< Beta values.
-  real(RPP)                          :: alpha_sum(1:2)        !< Sum of aplha values.
+  real(R_P),             intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(R_P),             intent(out) :: values(1:,0:)         !< Weights values of stencil interpolations.
+  real(R_P)                          :: alpha(1:2,0:self%S-1) !< Aplha values.
+  real(R_P)                          :: beta(1:2,0:self%S-1)  !< Beta values.
+  real(R_P)                          :: alpha_sum(1:2)        !< Sum of aplha values.
   integer(I_P)                       :: f, s                  !< Counters.
 
   call self%beta%compute(stencil=stencil, values=beta)
@@ -138,14 +134,14 @@ contains
   pure subroutine smoothness_indicators_int(self, si)
   !< Return smoothness indicators (interpolate).
   class(weights_rec_js),  intent(in)  :: self  !< Weights.
-  real(RPP),              intent(out) :: si(:) !< Smoothness indicators.
+  real(R_P),              intent(out) :: si(:) !< Smoothness indicators.
   ! empty procedure
   endsubroutine smoothness_indicators_int
 
   pure subroutine smoothness_indicators_rec(self, si)
   !< Return smoothness indicators (reconstruct).
   class(weights_rec_js),  intent(in)  :: self    !< Weights.
-  real(RPP),              intent(out) :: si(:,:) !< Smoothness indicators.
+  real(R_P),              intent(out) :: si(:,:) !< Smoothness indicators.
   ! TODO implement this
   endsubroutine smoothness_indicators_rec
 endmodule wenoof_weights_rec_js

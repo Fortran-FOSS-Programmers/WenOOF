@@ -1,13 +1,10 @@
 !< WenOOF test: interpolation or reconstruction of sine function.
+
 module sin_test_module
 !< Auxiliary module defining the test class.
 
 use flap, only : command_line_interface
-#ifdef r16p
-use penf, only: I_P, RPP=>R16P, FRPP=>FR16P, str, strz
-#else
-use penf, only: I_P, RPP=>R8P, FRPP=>FR8P, str, strz
-#endif
+use penf, only : FR_P, I_P, R_P, str, strz
 use pyplot_module, only : pyplot
 use wenoof, only : interpolator_object, wenoof_create
 use wenoof_test_ui, only : test_ui
@@ -16,27 +13,27 @@ implicit none
 private
 public :: test
 
-real(RPP), parameter     :: pi = 4._RPP * atan(1._RPP)  !< Pi greek.
+real(R_P), parameter :: pi = 4._R_P * atan(1._R_P) !< Pi greek.
 
 type :: solution_data
   !< Class to handle solution data.
-  real(RPP), allocatable :: x_cell(:)           !< Cell domain [1-S:points_number+S].
-  real(RPP), allocatable :: fx_cell(:)          !< Cell refecence values [1-S:points_number+S].
-  real(RPP), allocatable :: x_face(:,:)         !< Face domain [1:2,1:points_number].
-  real(RPP), allocatable :: fx_face(:,:)        !< Face reference values [1:2,1:points_number].
-  real(RPP), allocatable :: x_int(:)            !< Interpolation domain [1-S:points_number+S].
-  real(RPP), allocatable :: fx_int(:)           !< Interpolation refecence values [1-S:points_number+S].
-  real(RPP), allocatable :: dfx_cell(:)         !< Cell refecence values of df/dx [1:points_number].
-  real(RPP), allocatable :: interpolations(:,:) !< Interpolated values [1:2,1:points_number].
-  real(RPP), allocatable :: reconstruction(:)   !< Reconstruction values [1:2,1:points_number].
-  real(RPP), allocatable :: si_r(:,:,:)         !< Computed smoothness indicators [1:2,1:points_number,0:S-1].
-  real(RPP), allocatable :: weights_r(:,:,:)    !< Computed weights [1:2,1:points_number,0:S-1].
-  real(RPP), allocatable :: interpolation(:)    !< Interpolated values [1:points_number].
-  real(RPP), allocatable :: si_i(:,:)           !< Computed smoothness indicators [1:points_number,0:S-1].
-  real(RPP), allocatable :: weights_i(:,:)      !< Computed weights [1:points_number,0:S-1].
-  real(RPP)              :: error_L2            !< L2 norm of the numerical error.
-  real(RPP)              :: x_target            !< Abscissa of the interpolation [-0.5:0.5].
-  real(RPP)              :: Dx=0._RPP           !< Space step (spatial resolution).
+  real(R_P), allocatable :: x_cell(:)           !< Cell domain [1-S:points_number+S].
+  real(R_P), allocatable :: fx_cell(:)          !< Cell refecence values [1-S:points_number+S].
+  real(R_P), allocatable :: x_face(:,:)         !< Face domain [1:2,1:points_number].
+  real(R_P), allocatable :: fx_face(:,:)        !< Face reference values [1:2,1:points_number].
+  real(R_P), allocatable :: x_int(:)            !< Interpolation domain [1-S:points_number+S].
+  real(R_P), allocatable :: fx_int(:)           !< Interpolation refecence values [1-S:points_number+S].
+  real(R_P), allocatable :: dfx_cell(:)         !< Cell refecence values of df/dx [1:points_number].
+  real(R_P), allocatable :: interpolations(:,:) !< Interpolated values [1:2,1:points_number].
+  real(R_P), allocatable :: reconstruction(:)   !< Reconstruction values [1:2,1:points_number].
+  real(R_P), allocatable :: si_r(:,:,:)         !< Computed smoothness indicators [1:2,1:points_number,0:S-1].
+  real(R_P), allocatable :: weights_r(:,:,:)    !< Computed weights [1:2,1:points_number,0:S-1].
+  real(R_P), allocatable :: interpolation(:)    !< Interpolated values [1:points_number].
+  real(R_P), allocatable :: si_i(:,:)           !< Computed smoothness indicators [1:points_number,0:S-1].
+  real(R_P), allocatable :: weights_i(:,:)      !< Computed weights [1:points_number,0:S-1].
+  real(R_P)              :: error_L2            !< L2 norm of the numerical error.
+  real(R_P)              :: x_target            !< Abscissa of the interpolation [-0.5:0.5].
+  real(R_P)              :: Dx=0._R_P           !< Space step (spatial resolution).
 endtype solution_data
 
 type :: test
@@ -48,7 +45,7 @@ type :: test
   private
   type(test_ui)                    :: ui            !< Command line interface handler.
   type(solution_data), allocatable :: solution(:,:) !< Solution [1:pn_number, 1:S_number].
-  real(RPP), allocatable           :: accuracy(:,:) !< Accuracy (measured) [1:pn_number-1, 1:S_number].
+  real(R_P), allocatable           :: accuracy(:,:) !< Accuracy (measured) [1:pn_number-1, 1:S_number].
   contains
     ! public methods
     procedure, pass(self) :: execute !< Execute selected test(s).
@@ -100,7 +97,7 @@ contains
   allocate(self%solution(1:self%ui%pn_number, 1:self%ui%S_number))
   if (self%ui%pn_number>1) then
     allocate(self%accuracy(1:self%ui%pn_number, 1:self%ui%S_number))
-    self%accuracy = 0._RPP
+    self%accuracy = 0._R_P
   endif
   if (self%ui%interpolate) then
     self%solution%x_target = self%ui%x_target
@@ -113,14 +110,14 @@ contains
         allocate(self%solution(pn, s)%interpolation(       1:self%ui%points_number(pn)                              ))
         allocate(self%solution(pn, s)%si_i(                1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
         allocate(self%solution(pn, s)%weights_i(           1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
-        self%solution(pn, s)%x_cell         = 0._RPP
-        self%solution(pn, s)%fx_cell        = 0._RPP
-        self%solution(pn, s)%x_int          = 0._RPP
-        self%solution(pn, s)%fx_int         = 0._RPP
-        self%solution(pn, s)%interpolation  = 0._RPP
-        self%solution(pn, s)%si_i           = 0._RPP
-        self%solution(pn, s)%weights_i      = 0._RPP
-        self%solution(pn, s)%error_L2       = 0._RPP
+        self%solution(pn, s)%x_cell         = 0._R_P
+        self%solution(pn, s)%fx_cell        = 0._R_P
+        self%solution(pn, s)%x_int          = 0._R_P
+        self%solution(pn, s)%fx_int         = 0._R_P
+        self%solution(pn, s)%interpolation  = 0._R_P
+        self%solution(pn, s)%si_i           = 0._R_P
+        self%solution(pn, s)%weights_i      = 0._R_P
+        self%solution(pn, s)%error_L2       = 0._R_P
       enddo
     enddo
   else
@@ -135,16 +132,16 @@ contains
         allocate(self%solution(pn, s)%reconstruction(      1:self%ui%points_number(pn)                              ))
         allocate(self%solution(pn, s)%si_r(          1:2,  1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
         allocate(self%solution(pn, s)%weights_r(     1:2,  1:self%ui%points_number(pn),             0:self%ui%S(s)-1))
-        self%solution(pn, s)%x_cell         = 0._RPP
-        self%solution(pn, s)%fx_cell        = 0._RPP
-        self%solution(pn, s)%x_face         = 0._RPP
-        self%solution(pn, s)%fx_face        = 0._RPP
-        self%solution(pn, s)%dfx_cell       = 0._RPP
-        self%solution(pn, s)%interpolations = 0._RPP
-        self%solution(pn, s)%reconstruction = 0._RPP
-        self%solution(pn, s)%si_r           = 0._RPP
-        self%solution(pn, s)%weights_r      = 0._RPP
-        self%solution(pn, s)%error_L2       = 0._RPP
+        self%solution(pn, s)%x_cell         = 0._R_P
+        self%solution(pn, s)%fx_cell        = 0._R_P
+        self%solution(pn, s)%x_face         = 0._R_P
+        self%solution(pn, s)%fx_face        = 0._R_P
+        self%solution(pn, s)%dfx_cell       = 0._R_P
+        self%solution(pn, s)%interpolations = 0._R_P
+        self%solution(pn, s)%reconstruction = 0._R_P
+        self%solution(pn, s)%si_r           = 0._R_P
+        self%solution(pn, s)%weights_r      = 0._R_P
+        self%solution(pn, s)%error_L2       = 0._R_P
       enddo
     enddo
   endif
@@ -164,7 +161,7 @@ contains
         self%solution(pn, s)%Dx = 2 * pi / self%ui%points_number(pn)
         ! compute the values used for the interpolation of sin function: cell values
         do i=1 - self%ui%S(s), self%ui%points_number(pn) + self%ui%S(s)
-          self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._RPP
+          self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._R_P
           self%solution(pn, s)%fx_cell(i) = sin(self%solution(pn, s)%x_cell(i))
         enddo
         ! values to which the interpolation should tend
@@ -180,13 +177,13 @@ contains
         self%solution(pn, s)%Dx = 2 * pi / self%ui%points_number(pn)
         ! compute the values used for the interpolation/reconstruction of cos function: cell values
         do i=1 - self%ui%S(s), self%ui%points_number(pn) + self%ui%S(s)
-          self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._RPP
+          self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._R_P
           self%solution(pn, s)%fx_cell(i) = sin(self%solution(pn, s)%x_cell(i))
         enddo
         ! values to which the interpolation/reconstruction should tend
         do i = 1, self%ui%points_number(pn)
-          self%solution(pn, s)%x_face(1,i) = self%solution(pn, s)%x_cell(i) - self%solution(pn, s)%Dx / 2._RPP
-          self%solution(pn, s)%x_face(2,i) = self%solution(pn, s)%x_cell(i) + self%solution(pn, s)%Dx / 2._RPP
+          self%solution(pn, s)%x_face(1,i) = self%solution(pn, s)%x_cell(i) - self%solution(pn, s)%Dx / 2._R_P
+          self%solution(pn, s)%x_face(2,i) = self%solution(pn, s)%x_cell(i) + self%solution(pn, s)%Dx / 2._R_P
           self%solution(pn, s)%fx_face(1,i) = sin(self%solution(pn, s)%x_face(1,i))
           self%solution(pn, s)%fx_face(2,i) = sin(self%solution(pn, s)%x_face(2,i))
           self%solution(pn, s)%dfx_cell(i) = cos(self%solution(pn, s)%x_cell(i))
@@ -208,8 +205,8 @@ contains
   !< Perform the test.
   class(test), intent(inout)              :: self           !< Test.
   class(interpolator_object), allocatable :: interpolator   !< WENO interpolator.
-  real(RPP), allocatable                  :: stencil_i(:)   !< Stencils used for interpolation.
-  real(RPP), allocatable                  :: stencil_r(:,:) !< Stencils used for reconstruction.
+  real(R_P), allocatable                  :: stencil_i(:)   !< Stencils used for interpolation.
+  real(R_P), allocatable                  :: stencil_r(:,:) !< Stencils used for reconstruction.
   integer(I_P)                            :: s              !< Counter.
   integer(I_P)                            :: pn             !< Counter.
   integer(I_P)                            :: i              !< Counter.
@@ -304,7 +301,7 @@ contains
                     weights       => self%solution(pn, s)%weights_i,      &
                     Dx            => self%solution(pn, s)%Dx)
             do i = 1, self%ui%points_number(pn)
-              write(file_unit, "("//trim(str(5+2*self%ui%S(s), .true.))//"("//FRPP//",1X))") &
+              write(file_unit, "("//trim(str(5+2*self%ui%S(s), .true.))//"("//FR_P//",1X))") &
                  x_cell(i),                                                                  &
                  fx_cell(i),                                                                 &
                  x_int(i),                                                                   &
@@ -323,7 +320,7 @@ contains
         write(file_unit, "(A)") 'VARIABLES = "S" "Np" "error (L2)" "observed order" "formal order"'
         do s=1, self%ui%S_number
           do pn=1, self%ui%pn_number
-            write(file_unit, "(2(I5,1X),"//FRPP//",1X,F5.2,1X,I3)") self%ui%S(s),                  &
+            write(file_unit, "(2(I5,1X),"//FR_P//",1X,F5.2,1X,I3)") self%ui%S(s),                  &
                                                                     self%ui%points_number(pn),     &
                                                                     self%solution(pn, s)%error_L2, &
                                                                     self%accuracy(pn, s),          &
@@ -362,7 +359,7 @@ contains
                     weights        => self%solution(pn, s)%weights_r,      &
                     Dx             => self%solution(pn, s)%Dx)
             do i = 1, self%ui%points_number(pn)
-              write(file_unit, "("//trim(str(10+4*self%ui%S(s), .true.))//"("//FRPP//",1X))") &
+              write(file_unit, "("//trim(str(10+4*self%ui%S(s), .true.))//"("//FR_P//",1X))") &
                  x_cell(i),                                                                   &
                  fx_cell(i),                                                                  &
                  dfx_cell(i),                                                                 &
@@ -383,7 +380,7 @@ contains
         write(file_unit, "(A)") 'VARIABLES = "S" "Np" "error (L2)" "observed order" "formal order"'
         do s=1, self%ui%S_number
           do pn=1, self%ui%pn_number
-            write(file_unit, "(2(I5,1X),"//FRPP//",1X,F5.2,1X,I3)") self%ui%S(s),                  &
+            write(file_unit, "(2(I5,1X),"//FR_P//",1X,F5.2,1X,I3)") self%ui%S(s),                  &
                                                                     self%ui%points_number(pn),     &
                                                                     self%solution(pn, s)%error_L2, &
                                                                     self%accuracy(pn, s),          &
@@ -409,13 +406,13 @@ contains
                             label='$\sin(x)$',                                          &
                             linestyle='k-',                                             &
                             linewidth=2,                                                &
-                            ylim=[-1.1_RPP, 1.1_RPP])
+                            ylim=[-1.1_R_P, 1.1_R_P])
           call plt%add_plot(x=self%solution(pn, s)%x_int(1:self%ui%points_number(pn)), &
                             y=self%solution(pn, s)%interpolation(:),                   &
                             label='WENO interpolation',                                &
                             linestyle='ro',                                            &
                             markersize=6,                                              &
-                            ylim=[-1.1_RPP, 1.1_RPP])
+                            ylim=[-1.1_R_P, 1.1_R_P])
           call plt%savefig(file_bname//&
                            '-S_'//trim(str(self%ui%S(s), .true.))//'-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.png')
         enddo
@@ -431,13 +428,13 @@ contains
                             label='$\cos(x)$',                                          &
                             linestyle='k-',                                             &
                             linewidth=2,                                                &
-                            ylim=[-1.1_RPP, 1.1_RPP])
+                            ylim=[-1.1_R_P, 1.1_R_P])
           call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%ui%points_number(pn)),                            &
                             y=self%solution(pn, s)%reconstruction(:),                                              &
                             label='WENO reconstruction',                                                           &
                             linestyle='ro',                                                                        &
                             markersize=6,                                                                          &
-                            ylim=[-1.1_RPP, 1.1_RPP])
+                            ylim=[-1.1_R_P, 1.1_R_P])
           call plt%savefig(file_bname//&
                            '-S_'//trim(str(self%ui%S(s), .true.))//'-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.png')
         enddo
@@ -462,7 +459,7 @@ contains
                     Dx=>self%solution(pn, s)%Dx, &
                     fx_int=>self%solution(pn, s)%fx_int, &
                     interpolation=>self%solution(pn, s)%interpolation)
-            error_L2 = 0._RPP
+            error_L2 = 0._R_P
             do i=1, self%ui%points_number(pn)
               error_L2 = error_L2 + (interpolation(i) - fx_int(i))**2
             enddo
@@ -485,7 +482,7 @@ contains
                     Dx=>self%solution(pn, s)%Dx, &
                     dfx_cell=>self%solution(pn, s)%dfx_cell, &
                     reconstruction=>self%solution(pn, s)%reconstruction)
-            error_L2 = 0._RPP
+            error_L2 = 0._R_P
             do i=1, self%ui%points_number(pn)
               error_L2 = error_L2 + (reconstruction(i) - dfx_cell(i))**2
             enddo

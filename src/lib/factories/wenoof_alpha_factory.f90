@@ -3,11 +3,7 @@ module wenoof_alpha_factory
 !< Wenoof alpha factory.
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
-#ifdef r16p
-use penf, only: I_P, RPP=>R16P
-#else
-use penf, only: I_P, RPP=>R8P
-#endif
+use penf, only : I_P, R_P
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
 use wenoof_alpha_int_js, only : alpha_int_js, alpha_int_js_constructor
 use wenoof_alpha_int_m, only : alpha_int_m, alpha_int_m_constructor
@@ -58,7 +54,7 @@ contains
   character(*),                                 intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                 intent(in)           :: S                 !< Stencils dimension.
   class(alpha_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  real(RPP),                                    intent(in), optional :: eps               !< Small epsilon to avoid zero/division.
+  real(R_P),                                    intent(in), optional :: eps               !< Small epsilon to avoid zero/division.
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')

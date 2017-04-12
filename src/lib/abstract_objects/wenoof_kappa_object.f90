@@ -2,11 +2,7 @@
 module wenoof_kappa_object
 !< Abstract Kappa (optimal, linear weights of stencil interpolations) object.
 
-#ifdef r16p
-use penf, only: I_P, RPP=>R16P
-#else
-use penf, only: I_P, RPP=>R8P
-#endif
+use penf, only : I_P, R_P
 use wenoof_base_object, only : base_object, base_object_constructor
 
 implicit none
@@ -32,18 +28,18 @@ abstract interface
   !< Abstract interfaces of [[kappa_object]].
   pure subroutine compute_int_interface(self, stencil, x_target, values)
   !< Compute kappa (interpolate).
-  import :: kappa_object, I_P, RPP
+  import :: kappa_object, I_P, R_P
   class(kappa_object), intent(in)  :: self               !< Kappa.
-  real(RPP),           intent(in)  :: stencil(1-self%S:) !< Stencil used for interpolation, [1-S:S-1].
-  real(RPP),           intent(in)  :: x_target           !< Coordinate of the interpolation point.
-  real(RPP),           intent(out) :: values(0:)         !< Kappa values.
+  real(R_P),           intent(in)  :: stencil(1-self%S:) !< Stencil used for interpolation, [1-S:S-1].
+  real(R_P),           intent(in)  :: x_target           !< Coordinate of the interpolation point.
+  real(R_P),           intent(out) :: values(0:)         !< Kappa values.
   endsubroutine compute_int_interface
 
   pure subroutine compute_rec_interface(self, values)
   !< Compute kappa (reconstruct).
-  import :: kappa_object, RPP
+  import :: kappa_object, R_P
   class(kappa_object), intent(in)  :: self          !< Kappa.
-  real(RPP),           intent(out) :: values(1:,0:) !< Kappa values.
+  real(R_P),           intent(out) :: values(1:,0:) !< Kappa values.
   endsubroutine compute_rec_interface
 endinterface
 endmodule wenoof_kappa_object

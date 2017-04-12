@@ -3,7 +3,7 @@ module wenoof_weights_factory
 !< Wenoof weights factory.
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
-use penf, only: I_P
+use penf, only : I_P
 use wenoof_alpha_object  , only : alpha_object_constructor
 use wenoof_beta_object   , only : beta_object_constructor
 use wenoof_kappa_object  , only : kappa_object_constructor

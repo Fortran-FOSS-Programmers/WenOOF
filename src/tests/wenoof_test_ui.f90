@@ -3,11 +3,7 @@ module wenoof_test_ui
 !< WenOOF test UI: definition of common User Interface (UI) for WenOOF tests.
 
 use flap, only : command_line_interface
-#ifdef r16p
-use penf, only: I_P, RPP=>R16P, FRPP=>FR16P
-#else
-use penf, only: I_P, RPP=>R8P, FRPP=>FR8P
-#endif
+use penf, only : FR_P, I_P, R_P
 
 implicit none
 private
@@ -29,8 +25,8 @@ type :: test_ui
   integer(I_P), allocatable    :: points_number(:)                     !< Points number used to discretize the domain.
   integer(I_P)                 :: S_number                             !< Number of different stencils tested.
   integer(I_P), allocatable    :: S(:)                                 !< Stencils used.
-  real(RPP)                    :: eps                                  !< Small epsilon to avoid zero-division.
-  real(RPP)                    :: x_target                             !< Interpolation target coordinate.
+  real(R_P)                    :: eps                                  !< Small epsilon to avoid zero-division.
+  real(R_P)                    :: x_target                             !< Interpolation target coordinate.
   logical                      :: interpolate=.false.                  !< Flag for activating interpolation.
   logical                      :: reconstruct=.false.                  !< Flag for activating reconstruction.
   logical                      :: errors_analysis=.false.              !< Flag for activating errors analysis.

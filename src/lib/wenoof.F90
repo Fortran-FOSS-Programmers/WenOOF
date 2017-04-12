@@ -3,11 +3,7 @@ module wenoof
 !< WenOOF, WENO interpolation Object Oriented Fortran library
 
 use, intrinsic :: iso_c_binding
-#ifdef r16p
-use penf, only: I_P, RPP=>R16P
-#else
-use penf, only: I_P, RPP=>R8P
-#endif
+use penf, only : I_P, R_P
 use wenoof_interpolator_object, only : interpolator_object
 use wenoof_objects_factory, only : objects_factory
 
@@ -15,16 +11,20 @@ implicit none
 private
 public :: interpolator_object
 public :: wenoof_create
+#ifndef r16p
 public :: wenoof_initialize_c_wrap
 public :: wenoof_interpolate_c_wrap
 public :: wenoof_reconstruct_c_wrap
+#endif
 
 interface wenoof_create
   module procedure wenoof_create_reconstructor
   module procedure wenoof_create_interpolator
 end interface wenoof_create
 
+#ifndef r16p
 class(interpolator_object), allocatable :: interpolator_c_wrap !< The WENO interpolator/reconstructor for C/Python wrappers.
+#endif
 
 contains
   subroutine wenoof_create_reconstructor(interpolator_type, S, interpolator, eps)
@@ -32,7 +32,7 @@ contains
   character(*),                            intent(in)           :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                            intent(in)           :: S                          !< Stencil dimension.
   class(interpolator_object), allocatable, intent(out)          :: interpolator               !< The concrete WENO interpolator.
-  real(RPP),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero-div.
+  real(R_P),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero-div.
   type(objects_factory)                                         :: factory                    !< The factory.
 
   call factory%create(interpolator_type=interpolator_type, &
@@ -46,19 +46,19 @@ contains
   !< WenOOF creator, create a concrete WENO interpolator object.
   character(*),                            intent(in)           :: interpolator_type  !< Type of the interpolator.
   integer(I_P),                            intent(in)           :: S                  !< Stencil dimension.
-  real(RPP),                               intent(in)           :: x_target           !< Coordinate of the interpolation point.
+  real(R_P),                               intent(in)           :: x_target           !< Coordinate of the interpolation point.
   class(interpolator_object), allocatable, intent(out)          :: interpolator       !< The concrete WENO interpolator.
-  real(RPP),                               intent(in), optional :: eps                !< Small epsilon to avoid zero-div.
-  real(RPP),                  allocatable                       :: stencil(:)         !< Stencil used for interpolation, [1-S:-1+S].
+  real(R_P),                               intent(in), optional :: eps                !< Small epsilon to avoid zero-div.
+  real(R_P),                  allocatable                       :: stencil(:)         !< Stencil used for interpolation, [1-S:-1+S].
   integer(I_P)                                                  :: i                  !< Counter.
   type(objects_factory)                                         :: factory            !< The factory.
 
-  if ((x_target < -0.5_RPP).or.(x_target > 0.5_RPP)) then
+  if ((x_target < -0.5_R_P).or.(x_target > 0.5_R_P)) then
     error stop 'error: x_target must be between -0.5 and 0.5, that represent left and right cell interfaces'
   endif
   allocate(stencil(1-S:S-1))
   do i=0, 2 * S - 2
-    stencil(-S+1+i) = 1.0_RPP - S + i
+    stencil(-S+1+i) = 1.0_R_P - S + i
   enddo
   call factory%create(interpolator_type=interpolator_type, &
                       S=S,                                 &
@@ -68,6 +68,7 @@ contains
                       eps=eps)
   endsubroutine wenoof_create_interpolator
 
+#ifndef r16p
   ! procedure for C/Python wrappers
   subroutine wenoof_initialize_c_wrap(interpolator_type, S, eps, x_target, verbose) bind(c, name='wenoof_initialize_c_wrap')
   !< Intialize the WENO interpolator for C/Python wrappers.
@@ -127,4 +128,5 @@ contains
 
   call interpolator_c_wrap%interpolate(stencil=stencil, interpolation=interpolation)
   endsubroutine wenoof_reconstruct_c_wrap
+#endif
 endmodule wenoof

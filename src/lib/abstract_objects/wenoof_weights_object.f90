@@ -2,11 +2,7 @@
 module wenoof_weights_object
 !< Abstract weights object.
 
-#ifdef r16p
-use penf, only: RPP=>R16P
-#else
-use penf, only: RPP=>R8P
-#endif
+use penf, only : R_P
 use wenoof_base_object, only : base_object, base_object_constructor
 
 implicit none
@@ -35,32 +31,32 @@ abstract interface
   !< Abstract interfaces of [[weights_object]].
   pure subroutine compute_int_interface(self, stencil, values)
   !< Compute weights (interpolate).
-  import :: weights_object, RPP
+  import :: weights_object, R_P
   class(weights_object), intent(in)  :: self               !< Weights.
-  real(RPP),             intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
-  real(RPP),             intent(out) :: values(0:)         !< Weights values of stencil interpolations.
+  real(R_P),             intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(R_P),             intent(out) :: values(0:)         !< Weights values of stencil interpolations.
   endsubroutine compute_int_interface
 
   pure subroutine compute_rec_interface(self, stencil, values)
   !< Compute beta (reconstruct).
-  import :: weights_object, RPP
+  import :: weights_object, R_P
   class(weights_object), intent(in)  :: self                  !< Weights.
-  real(RPP),             intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  real(RPP),             intent(out) :: values(1:,0:)         !< Weights values of stencil interpolations.
+  real(R_P),             intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(R_P),             intent(out) :: values(1:,0:)         !< Weights values of stencil interpolations.
   endsubroutine compute_rec_interface
 
   pure subroutine smoothness_indicators_int_interface(self, si)
   !< Return smoothness indicators (interpolate).
-  import :: weights_object, RPP
+  import :: weights_object, R_P
   class(weights_object),  intent(in)  :: self  !< Weights.
-  real(RPP),              intent(out) :: si(:) !< Smoothness indicators.
+  real(R_P),              intent(out) :: si(:) !< Smoothness indicators.
   endsubroutine smoothness_indicators_int_interface
 
   pure subroutine smoothness_indicators_rec_interface(self, si)
   !< Return smoothness indicators (reconstruct).
-  import :: weights_object, RPP
+  import :: weights_object, R_P
   class(weights_object),  intent(in)  :: self      !< Weights.
-  real(RPP),              intent(out) :: si(1:,0:) !< Smoothness indicators.
+  real(R_P),              intent(out) :: si(1:,0:) !< Smoothness indicators.
   endsubroutine smoothness_indicators_rec_interface
 endinterface
 endmodule wenoof_weights_object
