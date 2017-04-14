@@ -39,7 +39,6 @@ contains
                       S=S,                                 &
                       interpolator=interpolator,           &
                       eps=eps)
-
   endsubroutine wenoof_create_reconstructor
 
   subroutine wenoof_create_interpolator(interpolator_type, S, x_target, interpolator, eps)

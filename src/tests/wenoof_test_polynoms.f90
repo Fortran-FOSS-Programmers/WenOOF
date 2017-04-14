@@ -1,6 +1,6 @@
-!< WenOOF test: interpolation or reconstruction of sine function.
+!< WenOOF test: interpolation or reconstruction of polynomial functions.
 
-module sin_test_module
+module wenoof_test_polynoms_module
 !< Auxiliary module defining the test class.
 
 use flap, only : command_line_interface
@@ -12,8 +12,6 @@ use wenoof_test_ui, only : test_ui
 implicit none
 private
 public :: test
-
-real(R_P), parameter :: pi = 4._R_P * atan(1._R_P) !< Pi greek.
 
 type :: solution_data
   !< Class to handle solution data.
@@ -158,35 +156,35 @@ contains
   if (self%ui%interpolate) then
     do s=1, self%ui%S_number
       do pn=1, self%ui%pn_number
-        self%solution(pn, s)%Dx = 2 * pi / self%ui%points_number(pn)
-        ! compute the values used for the interpolation of sin function: cell values
+        self%solution(pn, s)%Dx = 1._R_P / self%ui%points_number(pn)
+        ! compute the values used for the interpolation of polynomials function: cell values
         do i=1 - self%ui%S(s), self%ui%points_number(pn) + self%ui%S(s)
           self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._R_P
-          self%solution(pn, s)%fx_cell(i) = sin(self%solution(pn, s)%x_cell(i))
+          self%solution(pn, s)%fx_cell(i) = interface_function(x=self%solution(pn, s)%x_cell(i), o=2*self%ui%S(s)+2)
         enddo
         ! values to which the interpolation should tend
         do i = 1, self%ui%points_number(pn)
           self%solution(pn, s)%x_int(i) = self%solution(pn, s)%x_cell(i) + self%solution(pn, s)%x_target * self%solution(pn, s)%Dx
-          self%solution(pn, s)%fx_int(i) = sin(self%solution(pn, s)%x_int(i))
+          self%solution(pn, s)%fx_int(i) = interface_function(self%solution(pn, s)%x_int(i), o=2*self%ui%S(s)+2)
         enddo
       enddo
     enddo
   else
     do s=1, self%ui%S_number
       do pn=1, self%ui%pn_number
-        self%solution(pn, s)%Dx = 2 * pi / self%ui%points_number(pn)
-        ! compute the values used for the interpolation/reconstruction of cos function: cell values
+        self%solution(pn, s)%Dx = 1._R_P / self%ui%points_number(pn)
+        ! compute the values used for the interpolation/reconstruction of polynomials function: cell values
         do i=1 - self%ui%S(s), self%ui%points_number(pn) + self%ui%S(s)
           self%solution(pn, s)%x_cell(i) = i * self%solution(pn, s)%Dx - self%solution(pn, s)%Dx / 2._R_P
-          self%solution(pn, s)%fx_cell(i) = sin(self%solution(pn, s)%x_cell(i))
+          self%solution(pn, s)%fx_cell(i) = interface_function(x=self%solution(pn, s)%x_cell(i), o=2*self%ui%S(s)+2)
         enddo
         ! values to which the interpolation/reconstruction should tend
         do i = 1, self%ui%points_number(pn)
           self%solution(pn, s)%x_face(1,i) = self%solution(pn, s)%x_cell(i) - self%solution(pn, s)%Dx / 2._R_P
           self%solution(pn, s)%x_face(2,i) = self%solution(pn, s)%x_cell(i) + self%solution(pn, s)%Dx / 2._R_P
-          self%solution(pn, s)%fx_face(1,i) = sin(self%solution(pn, s)%x_face(1,i))
-          self%solution(pn, s)%fx_face(2,i) = sin(self%solution(pn, s)%x_face(2,i))
-          self%solution(pn, s)%dfx_cell(i) = cos(self%solution(pn, s)%x_cell(i))
+          self%solution(pn, s)%fx_face(1,i) = interface_function(self%solution(pn, s)%x_face(1,i), o=2*self%ui%S(s)+2)
+          self%solution(pn, s)%fx_face(2,i) = interface_function(self%solution(pn, s)%x_face(2,i), o=2*self%ui%S(s)+2)
+          self%solution(pn, s)%dfx_cell(i) = dinterface_function_dx(self%solution(pn, s)%x_cell(i), o=2*self%ui%S(s)+2)
         enddo
       enddo
     enddo
@@ -214,24 +212,24 @@ contains
   call self%compute_reference_solution
   if (self%ui%interpolate) then
     do s=1, self%ui%S_number
-      call wenoof_create(interpolator_type='interpolator-'//trim(adjustl(self%ui%interpolator_type)), &
-                         S=self%ui%S(s),                                                              &
-                         x_target=self%ui%x_target,                                                   &
-                         interpolator=interpolator,                                                   &
-                         eps=self%ui%eps)
-      if (self%ui%verbose) print '(A)', interpolator%description()
-      allocate(stencil_i(1-self%ui%S(s):-1+self%ui%S(s)))
-      do pn=1, self%ui%pn_number
-        do i=1, self%ui%points_number(pn)
-          stencil_i(:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))
-          call interpolator%interpolate(stencil=stencil_i,                                   &
-                                        interpolation=self%solution(pn, s)%interpolation(i), &
-                                        si=self%solution(pn, s)%si_i(i, 0:self%ui%S(s)-1),   &
-                                        weights=self%solution(pn, s)%weights_i(i, 0:self%ui%S(s)-1))
-        enddo
+    call wenoof_create(interpolator_type='interpolator-'//trim(adjustl(self%ui%interpolator_type)), &
+                       S=self%ui%S(s),                                                              &
+                       x_target=0.3_R_P,                                                            &
+                       interpolator=interpolator,                                                   &
+                       eps=self%ui%eps)
+    if (self%ui%verbose) print '(A)', interpolator%description()
+    allocate(stencil_i(1-self%ui%S(s):-1+self%ui%S(s)))
+    do pn=1, self%ui%pn_number
+      do i=1, self%ui%points_number(pn)
+        stencil_i(:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))
+        call interpolator%interpolate(stencil=stencil_i,                                   &
+                                      interpolation=self%solution(pn, s)%interpolation(i), &
+                                      si=self%solution(pn, s)%si_i(i, 0:self%ui%S(s)-1),   &
+                                      weights=self%solution(pn, s)%weights_i(i, 0:self%ui%S(s)-1))
       enddo
-      deallocate(stencil_i)
     enddo
+    deallocate(stencil_i)
+  enddo
   else
     do s=1, self%ui%S_number
       call wenoof_create(interpolator_type='reconstructor-'//trim(adjustl(self%ui%interpolator_type)), &
@@ -275,61 +273,62 @@ contains
 
   output_dir = trim(adjustl(self%ui%output_dir))//'/'
   if (self%ui%results.or.self%ui%plots) call execute_command_line('mkdir -p '//output_dir)
+
   if (self%ui%interpolate) then
     file_bname = output_dir//trim(adjustl(self%ui%output_bname))//'-interpolator-'//trim(adjustl(self%ui%interpolator_type))
-    if (self%ui%results) then
-      do s=1, self%ui%S_number
-        do pn=1, self%ui%pn_number
-          open(newunit=file_unit, file=file_bname//'-S_'//trim(str(self%ui%S(s), .true.))//&
-                                       '-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.dat')
-          buffer = 'VARIABLES = "x" "sin(x)" "x_int" "sin(x)_int" "interpolation"'
-          do ss=0, self%ui%S(s)-1
-            buffer = buffer//' "si-'//trim(str(ss, .true.))
-          enddo
-          do ss=0, self%ui%S(s)-1
-            buffer = buffer//' "W-'//trim(str(ss, .true.))
-          enddo
-          write(file_unit, "(A)") buffer
-          write(file_unit, "(A)") 'ZONE T = "'//'S_'//trim(str(self%ui%S(s), .true.))//&
-                                                '-Np_'//trim(str(self%ui%points_number(pn), .true.))//'"'
-          associate(x_cell        => self%solution(pn, s)%x_cell,         &
-                    fx_cell       => self%solution(pn, s)%fx_cell,        &
-                    x_int         => self%solution(pn, s)%x_int,          &
-                    fx_int        => self%solution(pn, s)%fx_int,         &
-                    interpolation => self%solution(pn, s)%interpolation,  &
-                    si            => self%solution(pn, s)%si_i,           &
-                    weights       => self%solution(pn, s)%weights_i,      &
-                    Dx            => self%solution(pn, s)%Dx)
-            do i = 1, self%ui%points_number(pn)
-              write(file_unit, "("//trim(str(5+2*self%ui%S(s), .true.))//"("//FR_P//",1X))") &
-                 x_cell(i),                                                                  &
-                 fx_cell(i),                                                                 &
-                 x_int(i),                                                                   &
-                 fx_int(i),                                                                  &
-                 interpolation(i),                                                           &
-                (si(i, ss), ss=0, self%ui%S(s)-1),                                           &
-                (weights(i, ss), ss=0, self%ui%S(s)-1)
-            enddo
-          endassociate
-          close(file_unit)
-        enddo
-      enddo
-
-      if (self%ui%errors_analysis.and.self%ui%pn_number>1) then
-        open(newunit=file_unit, file=file_bname//'-accuracy.dat')
-        write(file_unit, "(A)") 'VARIABLES = "S" "Np" "error (L2)" "observed order" "formal order"'
+      if (self%ui%results) then
         do s=1, self%ui%S_number
           do pn=1, self%ui%pn_number
-            write(file_unit, "(2(I5,1X),"//FR_P//",1X,F5.2,1X,I3)") self%ui%S(s),                  &
-                                                                    self%ui%points_number(pn),     &
-                                                                    self%solution(pn, s)%error_L2, &
-                                                                    self%accuracy(pn, s),          &
-                                                                    2*self%ui%S(s)-1
+            open(newunit=file_unit, file=file_bname//'-S_'//trim(str(self%ui%S(s), .true.))//&
+                                         '-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.dat')
+            buffer = 'VARIABLES = "x" "f(x)" "x_int" "f(x)_int" "interpolation"'
+            do ss=0, self%ui%S(s)-1
+              buffer = buffer//' "si-'//trim(str(ss, .true.))
+            enddo
+            do ss=0, self%ui%S(s)-1
+              buffer = buffer//' "W-'//trim(str(ss, .true.))
+            enddo
+            write(file_unit, "(A)") buffer
+            write(file_unit, "(A)") 'ZONE T = "'//'S_'//trim(str(self%ui%S(s), .true.))//&
+                                                  '-Np_'//trim(str(self%ui%points_number(pn), .true.))//'"'
+            associate(x_cell        => self%solution(pn, s)%x_cell,        &
+                      fx_cell       => self%solution(pn, s)%fx_cell,       &
+                      x_int         => self%solution(pn, s)%x_int,         &
+                      fx_int        => self%solution(pn, s)%fx_int,        &
+                      interpolation => self%solution(pn, s)%interpolation, &
+                      si            => self%solution(pn, s)%si_i,          &
+                      weights       => self%solution(pn, s)%weights_i,     &
+                      Dx            => self%solution(pn, s)%Dx)
+              do i = 1, self%ui%points_number(pn)
+                write(file_unit, "("//trim(str(5+2*self%ui%S(s), .true.))//"("//FR_P//",1X))") &
+                   x_cell(i),                                                                  &
+                   fx_cell(i),                                                                 &
+                   x_int(i),                                                                   &
+                   fx_int(i),                                                                  &
+                   interpolation(i),                                                           &
+                  (si(i, ss), ss=0, self%ui%S(s)-1),                                           &
+                  (weights(i, ss), ss=0, self%ui%S(s)-1)
+              enddo
+            endassociate
+            close(file_unit)
           enddo
         enddo
-        close(file_unit)
+
+        if (self%ui%errors_analysis.and.self%ui%pn_number>1) then
+          open(newunit=file_unit, file=file_bname//'-accuracy.dat')
+          write(file_unit, "(A)") 'VARIABLES = "S" "Np" "error (L2)" "observed order" "formal order"'
+          do s=1, self%ui%S_number
+            do pn=1, self%ui%pn_number
+              write(file_unit, "(2(I5,1X),"//FR_P//",1X,F5.2,1X,I3)") self%ui%S(s),                  &
+                                                                      self%ui%points_number(pn),     &
+                                                                      self%solution(pn, s)%error_L2, &
+                                                                      self%accuracy(pn, s),          &
+                                                                      2*self%ui%S(s)-1
+            enddo
+          enddo
+          close(file_unit)
+        endif
       endif
-    endif
   else
     file_bname = output_dir//trim(adjustl(self%ui%output_bname))//'-reconstructor-'//trim(adjustl(self%ui%interpolator_type))
     if (self%ui%results) then
@@ -337,8 +336,8 @@ contains
         do pn=1, self%ui%pn_number
           open(newunit=file_unit, file=file_bname//'-S_'//trim(str(self%ui%S(s), .true.))//&
                                        '-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.dat')
-          buffer = 'VARIABLES = "x" "sin(x)" "cos(x)" "x_left" "x_right" "sin(x)_left" "sin(x)_right"'
-          buffer = buffer//' "reconstruction_left" "reconstruction_right" "cos_reconstruction"'
+          buffer = 'VARIABLES = "x" "f(x)" "df_dx(x)" "x_left" "x_right" "f(x)_left" "f(x)_right"'
+          buffer = buffer//' "reconstruction_left" "reconstruction_right" "df_dx_reconstruction"'
           do ss=0, self%ui%S(s)-1
             buffer = buffer//' "si-'//trim(str(ss, .true.))//'_left"'//' "si-'//trim(str(ss, .true.))//'_right"'
           enddo
@@ -398,12 +397,12 @@ contains
     if (self%ui%interpolate) then
       do s=1, self%ui%S_number
         do pn=1, self%ui%pn_number
-          buffer = 'WENO interpolation of $\sin(x)$; '//&
+          buffer = 'WENO interpolation of polynomial function; '//&
                    'S='//trim(str(self%ui%S(s), .true.))//'Np='//trim(str(self%ui%points_number(pn), .true.))
-          call plt%initialize(grid=.true., xlabel='angle (rad)', title=buffer, legend=.true.)
+          call plt%initialize(grid=.true., xlabel='x (m)', title=buffer, legend=.true.)
           call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%ui%points_number(pn)), &
                             y=self%solution(pn, s)%fx_cell(:),                          &
-                            label='$\sin(x)$',                                          &
+                            label='polynom',                                            &
                             linestyle='k-',                                             &
                             linewidth=2,                                                &
                             ylim=[-1.1_R_P, 1.1_R_P])
@@ -420,20 +419,20 @@ contains
     else
       do s=1, self%ui%S_number
         do pn=1, self%ui%pn_number
-          buffer = 'WENO reconstruction of $d \sin(x)/Dx=\cos(x)$; '//&
+          buffer = 'WENO reconstruction of $d \p(x)/Dx; '//&
                    'S='//trim(str(self%ui%S(s), .true.))//'Np='//trim(str(self%ui%points_number(pn), .true.))
-          call plt%initialize(grid=.true., xlabel='angle (rad)', title=buffer, legend=.true.)
-          call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%ui%points_number(pn)), &
-                            y=self%solution(pn, s)%dfx_cell(:),                         &
-                            label='$\cos(x)$',                                          &
-                            linestyle='k-',                                             &
-                            linewidth=2,                                                &
+          call plt%initialize(grid=.true., xlabel='x (m)', title=buffer, legend=.true.)
+          call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%ui%points_number(pn)),  &
+                            y=self%solution(pn, s)%dfx_cell(:),                          &
+                            label='dp',                                                  &
+                            linestyle='k-',                                              &
+                            linewidth=2,                                                 &
                             ylim=[-1.1_R_P, 1.1_R_P])
-          call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%ui%points_number(pn)),                            &
-                            y=self%solution(pn, s)%reconstruction(:),                                              &
-                            label='WENO reconstruction',                                                           &
-                            linestyle='ro',                                                                        &
-                            markersize=6,                                                                          &
+          call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%ui%points_number(pn)),  &
+                            y=self%solution(pn, s)%reconstruction(:),                    &
+                            label='WENO reconstruction',                                 &
+                            linestyle='ro',                                              &
+                            markersize=6,                                                &
                             ylim=[-1.1_R_P, 1.1_R_P])
           call plt%savefig(file_bname//&
                            '-S_'//trim(str(self%ui%S(s), .true.))//'-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.png')
@@ -501,15 +500,42 @@ contains
     endif
   endif
   endsubroutine analize_errors
-endmodule sin_test_module
 
-program sin_test_program
-!< WenOOF test: interpolation or reconstruction of sine function.
+  ! non TBP
+  pure function interface_function(x, o) result(y)
+  !< Interface function.
+  real(R_P),    intent(in) :: x !< X value.
+  integer(I_P), intent(in) :: o !< Polynomial order.
+  real(R_P)                :: y !< Y value.
+  integer(I_P)             :: i !< Counter.
 
-use sin_test_module
+  y = 0._R_P
+  do i=1, o
+    y = y + i * (x ** i)
+  enddo
+  endfunction interface_function
+
+  pure function dinterface_function_dx(x, o) result(y)
+  !< Derivative of interface function.
+  real(R_P),    intent(in) :: x !< X value.
+  integer(I_P), intent(in) :: o !< Polynomial order.
+  real(R_P)                :: y !< Y value.
+  integer(I_P)             :: i !< Counter.
+
+  y = 0._R_P
+  do i=1, o
+    y = y + i * i * (x ** (i - 1))
+  enddo
+  endfunction dinterface_function_dx
+endmodule wenoof_test_polynoms_module
+
+program wenoof_test_polynoms
+!< WenOOF test: interpolation of polynomial functions.
+
+use wenoof_test_polynoms_module
 
 implicit none
-type(test) :: sin_test
+type(test) :: polynoms_test
 
-call sin_test%execute
-endprogram sin_test_program
+call polynoms_test%execute
+endprogram wenoof_test_polynoms
