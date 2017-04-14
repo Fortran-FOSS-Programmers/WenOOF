@@ -46,9 +46,9 @@ function projectdownload () {
   fi
 
   if [ "$DOWNLOAD" == "git" ]; then
-    git clone --recursive $GITHUB
+    git clone $GITHUB
     cd $PROJECT
-    git submodule update --init --recursive
+    git submodule update --init
     cd -
   elif [ "$DOWNLOAD" == "wget" ]; then
     wget $(curl -s https://api.github.com/repos/$USERNAME/$PROJECT/releases/latest | grep 'browser_' | cut -d\" -f4)
