@@ -40,15 +40,16 @@ type, extends(integrand) :: linear_advection_object
    !<```
    !< Where *Ni* are the finite volumes (cells) used for discretizing the domain and *Ng* are the ghost cells used for imposing the
    !< left and right boundary conditions (for a total of *2Ng* cells).
-   integer(I_P)                            :: weno_order=0 !< WENO reconstruction order.
-   integer(I_P)                            :: Ni=0         !< Space dimension.
-   integer(I_P)                            :: Ng=0         !< Ghost cells number.
-   real(R_P)                               :: Dx=0._R_P    !< Space step.
-   real(R_P)                               :: a=0._R_P     !< Advection coefficient.
-   real(R_P), allocatable                  :: u(:)         !< Integrand (state) variable.
-   character(:), allocatable               :: BC_L         !< Left boundary condition type.
-   character(:), allocatable               :: BC_R         !< Right boundary condition type.
-   class(interpolator_object), allocatable :: interpolator !< WENO interpolator.
+   integer(I_P)                            :: weno_order=0           !< WENO reconstruction order.
+   real(R_P)                               :: weno_eps=10._R_P**(-6) !< WENO epsilon to avoid division by zero, default value.
+   integer(I_P)                            :: Ni=0                   !< Space dimension.
+   integer(I_P)                            :: Ng=0                   !< Ghost cells number.
+   real(R_P)                               :: Dx=0._R_P              !< Space step.
+   real(R_P)                               :: a=0._R_P               !< Advection coefficient.
+   real(R_P), allocatable                  :: u(:)                   !< Integrand (state) variable.
+   character(:), allocatable               :: BC_L                   !< Left boundary condition type.
+   character(:), allocatable               :: BC_R                   !< Right boundary condition type.
+   class(interpolator_object), allocatable :: interpolator           !< WENO interpolator.
    contains
       ! auxiliary methods
       procedure, pass(self) :: initialize       !< Initialize field.
@@ -98,7 +99,8 @@ contains
    self%BC_L = BC_L
    self%BC_R = BC_R
 
-   if (self%weno_order>1) call wenoof_create(interpolator_type=trim(adjustl(s_scheme)), S=self%Ng, interpolator=self%interpolator)
+   if (self%weno_order>1) call wenoof_create(interpolator_type=trim(adjustl(s_scheme)), S=self%Ng, interpolator=self%interpolator, &
+                                             eps=self%weno_eps)
    endsubroutine initialize
 
    pure subroutine destroy(self)
@@ -428,6 +430,7 @@ implicit none
 character(len=99)                          :: s_scheme                   !< Space scheme.
 character(len=99)                          :: t_scheme                   !< Time scheme.
 integer(I_P)                               :: weno_order                 !< WENO reconstruction order.
+real(R_P)                                  :: weno_eps                   !< WENO epsilon value.
 integer(I_P)                               :: stages                     !< Number of stages.
 type(integrator_runge_kutta_lssp)          :: rk_integrator              !< Runge-Kutta integrator.
 type(linear_advection_object), allocatable :: rk_stage(:)                !< Runge-Kutta stages.
@@ -505,6 +508,7 @@ contains
    call cli%add(switch='--s-scheme', help='space intergation scheme', required=.false., act='store', def='reconstructor-JS', &
      choices='reconstructor-JS,reconstructor-M-JS,reconstructor-M-Z,reconstructor-Z')
    call cli%add(switch='--weno-order', help='WENO order', required=.false., act='store', def='1')
+   call cli%add(switch='--weno-eps', help='WENO epsilon parameter', required=.false., act='store', def='0.000001')
    call cli%add(switch='--t-scheme', help='time intergation scheme', required=.false., act='store', &
                 def='runge_kutta_lssp_stages_s_order_s_1',                                          &
                 choices='runge_kutta_lssp_stages_s_order_s_1,runge_kutta_lssp_stages_s_order_s')
@@ -519,6 +523,7 @@ contains
    call cli%get(switch='--t-max',      val=t_max,      error=error) ; if (error/=0) stop
    call cli%get(switch='--s-scheme',   val=s_scheme,   error=error) ; if (error/=0) stop
    call cli%get(switch='--weno-order', val=weno_order, error=error) ; if (error/=0) stop
+   call cli%get(switch='--weno-eps',   val=weno_eps,   error=error) ; if (error/=0) stop
    call cli%get(switch='--t-scheme',   val=t_scheme,   error=error) ; if (error/=0) stop
    call cli%get(switch='--stages',     val=stages,     error=error) ; if (error/=0) stop
    call cli%get(switch='--cfl',        val=CFL,        error=error) ; if (error/=0) stop
