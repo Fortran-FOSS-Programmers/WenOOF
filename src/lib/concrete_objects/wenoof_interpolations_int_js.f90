@@ -185,7 +185,7 @@ contains
         endselect
       elseif(x_target==0.5_R_P) then
         ! right interface (i+1/2)
-        select case(self%S)
+        select case(S)
           case(2) ! 3rd order
             !  cell  1      ;    cell  0
             c(1,0)= -0.5_R_P; c(0,0)=  1.5_R_P ! stencil 0
