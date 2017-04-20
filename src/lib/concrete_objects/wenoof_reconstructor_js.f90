@@ -135,7 +135,7 @@ contains
   class(reconstructor_js), intent(in)  :: self                              !< Reconstructor.
   real(R_P),               intent(in)  :: stencil(1:, 1 - self%S:)          !< Stencil of the interpolation [1:2, 1-S:-1+S].
   real(R_P),               intent(out) :: interpolation(1:)                 !< Result of the interpolation, [1:2].
-  real(R_P),               intent(out) :: si(1:, 0:)                        !< Computed values of smoothness indicators [1:2, 0:S-1].
+  real(R_P),               intent(out) :: si(1:, 0:)                        !< Computed values of SI [1:2, 0:S-1].
   real(R_P),               intent(out) :: weights(1:, 0:)                   !< Weights of the stencils, [1:2, 0:S-1].
   real(R_P)                            :: interpolations(1:2, 0:self%S - 1) !< Stencils interpolations.
   integer(I_P)                         :: f, s                              !< Counters.
