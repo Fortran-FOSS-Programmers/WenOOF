@@ -4,7 +4,7 @@ module wenoof_interpolator_js
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P, str
-use wenoof_base_object, only : base_object_constructor
+use wenoof_base_object, only : base_object, base_object_constructor
 use wenoof_interpolations_factory, only : interpolations_factory
 use wenoof_interpolations_object, only : interpolations_object
 use wenoof_interpolator_object, only : interpolator_object, interpolator_object_constructor
@@ -37,6 +37,7 @@ type, extends(interpolator_object) :: interpolator_js
     procedure, pass(self) :: interpolate_int_standard !< Interpolate values (without providing debug values, interpolate).
     procedure, pass(self) :: interpolate_rec_debug    !< Interpolate values (providing also debug values, reconstruct).
     procedure, pass(self) :: interpolate_rec_standard !< Interpolate values (without providing debug values, reconstruct).
+    procedure, pass(lhs)  :: object_assign_object     !< `=` operator.
 endtype interpolator_js
 
 contains
@@ -133,4 +134,27 @@ contains
   real(R_P),              intent(out) :: interpolation(1:)        !< Result of the interpolation, [1:2].
   ! empty procedure
   endsubroutine interpolate_rec_standard
+
+  subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(interpolator_js), intent(inout) :: lhs !< Left hand side.
+  class(base_object),     intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(interpolator_js)
+     if (allocated(rhs%interpolations)) then
+        if (.not.allocated(lhs%interpolations)) allocate(lhs%interpolations, mold=rhs%interpolations)
+        lhs%interpolations = rhs%interpolations
+     else
+        if (allocated(lhs%interpolations)) deallocate(lhs%interpolations)
+     endif
+     if (allocated(rhs%weights)) then
+        if (.not.allocated(lhs%weights)) allocate(lhs%weights, mold=rhs%weights)
+        lhs%weights = rhs%weights
+     else
+        if (allocated(lhs%weights)) deallocate(lhs%weights)
+     endif
+  endselect
+  endsubroutine object_assign_object
 endmodule wenoof_interpolator_js

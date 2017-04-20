@@ -7,7 +7,7 @@ module wenoof_beta_int_js
 !< doi:10.1137/070679065.
 
 use penf, only : I_P, R_P, str
-use wenoof_base_object, only : base_object_constructor
+use wenoof_base_object, only : base_object, base_object_constructor
 use wenoof_beta_object, only : beta_object, beta_object_constructor
 
 implicit none
@@ -29,11 +29,12 @@ type, extends(beta_object) :: beta_int_js
   real(R_P), allocatable :: coef(:,:,:) !< Beta coefficients [0:S-1,0:S-1,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create beta.
-    procedure, pass(self) :: compute_int !< Compute beta (interpolate).
-    procedure, pass(self) :: compute_rec !< Compute beta (reconstruct).
-    procedure, pass(self) :: description !< Return object string-description.
-    procedure, pass(self) :: destroy     !< Destroy beta.
+    procedure, pass(self) :: create               !< Create beta.
+    procedure, pass(self) :: compute_int          !< Compute beta (interpolate).
+    procedure, pass(self) :: compute_rec          !< Compute beta (reconstruct).
+    procedure, pass(self) :: description          !< Return object string-description.
+    procedure, pass(self) :: destroy              !< Destroy beta.
+    procedure, pass(lhs)  :: object_assign_object !< `=` operator.
 endtype beta_int_js
 
 contains
@@ -2411,4 +2412,20 @@ contains
   call self%destroy_
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
+
+  subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(beta_int_js), intent(inout) :: lhs !< Left hand side.
+  class(base_object), intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(beta_int_js)
+     if (allocated(rhs%coef)) then
+        lhs%coef = rhs%coef
+     else
+        if (allocated(lhs%coef)) deallocate(lhs%coef)
+     endif
+  endselect
+  endsubroutine object_assign_object
 endmodule wenoof_beta_int_js

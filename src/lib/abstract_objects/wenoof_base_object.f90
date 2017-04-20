@@ -28,17 +28,28 @@ type, abstract :: base_object
   integer(I_P) :: S=0_I_P     !< Stencils dimension.
   real(R_P)    :: eps=EPS_DEF !< Small epsilon to avoid division by zero.
   contains
+    ! public operators
+    generic :: assignment(=) => object_assign_object !< `=` overloading.
     ! public deferred methods
-    procedure(create_interface),      pass(self), deferred :: create      !< Create object.
-    procedure(description_interface), pass(self), deferred :: description !< Return object string-description.
-    procedure(destroy_interface),     pass(self), deferred :: destroy     !< Destroy object.
+    procedure(create_interface),               pass(self), deferred :: create               !< Create object.
+    procedure(description_interface),          pass(self), deferred :: description          !< Return object string-description.
+    procedure(destroy_interface),              pass(self), deferred :: destroy              !< Destroy object.
+    procedure(object_assign_object_interface), pass(lhs),  deferred :: object_assign_object !< `=` operator.
     ! public non overridable methods
+    procedure, pass(lhs),  non_overridable :: assign_  !< Assign object.
     procedure, pass(self), non_overridable :: create_  !< Create object.
     procedure, pass(self), non_overridable :: destroy_ !< Destroy object.
 endtype base_object
 
 abstract interface
   !< Abstract interfaces of [[base_object]].
+  subroutine object_assign_object_interface(lhs, rhs)
+  !< `=` operator.
+  import :: base_object
+  class(base_object), intent(inout) :: lhs !< Left hand side.
+  class(base_object), intent(in)    :: rhs !< Right hand side.
+  endsubroutine object_assign_object_interface
+
   subroutine create_interface(self, constructor)
   !< Create object.
   !<
@@ -80,6 +91,15 @@ contains
   ! base object
 
   ! public non overridable methods
+  subroutine assign_(lhs, rhs)
+  !< Assign object.
+  class(base_object), intent(inout) :: lhs !< Left hand side.
+  class(base_object), intent(in)    :: rhs !< Right hand side.
+
+  lhs%S = rhs%S
+  lhs%eps = rhs%eps
+  endsubroutine assign_
+
   subroutine create_(self, constructor)
   !< Create object.
   class(base_object),             intent(inout) :: self        !< Object.

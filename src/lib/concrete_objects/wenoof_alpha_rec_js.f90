@@ -7,7 +7,7 @@ module wenoof_alpha_rec_js
 
 use penf, only : I_P, R_P, str
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
-use wenoof_base_object, only : base_object_constructor
+use wenoof_base_object, only : base_object, base_object_constructor
 
 implicit none
 private
@@ -25,11 +25,12 @@ type, extends(alpha_object) :: alpha_rec_js
   !< ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create alpha.
-    procedure, pass(self) :: compute_int !< Compute alpha (interpolate).
-    procedure, pass(self) :: compute_rec !< Compute alpha (reconstruct).
-    procedure, pass(self) :: description !< Return object string-description.
-    procedure, pass(self) :: destroy     !< Destroy alpha.
+    procedure, pass(self) :: create               !< Create alpha.
+    procedure, pass(self) :: compute_int          !< Compute alpha (interpolate).
+    procedure, pass(self) :: compute_rec          !< Compute alpha (reconstruct).
+    procedure, pass(self) :: description          !< Return object string-description.
+    procedure, pass(self) :: destroy              !< Destroy alpha.
+    procedure, pass(lhs)  :: object_assign_object !< `=` operator.
 endtype alpha_rec_js
 
 contains
@@ -87,4 +88,12 @@ contains
 
   call self%destroy_
   endsubroutine destroy
+
+  subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(alpha_rec_js), intent(inout) :: lhs !< Left hand side.
+  class(base_object),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  endsubroutine object_assign_object
 endmodule wenoof_alpha_rec_js

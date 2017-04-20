@@ -8,7 +8,7 @@ module wenoof_kappa_rec_js
 !< doi:10.1016/j.jcp.2009.07.039
 
 use penf, only : I_P, R_P, str
-use wenoof_base_object, only : base_object_constructor
+use wenoof_base_object, only : base_object, base_object_constructor
 use wenoof_kappa_object, only : kappa_object, kappa_object_constructor
 
 implicit none
@@ -30,11 +30,12 @@ type, extends(kappa_object):: kappa_rec_js
   real(R_P), allocatable :: values(:,:) !< Kappa coefficients values [1:2,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create kappa.
-    procedure, pass(self) :: compute_int !< Compute kappa (interpolate).
-    procedure, pass(self) :: compute_rec !< Compute kappa (reconstruct).
-    procedure, pass(self) :: description !< Return object string-description.
-    procedure, pass(self) :: destroy     !< Destroy kappa.
+    procedure, pass(self) :: create               !< Create kappa.
+    procedure, pass(self) :: compute_int          !< Compute kappa (interpolate).
+    procedure, pass(self) :: compute_rec          !< Compute kappa (reconstruct).
+    procedure, pass(self) :: description          !< Return object string-description.
+    procedure, pass(self) :: destroy              !< Destroy kappa.
+    procedure, pass(lhs)  :: object_assign_object !< `=` operator.
 endtype kappa_rec_js
 
 contains
@@ -202,4 +203,20 @@ contains
   call self%destroy_
   if (allocated(self%values)) deallocate(self%values)
   endsubroutine destroy
+
+  subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(kappa_rec_js), intent(inout) :: lhs !< Left hand side.
+  class(base_object),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(kappa_rec_js)
+     if (allocated(rhs%values)) then
+        lhs%values = rhs%values
+     else
+        if (allocated(lhs%values)) deallocate(lhs%values)
+     endif
+  endselect
+  endsubroutine object_assign_object
 endmodule wenoof_kappa_rec_js

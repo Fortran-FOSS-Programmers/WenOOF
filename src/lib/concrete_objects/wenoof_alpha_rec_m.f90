@@ -10,7 +10,7 @@ use penf, only : I_P, R_P, str
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
 use wenoof_alpha_rec_js, only : alpha_rec_js, alpha_rec_js_constructor
 use wenoof_alpha_rec_z, only : alpha_rec_z, alpha_rec_z_constructor
-use wenoof_base_object, only : base_object_constructor
+use wenoof_base_object, only : base_object, base_object_constructor
 
 implicit none
 private
@@ -31,11 +31,12 @@ type, extends(alpha_object) :: alpha_rec_m
   class(alpha_object), allocatable :: alpha_base !< Base alpha to be re-mapped.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create alpha.
-    procedure, pass(self) :: compute_int !< Compute alpha (interpolate).
-    procedure, pass(self) :: compute_rec !< Compute alpha (reconstruct).
-    procedure, pass(self) :: description !< Return alpha string-description.
-    procedure, pass(self) :: destroy     !< Destroy alpha.
+    procedure, pass(self) :: create               !< Create alpha.
+    procedure, pass(self) :: compute_int          !< Compute alpha (interpolate).
+    procedure, pass(self) :: compute_rec          !< Compute alpha (reconstruct).
+    procedure, pass(self) :: description          !< Return alpha string-description.
+    procedure, pass(self) :: destroy              !< Destroy alpha.
+    procedure, pass(lhs)  :: object_assign_object !< `=` operator.
 endtype alpha_rec_m
 
 contains
@@ -128,4 +129,21 @@ contains
   call self%destroy_
   if (allocated(self%alpha_base)) deallocate(self%alpha_base)
   endsubroutine destroy
+
+  subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(alpha_rec_m), intent(inout) :: lhs !< Left hand side.
+  class(base_object), intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(alpha_rec_m)
+     if (allocated(rhs%alpha_base)) then
+        if (.not.allocated(lhs%alpha_base)) allocate(lhs%alpha_base, mold=rhs%alpha_base)
+        lhs%alpha_base = rhs%alpha_base
+     else
+        if (allocated(lhs%alpha_base)) deallocate(lhs%alpha_base)
+     endif
+  endselect
+  endsubroutine object_assign_object
 endmodule wenoof_alpha_rec_m

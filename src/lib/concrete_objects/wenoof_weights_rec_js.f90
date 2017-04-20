@@ -10,7 +10,7 @@ module wenoof_weights_rec_js
 use penf, only : I_P, R_P, str
 use wenoof_alpha_factory,  only : alpha_factory
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
-use wenoof_base_object, only : base_object_constructor
+use wenoof_base_object, only : base_object, base_object_constructor
 use wenoof_beta_factory, only : beta_factory
 use wenoof_beta_object, only : beta_object, beta_object_constructor
 use wenoof_kappa_factory, only : kappa_factory
@@ -49,6 +49,7 @@ type, extends(weights_object):: weights_rec_js
     procedure, pass(self) :: destroy                   !< Destroy weights.
     procedure, pass(self) :: smoothness_indicators_int !< Return smoothness indicators (interpolate).
     procedure, pass(self) :: smoothness_indicators_rec !< Return smoothness indicators (reconstruct).
+    procedure, pass(lhs)  :: object_assign_object      !< `=` operator.
 endtype weights_rec_js
 
 contains
@@ -144,4 +145,33 @@ contains
   real(R_P),              intent(out) :: si(:,:) !< Smoothness indicators.
   ! TODO implement this
   endsubroutine smoothness_indicators_rec
+
+  subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(weights_rec_js), intent(inout) :: lhs !< Left hand side.
+  class(base_object),    intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(weights_rec_js)
+     if (allocated(rhs%alpha)) then
+        if (.not.allocated(lhs%alpha)) allocate(lhs%alpha, mold=rhs%alpha)
+        lhs%alpha = rhs%alpha
+     else
+        if (allocated(lhs%alpha)) deallocate(lhs%alpha)
+     endif
+     if (allocated(rhs%beta)) then
+        if (.not.allocated(lhs%beta)) allocate(lhs%beta, mold=rhs%beta)
+        lhs%beta = rhs%beta
+     else
+        if (allocated(lhs%beta)) deallocate(lhs%beta)
+     endif
+     if (allocated(rhs%kappa)) then
+        if (.not.allocated(lhs%kappa)) allocate(lhs%kappa, mold=rhs%kappa)
+        lhs%kappa = rhs%kappa
+     else
+        if (allocated(lhs%kappa)) deallocate(lhs%kappa)
+     endif
+  endselect
+  endsubroutine object_assign_object
 endmodule wenoof_weights_rec_js
