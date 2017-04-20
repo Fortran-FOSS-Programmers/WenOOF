@@ -60,11 +60,15 @@ contains
   call constructor%create(S=S)
   select type(constructor)
   type is(interpolator_js_constructor)
-    allocate(constructor%interpolations_constructor, source=interpolations_constructor)
-    allocate(constructor%weights_constructor, source=weights_constructor)
+    allocate(constructor%interpolations_constructor, mold=interpolations_constructor)
+    constructor%interpolations_constructor = interpolations_constructor
+    allocate(constructor%weights_constructor, mold=weights_constructor)
+    constructor%weights_constructor = weights_constructor
   type is(reconstructor_js_constructor)
-    allocate(constructor%interpolations_constructor, source=interpolations_constructor)
-    allocate(constructor%weights_constructor, source=weights_constructor)
+    allocate(constructor%interpolations_constructor, mold=interpolations_constructor)
+    constructor%interpolations_constructor = interpolations_constructor
+    allocate(constructor%weights_constructor, mold=weights_constructor)
+    constructor%weights_constructor = weights_constructor
   endselect
   endsubroutine create_constructor
 endmodule wenoof_interpolator_factory

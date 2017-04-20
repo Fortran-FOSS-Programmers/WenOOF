@@ -328,7 +328,8 @@ contains
      if (allocated(rhs%BC_R)) lhs%BC_R = rhs%BC_R
      if (allocated(rhs%interpolator)) then
         if (allocated(lhs%interpolator)) deallocate(lhs%interpolator)
-        allocate(lhs%interpolator, source=rhs%interpolator)
+        allocate(lhs%interpolator, mold=rhs%interpolator)
+        lhs%interpolator = rhs%interpolator
      endif
   endselect
   endsubroutine advection_assign_advection

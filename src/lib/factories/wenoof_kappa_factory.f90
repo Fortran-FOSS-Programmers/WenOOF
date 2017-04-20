@@ -65,7 +65,8 @@ contains
     constructor%stencil = stencil
     constructor%x_target = x_target
     call constructor%create(S=S)
-    allocate(constructor%interpolations_constructor, source=interpolations_constructor)
+    allocate(constructor%interpolations_constructor, mold=interpolations_constructor)
+    constructor%interpolations_constructor = interpolations_constructor
   endselect
   endsubroutine create_constructor_int
 endmodule wenoof_kappa_factory
