@@ -8,7 +8,7 @@ module wenoof_interpolations_rec_js
 !< doi:10.1016/j.jcp.2009.07.039
 
 use penf, only : I_P, R_P, str
-use wenoof_base_object, only : base_object_constructor
+use wenoof_base_object, only : base_object, base_object_constructor
 use wenoof_interpolations_object, only : interpolations_object, interpolations_object_constructor
 
 implicit none
@@ -18,6 +18,9 @@ public :: interpolations_rec_js_constructor
 
 type, extends(interpolations_object_constructor) :: interpolations_rec_js_constructor
   !< Jiang-Shu (Lagrange) interpolations object for derivative reconstruction constructor.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype interpolations_rec_js_constructor
 
 type, extends(interpolations_object) :: interpolations_rec_js
@@ -31,14 +34,26 @@ type, extends(interpolations_object) :: interpolations_rec_js
   real(R_P), allocatable :: coef(:,:,:) !< Polynomial coefficients [1:2,0:S-1,0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create interpolations.
-    procedure, pass(self) :: compute_int !< Compute interpolations (interpolate).
-    procedure, pass(self) :: compute_rec !< Compute interpolations (reconstruct).
-    procedure, pass(self) :: description !< Return object string-description.
-    procedure, pass(self) :: destroy     !< Destroy interpolations.
+    procedure, pass(self) :: create               !< Create interpolations.
+    procedure, pass(self) :: compute_int          !< Compute interpolations (interpolate).
+    procedure, pass(self) :: compute_rec          !< Compute interpolations (reconstruct).
+    procedure, pass(self) :: description          !< Return object string-description.
+    procedure, pass(self) :: destroy              !< Destroy interpolations.
+    procedure, pass(lhs)  :: object_assign_object !< `=` operator.
 endtype interpolations_rec_js
 
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(interpolations_rec_js_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor),           intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  endsubroutine constr_assign_constr
+
   ! public deferred methods
   subroutine create(self, constructor)
   !< Create interpolations.
@@ -363,4 +378,20 @@ contains
   call self%destroy_
   if (allocated(self%coef)) deallocate(self%coef)
   endsubroutine destroy
+
+  subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(interpolations_rec_js), intent(inout) :: lhs !< Left hand side.
+  class(base_object),           intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(interpolations_rec_js)
+     if (allocated(rhs%coef)) then
+        lhs%coef = rhs%coef
+     else
+        if (allocated(lhs%coef)) deallocate(lhs%coef)
+     endif
+  endselect
+  endsubroutine object_assign_object
 endmodule wenoof_interpolations_rec_js

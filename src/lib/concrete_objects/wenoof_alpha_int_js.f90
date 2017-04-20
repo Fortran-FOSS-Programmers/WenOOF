@@ -7,7 +7,7 @@ module wenoof_alpha_int_js
 
 use penf, only : I_P, R_P, str
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
-use wenoof_base_object, only : base_object_constructor
+use wenoof_base_object, only : base_object, base_object_constructor
 
 implicit none
 private
@@ -16,6 +16,9 @@ public :: alpha_int_js_constructor
 
 type, extends(alpha_object_constructor) :: alpha_int_js_constructor
   !< Jiang-Shu alpha object constructor.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype alpha_int_js_constructor
 
 type, extends(alpha_object) :: alpha_int_js
@@ -25,14 +28,26 @@ type, extends(alpha_object) :: alpha_int_js
   !< ENO Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create alpha.
-    procedure, pass(self) :: compute_int !< Compute alpha (interpolate).
-    procedure, pass(self) :: compute_rec !< Compute alpha (reconstruct).
-    procedure, pass(self) :: description !< Return object string-description.
-    procedure, pass(self) :: destroy     !< Destroy alpha.
+    procedure, pass(self) :: create               !< Create alpha.
+    procedure, pass(self) :: compute_int          !< Compute alpha (interpolate).
+    procedure, pass(self) :: compute_rec          !< Compute alpha (reconstruct).
+    procedure, pass(self) :: description          !< Return object string-description.
+    procedure, pass(self) :: destroy              !< Destroy alpha.
+    procedure, pass(lhs)  :: object_assign_object !< `=` operator.
 endtype alpha_int_js
 
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(alpha_int_js_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  endsubroutine constr_assign_constr
+
   ! deferred public methods
   subroutine create(self, constructor)
   !< Create alpha.
@@ -85,4 +100,12 @@ contains
 
   call self%destroy_
   endsubroutine destroy
+
+  subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(alpha_int_js), intent(inout) :: lhs !< Left hand side.
+  class(base_object),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  endsubroutine object_assign_object
 endmodule wenoof_alpha_int_js

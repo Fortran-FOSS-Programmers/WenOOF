@@ -74,13 +74,19 @@ contains
   call constructor%create(S=S)
   select type(constructor)
   type is(weights_int_js_constructor)
-    allocate(constructor%alpha_constructor, source=alpha_constructor)
-    allocate(constructor%beta_constructor, source=beta_constructor)
-    allocate(constructor%kappa_constructor, source=kappa_constructor)
+    allocate(constructor%alpha_constructor, mold=alpha_constructor)
+    constructor%alpha_constructor = alpha_constructor
+    allocate(constructor%beta_constructor, mold=beta_constructor)
+    constructor%beta_constructor = beta_constructor
+    allocate(constructor%kappa_constructor, mold=kappa_constructor)
+    constructor%kappa_constructor = kappa_constructor
   type is(weights_rec_js_constructor)
-    allocate(constructor%alpha_constructor, source=alpha_constructor)
-    allocate(constructor%beta_constructor, source=beta_constructor)
-    allocate(constructor%kappa_constructor, source=kappa_constructor)
+    allocate(constructor%alpha_constructor, mold=alpha_constructor)
+    constructor%alpha_constructor = alpha_constructor
+    allocate(constructor%beta_constructor, mold=beta_constructor)
+    constructor%beta_constructor = beta_constructor
+    allocate(constructor%kappa_constructor, mold=kappa_constructor)
+    constructor%kappa_constructor = kappa_constructor
   endselect
   endsubroutine create_constructor
 endmodule wenoof_weights_factory

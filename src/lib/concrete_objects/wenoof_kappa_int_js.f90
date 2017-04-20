@@ -7,7 +7,7 @@ module wenoof_kappa_int_js
 !< doi:10.1137/070679065.
 
 use penf, only : I_P, R_P, str
-use wenoof_base_object, only : base_object_constructor
+use wenoof_base_object, only : base_object, base_object_constructor
 use wenoof_interpolations_factory, only : interpolations_factory
 use wenoof_interpolations_object, only : interpolations_object, interpolations_object_constructor
 use wenoof_interpolations_int_js, only : interpolations_int_js
@@ -23,6 +23,9 @@ type, extends(kappa_object_constructor) :: kappa_int_js_constructor
   class(interpolations_object_constructor), allocatable :: interpolations_constructor !< Interpolations coefficients constructor.
   real(R_P), allocatable                                :: stencil(:)                 !< Stencil used for interpolation, [1-S:S-1].
   real(R_P)                                             :: x_target                   !< Coordinate of the interpolation point.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype kappa_int_js_constructor
 
 type, extends(kappa_object):: kappa_int_js
@@ -35,14 +38,42 @@ type, extends(kappa_object):: kappa_int_js
   real(R_P),                    allocatable :: values(:)      !< Kappa coefficients values [0:S-1].
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create kappa.
-    procedure, pass(self) :: compute_int !< Compute kappa (interpolate).
-    procedure, pass(self) :: compute_rec !< Compute kappa (reconstruct).
-    procedure, pass(self) :: description !< Return object string-description.
-    procedure, pass(self) :: destroy     !< Destroy kappa.
+    procedure, pass(self) :: create               !< Create kappa.
+    procedure, pass(self) :: compute_int          !< Compute kappa (interpolate).
+    procedure, pass(self) :: compute_rec          !< Compute kappa (reconstruct).
+    procedure, pass(self) :: description          !< Return object string-description.
+    procedure, pass(self) :: destroy              !< Destroy kappa.
+    procedure, pass(lhs)  :: object_assign_object !< `=` operator.
 endtype kappa_int_js
 
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(kappa_int_js_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(kappa_int_js_constructor)
+     if (allocated(rhs%interpolations_constructor)) then
+        if (.not.allocated(lhs%interpolations_constructor)) &
+           allocate(lhs%interpolations_constructor, mold=rhs%interpolations_constructor)
+           lhs%interpolations_constructor = rhs%interpolations_constructor
+     else
+        if (allocated(lhs%interpolations_constructor)) deallocate(lhs%interpolations_constructor)
+     endif
+     if (allocated(rhs%stencil)) then
+           lhs%stencil = rhs%stencil
+     else
+        if (allocated(lhs%stencil)) deallocate(lhs%stencil)
+     endif
+     lhs%x_target = rhs%x_target
+  endselect
+  endsubroutine constr_assign_constr
+
   ! deferred public methods
   subroutine create(self, constructor)
   !< Create kappa.
@@ -252,4 +283,26 @@ contains
   call self%destroy_
   if (allocated(self%values)) deallocate(self%values)
   endsubroutine destroy
+
+  subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(kappa_int_js), intent(inout) :: lhs !< Left hand side.
+  class(base_object),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(kappa_int_js)
+     if (allocated(rhs%interpolations)) then
+        if (.not.allocated(lhs%interpolations)) allocate(lhs%interpolations, mold=rhs%interpolations)
+        lhs%interpolations = rhs%interpolations
+     else
+        if (allocated(lhs%interpolations)) deallocate(lhs%interpolations)
+     endif
+     if (allocated(rhs%values)) then
+        lhs%values = rhs%values
+     else
+        if (allocated(lhs%values)) deallocate(lhs%values)
+     endif
+  endselect
+  endsubroutine object_assign_object
 endmodule wenoof_kappa_int_js

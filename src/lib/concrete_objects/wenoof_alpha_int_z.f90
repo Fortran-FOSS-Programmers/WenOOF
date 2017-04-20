@@ -8,7 +8,7 @@ module wenoof_alpha_int_z
 
 use penf, only : I_P, R_P, str
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
-use wenoof_base_object, only : base_object_constructor
+use wenoof_base_object, only : base_object, base_object_constructor
 
 implicit none
 private
@@ -17,6 +17,9 @@ public :: alpha_int_z_constructor
 
 type, extends(alpha_object_constructor) :: alpha_int_z_constructor
   !< Borges alpha (non linear weights) object constructor.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype alpha_int_z_constructor
 
 type, extends(alpha_object) :: alpha_int_z
@@ -27,13 +30,25 @@ type, extends(alpha_object) :: alpha_int_z
   !< 2008, vol. 227, pp. 3191-3211, doi: 10.1016/j.jcp.2007.11.038.
   contains
     ! public deferred methods
-    procedure, pass(self) :: create      !< Create alpha.
-    procedure, pass(self) :: compute_int !< Compute alpha (interpolate).
-    procedure, pass(self) :: compute_rec !< Compute alpha (reconstruct).
-    procedure, pass(self) :: description !< Return object string-description.
-    procedure, pass(self) :: destroy     !< Destroy alpha.
+    procedure, pass(self) :: create               !< Create alpha.
+    procedure, pass(self) :: compute_int          !< Compute alpha (interpolate).
+    procedure, pass(self) :: compute_rec          !< Compute alpha (reconstruct).
+    procedure, pass(self) :: description          !< Return object string-description.
+    procedure, pass(self) :: destroy              !< Destroy alpha.
+    procedure, pass(lhs)  :: object_assign_object !< `=` operator.
 endtype alpha_int_z
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(alpha_int_z_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor), intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  endsubroutine constr_assign_constr
+
   ! public deferred methods
   subroutine create(self, constructor)
   !< Create alpha.
@@ -86,6 +101,14 @@ contains
 
   call self%destroy_
   endsubroutine destroy
+
+  subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(alpha_int_z), intent(inout) :: lhs !< Left hand side.
+  class(base_object), intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  endsubroutine object_assign_object
 
   ! private non TBP
   pure function tau(S, beta) result(w_tau)

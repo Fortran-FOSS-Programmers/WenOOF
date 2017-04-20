@@ -58,9 +58,12 @@ contains
   class(interpolations_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
 
   allocate(interpolations_int_js_constructor :: constructor)
-  allocate(constructor%stencil(1-S:S-1))
-  constructor%stencil = stencil
-  constructor%x_target = x_target
+  select type(constructor)
+  type is(interpolations_int_js_constructor)
+     allocate(constructor%stencil(1-S:S-1))
+     constructor%stencil = stencil
+     constructor%x_target = x_target
+  endselect
   call constructor%create(S=S)
   endsubroutine create_constructor_int
 endmodule wenoof_interpolations_factory
