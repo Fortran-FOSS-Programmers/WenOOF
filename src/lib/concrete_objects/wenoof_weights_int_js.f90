@@ -10,7 +10,7 @@ module wenoof_weights_int_js
 use penf, only : I_P, R_P, str
 use wenoof_alpha_factory,  only : alpha_factory
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
-use wenoof_base_object, only : base_object_constructor
+use wenoof_base_object, only : base_object, base_object_constructor
 use wenoof_beta_factory, only : beta_factory
 use wenoof_beta_object, only : beta_object, beta_object_constructor
 use wenoof_kappa_factory, only : kappa_factory
@@ -28,6 +28,9 @@ type, extends(weights_object_constructor) :: weights_int_js_constructor
   class(alpha_object_constructor), allocatable :: alpha_constructor !< Alpha coefficients (non linear weights) constructor.
   class(beta_object_constructor),  allocatable :: beta_constructor  !< Beta coefficients (smoothness indicators) constructor.
   class(kappa_object_constructor), allocatable :: kappa_constructor !< kappa coefficients (optimal, linear weights) constructor.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype weights_int_js_constructor
 
 type, extends(weights_object):: weights_int_js
@@ -49,9 +52,42 @@ type, extends(weights_object):: weights_int_js
     procedure, pass(self) :: destroy                   !< Destroy weights.
     procedure, pass(self) :: smoothness_indicators_int !< Return smoothness indicators (interpolate).
     procedure, pass(self) :: smoothness_indicators_rec !< Return smoothness indicators (reconstrcut).
+    procedure, pass(lhs)  :: object_assign_object      !< `=` operator.
 endtype weights_int_js
 
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(weights_int_js_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(weights_int_js_constructor)
+     if (allocated(rhs%alpha_constructor)) then
+        if (.not.allocated(lhs%alpha_constructor)) allocate(lhs%alpha_constructor, mold=rhs%alpha_constructor)
+           lhs%alpha_constructor = rhs%alpha_constructor
+     else
+        if (allocated(lhs%alpha_constructor)) deallocate(lhs%alpha_constructor)
+     endif
+     if (allocated(rhs%beta_constructor)) then
+        if (.not.allocated(lhs%beta_constructor)) allocate(lhs%beta_constructor, mold=rhs%beta_constructor)
+           lhs%beta_constructor = rhs%beta_constructor
+     else
+        if (allocated(lhs%beta_constructor)) deallocate(lhs%beta_constructor)
+     endif
+     if (allocated(rhs%kappa_constructor)) then
+        if (.not.allocated(lhs%kappa_constructor)) allocate(lhs%kappa_constructor, mold=rhs%kappa_constructor)
+           lhs%kappa_constructor = rhs%kappa_constructor
+     else
+        if (allocated(lhs%kappa_constructor)) deallocate(lhs%kappa_constructor)
+     endif
+  endselect
+  endsubroutine constr_assign_constr
+
   ! deferred public methods
   subroutine create(self, constructor)
   !< Create reconstructor.
@@ -141,4 +177,33 @@ contains
   real(R_P),              intent(out) :: si(:,:) !< Smoothness indicators.
   ! empty procedure
   endsubroutine smoothness_indicators_rec
+
+  subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(weights_int_js), intent(inout) :: lhs !< Left hand side.
+  class(base_object),    intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(weights_int_js)
+     if (allocated(rhs%alpha)) then
+        if (.not.allocated(lhs%alpha)) allocate(lhs%alpha, mold=rhs%alpha)
+        lhs%alpha = rhs%alpha
+     else
+        if (allocated(lhs%alpha)) deallocate(lhs%alpha)
+     endif
+     if (allocated(rhs%beta)) then
+        if (.not.allocated(lhs%beta)) allocate(lhs%beta, mold=rhs%beta)
+        lhs%beta = rhs%beta
+     else
+        if (allocated(lhs%beta)) deallocate(lhs%beta)
+     endif
+     if (allocated(rhs%kappa)) then
+        if (.not.allocated(lhs%kappa)) allocate(lhs%kappa, mold=rhs%kappa)
+        lhs%kappa = rhs%kappa
+     else
+        if (allocated(lhs%kappa)) deallocate(lhs%kappa)
+     endif
+  endselect
+  endsubroutine object_assign_object
 endmodule wenoof_weights_int_js
