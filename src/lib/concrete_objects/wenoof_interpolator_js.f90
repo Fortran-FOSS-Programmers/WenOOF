@@ -18,6 +18,9 @@ public :: interpolator_js_constructor
 
 type, extends(interpolator_object_constructor) :: interpolator_js_constructor
   !< Jiang-Shu (upwind) interpolator object constructor.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype interpolator_js_constructor
 
 type, extends(interpolator_object) :: interpolator_js
@@ -41,6 +44,33 @@ type, extends(interpolator_object) :: interpolator_js
 endtype interpolator_js
 
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(interpolator_js_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor),     intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(interpolator_js_constructor)
+     if (allocated(rhs%interpolations_constructor)) then
+        if (.not.allocated(lhs%interpolations_constructor)) &
+           allocate(lhs%interpolations_constructor, mold=rhs%interpolations_constructor)
+           lhs%interpolations_constructor = rhs%interpolations_constructor
+     else
+        if (allocated(lhs%interpolations_constructor)) deallocate(lhs%interpolations_constructor)
+     endif
+     if (allocated(rhs%weights_constructor)) then
+        if (.not.allocated(lhs%weights_constructor)) allocate(lhs%weights_constructor, mold=rhs%weights_constructor)
+           lhs%weights_constructor = rhs%weights_constructor
+     else
+        if (allocated(lhs%weights_constructor)) deallocate(lhs%weights_constructor)
+     endif
+  endselect
+  endsubroutine constr_assign_constr
+
   ! public deferred methods
   subroutine create(self, constructor)
   !< Create interpolator.

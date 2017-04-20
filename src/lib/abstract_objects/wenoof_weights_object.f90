@@ -10,7 +10,7 @@ private
 public :: weights_object
 public :: weights_object_constructor
 
-type, extends(base_object_constructor) :: weights_object_constructor
+type, extends(base_object_constructor), abstract :: weights_object_constructor
   !< Abstract weights object constructor.
 endtype weights_object_constructor
 

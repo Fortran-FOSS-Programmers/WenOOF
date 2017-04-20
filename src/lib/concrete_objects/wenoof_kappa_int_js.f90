@@ -23,6 +23,9 @@ type, extends(kappa_object_constructor) :: kappa_int_js_constructor
   class(interpolations_object_constructor), allocatable :: interpolations_constructor !< Interpolations coefficients constructor.
   real(R_P), allocatable                                :: stencil(:)                 !< Stencil used for interpolation, [1-S:S-1].
   real(R_P)                                             :: x_target                   !< Coordinate of the interpolation point.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype kappa_int_js_constructor
 
 type, extends(kappa_object):: kappa_int_js
@@ -44,6 +47,33 @@ type, extends(kappa_object):: kappa_int_js
 endtype kappa_int_js
 
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(kappa_int_js_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(kappa_int_js_constructor)
+     if (allocated(rhs%interpolations_constructor)) then
+        if (.not.allocated(lhs%interpolations_constructor)) &
+           allocate(lhs%interpolations_constructor, mold=rhs%interpolations_constructor)
+           lhs%interpolations_constructor = rhs%interpolations_constructor
+     else
+        if (allocated(lhs%interpolations_constructor)) deallocate(lhs%interpolations_constructor)
+     endif
+     if (allocated(rhs%stencil)) then
+           lhs%stencil = rhs%stencil
+     else
+        if (allocated(lhs%stencil)) deallocate(lhs%stencil)
+     endif
+     lhs%x_target = rhs%x_target
+  endselect
+  endsubroutine constr_assign_constr
+
   ! deferred public methods
   subroutine create(self, constructor)
   !< Create kappa.

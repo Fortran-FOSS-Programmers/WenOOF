@@ -28,6 +28,9 @@ type, extends(weights_object_constructor) :: weights_rec_js_constructor
   class(alpha_object_constructor), allocatable :: alpha_constructor !< Alpha coefficients (non linear weights) constructor.
   class(beta_object_constructor),  allocatable :: beta_constructor  !< Beta coefficients (smoothness indicators) constructor.
   class(kappa_object_constructor), allocatable :: kappa_constructor !< kappa coefficients (optimal, linear weights) constructor.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype weights_rec_js_constructor
 
 type, extends(weights_object):: weights_rec_js
@@ -53,6 +56,38 @@ type, extends(weights_object):: weights_rec_js
 endtype weights_rec_js
 
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(weights_rec_js_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(weights_rec_js_constructor)
+     if (allocated(rhs%alpha_constructor)) then
+        if (.not.allocated(lhs%alpha_constructor)) allocate(lhs%alpha_constructor, mold=rhs%alpha_constructor)
+           lhs%alpha_constructor = rhs%alpha_constructor
+     else
+        if (allocated(lhs%alpha_constructor)) deallocate(lhs%alpha_constructor)
+     endif
+     if (allocated(rhs%beta_constructor)) then
+        if (.not.allocated(lhs%beta_constructor)) allocate(lhs%beta_constructor, mold=rhs%beta_constructor)
+           lhs%beta_constructor = rhs%beta_constructor
+     else
+        if (allocated(lhs%beta_constructor)) deallocate(lhs%beta_constructor)
+     endif
+     if (allocated(rhs%kappa_constructor)) then
+        if (.not.allocated(lhs%kappa_constructor)) allocate(lhs%kappa_constructor, mold=rhs%kappa_constructor)
+           lhs%kappa_constructor = rhs%kappa_constructor
+     else
+        if (allocated(lhs%kappa_constructor)) deallocate(lhs%kappa_constructor)
+     endif
+  endselect
+  endsubroutine constr_assign_constr
+
   ! deferred public methods
   subroutine create(self, constructor)
   !< Create reconstructor.

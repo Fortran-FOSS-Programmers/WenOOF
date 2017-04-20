@@ -18,6 +18,9 @@ public :: interpolations_rec_js_constructor
 
 type, extends(interpolations_object_constructor) :: interpolations_rec_js_constructor
   !< Jiang-Shu (Lagrange) interpolations object for derivative reconstruction constructor.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype interpolations_rec_js_constructor
 
 type, extends(interpolations_object) :: interpolations_rec_js
@@ -40,6 +43,17 @@ type, extends(interpolations_object) :: interpolations_rec_js
 endtype interpolations_rec_js
 
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(interpolations_rec_js_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor),           intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  endsubroutine constr_assign_constr
+
   ! public deferred methods
   subroutine create(self, constructor)
   !< Create interpolations.

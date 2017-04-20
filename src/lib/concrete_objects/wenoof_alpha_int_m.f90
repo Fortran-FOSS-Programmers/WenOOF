@@ -20,6 +20,9 @@ public :: alpha_int_m_constructor
 type, extends(alpha_object_constructor) :: alpha_int_m_constructor
   !< Henrick alpha (non linear weights) object constructor.
   character(len=:), allocatable :: base_type !< Base alpha coefficient type.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype alpha_int_m_constructor
 
 type, extends(alpha_object) :: alpha_int_m
@@ -40,6 +43,21 @@ type, extends(alpha_object) :: alpha_int_m
 endtype alpha_int_m
 
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(alpha_int_m_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor), intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(alpha_int_m_constructor)
+     if (allocated(rhs%base_type)) lhs%base_type = rhs%base_type
+  endselect
+  endsubroutine constr_assign_constr
+
   ! deferred public methods
   subroutine create(self, constructor)
   !< Create alpha.

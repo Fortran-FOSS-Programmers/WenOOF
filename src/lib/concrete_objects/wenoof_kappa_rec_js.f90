@@ -18,6 +18,9 @@ public :: kappa_rec_js_constructor
 
 type, extends(kappa_object_constructor) :: kappa_rec_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal kappa object constructor.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype kappa_rec_js_constructor
 
 type, extends(kappa_object):: kappa_rec_js
@@ -39,6 +42,17 @@ type, extends(kappa_object):: kappa_rec_js
 endtype kappa_rec_js
 
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(kappa_rec_js_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  endsubroutine constr_assign_constr
+
   ! deferred public methods
   subroutine create(self, constructor)
   !< Create kappa.

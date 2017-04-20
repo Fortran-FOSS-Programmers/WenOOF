@@ -15,10 +15,17 @@ real(R_P), parameter :: EPS_DEF=10._R_P**(-6) !< Small epsilon to avoid division
 
 type, abstract :: base_object_constructor
   !< Abstract base object constructor.
-  integer(I_P) :: S=0_I_P           !< Stencils dimension.
-  real(R_P)    :: eps=EPS_DEF       !< Small epsilon to avoid division by zero.
+  integer(I_P) :: S=0_I_P     !< Stencils dimension.
+  real(R_P)    :: eps=EPS_DEF !< Small epsilon to avoid division by zero.
   contains
+    ! public methods
     procedure, pass(self) :: create => create_base_object_constructor
+    ! public operators
+    generic :: assignment(=) => constr_assign_constr !< `=` overloading.
+    ! public deferred methods
+    procedure(constr_assign_constr_interface), pass(lhs),  deferred :: constr_assign_constr !< `=` operator.
+    ! public non overridable methods
+    procedure, pass(lhs),  non_overridable :: assign_ => assign_constr_ !< Assign object.
 endtype base_object_constructor
 
 type, abstract :: base_object
@@ -40,6 +47,16 @@ type, abstract :: base_object
     procedure, pass(self), non_overridable :: create_  !< Create object.
     procedure, pass(self), non_overridable :: destroy_ !< Destroy object.
 endtype base_object
+
+abstract interface
+  !< Abstract interfaces of [[base_object_constructor]].
+  subroutine constr_assign_constr_interface(lhs, rhs)
+  !< `=` operator.
+  import :: base_object_constructor
+  class(base_object_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor), intent(in)    :: rhs !< Right hand side.
+  endsubroutine constr_assign_constr_interface
+endinterface
 
 abstract interface
   !< Abstract interfaces of [[base_object]].
@@ -87,6 +104,16 @@ contains
   self%S = S
   if (present(eps)) self%eps = eps
   endsubroutine create_base_object_constructor
+
+  ! public non overridable methods
+  subroutine assign_constr_(lhs, rhs)
+  !< Assign object constructor.
+  class(base_object_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor), intent(in)    :: rhs !< Right hand side.
+
+  lhs%S = rhs%S
+  lhs%eps = rhs%eps
+  endsubroutine assign_constr_
 
   ! base object
 

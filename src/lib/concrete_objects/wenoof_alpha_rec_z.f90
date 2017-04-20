@@ -17,6 +17,9 @@ public :: alpha_rec_z_constructor
 
 type, extends(alpha_object_constructor) :: alpha_rec_z_constructor
   !< Borges alpha (non linear weights) object constructor.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype alpha_rec_z_constructor
 
 type, extends(alpha_object) :: alpha_rec_z
@@ -34,7 +37,19 @@ type, extends(alpha_object) :: alpha_rec_z
     procedure, pass(self) :: destroy              !< Destroy alpha.
     procedure, pass(lhs)  :: object_assign_object !< `=` operator.
 endtype alpha_rec_z
+
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(alpha_rec_z_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor), intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  endsubroutine constr_assign_constr
+
   ! public deferred methods
   subroutine create(self, constructor)
   !< Create alpha.

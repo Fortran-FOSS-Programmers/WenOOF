@@ -16,6 +16,9 @@ public :: alpha_int_js_constructor
 
 type, extends(alpha_object_constructor) :: alpha_int_js_constructor
   !< Jiang-Shu alpha object constructor.
+  contains
+    ! public deferred methods
+    procedure, pass(lhs) :: constr_assign_constr !< `=` operator.
 endtype alpha_int_js_constructor
 
 type, extends(alpha_object) :: alpha_int_js
@@ -34,6 +37,17 @@ type, extends(alpha_object) :: alpha_int_js
 endtype alpha_int_js
 
 contains
+  ! constructor
+
+  ! deferred public methods
+  subroutine constr_assign_constr(lhs, rhs)
+  !< `=` operator.
+  class(alpha_int_js_constructor), intent(inout) :: lhs !< Left hand side.
+  class(base_object_constructor),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  endsubroutine constr_assign_constr
+
   ! deferred public methods
   subroutine create(self, constructor)
   !< Create alpha.
