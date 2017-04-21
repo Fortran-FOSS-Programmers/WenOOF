@@ -1,0 +1,179 @@
+%&pdflatex
+\documentclass[pdftex,preprint,3p,times,numbers]{elsarticle}
+
+\journal{Computer Physics Communications}
+
+%\usepackage{moreverb}
+
+\usepackage{hyperref}
+\hypersetup{pdfborder={0 0 0}}
+
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multirow}
+\graphicspath{{images/}}
+
+\usepackage[pdftex,usenames]{xcolor}
+
+\usepackage{booktabs}
+%\usepackage{colortbl}
+\usepackage{multirow}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{xspace}
+
+\usepackage{xcolor}
+\definecolor{Maroon}{cmyk}{0,0.87,0.68,0.32}
+\definecolor{RoyalBlue}{cmyk}{1,0.50,0,0}
+\definecolor{gray}{cmyk}{0.01,0.01,0.01,0.01}
+\usepackage{listings}
+\lstdefinelanguage{MyFortran}[08]{Fortran}{morecomment=[l]{\#},morestring=[d]',morekeywords={procedure,pass,deferred,non_overridable,generic,class,is}}
+\lstdefinestyle{code}{%
+  basicstyle=\footnotesize,%
+  backgroundcolor=\color{gray},%
+  language=MyFortran,%
+  captionpos=b,%
+  columns=fixed,%
+  keepspaces=true,%
+  xleftmargin=10pt,%
+  numbers=none,%
+  numberstyle={\tiny},%
+  keywordstyle=\color{RoyalBlue},%
+  % stringstyle={\sffamily},%
+  texcl=true,%
+  upquote=true,%
+  commentstyle=\color{Maroon}%
+}
+
+\lstdefinestyle{codesimple}{%
+  basicstyle=\footnotesize,%
+  backgroundcolor=\color{gray},%
+  captionpos=b,%
+  columns=fixed,%
+  keepspaces=true,%
+  xleftmargin=10pt,%
+  numbers=none,%
+}
+
+\DeclareSymbolFont{extraup}{U}{zavm}{m}{n}
+\DeclareMathSymbol{\vardiamond}{\mathalpha}{extraup}{87}
+\definecolor{OMP}{RGB}{255,127,0}
+\definecolor{MPI}{RGB}{0,127,255}
+\definecolor{HYB}{RGB}{127,0,255}
+
+\DeclareGraphicsExtensions{.pdf,.png,.jpg,.bmp,.mps}
+\newcommand{\citeh}[1]{\citeauthor{#1} \citenum{#1}}
+
+\renewcommand{\thesubfigure}{\Alph{subfigure}}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{WenOOF, WENO interpolation Object Oriented Fortran library based on Abstract Calculus Pattern}
+
+\author[insean]{Zaghi S.\corref{cor1}\fnref{sz}}
+\ead{stefano.zaghi@cnr.it}
+\fntext[sz]{Ph. D., Aerospace Engineer, Research Scientist, Dept. of Computational Hydrodynamics at CNR-INSEAN.}
+\address[insean]{CNR-INSEAN, Istituto Nazionale per Studi ed Esperienze di Architettura Navale, Via di Vallerano 139, Rome, Italy, 00128}
+\cortext[cor1]{Corresponding author}
+
+\author[dima]{Rossi G.\fnref{gr}}
+\ead{giacomo.rossi@uniroma1.it}
+\fntext[gr]{Ph.D., Space Engineer, Research Fellow, Dept. of Mechanical and Aerospace Engineering at Universit\'{a} di Roma ``Sapienza''}
+\address[dima]{Dipartimento di Ingegneria Meccanica e Aerospaziale, Universit\'{a} di Roma ``Sapienza'', Via Eudossiana 18, Rome, Italy, 00184}
+
+\begin{abstract}
+  The (numerical) solution of partial differential equations (PDEs) can lead to discontinuous solutions. Weighted Essentially Non-Oscillatory shock capturing schemes can handle such solutions and show desiderable properties as Total Variation Diminishing and high order of accuracy in smooth regions. The present paper is the first \emph{manifesto} of WenOOF, a library aimed to implement WENO reconstruction and interpolation schemes by means of a clear, concise and efficient \emph{abstract} interface. WenOOF, meaning WENO interpolation Object Oriented Fortran library, has manifolds aims: to provide a set to built-in numerical schemes that are accurate, robust, validated and efficient and to allow easy application of these schemes to (almost) all PDEs by means of an effective Abstract Calculus Pattern. The key idea is to allow the same scheme-implementation to be applied to all reconstruction/interpolation problems thus avoiding the re-implementation of the reconstruction scheme for each different conservation problem: code re-usability is consequently maximized, WenOOF being a general robust framework. Besides, the same framework also allows rapid development of new WENO schemes due to the high abstraction level of the library itself.
+
+WenOOF is a modern Fortran library which main features are:
+\begin{description}
+  \item[Free] WenOOF is a free software;
+  \item[OOP] WenOOF is based on Object Oriented Programming paradigm;
+  \item[TDD] the WenOOF development follows the Test Driven Development software process;
+  \item[Accurately documented] the WenOOF documentation is based on high quality, first class solutions embedding detailed (mathematical) descriptions directly inside code sources; moreover, comprehensive hyper-linked documentations is also provided;
+  \item[Collaborative] the development of WenOOF takes advantage of web communications, the main project being hosted on GitHub.
+\end{description}
+
+The present paper is the first announcement of WenOOF project: the current implementation is extensively discussed and its capabilities are proved by means of tests and examples.
+\end{abstract}
+
+\begin{keyword}
+  Weighted Essentially Non-Oscillatory (WENO) \sep
+  Partial Differential Equations (PDEs) \sep
+  Object Oriented Programming (OOP) \sep
+  Abstract Calculus Pattern (ACP) \sep
+  Fortran
+\end{keyword}
+
+\end{frontmatter}
+
+{\bf PROGRAM SUMMARY}
+
+\begin{small}
+\noindent
+\emph{Manuscript Title:} WenOOF, WENO interpolation Object Oriented Fortran library based on Abstract Calculus Pattern \\
+\emph{Authors:} Zaghi, S., Rossi, G. \\
+\emph{Program title:} WenOOF \\
+\emph{Journal Reference:} \\
+\emph{Catalogue identifier:} \\
+\emph{Licensing provisions:} GNU General Public License (GPL) v3 \\
+\emph{Programming language:} Fortran (standard 2008 or newer); developed and tested with GNU gfortran 6.2 or newer \\
+\emph{Computer(s) for which the program has been designed:} designed for shared-memory multi-cores workstations and for hybrid distributed/shared-memory supercomputers, but any computer system with a Fortran (2008+) compiler is suited \\
+\emph{Operating system(s) for which the program has been designed:} designed for POSIX architecture and tested on GNU/Linux one \\
+\emph{RAM required to execute with typical data: bytes:} $[1MB,1GB]\times core$, simulation-dependent \\
+\emph{Has the code been vectorised or parallelized?:} the library is not aware of the parallel back-end, it providing a high-level models, but the provided tests suite shows parallel usage by means of MPI library and OpenMP paradigm \\
+\emph{Number of processors used:} tested up to 256 \\
+\emph{Supplementary material:}    \\
+\emph{Keywords:} WENO, OOP, ACP, Fortran \\
+\emph{CPC Library Classification:} 4.3 Differential Equations, 4.10 Interpolation, 12 Gases and Fluids \\
+\emph{External routines/libraries used:} \\
+\emph{CPC Program Library subprograms used:} \\
+\emph{Nature of problem:} \\
+Numerical integration of (general) Partial Differential Equations system \\
+\emph{Solution method:} \\
+\emph{Restrictions:} \\
+\emph{Unusual features:} \\
+\emph{Additional comments:} \\
+\emph{Running time:} \\
+\emph{References:} \\
+% \begin{thebibliography}{0}
+% \end{thebibliography}
+\end{small}
+
+\input{src/introduction/introduction.tex}
+
+\clearpage
+
+\input{src/mathematical-numerical-models/mathematical-numerical-models.tex}
+
+\clearpage
+
+%\input{src/API/API.tex}
+
+\clearpage
+
+%\input{src/tests/tests.tex}
+
+\clearpage
+
+%\input{src/parallel/parallel.tex}
+
+\clearpage
+
+%\input{src/conclusions/conclusions.tex}
+
+\appendix
+
+%\input{src/appendix/euler-1D-parallel-tests-API.tex}
+
+\bibliographystyle{mycpc2}
+\bibliography{Reference}
+
+\end{document}

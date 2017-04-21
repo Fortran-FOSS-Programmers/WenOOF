@@ -1,0 +1,19 @@
+\begin{thebibliography}{4}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Gibbs(1906)}]{gibbs-b-1906}
+J.~Gibbs, {The Scientific Papers of J. Willard Gibbs}\index{Gibbs, J.W.}
+  (Longmans, Green and co, N.Y., 1906)
+
+\bibitem[{Liu et~al.(1994)Liu, Osher and Chan}]{liu-1994}
+X.~Liu, S.~Osher, T.~Chan, Journal of Computational Physics 115 (1994) pp. 200
+
+\bibitem[{Harten et~al.(1987)Harten, Einfeldt, Osher and
+  Chakravarthy}]{harten-1987}
+A.~Harten, B.~Einfeldt, S.~Osher, S.~Chakravarthy, Journal of Computational
+  Physics 71 (1987) pp. 231
+
+\bibitem[{Jiang and Shu(1996)}]{jiang-1996}
+G.~Jiang, C.~Shu, Journal of Computational Physics 126 (1996) pp. 202
+
+\end{thebibliography}

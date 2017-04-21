@@ -1,0 +1,9 @@
+\section{Introduction}\label{sec:introduction}
+
+Interpolation is the process of deriving a simple function from a set of discrete data points so that the function passes through all the given data points (i.e. reproduces the data points exactly) and can be used to estimate data points in-between the given ones.
+
+Interpolation is also used to simplify complicated functions by sampling data points and then interpolating them using a simpler function. Polynomials are commonly used for interpolation because they are easier to evaluate, differentiate, and integrate. Unfortunately, interpolation of order greater than one can suffer of the Gibbs' phenomenon~\cite{gibbs-b-1906} next to discontinuities.
+
+The original idea of WENO schemes~\cite{liu-1994} is to use a convex combination of all candidate stencils (instead of using only the smoothest one as in ENO schemes~\cite{harten-1987}) to obtain high order reconstruction: this approach can obviously be extended to interpolation process, leading to an high order oscillatory free interpolation.
+
+{\color{red} Add interpolation background and citation to interpolation related works.}

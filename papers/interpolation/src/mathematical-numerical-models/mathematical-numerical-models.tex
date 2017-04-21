@@ -1,0 +1,218 @@
+\section{Mathematical and Numerical Models}\label{sec:MNmodels}
+
+Assume we have a uniform mesh $x_1, x_2, \dots x_n$ with $\Delta x = x_{n+1} - x_n$ and that we know the values of a function $u$ at all the grid points, that is $u_i = u(x_i)$ for all $i$. We would like to find an approximation of the function $u(x)$ at the point $x^*$ other than the nodes $x_i$, with $x_{i-\frac{1}{2}} < x^* < x_{i+\frac{1}{2}}$, where $x_{i-\frac{1}{2}}$ and $x_{i+\frac{1}{2}}$ are the cell interfaces.
+
+For a $r^{th}$ order accurate interpolation, there are $r$ candidate stencils next to the target point $x^*$: we denote these stencil as $S_k$, where $k=0, \dots, r-1$ labels the stencils from the leftmost stencil to the rightmost stencil in that order. Using  the Lagrange form of the interpolation polynomial, the polynom $p_k(x)$ over the stencil $S_k$ can be written as:
+
+\begin{equation}
+  \label{eq:Lagrange}
+  p_k(x^*) = \sum_{j=0}^{r-1} u_{i-r+k+j+1} \sum_{\substack{l=0 \\ l \neq j}}^{r-1} \frac{x^* - x_{i-r+k+l+1}}{x_{i-r+k+j+1} - x_{i-r+k+l+1}} = \sum_{j=0}^{r-1} a_{k,i-r+j+1} u_{i-r+k+j+1}
+\end{equation}
+
+where $a_{k,i-r+j+1}$ are the Lagrange coefficients of the stencil $S_k$.
+
+In table~\ref{tab:polynomial_coefficients} are reported the polynomial coefficients from $r=2$ to $r=9$ for all the interpolating stencils, for $x^* = x_{i+\frac{1}{2}}$; polynomial coefficients for $x^*=x_{i-\frac{1}{2}}$ can be obtained by table~\ref{tab:polynomial_coefficients} by symmetry.
+
+\begin{table}
+  \begin{center}
+    \caption{Polynomial coefficients from $r=2$ to $r=9$ for $x^*=x_{i+\frac{1}{2}}$}
+    \label{tab:polynomial_coefficients}
+    \begin{tabular}{ccccccccccc}
+      \toprule
+      $r$  &  $k$  &  $j=0$  &  $j=1$  &  $j=2$  &  $j=3$  &  $j=4$  &  $j=5$  &  $j=6$  &  $j=7$  &  $j=8$  \\
+      \midrule
+      9  &  0  &  $ \frac{6435}{32768}$  &    $-\frac{7293}{4096}$  &  $ \frac{58905}{8192}$  &  $-\frac{ 69615}{4096}$  & $ \frac{425425}{16384}$  &  $-\frac{109395}{ 4096}$  &  $ \frac{153153}{8192}$  & $-\frac{ 36465}{ 4096}$  &  $ \frac{109395}{32768}$ \\ \addlinespace
+         &  1  &  $-\frac{ 429}{32768}$  &    $ \frac{ 495}{4096}$  &  $-\frac{ 4095}{8192}$  &  $ \frac{  5005}{4096}$  & $-\frac{ 32175}{16384}$  &  $ \frac{  9009}{ 4096}$  &  $-\frac{ 15015}{8192}$  & $ \frac{  6435}{ 4096}$  &  $ \frac{  6435}{32768}$ \\ \addlinespace
+         &  2  &  $ \frac{  99}{32768}$  &    $-\frac{ 117}{4096}$  &  $ \frac{ 1001}{8192}$  &  $-\frac{  1287}{4096}$  & $ \frac{  9009}{16384}$  &  $-\frac{  3003}{ 4096}$  &  $ \frac{  9009}{8192}$  & $ \frac{  1287}{ 4096}$  &  $-\frac{   429}{32768}$ \\ \addlinespace
+         &  3  &  $-\frac{  45}{32768}$  &    $ \frac{  55}{4096}$  &  $-\frac{  495}{8192}$  &  $ \frac{   693}{4096}$  & $-\frac{  5775}{16384}$  &  $ \frac{  3465}{ 4096}$  &  $ \frac{  3465}{8192}$  & $-\frac{   165}{ 4096}$  &  $ \frac{    99}{32768}$ \\ \addlinespace
+         &  4  &  $ \frac{  35}{32768}$  &    $-\frac{  45}{4096}$  &  $ \frac{  441}{8192}$  &  $-\frac{   735}{4096}$  & $ \frac{ 11025}{16384}$  &  $ \frac{  2205}{ 4096}$  &  $-\frac{   735}{8192}$  & $ \frac{    63}{ 4096}$  &  $-\frac{    45}{32768}$ \\ \addlinespace
+         &  5  &  $-\frac{  45}{32768}$  &    $ \frac{  63}{4096}$  &  $-\frac{  735}{8192}$  &  $ \frac{  2205}{4096}$  & $ \frac{ 11025}{16384}$  &  $-\frac{   735}{ 4096}$  &  $ \frac{   441}{8192}$  & $-\frac{    45}{ 4096}$  &  $ \frac{    35}{32768}$ \\ \addlinespace
+         &  6  &  $ \frac{  99}{32768}$  &    $-\frac{ 165}{4096}$  &  $ \frac{ 3465}{8192}$  &  $ \frac{  3465}{4096}$  & $-\frac{  5775}{16384}$  &  $ \frac{   693}{ 4096}$  &  $-\frac{   495}{8192}$  & $ \frac{    55}{ 4096}$  &  $-\frac{    45}{32768}$ \\ \addlinespace
+         &  7  &  $-\frac{ 429}{32768}$  &    $ \frac{1287}{4096}$  &  $ \frac{ 9009}{8192}$  &  $-\frac{  3003}{4096}$  & $ \frac{  9009}{16384}$  &  $-\frac{  1287}{ 4096}$  &  $ \frac{  1001}{8192}$  & $-\frac{   117}{ 4096}$  &  $ \frac{    99}{32768}$ \\ \addlinespace
+         &  8  &  $ \frac{6435}{32768}$  &    $ \frac{6435}{4096}$  &  $-\frac{15015}{8192}$  &  $ \frac{  9009}{4096}$  & $-\frac{ 32175}{16384}$  &  $ \frac{  5005}{ 4096}$  &  $-\frac{  4095}{8192}$  & $ \frac{   495}{ 4096}$  &  $-\frac{   429}{32768}$ \\ \addlinespace
+      8  &  0  &  $-\frac{429}{2048}$  &  $ \frac{3465}{2048}$  &  $-\frac{12285}{2048}$  &  $ \frac{25025}{2048}$  &  $-\frac{32175}{2048}$  &  $ \frac{27027}{2048}$  &  $-\frac{15015}{2048}$  &  $ \frac{6435}{2048}$ \\ \addlinespace
+         &  1  &  $ \frac{ 33}{2048}$  &  $-\frac{ 273}{2048}$  &  $ \frac{ 1001}{2048}$  &  $-\frac{ 2145}{2048}$  &  $ \frac{ 3003}{2048}$  &  $-\frac{ 3003}{2048}$  &  $ \frac{ 3003}{2048}$  &  $ \frac{ 429}{2048}$ \\ \addlinespace
+         &  2  &  $-\frac{  9}{2048}$  &  $ \frac{  77}{2048}$  &  $-\frac{  297}{2048}$  &  $ \frac{  693}{2048}$  &  $-\frac{ 1155}{2048}$  &  $ \frac{ 2079}{2048}$  &  $ \frac{  693}{2048}$  &  $-\frac{  33}{2048}$ \\ \addlinespace
+         &  3  &  $ \frac{  5}{2048}$  &  $-\frac{  45}{2048}$  &  $ \frac{  189}{2048}$  &  $-\frac{  525}{2048}$  &  $ \frac{ 1575}{2048}$  &  $ \frac{  945}{2048}$  &  $-\frac{  105}{2048}$  &  $ \frac{   9}{2048}$ \\ \addlinespace
+         &  4  &  $-\frac{  5}{2048}$  &  $ \frac{  49}{2048}$  &  $-\frac{  245}{2048}$  &  $ \frac{ 1225}{2048}$  &  $ \frac{ 1225}{2048}$  &  $-\frac{  245}{2048}$  &  $ \frac{   49}{2048}$  &  $-\frac{   5}{2048}$ \\ \addlinespace
+         &  5  &  $ \frac{  9}{2048}$  &  $-\frac{ 105}{2048}$  &  $ \frac{  945}{2048}$  &  $ \frac{ 1575}{2048}$  &  $-\frac{  525}{2048}$  &  $ \frac{  189}{2048}$  &  $-\frac{   45}{2048}$  &  $ \frac{   5}{2048}$ \\ \addlinespace
+         &  6  &  $-\frac{ 33}{2048}$  &  $ \frac{ 693}{2048}$  &  $ \frac{ 2079}{2048}$  &  $-\frac{ 1155}{2048}$  &  $ \frac{  693}{2048}$  &  $-\frac{  297}{2048}$  &  $ \frac{   77}{2048}$  &  $-\frac{   9}{2048}$ \\ \addlinespace
+         &  7  &  $ \frac{429}{2048}$  &  $ \frac{3003}{2048}$  &  $-\frac{ 3003}{2048}$  &  $ \frac{ 3003}{2048}$  &  $-\frac{ 2145}{2048}$  &  $ \frac{ 1001}{2048}$  &  $-\frac{  273}{2048}$  &  $ \frac{  33}{2048}$ \\ \addlinespace
+      7  &  0  & $ \frac{231}{1024}$  &  $-\frac{819}{512}$  &  $ \frac{5005}{1024}$  &  $-\frac{2145}{256}$  &  $ \frac{9009}{1024}$  &  $-\frac{3003}{512}$  &  $ \frac{3003}{1024}$  \\ \addlinespace
+         &  1  & $-\frac{ 21}{1024}$  &  $ \frac{ 77}{512}$  &  $-\frac{ 495}{1024}$  &  $ \frac{ 231}{256}$  &  $-\frac{1155}{1024}$  &  $ \frac{ 693}{512}$  &  $ \frac{ 231}{1024}$  \\ \addlinespace
+         &  2  & $ \frac{  7}{1024}$  &  $-\frac{ 27}{512}$  &  $ \frac{ 189}{1024}$  &  $-\frac{ 105}{256}$  &  $ \frac{ 945}{1024}$  &  $ \frac{ 189}{512}$  &  $-\frac{  21}{1024}$  \\ \addlinespace
+         &  3  & $-\frac{  5}{1024}$  &  $ \frac{ 21}{512}$  &  $-\frac{ 175}{1024}$  &  $ \frac{ 175}{256}$  &  $ \frac{ 525}{1024}$  &  $-\frac{  35}{512}$  &  $ \frac{   7}{1024}$  \\ \addlinespace
+         &  4  & $ \frac{  7}{1024}$  &  $-\frac{ 35}{512}$  &  $ \frac{ 525}{1024}$  &  $ \frac{ 175}{256}$  &  $-\frac{ 175}{1024}$  &  $ \frac{  21}{512}$  &  $-\frac{   5}{1024}$  \\ \addlinespace
+         &  5  & $-\frac{ 21}{1024}$  &  $ \frac{189}{512}$  &  $ \frac{ 945}{1024}$  &  $-\frac{ 105}{256}$  &  $ \frac{ 189}{1024}$  &  $-\frac{  27}{512}$  &  $ \frac{   7}{1024}$  \\ \addlinespace
+         &  6  & $ \frac{231}{1024}$  &  $ \frac{693}{512}$  &  $-\frac{1155}{1024}$  &  $ \frac{ 231}{256}$  &  $-\frac{ 495}{1024}$  &  $ \frac{  77}{512}$  &  $-\frac{  21}{1024}$  \\ \addlinespace
+      6  &  0  &  $-\frac{63}{256}$  &  $ \frac{385}{256}$  &  $-\frac{495}{128}$  &  $ \frac{693}{128}$  &  $-\frac{1155}{256}$  &  $ \frac{693}{256}$  \\ \addlinespace
+         &  1  &  $ \frac{ 7}{256}$  &  $-\frac{ 45}{256}$  &  $ \frac{ 63}{128}$  &  $-\frac{105}{128}$  &  $ \frac{ 315}{256}$  &  $ \frac{ 63}{256}$  \\ \addlinespace
+         &  2  &  $-\frac{ 3}{256}$  &  $ \frac{ 21}{256}$  &  $-\frac{ 35}{128}$  &  $ \frac{105}{128}$  &  $ \frac{ 105}{256}$  &  $-\frac{  7}{256}$  \\ \addlinespace
+         &  3  &  $ \frac{ 3}{256}$  &  $-\frac{ 25}{256}$  &  $ \frac{ 75}{128}$  &  $ \frac{ 75}{128}$  &  $-\frac{  25}{256}$  &  $ \frac{  3}{256}$  \\ \addlinespace
+         &  4  &  $-\frac{ 7}{256}$  &  $ \frac{105}{256}$  &  $ \frac{105}{128}$  &  $-\frac{ 35}{128}$  &  $ \frac{  21}{256}$  &  $-\frac{  3}{256}$  \\ \addlinespace
+         &  5  &  $ \frac{63}{256}$  &  $ \frac{315}{256}$  &  $-\frac{105}{128}$  &  $ \frac{ 63}{128}$  &  $-\frac{  45}{256}$  &  $ \frac{  7}{256}$  \\ \addlinespace
+      5  &  0  &  $ \frac{35}{128}$  &  $-\frac{45}{32}$  &  $ \frac{189}{64}$  &  $-\frac{105}{32}$  &  $ \frac{315}{128}$  \\ \addlinespace
+         &  1  &  $-\frac{ 5}{128}$  &  $ \frac{ 7}{32}$  &  $-\frac{ 35}{64}$  &  $ \frac{ 35}{32}$  &  $ \frac{ 35}{128}$  \\ \addlinespace
+         &  2  &  $ \frac{ 3}{128}$  &  $-\frac{ 5}{32}$  &  $ \frac{ 45}{64}$  &  $ \frac{ 15}{32}$  &  $-\frac{  5}{128}$  \\ \addlinespace
+         &  3  &  $-\frac{ 5}{128}$  &  $ \frac{15}{32}$  &  $ \frac{ 45}{64}$  &  $-\frac{  5}{32}$  &  $ \frac{  3}{128}$  \\ \addlinespace
+         &  4  &  $ \frac{35}{128}$  &  $ \frac{35}{32}$  &  $-\frac{ 35}{64}$  &  $ \frac{  7}{32}$  &  $-\frac{  5}{128}$  \\ \addlinespace
+      4  &  0  &  $-\frac{5}{16}$  &  $ \frac{21}{16}$  &  $-\frac{35}{16}$  &  $ \frac{35}{16}$  \\ \addlinespace
+         &  1  &  $ \frac{1}{16}$  &  $-\frac{ 5}{16}$  &  $ \frac{15}{16}$  &  $ \frac{ 5}{16}$  \\ \addlinespace
+         &  2  &  $-\frac{1}{16}$  &  $ \frac{ 9}{16}$  &  $ \frac{ 9}{16}$  &  $-\frac{ 1}{16}$  \\ \addlinespace
+         &  3  &  $ \frac{5}{16}$  &  $ \frac{15}{16}$  &  $-\frac{ 5}{16}$  &  $ \frac{ 1}{16}$  \\ \addlinespace
+      3  &  0  &  $ \frac{3}{8}$  &  $-\frac{5}{4}$  &  $ \frac{15}{8}$  \\ \addlinespace
+         &  1  &  $-\frac{1}{8}$  &  $ \frac{3}{4}$  &  $ \frac{3}{8} $  \\ \addlinespace
+         &  2  &  $ \frac{3}{8}$  &  $ \frac{3}{4}$  &  $-\frac{1}{8} $  \\ \addlinespace
+      2  &  0  &  $-\frac{1}{2}$  &  $\frac{3}{2}$ \\ \addlinespace
+         &  1  &  $ \frac{1}{2}$  &  $\frac{1}{2}$ \\ \addlinespace
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\end{table}
+
+If we consider the big stencil $S = \cup_{i=0}^k S_k$, we can obtain a $(2r-1)^{th}$ accurate interpolation and \eqref{eq:Lagrange} becomes:
+
+\begin{equation}
+  \label{eq:Lagrange_big}
+  P(x^*) = \sum_{j=0}^{2r-2} u_{i-r+j+1} \sum_{\substack{l=0 \\ l \neq j}}^{2r-2} \frac{x^* - x_{i-r+l+1}}{x_{i-r+j+1} - x_{i-r+l+1}} = \sum_{j=0}^{2r-2} b_{i-r+j+1} u_{i-r+j+1}
+\end{equation}
+
+where $b_{i-r+j+1}$ are the Lagrange coefficients of the stencil $S$.
+
+Expression~\eqref{eq:Lagrange_big} can also be written as a linear convex combination of the $r$ approximations of order $r^{th}$~\eqref{eq:Lagrange}
+
+\begin{equation}
+  \label{eq:pol_convex}
+  P(x^*) = \sum_{i=0}^{r-1} \gamma_i p_i(x^*) \text{, with } \sum_{i=0}^{r-1} \gamma_i = 1
+\end{equation}
+
+where $\gamma_r$ are usually referred as the linear weights. The linear weights for the point $x^*$ can be evaluated from the Lagrange coefficients $a_{k,i-r+j+1}$ and $b_{i-r+j+1}$ by means of:
+
+\begin{equation}
+  \label{eq:linear_weights}
+  \gamma_k(x^*) = \frac{b_{i-r+j+1} - \sum_{l=0}^{j-1} \gamma_l(x^*) a_{k,i-r+l+1}(x^*)}{a_{0,i-r+j+1}(x^*)} \text{, } j=0, \dots, r-1
+\end{equation}
+
+In table~\ref{tab:linear_weights} are reported linear weights from $r=2$ to $r=9$ for $x^*=x_{i+\frac{1}{2}}$; linear weights for $x^*=x_{i-\frac{1}{2}}$ can be obtained by table~\ref{tab:linear_weights} by symmetry.
+
+\begin{table}
+  \begin{center}
+    \caption{Linear weights from $r=2$ to $r=9$ for $x^*=x_{i+\frac{1}{2}}$}
+    \label{tab:linear_weights}
+    \begin{tabular}{cccccccccc}
+      \toprule
+      $r$  &  $j=0$  &  $j=1$  &  $j=2$  &  $j=3$  &  $j=4$  &  $j=5$  &  $j=6$  &  $j=7$  &  $j=8$  \\
+      \midrule
+      9  & $\frac{    1}{65536}$  & $\frac{   17}{ 8192}$  & $\frac{  595}{16384}$  & $\frac{ 1547}{ 8192}$  & $\frac{12155}{32768}$ & $\frac{ 2431}{ 8192}$  & $\frac{ 1547}{16384}$  & $\frac{   85}{ 8192}$  & $\frac{   17}{65536}$  \\ \addlinespace
+      8  & $\frac{   1}{16384}$  & $\frac{ 105}{16384}$  & $\frac{1365}{16384}$  & $\frac{5005}{16384}$  & $\frac{6435}{16384}$ & $\frac{3003}{16384}$  & $\frac{ 455}{16384}$  & $\frac{  15}{16384}$  \\ \addlinespace
+      7  & $\frac{   1}{4096}$  & $\frac{  39}{2048}$  & $\frac{ 179}{1024}$  & $\frac{ 429}{1024}$  & $\frac{1287}{4096}$  & $\frac{ 143}{2048}$  & $\frac{  13}{4096}$  \\ \addlinespace
+      6  & $\frac{  1}{1024}$  & $\frac{ 55}{1024}$  & $\frac{165}{ 512}$  & $\frac{231}{ 512}$  & $\frac{165}{1024}$  & $\frac{ 11}{1024}$  \\ \addlinespace
+      5  & $\frac{ 1}{256}$  & $\frac{ 9}{ 64}$  & $\frac{63}{128}$  & $\frac{21}{ 64}$  & $\frac{ 9}{256}$  \\ \addlinespace
+      4  & $\frac{ 1}{64}$  & $\frac{21}{64}$  & $\frac{35}{64}$  & $\frac{ 7}{64}$  \\ \addlinespace
+      3  & $\frac{1}{16}$  & $\frac{5}{ 8}$  & $\frac{5}{16}$  \\ \addlinespace
+      2  & $\frac{1}{4}$  & $\frac{3}{4}$  \\ \addlinespace
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\end{table}
+
+The basic idea of WENO schemes is to use a nonlinear combination of the $r$ interpolations to obtain a $(2r-1)^{th}$ order interpolation in smooth regions and handle stencil with discontinuities: the nonlinear weights, infact, are close to the linear weights if the function in the stencil is smooth and close to $0$ if in that stencil is contained a discontinuity.
+
+\begin{equation}
+  \label{eq:WENO_interp}
+  u(x^*) = \sum_{i=0}^{r-1} w_i p_i(x^*)
+\end{equation}
+
+Following the work of Jiang and Shu~\cite{jiang-1996}, the nonlinear weights are evaluated as:
+
+\begin{equation}
+  \label{eq:nonlinear_weights}
+  w_k = \frac{\gamma_k}{\left( \epsilon + \beta_k \right)^2}
+\end{equation}
+
+where $\epsilon$ is a parameter to avoid division by zero and $\beta_k$ are the smoothness indicators of the function $u$ on the stencil $l$:
+
+\begin{equation}
+  \label{eq:IS}
+  \beta_k = \sum_{j=1}^{r-1} \Delta x^{2j-1} \int_{x_{i-\frac{1}{2}}}^{x_{i+\frac{1}{2}}} \left( \frac{d^j p_k(x)}{dx^j} \right)^2 dx
+\end{equation}
+
+This is clearly just a scaled sum of the square L2 norms of all the derivatives of the relevant interpolation polynomial $p_k(x)$ in the relevant interval $[x_{i−\frac{1}{2}},x_{i+\frac{1}{2}}]$, where the interpolating point is located. The scaling factor $\Delta_x^{2l-2}$ is to make sure that the final explicit formulas for the smoothness indicators do not depend on the mesh size $\Delta x$.
+
+Substitution of~\eqref{eq:Lagrange} for any $k=0,\dots,r-1$ into~\eqref{eq:IS} yelds to:
+
+\begin{equation}
+  \label{eq:IS_u}
+  \beta_k = \sum_{j=0}^{r-1} \sum_{l=0}^j \sigma_{k,j,l} u_{i+k-j} u_{i+k-l}
+\end{equation}
+
+The coefficients $\sigma_{k,j,l}$ are reported in table~\ref{tab:IS}.
+
+\begin{table}
+  \begin{center}
+    \caption{Smoothness indicators coefficients from $r=2$ to $r=9$}
+    \label{tab:IS}
+    \begin{tabular}{cccccccccc}
+      \toprule
+      $r=2$  \\
+      $j$  &  $l$  &  $k=0$ &  $k=1$ \\ \addlinespace
+      $1$  &  $1$  &  $-2$  &  $-2$  \\ \addlinespace
+           &  $0$  &  $ 1$  &  $ 1$  \\ \addlinespace
+      $0$  &  $0$  &  $ 1$  &  $ 1$  \\ \addlinespace
+      \midrule
+      $r=3$  \\
+      $j$  &  $l$  &  $k=0$            &  $k=1$            &  $k=2$            \\ \addlinespace
+      $2$  &  $2$  &  $ \frac{11}{3}$  &  $ \frac{ 5}{3}$  &  $ \frac{11}{3}$  \\ \addlinespace
+           &  $1$  &  $-\frac{31}{3}$  &  $-\frac{13}{3}$  &  $-\frac{19}{3}$  \\ \addlinespace
+           &  $0$  &  $ \frac{10}{3}$  &  $ \frac{ 4}{3}$  &  $ \frac{ 4}{3}$  \\ \addlinespace
+      $1$  &  $1$  &  $-\frac{19}{3}$  &  $-\frac{13}{3}$  &  $-\frac{31}{3}$  \\ \addlinespace
+           &  $0$  &  $ \frac{25}{3}$  &  $ \frac{13}{3}$  &  $ \frac{25}{3}$  \\ \addlinespace
+      $0$  &  $0$  &  $ \frac{ 4}{3}$  &  $ \frac{ 4}{3}$  &  $ \frac{10}{3}$  \\ \addlinespace
+      \midrule
+      $r=4$  \\
+      $j$  &  $l$  &  $k=0$                  &  $k=1$                  &  $k=2$                  &  $k=3$                  \\ \addlinespace
+      $3$  &  $3$  &  $-\frac{11389}{1440}$  &  $-\frac{ 2989}{1440}$  &  $-\frac{ 2989}{1440}$  &  $-\frac{11389}{1440}$  \\ \addlinespace
+           &  $2$  &  $ \frac{14369}{ 480}$  &  $ \frac{ 1283}{ 160}$  &  $ \frac{ 3169}{ 480}$  &  $ \frac{ 9449}{ 480}$  \\ \addlinespace
+           &  $1$  &  $-\frac{ 6383}{ 160}$  &  $-\frac{ 5069}{ 480}$  &  $-\frac{ 3229}{ 480}$  &  $-\frac{ 2623}{ 160}$  \\ \addlinespace
+           &  $0$  &  $ \frac{25729}{2880}$  &  $ \frac{ 6649}{2880}$  &  $ \frac{ 3169}{2880}$  &  $ \frac{ 6649}{2880}$  \\ \addlinespace
+      $2$  &  $2$  &  $ \frac{ 9449}{ 480}$  &  $ \frac{ 3169}{ 480}$  &  $ \frac{ 1283}{ 160}$  &  $ \frac{14369}{ 480}$  \\ \addlinespace
+           &  $1$  &  $-\frac{35047}{ 480}$  &  $-\frac{11767}{ 480}$  &  $-\frac{11767}{ 480}$  &  $-\frac{35047}{ 480}$  \\ \addlinespace
+           &  $0$  &  $ \frac{44747}{ 960}$  &  $ \frac{13667}{ 960}$  &  $ \frac{11147}{ 960}$  &  $ \frac{28547}{ 960}$  \\ \addlinespace
+      $1$  &  $1$  &  $-\frac{ 2623}{ 160}$  &  $-\frac{ 3229}{ 480}$  &  $-\frac{ 5069}{ 480}$  &  $-\frac{ 6383}{ 160}$  \\ \addlinespace
+           &  $0$  &  $ \frac{28547}{ 960}$  &  $ \frac{11147}{ 960}$  &  $ \frac{13667}{ 960}$  &  $ \frac{44747}{ 960}$  \\ \addlinespace
+      $0$  &  $0$  &  $ \frac{ 6649}{2880}$  &  $ \frac{ 3169}{2880}$  &  $ \frac{ 6649}{2880}$  &  $ \frac{25729}{2880}$  \\ \addlinespace
+      \midrule
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\end{table}
+
+For example, if $r=3$, \eqref{eq:Lagrange} can be applied to the leftmost stencil $S_0=\left\{ x_{i-2}, x_{i-1}, x_i \right\}$ to obtain the polynomial $p_0$:
+
+\begin{equation}
+  \label{eq:pol_0}
+  p_0(x_{i+\frac{1}{2}}) = \frac{3}{8} u_{i-2} - \frac{5}{4} u_{i-1} + \frac{15}{8} u_i
+\end{equation}
+
+and this approximation is third order accurate if the function $u(x)$ is smooth in the stencil $S_0$. If we choose a different stencil $S_1=\left\{ x_{i-1}, x_{i}, x_{i+1} \right\}$ we obtain the polynomial $p_1$:
+
+\begin{equation}
+  \label{eq:pol_1}
+  p_1(x_{i+\frac{1}{2}}) = -\frac{1}{8} u_{i-1} + \frac{3}{4} u_i + \frac{3}{8} u_{i+1}
+\end{equation}
+
+that is also third order accurate. The last stencil that can be used is the stencil $S_2=\left\{ x_{i}, x_{i+1}, x_{i+2} \right\}$ to obtain the third order accurate interpolating polynom $p_2$:
+
+\begin{equation}
+  \label{eq:pol_2}
+  p_2(x_{i+\frac{1}{2}}) = \frac{3}{8} u_i + \frac{3}{4} u_{i+1} - \frac{1}{8} u_{i+2}
+\end{equation}
+
+When $r=3$, using \eqref{eq:Lagrange_big} on the stencil $S= S_0 \cup S_1 \cup S_2$, we obtain a fifth order accurate approximation of the function $u$ at the point $x_{i+\frac{1}{2}}$:
+
+\begin{equation}
+  \label{eq:pol_union}
+  P(x_{i+\frac{1}{2}}) = \frac{3}{128} u_{i-2} - \frac{5}{32} u_{i-1} + \frac{45}{64} u_i + \frac{15}{32} u_{i+1} - \frac{5}{128} u_{i+2}
+\end{equation}
+
+For $r=3$, $\gamma_0 = \frac{1}{16}$, $\gamma_1 = \frac{5}{8}$, $\gamma_2 = \frac{5}{16}$.
