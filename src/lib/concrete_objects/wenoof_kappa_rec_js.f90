@@ -218,7 +218,7 @@ contains
   if (allocated(self%values)) deallocate(self%values)
   endsubroutine destroy
 
-  subroutine object_assign_object(lhs, rhs)
+  pure subroutine object_assign_object(lhs, rhs)
   !< `=` operator.
   class(kappa_rec_js), intent(inout) :: lhs !< Left hand side.
   class(base_object),  intent(in)    :: rhs !< Right hand side.

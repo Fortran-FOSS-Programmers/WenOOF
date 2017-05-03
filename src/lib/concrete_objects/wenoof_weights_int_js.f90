@@ -178,7 +178,7 @@ contains
   ! empty procedure
   endsubroutine smoothness_indicators_rec
 
-  subroutine object_assign_object(lhs, rhs)
+  pure subroutine object_assign_object(lhs, rhs)
   !< `=` operator.
   class(weights_int_js), intent(inout) :: lhs !< Left hand side.
   class(base_object),    intent(in)    :: rhs !< Right hand side.

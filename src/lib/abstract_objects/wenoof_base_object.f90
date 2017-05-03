@@ -60,7 +60,7 @@ endinterface
 
 abstract interface
   !< Abstract interfaces of [[base_object]].
-  subroutine object_assign_object_interface(lhs, rhs)
+  pure subroutine object_assign_object_interface(lhs, rhs)
   !< `=` operator.
   import :: base_object
   class(base_object), intent(inout) :: lhs !< Left hand side.
@@ -118,7 +118,7 @@ contains
   ! base object
 
   ! public non overridable methods
-  subroutine assign_(lhs, rhs)
+  pure subroutine assign_(lhs, rhs)
   !< Assign object.
   class(base_object), intent(inout) :: lhs !< Left hand side.
   class(base_object), intent(in)    :: rhs !< Right hand side.

@@ -170,7 +170,7 @@ contains
   enddo
   endsubroutine interpolate_rec_standard
 
-  subroutine object_assign_object(lhs, rhs)
+  pure subroutine object_assign_object(lhs, rhs)
   !< `=` operator.
   class(reconstructor_js), intent(inout) :: lhs !< Left hand side.
   class(base_object),      intent(in)    :: rhs !< Right hand side.
