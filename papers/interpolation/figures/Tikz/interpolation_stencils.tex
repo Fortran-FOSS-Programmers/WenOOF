@@ -1,0 +1,56 @@
+\documentclass[tikz]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+\usetikzlibrary{shapes.misc}
+\usepackage[osf,sc]{mathpazo}
+\usepackage[euler-digits]{eulervm}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+\tikzset{cross/.style={cross out, draw=red, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt.
+cross/.default={4pt}}
+
+\begin{document}
+
+ \begin{tikzpicture}
+  % whole stencil
+  \draw[very thick] (-1, 0  ) -- (11,0  );
+  \draw[very thick] ( 0,-0.1) -- ( 0,0.1);
+  \filldraw[black] (1,0) circle (2pt);
+  \draw (1,-0.5) node {\footnotesize{$x_{i-2}$}};
+  \draw[very thick] ( 2,-0.1) -- ( 2,0.1);
+  \filldraw[black] (3,0) circle (2pt);
+  \draw (3,-0.5) node {\footnotesize{$x_{i-1}$}};
+  \draw[very thick] ( 4,-0.1) -- ( 4,0.1);
+  \filldraw[black] (5,0) circle (2pt);
+  \draw (5,-0.5) node {\footnotesize{$x_i$}};
+  \draw[very thick] ( 6,-0.1) -- ( 6,0.1);
+  \filldraw[black] (7,0) circle (2pt);
+  \draw (7,-0.5) node {\footnotesize{$x_{i+1}$}};
+  \draw[very thick] ( 8,-0.1) -- ( 8,0.1);
+  \filldraw[black] (9,0) circle (2pt);
+  \draw (9,-0.5) node {\footnotesize{$x_{i+2}$}};
+  \draw[very thick] (10,-0.1) -- (10,0.1);
+  %interpolation target point
+  \draw (6,0  ) node[cross] {};
+  \draw (6,0.5) node {\footnotesize{$x_{i+\frac{1}{2}}$}};
+  %first stencil
+  \draw ( 0,-1  ) -- (6,-1  );
+  \draw ( 0,-1  ) -- (0,-0.8);
+  \draw ( 6,-1  ) -- (6,-0.8);
+  \draw ( 3,-1.2) node {\footnotesize{$S_0$}};
+  %second stencil
+  \draw ( 2,-2  ) -- (8,-2  );
+  \draw ( 2,-2  ) -- (2,-1.8);
+  \draw ( 8,-2  ) -- (8,-1.8);
+  \draw ( 5,-2.2) node {\footnotesize{$S_1$}};
+  %third stencil
+  \draw ( 4,-3  ) -- (10,-3  );
+  \draw ( 4,-3  ) -- ( 4,-2.8);
+  \draw (10,-3  ) -- (10,-2.8);
+  \draw ( 7,-3.2) node {\footnotesize{$S_2$}};
+ \end{tikzpicture}
+\end{document}

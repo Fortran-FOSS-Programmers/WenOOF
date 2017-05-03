@@ -134,7 +134,7 @@ Following the work of Jiang and Shu~\cite{jiang-1996}, the nonlinear weights are
 
 \begin{equation}
   \label{eq:nonlinear_weights}
-  w_k = \frac{\gamma_k}{\left( \epsilon + \beta_k \right)^2}
+  w_{JS,k} = \frac{\alpha_{JS,k}}{\sum_{i=0}^{r-1} \alpha_{JS,i}} \quad \text{with} \quad \alpha_{JS,k} = \frac{\gamma_k}{\left( \epsilon + \beta_k \right)^2}
 \end{equation}
 
 where $\epsilon$ is a parameter to avoid division by zero and $\beta_k$ are the smoothness indicators of the function $u$ on the stencil $l$:
@@ -153,7 +153,47 @@ Substitution of~\eqref{eq:Lagrange} for any $k=0,\dots,r-1$ into~\eqref{eq:IS} y
   \beta_k = \sum_{j=0}^{r-1} \sum_{l=0}^j \sigma_{k,j,l} u_{i+k-j} u_{i+k-l}
 \end{equation}
 
-The coefficients $\sigma_{k,j,l}$ are reported in table~\cref{tab:IS_2-5,tab:IS_6}.
+The coefficients $\sigma_{k,j,l}$ are reported in table~\cref{tab:IS_2-5,tab:IS_6,tab:IS_7,tab:IS_8,tab:IS_9}.
+
+Henrick et al.~\cite{henrick-2005} show that using mapped nonlinear weights (WENO-M), the numerical dissipation of Jiang and Shu nonlinear weights can be reduced: the mapping function delays the departure of the nonlinear weights from the optimal weights; the weights can be computed by the:
+
+\begin{equation}
+  \label{eq:weno_M}
+  w_{M,k} = \frac{\alpha_{M,k}}{\sum_{i=0}^{r-1} \alpha_{M,i}} \quad \text{with} \quad \alpha_{M,k} = g_M \left( w_{JS,k}, \gamma_k \right)
+\end{equation}
+
+where
+
+\begin{equation}
+  \label{eq:weno_mapping_function}
+  g_M (w,C) = \frac{w \left( C + C^2 -3Cw +w^2 \right)}{C^2 + w \left( 1 - 2C \right)}
+\end{equation}
+
+Borges et al.~\cite{borges-2008} developed improved nonlinear weights (WENO-Z) starting from a new definition of smoothness indicators. The new weights show less dissipation and higher resolution compared to Jiand and Shu nonlinear weights, and can also be used as basis of the Henrick weights instead of Jiang and Shu weights.
+
+The general expression for WENO-Z nonlinear weights is
+
+\begin{equation}
+  \label{eq:weno_Z}
+  w_{Z,k} = \frac{\alpha_{Z,k}}{\sum_{i=0}^{r-1} \alpha_{Z,i}} \quad \text{with} \quad \alpha_{Z,k} = \gamma_k \left( 1 + \frac{\tau_Z}{\epsilon + \beta_k} \right)
+\end{equation}
+
+where
+
+\begin{equation}
+  \label{eq:tau_Z}
+  \tau_Z = \lvert \beta_0 - \left( 1 - wo \right) \beta_1 - \left( 1 - wo \right) \beta_{r-2} + \left( 1 - 2wo \beta_{S-1} \right) \rvert
+\end{equation}
+
+and
+
+\begin{equation}
+  \label{eq:weno_odd}
+  wo = \begin{cases}
+       0 \quad \text{if $r$ is even} \\
+       1 \quad \text{if $r$ is odd}
+    \end{cases}
+\end{equation}
 
 \begin{table}
   \begin{center}
@@ -389,7 +429,16 @@ The coefficients $\sigma_{k,j,l}$ are reported in table~\cref{tab:IS_2-5,tab:IS_
   \end{center}
 \end{table}
 
-For example, if $r=3$, \eqref{eq:Lagrange} can be applied to the leftmost stencil $S_0=\left\{ x_{i-2}, x_{i-1}, x_i \right\}$ to obtain the polynomial $p_0$:
+\subsection{Practical Example}
+
+If $r=3$, the whole interpolation stencil is composed by \num{5} points and divided in \num{3} substencils of \num{3} points, as can be seen in figure~\ref{fig:stencils_3}. Equation~\eqref{eq:Lagrange} can be applied to the leftmost stencil $S_0=\left\{ x_{i-2}, x_{i-1}, x_i \right\}$ to obtain the polynomial $p_0$:
+
+\begin{figure}
+   \centering
+   \includegraphics[width=\textwidth]{interpolation_stencils.pdf}
+   \label{fig:stencils_3}
+   \caption{Interpolation domain for $r=3$}
+\end{figure}
 
 \begin{equation}
   \label{eq:pol_0}
@@ -410,11 +459,19 @@ that is also third order accurate. The last stencil that can be used is the sten
   p_2(x_{i+\frac{1}{2}}) = \frac{3}{8} u_i + \frac{3}{4} u_{i+1} - \frac{1}{8} u_{i+2}
 \end{equation}
 
-When $r=3$, using \eqref{eq:Lagrange_big} on the stencil $S= S_0 \cup S_1 \cup S_2$, we obtain a fifth order accurate approximation of the function $u$ at the point $x_{i+\frac{1}{2}}$:
+Using \eqref{eq:Lagrange_big} on the stencil $S= S_0 \cup S_1 \cup S_2$, we obtain a fifth order accurate approximation of the function $u$ at the point $x_{i+\frac{1}{2}}$:
 
 \begin{equation}
   \label{eq:pol_union}
   P(x_{i+\frac{1}{2}}) = \frac{3}{128} u_{i-2} - \frac{5}{32} u_{i-1} + \frac{45}{64} u_i + \frac{15}{32} u_{i+1} - \frac{5}{128} u_{i+2}
 \end{equation}
 
-For $r=3$, $\gamma_0 = \frac{1}{16}$, $\gamma_1 = \frac{5}{8}$, $\gamma_2 = \frac{5}{16}$.
+Using~\ref{eq:pol_convex}, for this particular case by simple algebra the following values for linear weights can be obtained: $\gamma_0 = \frac{1}{16}$, $\gamma_1 = \frac{5}{8}$, $\gamma_2 = \frac{5}{16}$.
+
+The smoothness indicators coefficients $\sigma_{k,j,l}$ can be obtained applying equation~\ref{eq:IS} to $p_0$, $p_1$ and $p_2$ polynoms respectively; this leds to the three explicit formulas for $\beta_k$:
+
+\begin{align}
+   \beta_0 & = \frac{ 4}{3} u_{i-2}^2 - \frac{19}{3} u_{i-2} u_{i-1} + \frac{25}{3} u_{i-1}^2 + \frac{11}{3} u_{i-2} u_{i  } -\frac{31}{3} u_{i-1} u_{i  } + \frac{10}{3} u_{i  }^2 \\
+   \beta_1 & = \frac{ 4}{3} u_{i-1}^2 - \frac{13}{3} u_{i-1} u_{i  } + \frac{13}{3} u_{i  }^2 + \frac{ 5}{3} u_{i-1} u_{i+1} -\frac{13}{3} u_{i  } u_{i+1} + \frac{ 4}{3} u_{i+1}^2 \\
+   \beta_2 & = \frac{10}{3} u_{i  }^2 - \frac{31}{3} u_{i  } u_{i+1} + \frac{25}{3} u_{i+1}^2 + \frac{11}{3} u_{i  } u_{i+2} -\frac{19}{3} u_{i+1} u_{i+2} + \frac{ 4}{3} u_{i+2}^2
+\end{align}
