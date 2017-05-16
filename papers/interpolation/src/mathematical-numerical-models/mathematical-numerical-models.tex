@@ -153,7 +153,7 @@ Substitution of~\eqref{eq:Lagrange} for any $k=0,\dots,r-1$ into~\eqref{eq:IS} y
   \beta_k = \sum_{j=0}^{r-1} \sum_{l=0}^j \sigma_{k,j,l} u_{i+k-j} u_{i+k-l}
 \end{equation}
 
-The coefficients $\sigma_{k,j,l}$ are reported in table~\cref{tab:IS_2-5,tab:IS_6,tab:IS_7,tab:IS_8,tab:IS_9}.
+The coefficients $\sigma_{k,j,l}$ are reported in~\cref{tab:IS_2-5,tab:IS_6,tab:IS_7,tab:IS_8,tab:IS_9}.
 
 Henrick et al.~\cite{henrick-2005} show that using mapped nonlinear weights (WENO-M), the numerical dissipation of Jiang and Shu nonlinear weights can be reduced: the mapping function delays the departure of the nonlinear weights from the optimal weights; the weights can be computed by the:
 
@@ -431,13 +431,13 @@ and
 
 \subsection{Practical Example}
 
-If $r=3$, the whole interpolation stencil is composed by \num{5} points and divided in \num{3} substencils of \num{3} points, as can be seen in figure~\ref{fig:stencils_3}. Equation~\eqref{eq:Lagrange} can be applied to the leftmost stencil $S_0=\left\{ x_{i-2}, x_{i-1}, x_i \right\}$ to obtain the polynomial $p_0$:
+We want to obtain the function value at the point $x^*=x_{i+\frac{1}{2}}$: if $r=3$, the whole interpolation stencil is composed by \num{5} points and divided in \num{3} substencils of \num{3} points, as can be seen in figure~\ref{fig:stencils_3}. Equation~\eqref{eq:Lagrange} can be applied to the leftmost stencil $S_0=\left\{ x_{i-2}, x_{i-1}, x_i \right\}$ to obtain the polynomial $p_0$:
 
 \begin{figure}
    \centering
    \includegraphics[width=\textwidth]{interpolation_stencils.pdf}
-   \label{fig:stencils_3}
    \caption{Interpolation domain for $r=3$}
+   \label{fig:stencils_3}
 \end{figure}
 
 \begin{equation}
@@ -475,3 +475,7 @@ The smoothness indicators coefficients $\sigma_{k,j,l}$ can be obtained applying
    \beta_1 & = \frac{ 4}{3} u_{i-1}^2 - \frac{13}{3} u_{i-1} u_{i  } + \frac{13}{3} u_{i  }^2 + \frac{ 5}{3} u_{i-1} u_{i+1} -\frac{13}{3} u_{i  } u_{i+1} + \frac{ 4}{3} u_{i+1}^2 \\
    \beta_2 & = \frac{10}{3} u_{i  }^2 - \frac{31}{3} u_{i  } u_{i+1} + \frac{25}{3} u_{i+1}^2 + \frac{11}{3} u_{i  } u_{i+2} -\frac{19}{3} u_{i+1} u_{i+2} + \frac{ 4}{3} u_{i+2}^2
 \end{align}
+
+These expressions are used in equation~\ref{eq:nonlinear_weights} or in equation~\ref{eq:weno_M} or in equation~\ref{eq:weno_Z} to obtain the non-linear weights that are used in equation~\ref{eq:WENO_interp}.
+
+When the interpolation target point isn't located at the cell interfaces ($x_{i-\frac{1}{2}}$ or $x_{i-\frac{1}{2}}$)
