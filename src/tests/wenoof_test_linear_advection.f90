@@ -423,7 +423,7 @@ program wenoof_test_linear_advection
 !< WenOOF test: 1D linear advection.
 
 use flap, only : command_line_interface
-use foodie, only : integrator_runge_kutta_lssp
+use foodie, only : integrator_runge_kutta_lssp, integrator_runge_kutta_ssp
 use wenoof_test_linear_advection_object, only : linear_advection_object
 use penf, only : cton, FR_P, I_P, R_P, str
 
@@ -434,6 +434,7 @@ integer(I_P)                               :: weno_order                 !< WENO
 real(R_P)                                  :: weno_eps                   !< WENO epsilon value.
 integer(I_P)                               :: stages                     !< Number of stages.
 type(integrator_runge_kutta_lssp)          :: rk_integrator              !< Runge-Kutta integrator.
+type(integrator_runge_kutta_ssp)           :: rk_integrator_s            !< Runge-Kutta integrator.
 type(linear_advection_object), allocatable :: rk_stage(:)                !< Runge-Kutta stages.
 real(R_P)                                  :: dt                         !< Time step.
 real(R_P)                                  :: t                          !< Time.
@@ -464,7 +465,11 @@ step = 0
 time_loop: do
    step = step + 1
    dt = domain%dt(steps_max=steps_max, t_max=t_max, t=t, CFL=CFL)
-   call rk_integrator%integrate(U=domain, stage=rk_stage, dt=dt, t=t)
+   if (trim(adjustl(t_scheme))=='runge_kutta_ssp_stages_5_order_4') then
+      call rk_integrator_s%integrate(U=domain, stage=rk_stage, dt=dt, t=t)
+   else
+      call rk_integrator%integrate(U=domain, stage=rk_stage, dt=dt, t=t)
+   endif
    t = t + dt
    call save_time_serie(t=t)
    if (verbose) print "(A)", 'step = '//str(n=step)//', time step = '//str(n=dt)//', time = '//str(n=t)
@@ -478,8 +483,13 @@ contains
    real(R_P),   allocatable :: initial_state(:) !< Initial state of primitive variables.
    integer(I_P)             :: i                !< Space counter.
 
-   call rk_integrator%initialize(scheme=t_scheme, stages=stages)
-   if (allocated(rk_stage)) deallocate(rk_stage) ; allocate(rk_stage(1:rk_integrator%stages))
+   if (trim(adjustl(t_scheme))=='runge_kutta_ssp_stages_5_order_4') then
+      call rk_integrator_s%initialize(scheme=t_scheme, stop_on_fail=.true.)
+      if (allocated(rk_stage)) deallocate(rk_stage) ; allocate(rk_stage(1:rk_integrator_s%stages))
+   else
+      call rk_integrator%initialize(scheme=t_scheme, stages=stages)
+      if (allocated(rk_stage)) deallocate(rk_stage) ; allocate(rk_stage(1:rk_integrator%stages))
+   endif
    t = 0._R_P
    if (allocated(x)) deallocate(x) ; allocate(x(1:Ni))
    if (allocated(initial_state)) deallocate(initial_state) ; allocate(initial_state(1:Ni))
@@ -512,7 +522,7 @@ contains
    call cli%add(switch='--weno-eps', help='WENO epsilon parameter', required=.false., act='store', def='0.000001')
    call cli%add(switch='--t-scheme', help='time intergation scheme', required=.false., act='store', &
                 def='runge_kutta_lssp_stages_s_order_s_1',                                          &
-                choices='runge_kutta_lssp_stages_s_order_s_1,runge_kutta_lssp_stages_s_order_s')
+                choices='runge_kutta_lssp_stages_s_order_s_1,runge_kutta_lssp_stages_s_order_s,runge_kutta_ssp_stages_5_order_4')
    call cli%add(switch='--stages', help='number stages', required=.false., act='store', def='2')
    call cli%add(switch='--cfl', help='CFL value', required=.false., act='store', def='0.8')
    call cli%add(switch='--tserie', switch_ab='-t', help='Save time-serie-result', required=.false., act='store_true', def='.false.')
