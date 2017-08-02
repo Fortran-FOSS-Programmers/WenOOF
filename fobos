@@ -1,17 +1,22 @@
 [modes]
 modes = shared-gnu static-gnu shared-gnu-debug static-gnu-debug
         shared-intel static-intel shared-intel-debug static-intel-debug
+        shared-ibm static-ibm shared-ibm-debug static-ibm-debug
         tests-gnu tests-gnu-debug
         tests-intel tests-intel-debug
+        tests-ibm tests-ibm-debug
 
 [common-variables]
-$CSHARED_GNU = -cpp -c -fPIC -frealloc-lhs
-$CSHARED_INT = -cpp -c -fpic -assume realloc_lhs
+$CSHARED_GNU = -c -fPIC -frealloc-lhs
+$CSHARED_INT = -c -fpic -assume realloc_lhs
+$CSHARED_IBM = -c -qpic -qmkshrobj -qxlf2003=autorealloc
 $LSHARED     = -shared
-$CSTATIC_GNU = -cpp -c -frealloc-lhs
-$CSTATIC_INT = -cpp -c -assume realloc_lhs
+$CSTATIC_GNU = -c -frealloc-lhs
+$CSTATIC_INT = -c -assume realloc_lhs
+$CSTATIC_IBM = -c -qxlf2003=autorealloc
 $DEBUG_GNU   = -Og -g3 -ffpe-trap=invalid -Warray-bounds -Wcharacter-truncation -Wline-truncation -Wimplicit-interface -Wimplicit-procedure -Wunderflow -fcheck=all -fmodule-private -ffree-line-length-132 -fimplicit-none -fbacktrace -fdump-core -finit-real=nan -std=f2008 -fall-intrinsics
 $DEBUG_INT   = -O0 -debug all -check all -warn all -extend-source 132 -traceback -gen-interfaces#-fpe-all=0 -fp-stack-check -fstack-protector-all -ftrapuv -no-ftz -std08
+$DEBUG_IBM   = -qcheck=all -qdbg=level=9
 $OPTIMIZE    = -O2
 $EXDIRS      = FACE/src/tests FACE/src/third_party/
                FLAP/src/tests/ FLAP/src/third_party/
@@ -95,6 +100,43 @@ build_dir = ./exe/
 
 [tests-intel-debug]
 template  = template-static-intel-debug
+build_dir = ./exe/
+
+#IBM
+[shared-ibm]
+template  = template-shared-ibm
+target    = wenoof.F90
+build_dir = ./shared/
+output    = libwenoof.so
+mklib     = shared
+
+[static-ibm]
+template  = template-static-ibm
+target    = wenoof.F90
+build_dir = ./static/
+output    = libwenoof.a
+mklib     = static
+
+[shared-ibm-debug]
+template  = template-shared-ibm-debug
+target    = wenoof.F90
+build_dir = ./shared/
+output    = libwenoof.so
+mklib     = shared
+
+[static-ibm-debug]
+template  = template-static-ibm-debug
+target    = wenoof.F90
+build_dir = ./static/
+output    = libwenoof.a
+mklib     = static
+
+[tests-ibm]
+template  = template-static-ibm
+build_dir = ./exe/
+
+[tests-ibm-debug]
+template  = template-static-ibm-debug
 build_dir = ./exe/
 
 #templates
@@ -195,6 +237,60 @@ jobs         = 2
 compiler     = intel
 cflags       = $CSTATIC_INT $DEBUG_INT
 lflags       = $DEBUG_INT
+preproc      = -DDEBUG
+exclude_dirs = $EXDIRS
+mod_dir      = ./mod/
+obj_dir      = ./obj/
+src          = ./src/
+colors       = True
+quiet        = False
+log          = True
+jobs         = 2
+
+[template-shared-ibm]
+compiler     = ibm
+cflags       = $CSTATIC_IBM $OPTIMIZE
+lflags       = $OPTIMIZE
+exclude_dirs = $EXDIRS
+mod_dir      = ./mod/
+obj_dir      = ./obj/
+src          = ./src/
+colors       = True
+quiet        = False
+log          = True
+jobs         = 2
+
+[template-static-ibm]
+compiler     = ibm
+cflags       = $CSTATIC_IBM $OPTIMIZE
+lflags       = $OPTIMIZE
+exclude_dirs = $EXDIRS
+mod_dir      = ./mod/
+obj_dir      = ./obj/
+src          = ./src/
+colors       = True
+quiet        = False
+log          = True
+jobs         = 2
+
+[template-shared-ibm-debug]
+compiler     = ibm
+cflags       = $CSHARED_IBM $DEBUG_IBM
+lflags       = $LSHARED $DEBUG_IBM
+preproc      = -DDEBUG
+exclude_dirs = $EXDIRS
+mod_dir      = ./mod/
+obj_dir      = ./obj/
+src          = ./src/
+colors       = True
+quiet        = False
+log          = True
+jobs         = 2
+
+[template-static-ibm-debug]
+compiler     = ibm
+cflags       = $CSTATIC_IBM $DEBUG_IBM
+lflags       = $DEBUG_IBM
 preproc      = -DDEBUG
 exclude_dirs = $EXDIRS
 mod_dir      = ./mod/
