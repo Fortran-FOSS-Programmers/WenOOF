@@ -67,7 +67,6 @@ contains
   !< Create interpolations.
   class(interpolations_int_js),   intent(inout) :: self        !< Interpolations.
   class(base_object_constructor), intent(in)    :: constructor !< Interpolations constructor.
-  real(R_P), allocatable                        :: f(:,:)      !< Temporary variable.
   real(R_P)                                     :: prod        !< Temporary variable.
   real(R_P)                                     :: c_sum       !< Temporary variable.
   integer(I_P)                                  :: i, j, k     !< Counters.
@@ -342,7 +341,6 @@ contains
         endselect
       else
         ! internal point
-        allocate(f(0:S-1, 0:S-1))
         do k=0,S-1  !stencils loop
           c_sum = 0._R_P
           do j=0,S-2  !values loop
@@ -351,15 +349,10 @@ contains
               if (i==j) cycle
               prod = prod * ((x_target - stencil(-S+k+i+1)) / (stencil(-S+k+j+1) - stencil(-S+k+i+1)))
             enddo
-            f(j,k) = prod
+            c(S-1-j,k) = prod
             c_sum = c_sum + prod
           enddo
-          f(S-1,k) = 1._R_P - c_sum
-        enddo
-        do k=0,S-1
-          do j=0,S-1
-            c(j,k) = f(S-1-j,k)
-          enddo
+          c(0,k) = 1._R_P - c_sum
         enddo
       endif
     endassociate
