@@ -21,7 +21,6 @@ public :: kappa_int_js_constructor
 type, extends(kappa_object_constructor) :: kappa_int_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal kappa object constructor.
   class(interpolations_object_constructor), allocatable :: interpolations_constructor !< Interpolations coefficients constructor.
-  real(R_P), allocatable                                :: stencil(:)                 !< Stencil used for interpolation, [1-S:S-1].
   real(R_P)                                             :: x_target                   !< Coordinate of the interpolation point.
   contains
     ! public deferred methods
@@ -65,11 +64,6 @@ contains
      else
         if (allocated(lhs%interpolations_constructor)) deallocate(lhs%interpolations_constructor)
      endif
-     if (allocated(rhs%stencil)) then
-           lhs%stencil = rhs%stencil
-     else
-        if (allocated(lhs%stencil)) deallocate(lhs%stencil)
-     endif
      lhs%x_target = rhs%x_target
   endselect
   endsubroutine constr_assign_constr
@@ -89,14 +83,13 @@ contains
   select type(constructor)
   type is(kappa_int_js_constructor)
     call i_factory%create(constructor=constructor%interpolations_constructor, object=self%interpolations)
-    call self%compute_int(stencil=constructor%stencil, x_target=constructor%x_target, values=self%values)
+    call self%compute_int(x_target=constructor%x_target, values=self%values)
   endselect
   endsubroutine create
 
-  pure subroutine compute_int(self, stencil, x_target, values)
+  pure subroutine compute_int(self, x_target, values)
   !< Compute kappa.
   class(kappa_int_js), intent(in)  :: self                        !< Kappa.
-  real(R_P),           intent(in)  :: stencil(1-self%S:)          !< Stencil used for interpolation, [1-S:S-1].
   real(R_P),           intent(in)  :: x_target                    !< Coordinate of the interpolation point.
   real(R_P),           intent(out) :: values(0:)                  !< Kappa values.
   real(R_P)                        :: val_sum                     !< Temporary variable.
@@ -235,7 +228,7 @@ contains
         enddo
         do i=1, 2 * S - 1 ! whole stencil loop
           if (all(stc/=w_stc(i))) then
-             values(j) = values(j) * (x_target - stencil(w_stc(i)))
+             values(j) = values(j) * (x_target - w_stc(i))
           endif
         enddo
         values(j) = gam(j) * values(j)

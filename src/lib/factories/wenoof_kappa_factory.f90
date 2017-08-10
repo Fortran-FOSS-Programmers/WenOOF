@@ -50,11 +50,10 @@ contains
   call constructor%create(S=S)
   endsubroutine create_constructor_rec
 
-  subroutine create_constructor_int(interpolator_type, S, stencil, x_target, interpolations_constructor, constructor)
+  subroutine create_constructor_int(interpolator_type, S, x_target, interpolations_constructor, constructor)
   !< Create an instance of concrete extension of [[kappa_object_constructor]].
   character(*),                                 intent(in)  :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                                 intent(in)  :: S                          !< Stencils dimension.
-  real(R_P),                                    intent(in)  :: stencil(1-S:)              !< Stencil used for inter, [1-S:-1+S].
   real(R_P),                                    intent(in)  :: x_target                   !< Coordinate of the interp point.
   class(interpolations_object_constructor),     intent(in)  :: interpolations_constructor !< interpolations constructor.
   class(kappa_object_constructor), allocatable, intent(out) :: constructor                !< Constructor.
@@ -62,7 +61,6 @@ contains
   allocate(kappa_int_js_constructor :: constructor)
   select type(constructor)
   type is(kappa_int_js_constructor)
-    constructor%stencil = stencil
     constructor%x_target = x_target
     call constructor%create(S=S)
     allocate(constructor%interpolations_constructor, mold=interpolations_constructor)

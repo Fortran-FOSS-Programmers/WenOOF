@@ -17,7 +17,6 @@ public :: interpolations_int_js_constructor
 
 type, extends(interpolations_object_constructor) :: interpolations_int_js_constructor
   !< Jiang-Shu (Lagrange) interpolations object for function interpolation constructor.
-  real(R_P), allocatable :: stencil(:) !< Stencil used for interpolation, [1-S:S-1].
   real(R_P)              :: x_target   !< Coordinate of the interpolation point.
   contains
     ! public deferred methods
@@ -53,11 +52,6 @@ contains
   call lhs%assign_(rhs=rhs)
   select type(rhs)
   type is(interpolations_int_js_constructor)
-     if (allocated(rhs%stencil)) then
-        lhs%stencil = rhs%stencil
-     else
-        if (allocated(lhs%stencil)) deallocate(lhs%stencil)
-     endif
      lhs%x_target = rhs%x_target
   endselect
   endsubroutine constr_assign_constr
@@ -76,7 +70,7 @@ contains
   allocate(self%coef(0:self%S - 1, 0:self%S - 1))
   select type(constructor)
   type is(interpolations_int_js_constructor)
-    associate(S => self%S, c => self%coef, stencil => constructor%stencil, x_target => constructor%x_target)
+    associate(S => self%S, c => self%coef, x_target => constructor%x_target)
       if(x_target==-0.5_R_P) then
         ! left interface (i-1/2)
         select case(S)
@@ -347,7 +341,7 @@ contains
             prod = 1._R_P
             do i=0,S-1
               if (i==j) cycle
-              prod = prod * ((x_target - stencil(-S+k+i+1)) / (stencil(-S+k+j+1) - stencil(-S+k+i+1)))
+              prod = prod * ((x_target - (-S+k+i+1)) / ((-S+k+j+1) - (-S+k+i+1)))
             enddo
             c(S-1-j,k) = prod
             c_sum = c_sum + prod
