@@ -148,7 +148,7 @@ contains
   call self%create_interpolator_object(constructor=interpolator_constructor, object=interpolator)
   endsubroutine create_reconstructor
 
-  subroutine create_interpolator(self, interpolator_type, S, interpolator, x_target, eps)
+  subroutine create_interpolator(self, interpolator_type, S, interpolator, eps, x_target)
   !< Create an instance of concrete extension of [[interpolator_object]] given user options.
   class(objects_factory),                  intent(in)           :: self                       !< The factory.
   character(*),                            intent(in)           :: interpolator_type          !< Type of the interpolator.
