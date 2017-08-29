@@ -21,7 +21,6 @@ public :: kappa_int_js_constructor
 type, extends(kappa_object_constructor) :: kappa_int_js_constructor
   !< Jiang-Shu and Gerolymos-Senechal-Vallet optimal kappa object constructor.
   class(interpolations_object_constructor), allocatable :: interpolations_constructor !< Interpolations coefficients constructor.
-  real(R_P), allocatable                                :: stencil(:)                 !< Stencil used for interpolation, [1-S:S-1].
   real(R_P)                                             :: x_target                   !< Coordinate of the interpolation point.
   contains
     ! public deferred methods
@@ -65,11 +64,6 @@ contains
      else
         if (allocated(lhs%interpolations_constructor)) deallocate(lhs%interpolations_constructor)
      endif
-     if (allocated(rhs%stencil)) then
-           lhs%stencil = rhs%stencil
-     else
-        if (allocated(lhs%stencil)) deallocate(lhs%stencil)
-     endif
      lhs%x_target = rhs%x_target
   endselect
   endsubroutine constr_assign_constr
@@ -89,22 +83,20 @@ contains
   select type(constructor)
   type is(kappa_int_js_constructor)
     call i_factory%create(constructor=constructor%interpolations_constructor, object=self%interpolations)
-    call self%compute_int(stencil=constructor%stencil, x_target=constructor%x_target, values=self%values)
+    call self%compute_int(x_target=constructor%x_target, values=self%values)
   endselect
   endsubroutine create
 
-  pure subroutine compute_int(self, stencil, x_target, values)
+  pure subroutine compute_int(self, x_target, values)
   !< Compute kappa.
   class(kappa_int_js), intent(in)  :: self                        !< Kappa.
-  real(R_P),           intent(in)  :: stencil(1-self%S:)          !< Stencil used for interpolation, [1-S:S-1].
   real(R_P),           intent(in)  :: x_target                    !< Coordinate of the interpolation point.
   real(R_P),           intent(out) :: values(0:)                  !< Kappa values.
-  real(R_P)                        :: coeff(0:2*self%S-2)         !< Interpolation coefficients on the whole stencil.
-  real(R_P)                        :: coef(0:self%S-1,0:self%S-1) !< Temporary variable.
-  real(R_P)                        :: prod                        !< Temporary variable.
-  real(R_P)                        :: coeff_t                     !< Temporary variable.
   real(R_P)                        :: val_sum                     !< Temporary variable.
-  integer(I_P)                     :: i, j, k                     !< Counters.
+  integer(I_P)                     :: i, j                        !< Counters.
+  real(R_P)                        :: gam(0:self%S-1)             !< Temporary variable.
+  integer(I_P)                     :: w_stc(1:2*self%S-1)         !< Whole stencil indexes
+  integer(I_P)                     :: stc(1:self%S)               !< Local stencil indexes
 
   associate(S=>self%S, interp=>self%interpolations)
     if (x_target == -0.5_R_P) then ! left interface (i-1/2)
@@ -221,37 +213,28 @@ contains
       values = 1._R_P / S
     else
       ! internal point
-      val_sum = 0._R_P
-      do j=0, 2 * S - 3 ! values loop
-        prod = 1._R_P
-        do i=0, 2 * S - 2
-          if (i==j) cycle
-          prod = prod * ((x_target - stencil(-S+i+1)) / (stencil(-S+j+1) - stencil(-S+i+1)))
-        enddo
-        coeff(j) = prod
-        val_sum = val_sum + coeff(j)
+      do i=0, S - 1
+        gam(i) = (-1._R_P)**(S - 1_I_P + i) * (factorial(S - 1_I_P))**2 / &
+                 (factorial(S - 1_I_P - i) * factorial(i) * factorial(2 * S - 2_I_P))
       enddo
-      coeff(2*S-2) = 1._R_P - val_sum
-      select type(interp)
-        type is(interpolations_int_js)
-          val_sum = 0._R_P
-          do k=0,S-1
-            do j=0,S-1
-              coef(j, k) = interp%coef(S-1-j,S-1-k)
-            enddo
-          enddo
-          do j = 0,S-2
-            coeff_t = 0._R_P
-            k = j
-            do i = 0,j-1
-              coeff_t = coeff_t + values(i) * coef(k,i)
-              k = k - 1
-            enddo
-            values(j) = (coeff(j) - coeff_t) / coef(0,j)
-            val_sum = val_sum + values(j)
-          enddo
-          values(S-1) = 1._R_P - val_sum
-      endselect
+      do i=1, 2 * S - 1 ! whole stencil loop
+        w_stc(i) = -S + i
+      enddo
+      values(:) = 1._R_P
+      val_sum = 0._R_P
+      do j=0, S - 1
+        do i=0, S - 1 ! values loop
+          stc(i+1) = -S + j + i + 1
+        enddo
+        do i=1, 2 * S - 1 ! whole stencil loop
+          if (all(stc/=w_stc(i))) then
+             values(j) = values(j) * (x_target - w_stc(i))
+          endif
+        enddo
+        values(j) = gam(j) * values(j)
+        if (j/=(S-1)) val_sum = val_sum + values(j)
+      enddo
+      values(S-1) = 1._R_P - val_sum
     endif
   endassociate
   endsubroutine compute_int
@@ -305,4 +288,17 @@ contains
      endif
   endselect
   endsubroutine object_assign_object
+
+  pure integer function factorial(n)
+  !< Factorial function
+  integer, intent(in) :: n
+  integer             :: i, fact
+
+  fact = 1_I_P
+  do i=1, n
+    fact = fact * i
+  enddo
+  factorial = fact
+  endfunction factorial
+
 endmodule wenoof_kappa_int_js

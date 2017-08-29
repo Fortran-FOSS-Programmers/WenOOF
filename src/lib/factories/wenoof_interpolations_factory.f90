@@ -49,19 +49,16 @@ contains
   call constructor%create(S=S)
   endsubroutine create_constructor_rec
 
-  subroutine create_constructor_int(interpolator_type, S, stencil, x_target, constructor)
+  subroutine create_constructor_int(interpolator_type, S, x_target, constructor)
   !< Create an instance of concrete extension of [[beta_object_constructor]].
   character(*),                                          intent(in)  :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                          intent(in)  :: S                 !< Stencils dimension.
-  real(R_P),                                             intent(in)  :: stencil(1-S:)     !< Stencil used for inter, [1-S:-1+S].
   real(R_P),                                             intent(in)  :: x_target          !< Coordinate of the interp point.
   class(interpolations_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
 
   allocate(interpolations_int_js_constructor :: constructor)
   select type(constructor)
   type is(interpolations_int_js_constructor)
-     allocate(constructor%stencil(1-S:S-1))
-     constructor%stencil = stencil
      constructor%x_target = x_target
   endselect
   call constructor%create(S=S)

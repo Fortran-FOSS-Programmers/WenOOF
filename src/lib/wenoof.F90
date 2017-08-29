@@ -48,21 +48,15 @@ contains
   real(R_P),                               intent(in)           :: x_target           !< Coordinate of the interpolation point.
   class(interpolator_object), allocatable, intent(out)          :: interpolator       !< The concrete WENO interpolator.
   real(R_P),                               intent(in), optional :: eps                !< Small epsilon to avoid zero-div.
-  real(R_P),                  allocatable                       :: stencil(:)         !< Stencil used for interpolation, [1-S:-1+S].
   integer(I_P)                                                  :: i                  !< Counter.
   type(objects_factory)                                         :: factory            !< The factory.
 
   if ((x_target < -0.5_R_P).or.(x_target > 0.5_R_P)) then
     error stop 'error: x_target must be between -0.5 and 0.5, that represent left and right cell interfaces'
   endif
-  allocate(stencil(1-S:S-1))
-  do i=0, 2 * S - 2
-    stencil(-S+1+i) = 1.0_R_P - S + i
-  enddo
   call factory%create(interpolator_type=interpolator_type, &
                       S=S,                                 &
                       interpolator=interpolator,           &
-                      stencil=stencil,                     &
                       x_target=x_target,                   &
                       eps=eps)
   endsubroutine wenoof_create_interpolator

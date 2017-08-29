@@ -148,13 +148,12 @@ contains
   call self%create_interpolator_object(constructor=interpolator_constructor, object=interpolator)
   endsubroutine create_reconstructor
 
-  subroutine create_interpolator(self, interpolator_type, S, interpolator, stencil, x_target, eps)
+  subroutine create_interpolator(self, interpolator_type, S, interpolator, x_target, eps)
   !< Create an instance of concrete extension of [[interpolator_object]] given user options.
   class(objects_factory),                  intent(in)           :: self                       !< The factory.
   character(*),                            intent(in)           :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                            intent(in)           :: S                          !< Stencils dimension.
   class(interpolator_object), allocatable, intent(out)          :: interpolator               !< Interpolator.
-  real(R_P),                               intent(in)           :: stencil(1-S:)              !< Stencil used for inter, [1-S:-1+S].
   real(R_P),                               intent(in)           :: x_target                   !< Coordinate of the interp point.
   real(R_P),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero/div.
   class(alpha_object_constructor),          allocatable         :: alpha_constructor          !< Alpha constructor.
@@ -175,13 +174,11 @@ contains
 
   call self%create_constructor(interpolator_type=interpolator_type,    &
                                S=S,                                    &
-                               stencil=stencil,                        &
                                x_target=x_target,                      &
                                constructor=interpolations_constructor)
 
   call self%create_constructor(interpolator_type=interpolator_type,                   &
                                S=S,                                                   &
-                               stencil=stencil,                                       &
                                x_target=x_target,                                     &
                                interpolations_constructor=interpolations_constructor, &
                                constructor=kappa_constructor)
@@ -246,11 +243,10 @@ contains
                                   constructor=constructor)
   endsubroutine create_beta_object_constructor
 
-  subroutine create_kappa_int_object_constructor(interpolator_type, S, stencil, x_target, interpolations_constructor, constructor)
+  subroutine create_kappa_int_object_constructor(interpolator_type, S, x_target, interpolations_constructor, constructor)
   !< Create an instance of concrete extension of [[kappa_object_constructor]].
   character(*),                                 intent(in)  :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                                 intent(in)  :: S                          !< Stencils dimension.
-  real(R_P),                                    intent(in)  :: stencil(1-S:)              !< Stencil used for inter, [1-S:-1+S].
   real(R_P),                                    intent(in)  :: x_target                   !< Coordinate of the interp point.
   class(interpolations_object_constructor),     intent(in)  :: interpolations_constructor !< interpolations constructor.
   class(kappa_object_constructor), allocatable, intent(out) :: constructor                !< Constructor.
@@ -258,7 +254,6 @@ contains
 
   call factory%create_constructor(interpolator_type=interpolator_type,                   &
                                   S=S,                                                   &
-                                  stencil=stencil,                                       &
                                   x_target=x_target,                                     &
                                   interpolations_constructor=interpolations_constructor, &
                                   constructor=constructor)
@@ -288,18 +283,16 @@ contains
                                   constructor=constructor)
   endsubroutine create_interpolations_rec_object_constructor
 
-  subroutine create_interpolations_int_object_constructor(interpolator_type, S, stencil, x_target, constructor)
+  subroutine create_interpolations_int_object_constructor(interpolator_type, S, x_target, constructor)
   !< Create an instance of concrete extension of [[interpolations_object_constructor]].
   character(*),                                          intent(in)  :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                          intent(in)  :: S                 !< Stencils dimension.
-  real(R_P),                                             intent(in)  :: stencil(1-S:)     !< Stencil used for inter, [1-S:-1+S].
   real(R_P),                                             intent(in)  :: x_target          !< Coordinate of the interp point.
   class(interpolations_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
   type(interpolations_factory)                                       :: factory           !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type, &
                                   S=S,                                 &
-                                  stencil=stencil,                     &
                                   x_target=x_target,                   &
                                   constructor=constructor)
   endsubroutine create_interpolations_int_object_constructor

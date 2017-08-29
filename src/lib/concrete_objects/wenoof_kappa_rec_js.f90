@@ -67,10 +67,9 @@ contains
   call self%compute_rec(values=self%values)
   endsubroutine create
 
-  pure subroutine compute_int(self, stencil, x_target, values)
+  pure subroutine compute_int(self, x_target, values)
   !< Compute kappa (interpolate).
   class(kappa_rec_js), intent(in)  :: self               !< Kappa.
-  real(R_P),           intent(in)  :: stencil(1-self%S:) !< Stencil used for interpolation, [1-S:S-1].
   real(R_P),           intent(in)  :: x_target           !< Coordinate of the interpolation point.
   real(R_P),           intent(out) :: values(0:)         !< Kappa values.
   ! empty procedure

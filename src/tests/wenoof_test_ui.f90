@@ -62,7 +62,7 @@ contains
                                    "$EXECUTABLE --reconstruct -i all -p -r   "])
 
       call cli%add(switch='--interpolate', help='Perform interpolation', required=.false., act='store_true', def='.false.')
-      call cli%add(switch='--reconstruct', help='Perform interpolation', required=.false., act='store_true', def='.false.')
+      call cli%add(switch='--reconstruct', help='Perform reconstruction', required=.false., act='store_true', def='.false.')
       call cli%add(switch='--x_target', switch_ab='-x', help='WENO interpolation target point coordinate', &
                    required=.false., def='0.0', act='store')
       call cli%add(switch='--interpolator', switch_ab='-i', help='WENO interpolator type', required=.false., &
