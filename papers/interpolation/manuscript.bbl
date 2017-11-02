@@ -1,4 +1,4 @@
-\begin{thebibliography}{4}
+\begin{thebibliography}{6}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Gibbs(1906)}]{gibbs-b-1906}
@@ -15,5 +15,13 @@ A.~Harten, B.~Einfeldt, S.~Osher, S.~Chakravarthy, Journal of Computational
 
 \bibitem[{Jiang and Shu(1996)}]{jiang-1996}
 G.~Jiang, C.~Shu, Journal of Computational Physics 126 (1996) pp. 202
+
+\bibitem[{Henrick et~al.(2005)Henrick, Aslam and Powers}]{henrick-2005}
+A.~Henrick, T.~Aslam, J.~Powers, Journal of Computational Physics 207 (2005)
+  pp. 542
+
+\bibitem[{Borges et~al.(2008)Borges, Carmona, Costa and Don}]{borges-2008}
+R.~Borges, M.~Carmona, B.~Costa, W.~Don, Journal of Computational Physics 227
+  (2008) pp. 3191
 
 \end{thebibliography}
