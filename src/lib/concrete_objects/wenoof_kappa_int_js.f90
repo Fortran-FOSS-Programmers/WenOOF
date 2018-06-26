@@ -98,7 +98,7 @@ contains
   integer(I_P)                     :: w_stc(1:2*self%S-1)         !< Whole stencil indexes
   integer(I_P)                     :: stc(1:self%S)               !< Local stencil indexes
 
-  associate(S=>self%S, interp=>self%interpolations)
+  associate(S=>self%S)
     if (x_target == -0.5_R_P) then ! left interface (i-1/2)
       select case(S)
         case(2) ! 3rd order
