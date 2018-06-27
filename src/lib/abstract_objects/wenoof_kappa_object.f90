@@ -28,7 +28,7 @@ abstract interface
   !< Abstract interfaces of [[kappa_object]].
   pure subroutine compute_int_interface(self, x_target, values)
   !< Compute kappa (interpolate).
-  import :: kappa_object, I_P, R_P
+  import :: kappa_object, R_P
   class(kappa_object), intent(in)  :: self               !< Kappa.
   real(R_P),           intent(in)  :: x_target           !< Coordinate of the interpolation point.
   real(R_P),           intent(out) :: values(0:)         !< Kappa values.
