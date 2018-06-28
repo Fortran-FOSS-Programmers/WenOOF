@@ -30,7 +30,7 @@ type, extends(kappa_object):: kappa_rec_js
   !< Schemes*, Guang-Shan Jiang, Chi-Wang Shu, JCP, 1996, vol. 126, pp. 202--228, doi:10.1006/jcph.1996.0130 and
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
-  real(R_P), allocatable :: values(:,:) !< Kappa coefficients values [1:2,0:S-1].
+  real(R_P), allocatable :: values(:,:,:) !< Kappa coefficients values [1:2,0:S-1,2:ord].
   contains
     ! public deferred methods
     procedure, pass(self) :: create               !< Create kappa.
@@ -63,7 +63,11 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(1:2, 0:self%S - 1))
+  if (self%ror) then
+    allocate(self%values(1:2, 0:self%S - 1, 2:self%S))
+  else
+    allocate(self%values(1:2, 0:self%S - 1, 1))
+  endif
   call self%compute_rec(values=self%values)
   endsubroutine create
 
@@ -71,16 +75,69 @@ contains
   !< Compute kappa (interpolate).
   class(kappa_rec_js), intent(in)  :: self               !< Kappa.
   real(R_P),           intent(in)  :: x_target           !< Coordinate of the interpolation point.
-  real(R_P),           intent(out) :: values(0:)         !< Kappa values.
+  real(R_P),           intent(out) :: values(0:,:)       !< Kappa values.
   ! empty procedure
   endsubroutine compute_int
 
   pure subroutine compute_rec(self, values)
   !< Compute kappa (reconstruct).
-  class(kappa_rec_js), intent(in)  :: self          !< Kappa.
-  real(R_P),           intent(out) :: values(1:,0:) !< Kappa values.
+  class(kappa_rec_js), intent(in)  :: self            !< Kappa.
+  real(R_P),           intent(out) :: values(1:,0:,:) !< Kappa values.
+  integer(I_P)                     :: i               !< Counter.
 
-  select case(self%S)
+  if (self%ror) then
+    do i=2, self%S
+      call assign_kappa(values=values(:,:,i), i=i)
+    enddo
+  else
+    call assign_kappa(values=values(:,:,1), i=self%S)
+  endif
+  endsubroutine compute_rec
+
+  pure function description(self, prefix) result(string)
+  !< Return object string-descripition.
+  class(kappa_rec_js), intent(in)           :: self             !< Kappa coefficient.
+  character(len=*),    intent(in), optional :: prefix           !< Prefixing string.
+  character(len=:), allocatable             :: string           !< String-description.
+  character(len=:), allocatable             :: prefix_          !< Prefixing string, local variable.
+  character(len=1), parameter               :: NL=new_line('a') !< New line char.
+
+  prefix_ = '' ; if (present(prefix)) prefix_ = prefix
+  string = prefix_//'Jiang-Shu kappa coefficients object for reconstruction:'//NL
+  string = string//prefix_//'  - S   = '//trim(str(self%S))
+  endfunction description
+
+  elemental subroutine destroy(self)
+  !< Destroy kappa.
+  class(kappa_rec_js), intent(inout) :: self !< Kappa.
+
+  call self%destroy_
+  if (allocated(self%values)) deallocate(self%values)
+  endsubroutine destroy
+
+  pure subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(kappa_rec_js), intent(inout) :: lhs !< Left hand side.
+  class(base_object),  intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(kappa_rec_js)
+     if (allocated(rhs%values)) then
+        lhs%values = rhs%values
+     else
+        if (allocated(lhs%values)) deallocate(lhs%values)
+     endif
+  endselect
+  endsubroutine object_assign_object
+
+  ! Private, non TBP
+  pure subroutine assign_kappa(values, i)
+  !< Assign the values of kappa coefficients.
+  real(R_P),    intent(inout) :: values(:,0:)    !< Kappa values.
+  integer(I_P), intent(in)    :: i               !< Counter.
+
+  select case(i)
     case(2) ! 3rd order
       ! 1 => left interface (i-1/2)
       values(1, 0) = 2._R_P/3._R_P ! stencil 0
@@ -194,42 +251,5 @@ contains
       values(2, 7) =  144._R_P/12155._R_P ! stencil 7
       values(2, 8) =    9._R_P/24310._R_P ! stencil 8
   endselect
-  endsubroutine compute_rec
-
-  pure function description(self, prefix) result(string)
-  !< Return object string-descripition.
-  class(kappa_rec_js), intent(in)           :: self             !< Kappa coefficient.
-  character(len=*),    intent(in), optional :: prefix           !< Prefixing string.
-  character(len=:), allocatable             :: string           !< String-description.
-  character(len=:), allocatable             :: prefix_          !< Prefixing string, local variable.
-  character(len=1), parameter               :: NL=new_line('a') !< New line char.
-
-  prefix_ = '' ; if (present(prefix)) prefix_ = prefix
-  string = prefix_//'Jiang-Shu kappa coefficients object for reconstruction:'//NL
-  string = string//prefix_//'  - S   = '//trim(str(self%S))
-  endfunction description
-
-  elemental subroutine destroy(self)
-  !< Destroy kappa.
-  class(kappa_rec_js), intent(inout) :: self !< Kappa.
-
-  call self%destroy_
-  if (allocated(self%values)) deallocate(self%values)
-  endsubroutine destroy
-
-  pure subroutine object_assign_object(lhs, rhs)
-  !< `=` operator.
-  class(kappa_rec_js), intent(inout) :: lhs !< Left hand side.
-  class(base_object),  intent(in)    :: rhs !< Right hand side.
-
-  call lhs%assign_(rhs=rhs)
-  select type(rhs)
-  type is(kappa_rec_js)
-     if (allocated(rhs%values)) then
-        lhs%values = rhs%values
-     else
-        if (allocated(lhs%values)) deallocate(lhs%values)
-     endif
-  endselect
-  endsubroutine object_assign_object
+  endsubroutine assign_kappa
 endmodule wenoof_kappa_rec_js

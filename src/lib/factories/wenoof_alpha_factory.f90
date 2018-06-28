@@ -6,11 +6,11 @@ use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use penf, only : I_P, R_P
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
 use wenoof_alpha_int_js, only : alpha_int_js, alpha_int_js_constructor
-use wenoof_alpha_int_m, only : alpha_int_m, alpha_int_m_constructor
-use wenoof_alpha_int_z, only : alpha_int_z, alpha_int_z_constructor
+use wenoof_alpha_int_m,  only : alpha_int_m, alpha_int_m_constructor
+use wenoof_alpha_int_z,  only : alpha_int_z, alpha_int_z_constructor
 use wenoof_alpha_rec_js, only : alpha_rec_js, alpha_rec_js_constructor
-use wenoof_alpha_rec_m, only : alpha_rec_m, alpha_rec_m_constructor
-use wenoof_alpha_rec_z, only : alpha_rec_z, alpha_rec_z_constructor
+use wenoof_alpha_rec_m,  only : alpha_rec_m, alpha_rec_m_constructor
+use wenoof_alpha_rec_z,  only : alpha_rec_z, alpha_rec_z_constructor
 
 implicit none
 private

@@ -58,22 +58,24 @@ contains
   call self%create_(constructor=constructor)
   endsubroutine create
 
-  pure subroutine compute_int(self, beta, kappa, values)
+  pure subroutine compute_int(self, ord, beta, kappa, values)
   !< Compute alpha (interpolate).
   class(alpha_int_js), intent(in)  :: self       !< Alpha coefficient.
+  integer(I_P),        intent(in)  :: ord        !< Order of interpolation.
   real(R_P),           intent(in)  :: beta(0:)   !< Beta [0:S-1].
   real(R_P),           intent(in)  :: kappa(0:)  !< Kappa [0:S-1].
   real(R_P),           intent(out) :: values(0:) !< Alpha values [0:S-1].
   integer(I_P)                     :: s1         !< Counter.
 
-  do s1=0, self%S - 1 ! stencil loops
-    values(s1) = kappa(s1) / (self%eps + beta(s1)) ** self%S
+  do s1=0, ord - 1 ! stencil loops
+    values(s1) = kappa(s1) / (self%eps + beta(s1)) ** ord
   enddo
   endsubroutine compute_int
 
-  pure subroutine compute_rec(self, beta, kappa, values)
+  pure subroutine compute_rec(self, ord, beta, kappa, values)
   !< Compute alpha (reconstruct).
   class(alpha_int_js), intent(in)  :: self          !< Alpha coefficient.
+  integer(I_P),        intent(in)  :: ord           !< Order of reconstruction.
   real(R_P),           intent(in)  :: beta(1:,0:)   !< Beta [1:2,0:S-1].
   real(R_P),           intent(in)  :: kappa(1:,0:)  !< Kappa [1:2,0:S-1].
   real(R_P),           intent(out) :: values(1:,0:) !< Alpha values [1:2,0:S-1].

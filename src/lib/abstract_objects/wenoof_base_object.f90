@@ -4,6 +4,7 @@ module wenoof_base_object
 !<
 !< Define a minimal, base, object that is used as ancestor of all objects, e.g. smoothness indicator, optimal weights, etc...
 
+use, intrinsic :: iso_c_binding, only : C_BOOL
 use penf, only : I_P, R_P
 
 implicit none
@@ -11,12 +12,14 @@ private
 public :: base_object
 public :: base_object_constructor
 
-real(R_P), parameter :: EPS_DEF=10._R_P**(-6) !< Small epsilon to avoid division by zero, default value.
+logical(kind=C_BOOL),   parameter :: ROR_DEF=.true.        !< ROR strategy switch, default value.
+real(R_P),              parameter :: EPS_DEF=10._R_P**(-6) !< Small epsilon to avoid division by zero, default value.
 
 type, abstract :: base_object_constructor
   !< Abstract base object constructor.
-  integer(I_P) :: S=0_I_P     !< Stencils dimension.
-  real(R_P)    :: eps=EPS_DEF !< Small epsilon to avoid division by zero.
+  integer(I_P)         :: S=0_I_P     !< Stencils dimension.
+  logical(kind=C_BOOL) :: ror=ROR_DEF !< ROR strategy switch.
+  real(R_P)            :: eps=EPS_DEF !< Small epsilon to avoid division by zero.
   contains
     ! public methods
     procedure, pass(self) :: create => create_base_object_constructor
@@ -32,8 +35,9 @@ type, abstract :: base_object
   !< Abstract base object, the ancestor of all.
   !<
   !< Define a minimal, base, object that is used as ancestor of all objects, e.g. smoothness indicator, optimal weights, etc...
-  integer(I_P) :: S=0_I_P     !< Stencils dimension.
-  real(R_P)    :: eps=EPS_DEF !< Small epsilon to avoid division by zero.
+  integer(I_P)         :: S=0_I_P     !< Stencils dimension.
+  logical(kind=C_BOOL) :: ror=ROR_DEF !< ROR strategy switch.
+  real(R_P)            :: eps=EPS_DEF !< Small epsilon to avoid division by zero.
   contains
     ! public operators
     generic :: assignment(=) => object_assign_object !< `=` overloading.
@@ -95,13 +99,15 @@ contains
   ! base object constructor
 
   ! public methods
-  subroutine create_base_object_constructor(self, S, eps)
+  subroutine create_base_object_constructor(self, S, ror, eps)
   !< Create alpha constructor.
   class(base_object_constructor), intent(inout)        :: self       !< Constructor.
   integer(I_P),                   intent(in)           :: S          !< Stencils dimension.
+  logical(kind=C_BOOL),           intent(in), optional :: ror        !< ROR strategy switch.
   real(R_P),                      intent(in), optional :: eps        !< Small epsilon to avoid division by zero.
 
   self%S = S
+  if (present(ror)) self%ror = ror
   if (present(eps)) self%eps = eps
   endsubroutine create_base_object_constructor
 
@@ -111,7 +117,8 @@ contains
   class(base_object_constructor), intent(inout) :: lhs !< Left hand side.
   class(base_object_constructor), intent(in)    :: rhs !< Right hand side.
 
-  lhs%S = rhs%S
+  lhs%S   = rhs%S
+  lhs%ror = rhs%ror
   lhs%eps = rhs%eps
   endsubroutine assign_constr_
 
@@ -123,7 +130,8 @@ contains
   class(base_object), intent(inout) :: lhs !< Left hand side.
   class(base_object), intent(in)    :: rhs !< Right hand side.
 
-  lhs%S = rhs%S
+  lhs%S   = rhs%S
+  lhs%ror = rhs%ror
   lhs%eps = rhs%eps
   endsubroutine assign_
 
@@ -135,7 +143,8 @@ contains
   call self%destroy_
   select type(constructor)
   class is(base_object_constructor)
-    self%S = constructor%S
+    self%S   = constructor%S
+    self%ror = constructor%ror
     self%eps = constructor%eps
   endselect
   endsubroutine create_
@@ -145,6 +154,7 @@ contains
   class(base_object), intent(inout) :: self !< Object.
 
   self%S = 0_I_P
+  self%ror = ROR_DEF
   self%eps = EPS_DEF
   endsubroutine destroy_
 endmodule wenoof_base_object

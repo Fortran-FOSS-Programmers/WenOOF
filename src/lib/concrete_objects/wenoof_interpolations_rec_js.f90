@@ -331,26 +331,28 @@ contains
   endassociate
   endsubroutine create
 
-  pure subroutine compute_int(self, stencil, values)
+  pure subroutine compute_int(self, ord, stencil, values)
   !< Compute interpolations (interpolate).
-  class(interpolations_rec_js), intent(in)  :: self               !< Interpolations.
-  real(R_P),                    intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
-  real(R_P),                    intent(out) :: values(0:)         !< Interpolations values.
+  class(interpolations_rec_js), intent(in)  :: self            !< Interpolations.
+  integer(I_P),                 intent(in)  :: ord             !< Interpolation order.
+  real(R_P),                    intent(in)  :: stencil(1-ord:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(R_P),                    intent(out) :: values(0:)      !< Interpolations values.
   ! empty procedure
   endsubroutine compute_int
 
-  pure subroutine compute_rec(self, stencil, values)
+  pure subroutine compute_rec(self, ord, stencil, values)
   !< Compute interpolations (reconstruct).
-  class(interpolations_rec_js), intent(in)  :: self                  !< Interpolations.
-  real(R_P),                    intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  real(R_P),                    intent(out) :: values(1:, 0:)        !< Interpolations values.
-  integer(I_P)                              :: s1                    !< Counter.
-  integer(I_P)                              :: s2                    !< Counter.
-  integer(I_P)                              :: f                     !< Counter.
+  class(interpolations_rec_js), intent(in)  :: self               !< Interpolations.
+  integer(I_P),                 intent(in)  :: ord                !< Reconstruction order.
+  real(R_P),                    intent(in)  :: stencil(1:,1-ord:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(R_P),                    intent(out) :: values(1:, 0:)     !< Interpolations values.
+  integer(I_P)                              :: s1                 !< Counter.
+  integer(I_P)                              :: s2                 !< Counter.
+  integer(I_P)                              :: f                  !< Counter.
 
   values = 0._R_P
-  do s1=0, self%S - 1 ! stencils loop
-    do s2=0, self%S - 1 ! values loop
+  do s1=0, ord - 1 ! stencils loop
+    do s2=0, ord - 1 ! values loop
       do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
         values(f, s1) = values(f, s1) + self%coef(f, s2, s1) * stencil(f, -s2 + s1)
       enddo

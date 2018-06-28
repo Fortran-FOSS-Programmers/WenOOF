@@ -353,13 +353,14 @@ contains
   endselect
   endsubroutine create
 
-  pure subroutine compute_int(self, stencil, values)
+  pure subroutine compute_int(self, ord, stencil, values)
   !< Compute interpolations (interpolation).
-  class(interpolations_int_js), intent(in)  :: self               !< Interpolations.
-  real(R_P),                    intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
-  real(R_P),                    intent(out) :: values(0:)         !< Interpolations values.
-  integer(I_P)                              :: s1                 !< Counter.
-  integer(I_P)                              :: s2                 !< Counter.
+  class(interpolations_int_js), intent(in)  :: self            !< Interpolations.
+  integer(I_P),                 intent(in)  :: ord             !< Interpolation order.
+  real(R_P),                    intent(in)  :: stencil(1-ord:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(R_P),                    intent(out) :: values(0:)      !< Interpolations values.
+  integer(I_P)                              :: s1              !< Counter.
+  integer(I_P)                              :: s2              !< Counter.
 
   values = 0._R_P
   do s1=0, self%S - 1 ! stencils loop
@@ -369,11 +370,12 @@ contains
   enddo
   endsubroutine compute_int
 
-  pure subroutine compute_rec(self, stencil, values)
+  pure subroutine compute_rec(self, ord, stencil, values)
   !< Compute interpolations (reconstruct).
-  class(interpolations_int_js), intent(in)  :: self                  !< Interpolations.
-  real(R_P),                    intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  real(R_P),                    intent(out) :: values(1:, 0:)        !< Interpolations values.
+  class(interpolations_int_js), intent(in)  :: self               !< Interpolations.
+  integer(I_P),                 intent(in)  :: ord                !< Interpolation order.
+  real(R_P),                    intent(in)  :: stencil(1:,1-ord:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(R_P),                    intent(out) :: values(1:, 0:)     !< Interpolations values.
   ! empty procedure
   endsubroutine compute_rec
 

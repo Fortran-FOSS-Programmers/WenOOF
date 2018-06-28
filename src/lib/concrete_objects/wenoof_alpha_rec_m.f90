@@ -85,30 +85,32 @@ contains
   endselect
   endsubroutine create
 
-  pure subroutine compute_int(self, beta, kappa, values)
+  pure subroutine compute_int(self, ord, beta, kappa, values)
   !< Compute alpha (interpolate).
   class(alpha_rec_m), intent(in)  :: self       !< Alpha.
+  integer(I_P),       intent(in)  :: ord        !< Order of interpolation.
   real(R_P),          intent(in)  :: beta(0:)   !< Beta [0:S-1].
   real(R_P),          intent(in)  :: kappa(0:)  !< Kappa [0:S-1].
   real(R_P),          intent(out) :: values(0:) !< Alpha values [0:S-1].
   ! empty procedure
   endsubroutine compute_int
 
-  pure subroutine compute_rec(self, beta, kappa, values)
+  pure subroutine compute_rec(self, ord, beta, kappa, values)
   !< Compute alpha (reconstruct).
-  class(alpha_rec_m), intent(in)  :: self                       !< Alpha.
-  real(R_P),          intent(in)  :: beta(1:,0:)                !< Beta [1:2,0:S-1].
-  real(R_P),          intent(in)  :: kappa(1:,0:)               !< Kappa [1:2,0:S-1].
-  real(R_P),          intent(out) :: values(1:,0:)              !< Alpha values [1:2,0:S-1].
-  real(R_P)                       :: alpha_base(1:2,0:self%S-1) !< Alpha base coefficients.
-  real(R_P)                       :: alpha_base_sum(1:2)        !< Sum of alpha base coefficients.
-  real(R_P)                       :: kappa_base                 !< Kappa base coefficient.
-  integer(I_P)                    :: f, s1                      !< Counters.
+  class(alpha_rec_m), intent(in)  :: self                    !< Alpha.
+  integer(I_P),       intent(in)  :: ord                     !< Order of reconstruction.
+  real(R_P),          intent(in)  :: beta(1:,0:)             !< Beta [1:2,0:S-1].
+  real(R_P),          intent(in)  :: kappa(1:,0:)            !< Kappa [1:2,0:S-1].
+  real(R_P),          intent(out) :: values(1:,0:)           !< Alpha values [1:2,0:S-1].
+  real(R_P)                       :: alpha_base(1:2,0:ord-1) !< Alpha base coefficients.
+  real(R_P)                       :: alpha_base_sum(1:2)     !< Sum of alpha base coefficients.
+  real(R_P)                       :: kappa_base              !< Kappa base coefficient.
+  integer(I_P)                    :: f, s1                   !< Counters.
 
-  call self%alpha_base%compute(beta=beta, kappa=kappa, values=alpha_base)
+  call self%alpha_base%compute(ord=ord, beta=beta, kappa=kappa, values=alpha_base)
   alpha_base_sum(1) = sum(alpha_base(1,:))
   alpha_base_sum(2) = sum(alpha_base(2,:))
-  do s1=0, self%S - 1 ! stencil loops
+  do s1=0, ord - 1 ! stencil loops
     do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
       kappa_base = alpha_base(f, s1) / alpha_base_sum(f)
       values(f, s1) =                                                                                                             &

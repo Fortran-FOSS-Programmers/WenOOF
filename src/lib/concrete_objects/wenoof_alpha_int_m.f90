@@ -85,20 +85,21 @@ contains
   endselect
   endsubroutine create
 
-  pure subroutine compute_int(self, beta, kappa, values)
+  pure subroutine compute_int(self, ord, beta, kappa, values)
   !< Compute alpha (interpolate).
-  class(alpha_int_m),  intent(in)  :: self                   !< Alpha.
-  real(R_P),           intent(in)  :: beta(0:)               !< Beta [0:S-1].
-  real(R_P),           intent(in)  :: kappa(0:)              !< Kappa [0:S-1].
-  real(R_P),           intent(out) :: values(0:)             !< Alpha values [0:S-1].
-  real(R_P)                        :: alpha_base(0:self%S-1) !< Alpha base coefficients.
-  real(R_P)                        :: alpha_base_sum         !< Sum of alpha base coefficients.
-  real(R_P)                        :: kappa_base             !< Kappa base coefficient.
-  integer(I_P)                     :: s1                     !< Counter.
+  class(alpha_int_m),  intent(in)  :: self                !< Alpha.
+  integer(I_P),        intent(in)  :: ord                 !< Order of interpolation.
+  real(R_P),           intent(in)  :: beta(0:)            !< Beta [0:S-1].
+  real(R_P),           intent(in)  :: kappa(0:)           !< Kappa [0:S-1].
+  real(R_P),           intent(out) :: values(0:)          !< Alpha values [0:S-1].
+  real(R_P)                        :: alpha_base(0:ord-1) !< Alpha base coefficients.
+  real(R_P)                        :: alpha_base_sum      !< Sum of alpha base coefficients.
+  real(R_P)                        :: kappa_base          !< Kappa base coefficient.
+  integer(I_P)                     :: s1                  !< Counter.
 
-  call self%alpha_base%compute(beta=beta, kappa=kappa, values=alpha_base)
+  call self%alpha_base%compute(ord=ord, beta=beta, kappa=kappa, values=alpha_base)
   alpha_base_sum = sum(alpha_base)
-  do s1=0, self%S - 1 ! stencil loops
+  do s1=0, ord - 1 ! stencil loops
     kappa_base = alpha_base(s1) / alpha_base_sum
     values(s1) =                                                                                                       &
       (kappa_base * (kappa(s1) + kappa(s1) * kappa(s1) - 3._R_P * kappa(s1) * kappa_base + kappa_base * kappa_base)) / &
@@ -106,9 +107,10 @@ contains
   enddo
   endsubroutine compute_int
 
-  pure subroutine compute_rec(self, beta, kappa, values)
+  pure subroutine compute_rec(self, ord, beta, kappa, values)
   !< Compute alpha (reconstruct).
   class(alpha_int_m), intent(in)  :: self          !< Alpha coefficient.
+  integer(I_P),       intent(in)  :: ord           !< Order of reconstruction.
   real(R_P),          intent(in)  :: beta(1:,0:)   !< Beta [1:2,0:S-1].
   real(R_P),          intent(in)  :: kappa(1:,0:)  !< Kappa [1:2,0:S-1].
   real(R_P),          intent(out) :: values(1:,0:) !< Alpha values [1:2,0:S-1].

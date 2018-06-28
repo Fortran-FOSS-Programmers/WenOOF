@@ -111,32 +111,34 @@ contains
   endselect
   endsubroutine create
 
-  pure subroutine compute_int(self, stencil, values)
+  pure subroutine compute_int(self, ord, stencil, values)
   !< Compute weights.
-  class(weights_int_js), intent(in)  :: self               !< Weights.
-  real(R_P),             intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
-  real(R_P),             intent(out) :: values(0:)         !< Weights values.
-  real(R_P)                          :: alpha(0:self%S-1)  !< Aplha values.
-  real(R_P)                          :: beta(0:self%S-1)   !< Beta values.
-  real(R_P)                          :: alpha_sum          !< Sum of aplha values.
-  integer(I_P)                       :: s                  !< Counters.
+  class(weights_int_js), intent(in)  :: self            !< Weights.
+  integer(I_P),          intent(in)  :: ord             !< Interpolation order.
+  real(R_P),             intent(in)  :: stencil(1-ord:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(R_P),             intent(out) :: values(0:)      !< Weights values.
+  real(R_P)                          :: alpha(0:ord-1)  !< Alpha values.
+  real(R_P)                          :: beta(0:ord-1)   !< Beta values.
+  real(R_P)                          :: alpha_sum       !< Sum of alpha values.
+  integer(I_P)                       :: s               !< Counters.
 
-  call self%beta%compute(stencil=stencil, values=beta)
+  call self%beta%compute(ord=ord, stencil=stencil, values=beta)
   select type(kappa => self%kappa)
   class is(kappa_int_js)
-    call self%alpha%compute(beta=beta, kappa=kappa%values, values=alpha)
+    call self%alpha%compute(ord=ord, beta=beta, kappa=kappa%values(:,ord), values=alpha)
   endselect
   alpha_sum = sum(alpha)
-  do s=0, self%S - 1 ! stencils loop
+  do s=0, ord - 1 ! stencils loop
     values(s) = alpha(s) / alpha_sum
   enddo
   endsubroutine compute_int
 
-  pure subroutine compute_rec(self, stencil, values)
+  pure subroutine compute_rec(self, ord, stencil, values)
   !< Compute weights.
-  class(weights_int_js), intent(in)  :: self                  !< Weights.
-  real(R_P),             intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  real(R_P),             intent(out) :: values(1:,0:)         !< Weights values of stencil interpolations.
+  class(weights_int_js), intent(in)  :: self               !< Weights.
+  integer(I_P),          intent(in)  :: ord                !< Reconstruction order.
+  real(R_P),             intent(in)  :: stencil(1:,1-ord:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(R_P),             intent(out) :: values(1:,0:)      !< Weights values of stencil interpolations.
   ! empty procedure
   endsubroutine compute_rec
 

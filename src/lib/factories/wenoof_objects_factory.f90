@@ -2,6 +2,7 @@
 module wenoof_objects_factory
 !< Wenoof factory.
 
+use, intrinsic :: iso_c_binding, only : C_BOOL
 use penf, only : I_P, R_P
 use wenoof_alpha_factory, only : alpha_factory
 use wenoof_alpha_object, only : alpha_object, alpha_object_constructor
@@ -103,12 +104,13 @@ contains
   call factory%create(constructor=constructor, object=object)
   endsubroutine create_interpolations_object
 
-  subroutine create_reconstructor(self, interpolator_type, S, interpolator, eps)
+  subroutine create_reconstructor(self, interpolator_type, S, interpolator, ror, eps)
   !< Create an instance of concrete extension of [[interpolator_object]] given user options.
   class(objects_factory),                  intent(in)           :: self                       !< The factory.
   character(*),                            intent(in)           :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                            intent(in)           :: S                          !< Stencils dimension.
   class(interpolator_object), allocatable, intent(out)          :: interpolator               !< Interpolator.
+  logical(kind=C_BOOL),                    intent(in), optional :: ror                        !< Activate or not ROR strategy.
   real(R_P),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero/div.
   class(alpha_object_constructor),          allocatable         :: alpha_constructor          !< Alpha constructor.
   class(beta_object_constructor),           allocatable         :: beta_constructor           !< Beta constructor.
@@ -124,9 +126,13 @@ contains
 
   call self%create_constructor(interpolator_type=interpolator_type, &
                                S=S,                                 &
-                               constructor=beta_constructor)
+                               constructor=beta_constructor,        &
+                               ror=ror)
 
-  call self%create_constructor(interpolator_type=interpolator_type, S=S, constructor=kappa_constructor)
+  call self%create_constructor(interpolator_type=interpolator_type, &
+                               S=S,                                 &
+                               constructor=kappa_constructor,       &
+                               ror=ror)
 
   call self%create_constructor(interpolator_type=interpolator_type, &
                                S=S,                                 &
@@ -137,7 +143,8 @@ contains
 
   call self%create_constructor(interpolator_type=interpolator_type,    &
                                S=S,                                    &
-                               constructor=interpolations_constructor)
+                               constructor=interpolations_constructor, &
+                               ror=ror)
 
   call self%create_constructor(interpolator_type=interpolator_type,                   &
                                S=S,                                                   &
@@ -148,13 +155,14 @@ contains
   call self%create_interpolator_object(constructor=interpolator_constructor, object=interpolator)
   endsubroutine create_reconstructor
 
-  subroutine create_interpolator(self, interpolator_type, S, interpolator, eps, x_target)
+  subroutine create_interpolator(self, interpolator_type, S, x_target, interpolator, ror, eps)
   !< Create an instance of concrete extension of [[interpolator_object]] given user options.
   class(objects_factory),                  intent(in)           :: self                       !< The factory.
   character(*),                            intent(in)           :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                            intent(in)           :: S                          !< Stencils dimension.
   class(interpolator_object), allocatable, intent(out)          :: interpolator               !< Interpolator.
   real(R_P),                               intent(in)           :: x_target                   !< Coordinate of the interp point.
+  logical(kind=C_BOOL),                    intent(in), optional :: ror                        !< Activate or not ROR strategy.
   real(R_P),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero/div.
   class(alpha_object_constructor),          allocatable         :: alpha_constructor          !< Alpha constructor.
   class(beta_object_constructor),           allocatable         :: beta_constructor           !< Beta constructor.
@@ -170,18 +178,21 @@ contains
 
   call self%create_constructor(interpolator_type=interpolator_type, &
                                S=S,                                 &
-                               constructor=beta_constructor)
+                               constructor=beta_constructor,        &
+                               ror=ror)
 
   call self%create_constructor(interpolator_type=interpolator_type,    &
                                S=S,                                    &
                                x_target=x_target,                      &
-                               constructor=interpolations_constructor)
+                               constructor=interpolations_constructor, &
+                               ror=ror)
 
   call self%create_constructor(interpolator_type=interpolator_type,                   &
                                S=S,                                                   &
                                x_target=x_target,                                     &
                                interpolations_constructor=interpolations_constructor, &
-                               constructor=kappa_constructor)
+                               constructor=kappa_constructor,                         &
+                               ror=ror)
 
   call self%create_constructor(interpolator_type=interpolator_type, &
                                S=S,                                 &
@@ -231,70 +242,80 @@ contains
                                   eps=eps)
   endsubroutine create_alpha_object_constructor
 
-  subroutine create_beta_object_constructor(interpolator_type, S, constructor)
+  subroutine create_beta_object_constructor(interpolator_type, S, constructor, ror)
   !< Create an instance of concrete extension of [[beta_object_constructor]].
   character(*),                                intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                intent(in)           :: S                 !< Stencils dimension.
   class(beta_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
+  logical(kind=C_BOOL),                        intent(in), optional :: ror               !< ROR strategy switch.
   type(beta_factory)                                                :: factory           !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type, &
                                   S=S,                                 &
-                                  constructor=constructor)
+                                  constructor=constructor,             &
+                                  ror=ror)
   endsubroutine create_beta_object_constructor
 
-  subroutine create_kappa_int_object_constructor(interpolator_type, S, x_target, interpolations_constructor, constructor)
+  subroutine create_kappa_int_object_constructor(interpolator_type, S, x_target, interpolations_constructor, constructor, ror)
   !< Create an instance of concrete extension of [[kappa_object_constructor]].
-  character(*),                                 intent(in)  :: interpolator_type          !< Type of the interpolator.
-  integer(I_P),                                 intent(in)  :: S                          !< Stencils dimension.
-  real(R_P),                                    intent(in)  :: x_target                   !< Coordinate of the interp point.
-  class(interpolations_object_constructor),     intent(in)  :: interpolations_constructor !< interpolations constructor.
-  class(kappa_object_constructor), allocatable, intent(out) :: constructor                !< Constructor.
-  type(kappa_factory)                                       :: factory                    !< The factory.
+  character(*),                                 intent(in)           :: interpolator_type          !< Type of the interpolator.
+  integer(I_P),                                 intent(in)           :: S                          !< Stencils dimension.
+  real(R_P),                                    intent(in)           :: x_target                   !< Coordinate of the interp point.
+  class(interpolations_object_constructor),     intent(in)           :: interpolations_constructor !< interpolations constructor.
+  class(kappa_object_constructor), allocatable, intent(out)          :: constructor                !< Constructor.
+  logical(kind=C_BOOL),                         intent(in), optional :: ror                        !< ROR strategy switch.
+  type(kappa_factory)                                                :: factory                    !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type,                   &
                                   S=S,                                                   &
                                   x_target=x_target,                                     &
                                   interpolations_constructor=interpolations_constructor, &
-                                  constructor=constructor)
+                                  constructor=constructor,                               &
+                                  ror=ror)
   endsubroutine create_kappa_int_object_constructor
 
-  subroutine create_kappa_rec_object_constructor(interpolator_type, S, constructor)
+  subroutine create_kappa_rec_object_constructor(interpolator_type, S, constructor, ror)
   !< Create an instance of concrete extension of [[kappa_object_constructor]].
-  character(*),                                 intent(in)  :: interpolator_type !< Type of the interpolator.
-  integer(I_P),                                 intent(in)  :: S                 !< Stencils dimension.
-  class(kappa_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
-  type(kappa_factory)                                       :: factory           !< The factory.
+  character(*),                                 intent(in)           :: interpolator_type !< Type of the interpolator.
+  integer(I_P),                                 intent(in)           :: S                 !< Stencils dimension.
+  class(kappa_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
+  logical(kind=C_BOOL),                         intent(in), optional :: ror               !< ROR strategy switch.
+  type(kappa_factory)                                                :: factory           !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type, &
                                   S=S,                                 &
-                                  constructor=constructor)
+                                  constructor=constructor,             &
+                                  ror=ror)
   endsubroutine create_kappa_rec_object_constructor
 
-  subroutine create_interpolations_rec_object_constructor(interpolator_type, S, constructor)
+  subroutine create_interpolations_rec_object_constructor(interpolator_type, S, constructor, ror)
   !< Create an instance of concrete extension of [[interpolations_object_constructor]].
   character(*),                                          intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                          intent(in)           :: S                 !< Stencils dimension.
   class(interpolations_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
+  logical(kind=C_BOOL),                                  intent(in), optional :: ror               !< ROR strategy switch.
   type(interpolations_factory)                                                :: factory           !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type, &
                                   S=S,                                 &
-                                  constructor=constructor)
+                                  constructor=constructor,             &
+                                  ror=ror)
   endsubroutine create_interpolations_rec_object_constructor
 
-  subroutine create_interpolations_int_object_constructor(interpolator_type, S, x_target, constructor)
+  subroutine create_interpolations_int_object_constructor(interpolator_type, S, x_target, constructor, ror)
   !< Create an instance of concrete extension of [[interpolations_object_constructor]].
-  character(*),                                          intent(in)  :: interpolator_type !< Type of the interpolator.
-  integer(I_P),                                          intent(in)  :: S                 !< Stencils dimension.
-  real(R_P),                                             intent(in)  :: x_target          !< Coordinate of the interp point.
-  class(interpolations_object_constructor), allocatable, intent(out) :: constructor       !< Constructor.
-  type(interpolations_factory)                                       :: factory           !< The factory.
+  character(*),                                          intent(in)           :: interpolator_type !< Type of the interpolator.
+  integer(I_P),                                          intent(in)           :: S                 !< Stencils dimension.
+  real(R_P),                                             intent(in)           :: x_target          !< Coordinate of the interp point.
+  class(interpolations_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
+  logical(kind=C_BOOL),                                  intent(in), optional :: ror               !< ROR strategy switch.
+  type(interpolations_factory)                                                :: factory           !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type, &
                                   S=S,                                 &
                                   x_target=x_target,                   &
-                                  constructor=constructor)
+                                  constructor=constructor,             &
+                                  ror=ror)
   endsubroutine create_interpolations_int_object_constructor
 
   subroutine create_interpolator_object_constructor(interpolator_type, S, interpolations_constructor, weights_constructor, &

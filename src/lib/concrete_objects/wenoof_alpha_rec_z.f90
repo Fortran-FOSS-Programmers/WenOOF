@@ -60,26 +60,28 @@ contains
   call self%create_(constructor=constructor)
   endsubroutine create
 
-  pure subroutine compute_int(self, beta, kappa, values)
+  pure subroutine compute_int(self, ord, beta, kappa, values)
   !< Compute alpha (interpolate).
   class(alpha_rec_z), intent(in)  :: self       !< Alpha.
+  integer(I_P),       intent(in)  :: ord        !< Order of interpolation.
   real(R_P),          intent(in)  :: beta(0:)   !< Beta [0:S-1].
   real(R_P),          intent(in)  :: kappa(0:)  !< Kappa [0:S-1].
   real(R_P),          intent(out) :: values(0:) !< Alpha values [0:S-1].
   ! empty procedure
   endsubroutine compute_int
 
-  pure subroutine compute_rec(self, beta, kappa, values)
+  pure subroutine compute_rec(self, ord, beta, kappa, values)
   !< Compute alpha.
   class(alpha_rec_z), intent(in)  :: self          !< Alpha.
+  integer(I_P),       intent(in)  :: ord           !< Order of reconstruction.
   real(R_P),          intent(in)  :: beta(1:,0:)   !< Beta [1:2,0:S-1].
   real(R_P),          intent(in)  :: kappa(1:,0:)  !< Kappa [1:2,0:S-1].
   real(R_P),          intent(out) :: values(1:,0:) !< Alpha values [1:2,0:S-1].
   integer(I_P)                    :: f, s1         !< Counters.
 
-  do s1=0, self%S - 1 ! stencil loops
+  do s1=0, ord - 1 ! stencil loops
     do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      values(f, s1) = kappa(f, s1) * ((1._R_P + (tau(S=self%S, beta=beta) / (self%eps + beta(f, s1)))) ** (weno_exp(self%S)))
+      values(f, s1) = kappa(f, s1) * ((1._R_P + (tau(S=ord, beta=beta) / (self%eps + beta(f, s1)))) ** (weno_exp(ord)))
     enddo
   enddo
   endsubroutine compute_rec

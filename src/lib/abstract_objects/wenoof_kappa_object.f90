@@ -28,17 +28,17 @@ abstract interface
   !< Abstract interfaces of [[kappa_object]].
   pure subroutine compute_int_interface(self, x_target, values)
   !< Compute kappa (interpolate).
-  import :: kappa_object, I_P, R_P
+  import :: kappa_object, R_P
   class(kappa_object), intent(in)  :: self               !< Kappa.
   real(R_P),           intent(in)  :: x_target           !< Coordinate of the interpolation point.
-  real(R_P),           intent(out) :: values(0:)         !< Kappa values.
+  real(R_P),           intent(out) :: values(0:,:)       !< Kappa values.
   endsubroutine compute_int_interface
 
   pure subroutine compute_rec_interface(self, values)
   !< Compute kappa (reconstruct).
   import :: kappa_object, R_P
-  class(kappa_object), intent(in)  :: self          !< Kappa.
-  real(R_P),           intent(out) :: values(1:,0:) !< Kappa values.
+  class(kappa_object), intent(in)  :: self            !< Kappa.
+  real(R_P),           intent(out) :: values(1:,0:,:) !< Kappa values.
   endsubroutine compute_rec_interface
 endinterface
 endmodule wenoof_kappa_object

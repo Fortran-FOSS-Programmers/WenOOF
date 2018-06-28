@@ -31,7 +31,7 @@ type, extends(beta_object) :: beta_rec_js
   !< *Very-high-order weno schemes*, G. A. Gerolymos, D. Senechal, I. Vallet, JCP, 2009, vol. 228, pp. 8481-8524,
   !< doi:10.1016/j.jcp.2009.07.039
   private
-  real(R_P), allocatable :: coef(:,:,:) !< Beta coefficients [0:S-1,0:S-1,0:S-1].
+  real(R_P), allocatable :: coef(:,:,:,:) !< Beta coefficients [0:S-1,0:S-1,0:S-1,2:S].
   contains
     ! public deferred methods
     procedure, pass(self) :: create               !< Create beta.
@@ -59,12 +59,94 @@ contains
   !< Create beta.
   class(beta_rec_js),             intent(inout) :: self        !< Beta.
   class(base_object_constructor), intent(in)    :: constructor !< Beta constructor.
+  integer(I_P)                                  :: i           !< Counter.
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%coef(0:self%S - 1, 0:self%S - 1, 0:self%S - 1))
-  associate(c => self%coef)
-    select case(self%S)
+  if (self%ror) then
+    allocate(self%coef(0:self%S - 1, 0:self%S - 1, 0:self%S - 1, 2:self%S))
+    do i=2, self%S
+      call assign_beta_coeff(c=self%coef(:,:,:,i), i=i)
+    enddo
+  else
+    allocate(self%coef(0:self%S - 1, 0:self%S - 1, 0:self%S - 1, 1))
+    call assign_beta_coeff(c=self%coef(:,:,:,1), i=self%S)
+  endif
+  endsubroutine create
+
+  pure subroutine compute_int(self, ord, stencil, values)
+  !< Compute beta (interpolate).
+  class(beta_rec_js), intent(in)  :: self            !< Beta.
+  integer(I_P),       intent(in)  :: ord             !< Interpolation order.
+  real(R_P),          intent(in)  :: stencil(1-ord:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(R_P),          intent(out) :: values(0:)      !< Beta values [0:S-1].
+  ! empty procedure
+  endsubroutine compute_int
+
+  pure subroutine compute_rec(self, ord, stencil, values)
+  !< Compute beta (reconstruct).
+  class(beta_rec_js), intent(in)  :: self               !< Beta.
+  integer(I_P),       intent(in)  :: ord                !< Reconstruction order.
+  real(R_P),          intent(in)  :: stencil(1:,1-ord:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(R_P),          intent(out) :: values(1:,0:)      !< Beta values [1:2,0:S-1].
+  integer(I_P)                    :: s1, s2, s3, f      !< Counters.
+
+  do s1=0, ord - 1 ! stencils loop
+    do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
+      values(f, s1) = 0._R_P
+      do s2=0, ord - 1
+        do s3=0, ord - 1
+          values(f, s1) = values(f, s1) + self%coef(s3, s2, s1, ord) * stencil(f, s1 - s3) * stencil(f, s1 - s2)
+        enddo
+      enddo
+    enddo
+  enddo
+  endsubroutine compute_rec
+
+  pure function description(self, prefix) result(string)
+  !< Return object string-descripition.
+  class(beta_rec_js), intent(in)           :: self             !< Beta coefficient.
+  character(len=*),   intent(in), optional :: prefix           !< Prefixing string.
+  character(len=:), allocatable            :: string           !< String-description.
+  character(len=:), allocatable            :: prefix_          !< Prefixing string, local variable.
+  character(len=1), parameter              :: NL=new_line('a') !< New line char.
+
+  prefix_ = '' ; if (present(prefix)) prefix_ = prefix
+  string = prefix_//'Jiang-Shu beta coefficients object for reconstruction:'//NL
+  string = string//prefix_//'  - S   = '//trim(str(self%S))
+  endfunction description
+
+  elemental subroutine destroy(self)
+  !< Destroy beta.
+  class(beta_rec_js), intent(inout) :: self !< Beta.
+
+  call self%destroy_
+  if (allocated(self%coef)) deallocate(self%coef)
+  endsubroutine destroy
+
+  pure subroutine object_assign_object(lhs, rhs)
+  !< `=` operator.
+  class(beta_rec_js), intent(inout) :: lhs !< Left hand side.
+  class(base_object), intent(in)    :: rhs !< Right hand side.
+
+  call lhs%assign_(rhs=rhs)
+  select type(rhs)
+  type is(beta_rec_js)
+     if (allocated(rhs%coef)) then
+        lhs%coef = rhs%coef
+     else
+        if (allocated(lhs%coef)) deallocate(lhs%coef)
+     endif
+  endselect
+  endsubroutine object_assign_object
+
+  ! private non TBP
+  pure subroutine assign_beta_coeff(c, i)
+  !< Assign the value of beta coefficients.
+  real(R_P),    intent(inout) :: c(0:,0:,0:) !< Beta values.
+  integer(I_P), intent(in)    :: i           !< Counter.
+
+  select case(i)
     case(2) ! 3rd order
       ! stencil 0
       !       i*i      ;     (i-1)*i
@@ -2379,71 +2461,6 @@ contains
       c(6,8,8) =                                     0._R_P;c(7,8,8) =                                     0._R_P
       !                    /                               ;                     /
       c(8,8,8) =    109471139332699._R_P/ 163459296000._R_P
-    endselect
-  endassociate
-  endsubroutine create
-
-  pure subroutine compute_int(self, stencil, values)
-  !< Compute beta (interpolate).
-  class(beta_rec_js), intent(in)  :: self               !< Beta.
-  real(R_P),          intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
-  real(R_P),          intent(out) :: values(0:)         !< Beta values [0:S-1].
-  ! empty procedure
-  endsubroutine compute_int
-
-  pure subroutine compute_rec(self, stencil, values)
-  !< Compute beta (reconstruct).
-  class(beta_rec_js), intent(in)  :: self                  !< Beta.
-  real(R_P),          intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  real(R_P),          intent(out) :: values(1:,0:)         !< Beta values [1:2,0:S-1].
-  integer(I_P)                    :: s1, s2, s3, f         !< Counters.
-
-  do s1=0, self%S - 1 ! stencils loop
-    do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
-      values(f, s1) = 0._R_P
-      do s2=0, self%S - 1
-        do s3=0, self%S - 1
-          values(f, s1) = values(f, s1) + self%coef(s3, s2, s1) * stencil(f, s1 - s3) * stencil(f, s1 - s2)
-        enddo
-      enddo
-    enddo
-  enddo
-  endsubroutine compute_rec
-
-  pure function description(self, prefix) result(string)
-  !< Return object string-descripition.
-  class(beta_rec_js), intent(in)           :: self             !< Beta coefficient.
-  character(len=*),   intent(in), optional :: prefix           !< Prefixing string.
-  character(len=:), allocatable            :: string           !< String-description.
-  character(len=:), allocatable            :: prefix_          !< Prefixing string, local variable.
-  character(len=1), parameter              :: NL=new_line('a') !< New line char.
-
-  prefix_ = '' ; if (present(prefix)) prefix_ = prefix
-  string = prefix_//'Jiang-Shu beta coefficients object for reconstruction:'//NL
-  string = string//prefix_//'  - S   = '//trim(str(self%S))
-  endfunction description
-
-  elemental subroutine destroy(self)
-  !< Destroy beta.
-  class(beta_rec_js), intent(inout) :: self !< Beta.
-
-  call self%destroy_
-  if (allocated(self%coef)) deallocate(self%coef)
-  endsubroutine destroy
-
-  pure subroutine object_assign_object(lhs, rhs)
-  !< `=` operator.
-  class(beta_rec_js), intent(inout) :: lhs !< Left hand side.
-  class(base_object), intent(in)    :: rhs !< Right hand side.
-
-  call lhs%assign_(rhs=rhs)
-  select type(rhs)
-  type is(beta_rec_js)
-     if (allocated(rhs%coef)) then
-        lhs%coef = rhs%coef
-     else
-        if (allocated(lhs%coef)) deallocate(lhs%coef)
-     endif
   endselect
-  endsubroutine object_assign_object
+  end subroutine assign_beta_coeff
 endmodule wenoof_beta_rec_js

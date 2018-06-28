@@ -41,7 +41,7 @@ contains
 
   subroutine create_constructor(interpolator_type, S, interpolations_constructor, weights_constructor, &
                                 constructor)
-  !< Create an instance of concrete extension of [[weights_object_constructor]].
+  !< Create an instance of concrete extension of [[interpolator_object_constructor]].
   character(*),                                        intent(in)  :: interpolator_type          !< Type of interpolator.
   integer(I_P),                                        intent(in)  :: S                          !< Stencils dimension.
   class(interpolations_object_constructor),            intent(in)  :: interpolations_constructor !< Interpolations const.

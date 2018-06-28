@@ -34,7 +34,7 @@ type, extends(kappa_object):: kappa_int_js
   !< Nonoscillatory Schemes for Convection Dominated Problems*, Chi-Wang Shu, SIAM Review, 2009, vol. 51, pp. 82--126,
   !< doi:10.1137/070679065.
   class(interpolations_object), allocatable :: interpolations !< Interpolations object for getting coefficients.
-  real(R_P),                    allocatable :: values(:)      !< Kappa coefficients values [0:S-1].
+  real(R_P),                    allocatable :: values(:,:)    !< Kappa coefficients values [0:S-1].
   contains
     ! public deferred methods
     procedure, pass(self) :: create               !< Create kappa.
@@ -79,7 +79,11 @@ contains
 
   call self%destroy
   call self%create_(constructor=constructor)
-  allocate(self%values(0:self%S - 1))
+  if (self%ror) then
+    allocate(self%values(0:self%S - 1, 2:self%S))
+  else
+    allocate(self%values(0:self%S - 1, 1))
+  endif
   select type(constructor)
   type is(kappa_int_js_constructor)
     call i_factory%create(constructor=constructor%interpolations_constructor, object=self%interpolations)
@@ -91,158 +95,22 @@ contains
   !< Compute kappa.
   class(kappa_int_js), intent(in)  :: self                        !< Kappa.
   real(R_P),           intent(in)  :: x_target                    !< Coordinate of the interpolation point.
-  real(R_P),           intent(out) :: values(0:)                  !< Kappa values.
-  real(R_P)                        :: val_sum                     !< Temporary variable.
-  integer(I_P)                     :: i, j                        !< Counters.
-  real(R_P)                        :: gam(0:self%S-1)             !< Temporary variable.
-  integer(I_P)                     :: w_stc(1:2*self%S-1)         !< Whole stencil indexes
-  integer(I_P)                     :: stc(1:self%S)               !< Local stencil indexes
+  real(R_P),           intent(out) :: values(0:,:)                !< Kappa values.
+  integer(I_P)                     :: i                           !< Counter.
 
-  associate(S=>self%S, interp=>self%interpolations)
-    if (x_target == -0.5_R_P) then ! left interface (i-1/2)
-      select case(S)
-        case(2) ! 3rd order
-          values(0) = 3._R_P/4._R_P ! stencil 0
-          values(1) = 1._R_P/4._R_P ! stencil 1
-        case(3) ! 5th order
-          values(0) = 5._R_P/16._R_P ! stencil 0
-          values(1) = 5._R_P/8._R_P  ! stencil 1
-          values(2) = 1._R_P/16._R_P ! stencil 2
-        case(4) ! 7th order
-          values(0) =  7._R_P/64._R_P ! stencil 0
-          values(1) = 35._R_P/64._R_P ! stencil 1
-          values(2) = 21._R_P/64._R_P ! stencil 2
-          values(3) =  1._R_P/64._R_P ! stencil 3
-        case(5) ! 9th order
-          values(0) =  9._R_P/256._R_P ! stencil 0
-          values(1) = 21._R_P/64._R_P  ! stencil 1
-          values(2) = 63._R_P/128._R_P ! stencil 2
-          values(3) =  9._R_P/64._R_P  ! stencil 3
-          values(4) =  1._R_P/256._R_P ! stencil 4
-        case(6) ! 11th order
-          values(0) =  11._R_P/1024._R_P  ! stencil 0
-          values(1) = 165._R_P/1024._R_P  ! stencil 1
-          values(2) = 231._R_P/512._R_P   ! stencil 2
-          values(3) = 165._R_P/512._R_P   ! stencil 3
-          values(4) =  55._R_P/1024._R_P  ! stencil 4
-          values(5) =   1._R_P/1024._R_P  ! stencil 5
-        case(7) ! 13th order
-          values(0) =   13._R_P/4096._R_P  ! stencil 0
-          values(1) =  143._R_P/2048._R_P  ! stencil 1
-          values(2) = 1287._R_P/4096._R_P  ! stencil 2
-          values(3) =  429._R_P/1024._R_P  ! stencil 3
-          values(4) =  179._R_P/1024._R_P  ! stencil 4
-          values(5) =   39._R_P/2048._R_P  ! stencil 5
-          values(6) =    1._R_P/4096._R_P  ! stencil 6
-        case(8) ! 15th order
-          values(0) =   15._R_P/16384._R_P ! stencil 0
-          values(1) =  455._R_P/16384._R_P ! stencil 1
-          values(2) = 3003._R_P/16384._R_P ! stencil 2
-          values(3) = 6435._R_P/16384._R_P ! stencil 3
-          values(4) = 5005._R_P/16384._R_P ! stencil 4
-          values(5) = 1365._R_P/16384._R_P ! stencil 5
-          values(6) =  105._R_P/16384._R_P ! stencil 6
-          values(7) =    1._R_P/16384._R_P ! stencil 7
-        case(9) ! 17th order
-          values(0) =    17._R_P/65536._R_P  ! stencil 0
-          values(1) =    85._R_P/8192._R_P   ! stencil 1
-          values(2) =  1547._R_P/16384._R_P  ! stencil 2
-          values(3) =  2431._R_P/8192._R_P   ! stencil 3
-          values(4) = 12155._R_P/32768._R_P  ! stencil 4
-          values(5) =  1547._R_P/8192._R_P   ! stencil 5
-          values(6) =   595._R_P/16384._R_P  ! stencil 6
-          values(7) =    17._R_P/8192._R_P   ! stencil 7
-          values(8) =     1._R_P/65536._R_P  ! stencil 8
-      endselect
-    elseif(x_target == 0.5_R_P) then ! right interface (i+1/2)
-      select case(S)
-        case(2) ! 3rd order
-          values(0) = 1._R_P/4._R_P ! stencil 0
-          values(1) = 3._R_P/4._R_P ! stencil 1
-        case(3) ! 5th order
-          values(0) = 1._R_P/16._R_P ! stencil 0
-          values(1) = 5._R_P/8._R_P  ! stencil 1
-          values(2) = 5._R_P/16._R_P ! stencil 2
-        case(4) ! 7th order
-          values(0) =  1._R_P/64._R_P ! stencil 0
-          values(1) = 21._R_P/64._R_P ! stencil 1
-          values(2) = 35._R_P/64._R_P ! stencil 2
-          values(3) =  7._R_P/64._R_P ! stencil 3
-        case(5) ! 9th order
-          values(0) =  1._R_P/256._R_P ! stencil 0
-          values(1) =  9._R_P/64._R_P  ! stencil 1
-          values(2) = 63._R_P/128._R_P  ! stencil 2
-          values(3) = 21._R_P/64._R_P  ! stencil 3
-          values(4) =  9._R_P/256._R_P ! stencil 4
-        case(6) ! 11th order
-          values(0) =   1._R_P/1024._R_P  ! stencil 0
-          values(1) =  55._R_P/1024._R_P  ! stencil 1
-          values(2) = 165._R_P/512._R_P   ! stencil 2
-          values(3) = 231._R_P/512._R_P   ! stencil 3
-          values(4) = 165._R_P/1024._R_P  ! stencil 4
-          values(5) =  11._R_P/1024._R_P  ! stencil 5
-        case(7) ! 13th order
-          values(0) =    1._R_P/4096._R_P  ! stencil 0
-          values(1) =   39._R_P/2048._R_P  ! stencil 1
-          values(2) =  179._R_P/1024._R_P  ! stencil 2
-          values(3) =  429._R_P/1024._R_P  ! stencil 3
-          values(4) = 1287._R_P/4096._R_P  ! stencil 4
-          values(5) =  143._R_P/2048._R_P  ! stencil 5
-          values(6) =   13._R_P/4096._R_P  ! stencil 6
-        case(8) ! 15th order
-          values(0) =    1._R_P/16384._R_P ! stencil 0
-          values(1) =  105._R_P/16384._R_P ! stencil 1
-          values(2) = 1365._R_P/16384._R_P ! stencil 2
-          values(3) = 5005._R_P/16384._R_P ! stencil 3
-          values(4) = 6435._R_P/16384._R_P ! stencil 4
-          values(5) = 3003._R_P/16384._R_P ! stencil 5
-          values(6) =  455._R_P/16384._R_P ! stencil 6
-          values(7) =   15._R_P/16384._R_P ! stencil 7
-        case(9) ! 17th order
-          values(0) =     1._R_P/65536._R_P  ! stencil 0
-          values(1) =    17._R_P/8192._R_P   ! stencil 1
-          values(2) =   595._R_P/16384._R_P  ! stencil 2
-          values(3) =  1547._R_P/8192._R_P   ! stencil 3
-          values(4) = 12155._R_P/32768._R_P  ! stencil 4
-          values(5) =  2431._R_P/8192._R_P   ! stencil 5
-          values(6) =  1547._R_P/16384._R_P  ! stencil 6
-          values(7) =    85._R_P/8192._R_P   ! stencil 7
-          values(8) =    17._R_P/65536._R_P  ! stencil 8
-      endselect
-    elseif(x_target == 0._R_P) then
-      values = 1._R_P / S
-    else
-      ! internal point
-      do i=0, S - 1
-        gam(i) = (-1._R_P)**(S - 1_I_P + i) * (factorial(S - 1_I_P))**2 / &
-                 (factorial(S - 1_I_P - i) * factorial(i) * factorial(2 * S - 2_I_P))
-      enddo
-      do i=1, 2 * S - 1 ! whole stencil loop
-        w_stc(i) = -S + i
-      enddo
-      values(:) = 1._R_P
-      val_sum = 0._R_P
-      do j=0, S - 1
-        do i=0, S - 1 ! values loop
-          stc(i+1) = -S + j + i + 1
-        enddo
-        do i=1, 2 * S - 1 ! whole stencil loop
-          if (all(stc/=w_stc(i))) then
-             values(j) = values(j) * (x_target - w_stc(i))
-          endif
-        enddo
-        values(j) = gam(j) * values(j)
-        if (j/=(S-1)) val_sum = val_sum + values(j)
-      enddo
-      values(S-1) = 1._R_P - val_sum
-    endif
-  endassociate
+  if (self%ror) then
+    do i=2, self%S
+      call assign_kappa(values=values(:,i), S=i, x_target=x_target)
+    enddo
+  else
+    call assign_kappa(values=values(:,1), S=self%S, x_target=x_target)
+  endif
   endsubroutine compute_int
 
   pure subroutine compute_rec(self, values)
   !< Compute kappa (reconstruct).
-  class(kappa_int_js), intent(in)  :: self          !< Kappa.
-  real(R_P),           intent(out) :: values(1:,0:) !< Kappa values.
+  class(kappa_int_js), intent(in)  :: self            !< Kappa.
+  real(R_P),           intent(out) :: values(1:,0:,:) !< Kappa values.
   ! empty procedure
   endsubroutine compute_rec
 
@@ -301,4 +169,154 @@ contains
   factorial = fact
   endfunction factorial
 
+  ! Private, non TBP
+  pure subroutine assign_kappa(values, S, x_target)
+  !< Assign the values of kappa coefficients.
+  real(R_P),    intent(inout) :: values(0:)      !< Kappa values.
+  integer(I_P), intent(in)    :: S               !< Interpolation order.
+  real(R_P),    intent(in)    :: x_target        !< Coordinate of the interpolation point.
+  integer(I_P)                :: i, j            !< Counters.
+  integer(I_P)                :: w_stc(1:2*S-1)  !< Whole stencil indexes
+  integer(I_P)                :: stc(1:S)        !< Local stencil indexes
+  real(R_P)                   :: gam(0:S-1)      !< Temporary variable.
+  real(R_P)                   :: val_sum         !< Temporary variable.
+
+  if (x_target == -0.5_R_P) then ! left interface (i-1/2)
+    select case(S)
+      case(2) ! 3rd order
+        values(0) = 3._R_P/4._R_P ! stencil 0
+        values(1) = 1._R_P/4._R_P ! stencil 1
+      case(3) ! 5th order
+        values(0) = 5._R_P/16._R_P ! stencil 0
+        values(1) = 5._R_P/8._R_P  ! stencil 1
+        values(2) = 1._R_P/16._R_P ! stencil 2
+      case(4) ! 7th order
+        values(0) =  7._R_P/64._R_P ! stencil 0
+        values(1) = 35._R_P/64._R_P ! stencil 1
+        values(2) = 21._R_P/64._R_P ! stencil 2
+        values(3) =  1._R_P/64._R_P ! stencil 3
+      case(5) ! 9th order
+        values(0) =  9._R_P/256._R_P ! stencil 0
+        values(1) = 21._R_P/64._R_P  ! stencil 1
+        values(2) = 63._R_P/128._R_P ! stencil 2
+        values(3) =  9._R_P/64._R_P  ! stencil 3
+        values(4) =  1._R_P/256._R_P ! stencil 4
+      case(6) ! 11th order
+        values(0) =  11._R_P/1024._R_P  ! stencil 0
+        values(1) = 165._R_P/1024._R_P  ! stencil 1
+        values(2) = 231._R_P/512._R_P   ! stencil 2
+        values(3) = 165._R_P/512._R_P   ! stencil 3
+        values(4) =  55._R_P/1024._R_P  ! stencil 4
+        values(5) =   1._R_P/1024._R_P  ! stencil 5
+      case(7) ! 13th order
+        values(0) =   13._R_P/4096._R_P  ! stencil 0
+        values(1) =  143._R_P/2048._R_P  ! stencil 1
+        values(2) = 1287._R_P/4096._R_P  ! stencil 2
+        values(3) =  429._R_P/1024._R_P  ! stencil 3
+        values(4) =  179._R_P/1024._R_P  ! stencil 4
+        values(5) =   39._R_P/2048._R_P  ! stencil 5
+        values(6) =    1._R_P/4096._R_P  ! stencil 6
+      case(8) ! 15th order
+        values(0) =   15._R_P/16384._R_P ! stencil 0
+        values(1) =  455._R_P/16384._R_P ! stencil 1
+        values(2) = 3003._R_P/16384._R_P ! stencil 2
+        values(3) = 6435._R_P/16384._R_P ! stencil 3
+        values(4) = 5005._R_P/16384._R_P ! stencil 4
+        values(5) = 1365._R_P/16384._R_P ! stencil 5
+        values(6) =  105._R_P/16384._R_P ! stencil 6
+        values(7) =    1._R_P/16384._R_P ! stencil 7
+      case(9) ! 17th order
+        values(0) =    17._R_P/65536._R_P  ! stencil 0
+        values(1) =    85._R_P/8192._R_P   ! stencil 1
+        values(2) =  1547._R_P/16384._R_P  ! stencil 2
+        values(3) =  2431._R_P/8192._R_P   ! stencil 3
+        values(4) = 12155._R_P/32768._R_P  ! stencil 4
+        values(5) =  1547._R_P/8192._R_P   ! stencil 5
+        values(6) =   595._R_P/16384._R_P  ! stencil 6
+        values(7) =    17._R_P/8192._R_P   ! stencil 7
+        values(8) =     1._R_P/65536._R_P  ! stencil 8
+    endselect
+  elseif(x_target == 0.5_R_P) then ! right interface (i+1/2)
+    select case(S)
+      case(2) ! 3rd order
+        values(0) = 1._R_P/4._R_P ! stencil 0
+        values(1) = 3._R_P/4._R_P ! stencil 1
+      case(3) ! 5th order
+        values(0) = 1._R_P/16._R_P ! stencil 0
+        values(1) = 5._R_P/8._R_P  ! stencil 1
+        values(2) = 5._R_P/16._R_P ! stencil 2
+      case(4) ! 7th order
+        values(0) =  1._R_P/64._R_P ! stencil 0
+        values(1) = 21._R_P/64._R_P ! stencil 1
+        values(2) = 35._R_P/64._R_P ! stencil 2
+        values(3) =  7._R_P/64._R_P ! stencil 3
+      case(5) ! 9th order
+        values(0) =  1._R_P/256._R_P ! stencil 0
+        values(1) =  9._R_P/64._R_P  ! stencil 1
+        values(2) = 63._R_P/128._R_P  ! stencil 2
+        values(3) = 21._R_P/64._R_P  ! stencil 3
+        values(4) =  9._R_P/256._R_P ! stencil 4
+      case(6) ! 11th order
+        values(0) =   1._R_P/1024._R_P  ! stencil 0
+        values(1) =  55._R_P/1024._R_P  ! stencil 1
+        values(2) = 165._R_P/512._R_P   ! stencil 2
+        values(3) = 231._R_P/512._R_P   ! stencil 3
+        values(4) = 165._R_P/1024._R_P  ! stencil 4
+        values(5) =  11._R_P/1024._R_P  ! stencil 5
+      case(7) ! 13th order
+        values(0) =    1._R_P/4096._R_P  ! stencil 0
+        values(1) =   39._R_P/2048._R_P  ! stencil 1
+        values(2) =  179._R_P/1024._R_P  ! stencil 2
+        values(3) =  429._R_P/1024._R_P  ! stencil 3
+        values(4) = 1287._R_P/4096._R_P  ! stencil 4
+        values(5) =  143._R_P/2048._R_P  ! stencil 5
+        values(6) =   13._R_P/4096._R_P  ! stencil 6
+      case(8) ! 15th order
+        values(0) =    1._R_P/16384._R_P ! stencil 0
+        values(1) =  105._R_P/16384._R_P ! stencil 1
+        values(2) = 1365._R_P/16384._R_P ! stencil 2
+        values(3) = 5005._R_P/16384._R_P ! stencil 3
+        values(4) = 6435._R_P/16384._R_P ! stencil 4
+        values(5) = 3003._R_P/16384._R_P ! stencil 5
+        values(6) =  455._R_P/16384._R_P ! stencil 6
+        values(7) =   15._R_P/16384._R_P ! stencil 7
+      case(9) ! 17th order
+        values(0) =     1._R_P/65536._R_P  ! stencil 0
+        values(1) =    17._R_P/8192._R_P   ! stencil 1
+        values(2) =   595._R_P/16384._R_P  ! stencil 2
+        values(3) =  1547._R_P/8192._R_P   ! stencil 3
+        values(4) = 12155._R_P/32768._R_P  ! stencil 4
+        values(5) =  2431._R_P/8192._R_P   ! stencil 5
+        values(6) =  1547._R_P/16384._R_P  ! stencil 6
+        values(7) =    85._R_P/8192._R_P   ! stencil 7
+        values(8) =    17._R_P/65536._R_P  ! stencil 8
+    endselect
+  elseif(x_target == 0._R_P) then
+    values = 1._R_P / S
+  else
+    ! internal point
+    do i=0, S - 1
+      gam(i) = (-1._R_P)**(S - 1_I_P + i) * (factorial(S - 1_I_P))**2 / &
+               (factorial(S - 1_I_P - i) * factorial(i) * factorial(2 * S - 2_I_P))
+    enddo
+    do i=1, 2 * S - 1 ! whole stencil loop
+      w_stc(i) = -S + i
+    enddo
+    values(:) = 1._R_P
+    val_sum = 0._R_P
+    do j=0, S - 1
+      do i=0, S - 1 ! values loop
+        stc(i+1) = -S + j + i + 1
+      enddo
+      do i=1, 2 * S - 1 ! whole stencil loop
+        if (all(stc/=w_stc(i))) then
+           values(j) = values(j) * (x_target - w_stc(i))
+        endif
+      enddo
+      values(j) = gam(j) * values(j)
+      if (j/=(S-1)) val_sum = val_sum + values(j)
+    enddo
+    values(S-1) = 1._R_P - val_sum
+  endif
+  endsubroutine assign_kappa
 endmodule wenoof_kappa_int_js

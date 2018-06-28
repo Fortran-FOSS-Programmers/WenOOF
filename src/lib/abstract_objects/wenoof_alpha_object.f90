@@ -2,7 +2,7 @@
 module wenoof_alpha_object
 !< Abstract alpha (non linear weights) object.
 
-use penf, only : R_P
+use penf, only : I_P, R_P
 use wenoof_base_object, only : base_object, base_object_constructor
 
 implicit none
@@ -27,19 +27,21 @@ endtype alpha_object
 
 abstract interface
   !< Abstract interfaces of [[alpha_object]].
-  pure subroutine compute_int_interface(self, beta, kappa, values)
+  pure subroutine compute_int_interface(self, ord, beta, kappa, values)
   !< Compute alpha (interpolate).
-  import :: alpha_object, R_P
+  import :: alpha_object, I_P, R_P
   class(alpha_object), intent(in)  :: self       !< Alpha.
+  integer(I_P),        intent(in)  :: ord        !< Order of interpolation.
   real(R_P),           intent(in)  :: beta(0:)   !< Beta [0:S-1].
   real(R_P),           intent(in)  :: kappa(0:)  !< Kappa [0:S-1].
   real(R_P),           intent(out) :: values(0:) !< Alpha values [0:S-1].
   endsubroutine compute_int_interface
 
-  pure subroutine compute_rec_interface(self, beta, kappa, values)
+  pure subroutine compute_rec_interface(self, ord, beta, kappa, values)
   !< Compute alpha (reconstruct).
-  import :: alpha_object, R_P
+  import :: alpha_object, I_P, R_P
   class(alpha_object), intent(in)  :: self          !< Alpha.
+  integer(I_P),        intent(in)  :: ord           !< Order of reconstruction.
   real(R_P),           intent(in)  :: beta(1:,0:)   !< Beta [1:2,0:S-1].
   real(R_P),           intent(in)  :: kappa(1:,0:)  !< Kappa [1:2,0:S-1].
   real(R_P),           intent(out) :: values(1:,0:) !< Alpha values [1:2,0:S-1].

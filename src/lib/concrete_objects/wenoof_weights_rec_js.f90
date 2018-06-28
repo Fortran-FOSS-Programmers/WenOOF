@@ -111,32 +111,34 @@ contains
   endselect
   endsubroutine create
 
-  pure subroutine compute_int(self, stencil, values)
+  pure subroutine compute_int(self, ord, stencil, values)
   !< Compute weights (interpolate).
-  class(weights_rec_js), intent(in)  :: self               !< Weights.
-  real(R_P),             intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
-  real(R_P),             intent(out) :: values(0:)         !< Weights values.
+  class(weights_rec_js), intent(in)  :: self            !< Weights.
+  integer(I_P),          intent(in)  :: ord             !< Interpolation order.
+  real(R_P),             intent(in)  :: stencil(1-ord:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(R_P),             intent(out) :: values(0:)      !< Weights values.
   ! empty procedure
   endsubroutine compute_int
 
-  pure subroutine compute_rec(self, stencil, values)
+  pure subroutine compute_rec(self, ord, stencil, values)
   !< Compute weights (reconstruct).
-  class(weights_rec_js), intent(in)  :: self                  !< Weights.
-  real(R_P),             intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
-  real(R_P),             intent(out) :: values(1:,0:)         !< Weights values of stencil interpolations.
-  real(R_P)                          :: alpha(1:2,0:self%S-1) !< Aplha values.
-  real(R_P)                          :: beta(1:2,0:self%S-1)  !< Beta values.
-  real(R_P)                          :: alpha_sum(1:2)        !< Sum of aplha values.
-  integer(I_P)                       :: f, s                  !< Counters.
+  class(weights_rec_js), intent(in)  :: self               !< Weights.
+  integer(I_P),          intent(in)  :: ord                !< Reconstruction order.
+  real(R_P),             intent(in)  :: stencil(1:,1-ord:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
+  real(R_P),             intent(out) :: values(1:,0:)      !< Weights values of stencil interpolations.
+  real(R_P)                          :: alpha(1:2,0:ord-1) !< Alpha values.
+  real(R_P)                          :: beta(1:2,0:ord-1)  !< Beta values.
+  real(R_P)                          :: alpha_sum(1:2)     !< Sum of alpha values.
+  integer(I_P)                       :: f, s               !< Counters.
 
-  call self%beta%compute(stencil=stencil, values=beta)
+  call self%beta%compute(ord=ord, stencil=stencil, values=beta)
   select type(kappa => self%kappa)
   class is(kappa_rec_js)
-    call self%alpha%compute(beta=beta, kappa=kappa%values, values=alpha)
+    call self%alpha%compute(ord=ord, beta=beta, kappa=kappa%values(:,:,ord), values=alpha)
   endselect
   alpha_sum(1) = sum(alpha(1,:))
   alpha_sum(2) = sum(alpha(2,:))
-  do s=0, self%S - 1 ! stencils loop
+  do s=0, ord - 1 ! stencils loop
     do f=1, 2 ! 1 => left interface (i-1/2), 2 => right interface (i+1/2)
       values(f, s) = alpha(f, s) / alpha_sum(f)
     enddo

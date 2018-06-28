@@ -2,7 +2,7 @@
 module wenoof_beta_object
 !< Abstract Beta coefficients (smoothness indicators of stencil interpolations) object.
 
-use penf, only : R_P
+use penf, only : I_P, R_P
 use wenoof_base_object, only : base_object, base_object_constructor
 
 implicit none
@@ -26,18 +26,20 @@ endtype beta_object
 
 abstract interface
   !< Abstract interfaces of [[beta_object]].
-  pure subroutine compute_int_interface(self, stencil, values)
+  pure subroutine compute_int_interface(self, ord, stencil, values)
   !< Compute beta (interpolate).
-  import :: beta_object, R_P
+  import :: beta_object, I_P, R_P
   class(beta_object), intent(in)  :: self               !< Beta.
+  integer(I_P),       intent(in)  :: ord                !< Order of interpolation.
   real(R_P),          intent(in)  :: stencil(1-self%S:) !< Stencil used for the interpolation, [1-S:-1+S].
   real(R_P),          intent(out) :: values(0:)         !< Beta values [0:S-1].
   endsubroutine compute_int_interface
 
-  pure subroutine compute_rec_interface(self, stencil, values)
+  pure subroutine compute_rec_interface(self, ord, stencil, values)
   !< Compute beta (reconstruct).
-  import :: beta_object, R_P
+  import :: beta_object, I_P, R_P
   class(beta_object), intent(in)  :: self                  !< Beta.
+  integer(I_P),       intent(in)  :: ord                   !< Order of reconstruction.
   real(R_P),          intent(in)  :: stencil(1:,1-self%S:) !< Stencil used for the interpolation, [1:2, 1-S:-1+S].
   real(R_P),          intent(out) :: values(1:,0:)         !< Beta values [1:2,0:S-1].
   endsubroutine compute_rec_interface

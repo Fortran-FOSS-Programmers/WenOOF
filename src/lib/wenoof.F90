@@ -27,26 +27,29 @@ class(interpolator_object), allocatable :: interpolator_c_wrap !< The WENO inter
 #endif
 
 contains
-  subroutine wenoof_create_reconstructor(interpolator_type, S, interpolator, eps)
+  subroutine wenoof_create_reconstructor(interpolator_type, S, interpolator, ror, eps)
   !< WenOOF creator, create a concrete WENO interpolator object.
-  character(*),                            intent(in)           :: interpolator_type          !< Type of the interpolator.
-  integer(I_P),                            intent(in)           :: S                          !< Stencil dimension.
-  class(interpolator_object), allocatable, intent(out)          :: interpolator               !< The concrete WENO interpolator.
-  real(R_P),                               intent(in), optional :: eps                        !< Small epsilon to avoid zero-div.
-  type(objects_factory)                                         :: factory                    !< The factory.
+  character(*),                            intent(in)           :: interpolator_type   !< Type of the interpolator.
+  integer(I_P),                            intent(in)           :: S                   !< Stencil dimension.
+  class(interpolator_object), allocatable, intent(out)          :: interpolator        !< The concrete WENO interpolator.
+  logical(kind=C_BOOL),                    intent(in), optional :: ror                 !< Activate or not ROR strategy.
+  real(R_P),                               intent(in), optional :: eps                 !< Small epsilon to avoid zero-div.
+  type(objects_factory)                                         :: factory             !< The factory.
 
   call factory%create(interpolator_type=interpolator_type, &
                       S=S,                                 &
                       interpolator=interpolator,           &
+                      ror=ror,                             &
                       eps=eps)
   endsubroutine wenoof_create_reconstructor
 
-  subroutine wenoof_create_interpolator(interpolator_type, S, x_target, interpolator, eps)
+  subroutine wenoof_create_interpolator(interpolator_type, S, x_target, interpolator, ror, eps)
   !< WenOOF creator, create a concrete WENO interpolator object.
   character(*),                            intent(in)           :: interpolator_type  !< Type of the interpolator.
   integer(I_P),                            intent(in)           :: S                  !< Stencil dimension.
   real(R_P),                               intent(in)           :: x_target           !< Coordinate of the interpolation point.
   class(interpolator_object), allocatable, intent(out)          :: interpolator       !< The concrete WENO interpolator.
+  logical(kind=C_BOOL),                    intent(in), optional :: ror                !< Activate or not ROR strategy.
   real(R_P),                               intent(in), optional :: eps                !< Small epsilon to avoid zero-div.
   integer(I_P)                                                  :: i                  !< Counter.
   type(objects_factory)                                         :: factory            !< The factory.
@@ -56,24 +59,27 @@ contains
   endif
   call factory%create(interpolator_type=interpolator_type, &
                       S=S,                                 &
-                      interpolator=interpolator,           &
                       x_target=x_target,                   &
+                      interpolator=interpolator,           &
+                      ror=ror,                             &
                       eps=eps)
   endsubroutine wenoof_create_interpolator
 
 #ifndef r16p
   ! procedure for C/Python wrappers
-  subroutine wenoof_initialize_c_wrap(interpolator_type, S, eps, x_target, verbose) bind(c, name='wenoof_initialize_c_wrap')
+  subroutine wenoof_initialize_c_wrap(interpolator_type, S, ror, eps, x_target, verbose) bind(c, name='wenoof_initialize_c_wrap')
   !< Intialize the WENO interpolator for C/Python wrappers.
   !<
   !< @note For the arguments the following conventions hold:
   !<
   !<+ `interpolator_type` must be null-terminated or new-line-terminated;
+  !<+ `ror` must be logical value, otherwise default value is taken;
   !<+ `eps` must be positive, otherwise default value is taken;
-  !<+ `x_target` must be in [-0.5,0.5], otherwise a reconstruction is initialized instead of an interpolator;
+  !<+ `x_target` must be in [-0.5,0.5], otherwise a reconstruction is initialized instead of an interpolation;
   !<+ `verbose` must be equal to 1, otherwise quite mode is activated.
   character(kind=C_CHAR), intent(in)        :: interpolator_type(*) !< Type of the interpolator.
   integer(C_INT32_T),     intent(in), value :: S                    !< Stencils number/dimension.
+  logical(C_BOOL),        intent(in), value :: ror                  !< ROR strategy switch.
   real(C_DOUBLE),         intent(in), value :: eps                  !< Small epsilon to avoid zero-div.
   real(C_DOUBLE),         intent(in), value :: x_target             !< Coordinate of the interpolation point.
   integer(C_INT32_T),     intent(in), value :: verbose              !< Activate verbose output.
@@ -90,36 +96,57 @@ contains
   if (-0.5_C_DOUBLE <= x_target .and. x_target <= 0.5_C_DOUBLE) then
     if (verbose==1) print '(A,F23.15)', 'interpolate at ', x_target
     if (eps > 0._C_DOUBLE) then
-      call wenoof_create(interpolator_type=interpolator_type_, S=S, x_target=x_target, interpolator=interpolator_c_wrap, eps=eps)
+       if (ror .eqv. .false.) then
+         call wenoof_create(interpolator_type=interpolator_type_, S=S, x_target=x_target, interpolator=interpolator_c_wrap, &
+                            ror=ror, eps=eps)
+       else
+         call wenoof_create(interpolator_type=interpolator_type_, S=S, x_target=x_target, interpolator=interpolator_c_wrap, &
+                            eps=eps)
+      endif
     else
-      call wenoof_create(interpolator_type=interpolator_type_, S=S, x_target=x_target, interpolator=interpolator_c_wrap)
+       if (ror .eqv. .false.) then
+         call wenoof_create(interpolator_type=interpolator_type_, S=S, x_target=x_target, interpolator=interpolator_c_wrap, &
+                            ror=ror)
+       else
+         call wenoof_create(interpolator_type=interpolator_type_, S=S, x_target=x_target, interpolator=interpolator_c_wrap)
+      endif
     endif
   else
     if (eps > 0._C_DOUBLE) then
-      call wenoof_create(interpolator_type=interpolator_type_, S=S, interpolator=interpolator_c_wrap, eps=eps)
+       if (ror .eqv. .false.) then
+         call wenoof_create(interpolator_type=interpolator_type_, S=S, interpolator=interpolator_c_wrap, ror=ror, eps=eps)
+       else
+         call wenoof_create(interpolator_type=interpolator_type_, S=S, interpolator=interpolator_c_wrap, eps=eps)
+      endif
     else
-      call wenoof_create(interpolator_type=interpolator_type_, S=S, interpolator=interpolator_c_wrap)
+       if (ror .eqv. .false.) then
+         call wenoof_create(interpolator_type=interpolator_type_, S=S, interpolator=interpolator_c_wrap, ror=ror)
+       else
+         call wenoof_create(interpolator_type=interpolator_type_, S=S, interpolator=interpolator_c_wrap)
+      endif
     endif
   endif
   if (verbose==1) print '(A)', interpolator_c_wrap%description()
   endsubroutine wenoof_initialize_c_wrap
 
-  subroutine wenoof_interpolate_c_wrap(S, stencil, interpolation) bind(c, name='wenoof_interpolate_c_wrap')
+  subroutine wenoof_interpolate_c_wrap(S, ord, stencil, interpolation) bind(c, name='wenoof_interpolate_c_wrap')
   !< Interpolate over stencils values by means of WenOOF interpolator.
   integer(C_INT32_T), intent(in), value  :: S                 !< Stencils number/dimension.
+  integer(C_INT32_T), intent(in), value  :: ord               !< Interpolation order.
   real(C_DOUBLE),     intent(in)         :: stencil(1-S:-1+S) !< Stencil of the interpolation.
   real(C_DOUBLE),     intent(out)        :: interpolation     !< Result of the interpolation.
 
-  call interpolator_c_wrap%interpolate(stencil=stencil, interpolation=interpolation)
+  call interpolator_c_wrap%interpolate(ord=ord, stencil=stencil, interpolation=interpolation)
   endsubroutine wenoof_interpolate_c_wrap
 
-  subroutine wenoof_reconstruct_c_wrap(S, stencil, interpolation) bind(c, name='wenoof_reconstruct_c_wrap')
+  subroutine wenoof_reconstruct_c_wrap(S, ord, stencil, interpolation) bind(c, name='wenoof_reconstruct_c_wrap')
   !< Reconstruct over stencils values by means of WenOOF reconstructor.
   integer(C_INT32_T), intent(in), value   :: S                      !< Stencils number/dimension.
+  integer(C_INT32_T), intent(in), value   :: ord                    !< Reconstruction order.
   real(C_DOUBLE),     intent(in)          :: stencil(1:2, 1-S:-1+S) !< Stencil of the interpolation.
   real(C_DOUBLE),     intent(out)         :: interpolation(1:2)     !< Result of the interpolation.
 
-  call interpolator_c_wrap%interpolate(stencil=stencil, interpolation=interpolation)
+  call interpolator_c_wrap%interpolate(ord=ord, stencil=stencil, interpolation=interpolation)
   endsubroutine wenoof_reconstruct_c_wrap
 #endif
 endmodule wenoof
