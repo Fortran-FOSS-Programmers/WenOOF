@@ -1,8 +1,14 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# File              : src/tests/wenoof_test_python_wrapper.py
+# Author            : Giacomo Rossi <giacombum@gmail.com>
+# Date              : 04.07.2018
+# Last Modified Date: 04.07.2018
+# Last Modified By  : Giacomo Rossi <giacombum@gmail.com>
 """Wrapper of WenOOF Fortran library"""
 
 from __future__ import print_function
-from ctypes import CDLL, c_char_p, c_double, c_int, POINTER
+from ctypes import CDLL, c_char_p, c_double, c_int, c_bool, POINTER
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -10,14 +16,15 @@ stencils = 3
 interpolator_type = 'interpolator-JS\n'
 eps = 1e-19
 x_target = 0.3
+ror = True
 verbose = 1
 
 wenoof = CDLL('./shared/libwenoof.so')
-wenoof.wenoof_initialize_c_wrap.argtypes = [c_char_p, c_int, c_double, c_double, c_int]
-wenoof.wenoof_interpolate_c_wrap.argtypes = [c_int, POINTER(c_double), POINTER(c_double)]
-wenoof.wenoof_reconstruct_c_wrap.argtypes = [c_int, POINTER(c_double), POINTER(c_double)]
+wenoof.wenoof_initialize_c_wrap.argtypes = [c_char_p, c_int, c_bool, c_double, c_double, c_int]
+wenoof.wenoof_interpolate_c_wrap.argtypes = [c_int, c_int, POINTER(c_double), POINTER(c_double)]
+wenoof.wenoof_reconstruct_c_wrap.argtypes = [c_int, c_int, POINTER(c_double), POINTER(c_double)]
 
-wenoof.wenoof_initialize_c_wrap(interpolator_type, stencils, eps, x_target, verbose)
+wenoof.wenoof_initialize_c_wrap(interpolator_type, stencils, ror, eps, x_target, verbose)
 
 cells_number = 50
 x_cell, dx = np.linspace(start=-np.pi, stop=np.pi, num=cells_number + 2 * stencils, endpoint=True, retstep=True)
@@ -26,7 +33,7 @@ y_weno = np.empty(cells_number + 2 * stencils, dtype="double")
 interpolation = np.empty(1, dtype="double")
 for i, x in enumerate(x_cell):
   if i >= stencils and i < cells_number + stencils:
-    wenoof.wenoof_interpolate_c_wrap(stencils,
+    wenoof.wenoof_interpolate_c_wrap(stencils, stencils,
                                      y_cell[i+1-stencils:].ctypes.data_as(POINTER(c_double)),
                                      interpolation.ctypes.data_as(POINTER(c_double)))
     y_weno[i] = interpolation

@@ -1,3 +1,5 @@
+BOOL
+
 # compiled object files
 *.slo
 *.lo

@@ -357,14 +357,16 @@ contains
   !< Compute interpolations (interpolation).
   class(interpolations_int_js), intent(in)  :: self            !< Interpolations.
   integer(I_P),                 intent(in)  :: ord             !< Interpolation order.
-  real(R_P),                    intent(in)  :: stencil(1-ord:) !< Stencil used for the interpolation, [1-S:-1+S].
+  real(R_P),                    intent(in)  :: stencil(-ord:)  !< Stencil used for the interpolation, [1-S:-1+S].
   real(R_P),                    intent(out) :: values(0:)      !< Interpolations values.
   integer(I_P)                              :: s1              !< Counter.
   integer(I_P)                              :: s2              !< Counter.
 
   values = 0._R_P
-  do s1=0, self%S - 1 ! stencils loop
-    do s2=0, self%S - 1 ! values loop
+  !do s1=0, self%S - 1 ! stencils loop
+  !  do s2=0, self%S - 1 ! values loop
+  do s1=0, ord  ! stencils loop
+    do s2=0, ord  ! values loop
       values(s1) = values(s1) + self%coef(s2, s1) * stencil(-s2 + s1)
     enddo
   enddo

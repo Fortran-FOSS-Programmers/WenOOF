@@ -3,7 +3,7 @@ module wenoof_beta_factory
 !< Wenoof beta factory.
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
-use, intrinsic :: iso_c_binding,   only : C_BOOL
+!use, intrinsic :: iso_c_binding,   only : C_BOOL
 use penf, only : I_P
 use wenoof_beta_object, only : beta_object, beta_object_constructor
 use wenoof_beta_rec_js, only : beta_rec_js, beta_rec_js_constructor
@@ -43,7 +43,7 @@ contains
   character(*),                                intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                intent(in)           :: S                 !< Stencils dimension.
   class(beta_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  logical(kind=C_BOOL),                        intent(in), optional :: ror               !< Activate or not ROR strategy.
+  logical,                                     intent(in), optional :: ror               !< Activate or not ROR strategy.
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS')

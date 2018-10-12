@@ -99,6 +99,7 @@ contains
   prefix_ = '' ; if (present(prefix)) prefix_ = prefix
   string = prefix_//'Jiang-Shu interpolator:'//NL
   string = string//prefix_//'  - S   = '//trim(str(self%S))//NL
+  string = string//prefix_//'  - ROR   = '//trim(str(self%ror))//NL
   string = string//prefix_//self%weights%description(prefix=prefix_//'  ')
   endfunction description
 
@@ -113,21 +114,21 @@ contains
 
   pure subroutine interpolate_int_debug(self, ord, stencil, interpolation, si, weights)
   !< Interpolate values (providing also debug values, interpolate).
-  class(interpolator_js), intent(in)  :: self                      !< Interpolator.
-  integer(I_P),           intent(in)  :: ord                       !< Interpolation order.
-  real(R_P),              intent(in)  :: stencil(1 - ord:)         !< Stencil of the interpolation [1:2, 1-S:-1+S].
-  real(R_P),              intent(out) :: interpolation             !< Result of the interpolation.
-  real(R_P),              intent(out) :: si(0:)                    !< Computed values of smoothness indicators [1:2, 0:S-1].
-  real(R_P),              intent(out) :: weights(0:)               !< Weights of the stencils, [1:2, 0:S-1].
-  real(R_P)                           :: interpolations(0:ord - 1) !< Stencils interpolations.
-  integer(I_P)                        :: s                         !< Counters.
+  class(interpolator_js), intent(in)  :: self                  !< Interpolator.
+  integer(I_P),           intent(in)  :: ord                   !< Interpolation order.
+  real(R_P),              intent(in)  :: stencil(1 - ord:)     !< Stencil of the interpolation [1:2, 1-S:-1+S].
+  real(R_P),              intent(out) :: interpolation         !< Result of the interpolation.
+  real(R_P),              intent(out) :: si(0:)                !< Computed values of smoothness indicators [1:2, 0:S-1].
+  real(R_P),              intent(out) :: weights(0:)           !< Weights of the stencils, [1:2, 0:S-1].
+  real(R_P)                           :: interpolations(0:ord) !< Stencils interpolations.
+  integer(I_P)                        :: s                     !< Counters.
 
   call self%interpolations%compute(ord=ord, stencil=stencil, values=interpolations)
   call self%weights%compute(ord=ord, stencil=stencil, values=weights)
   ! call self%weights%smoothness_indicators_of_rank_1(si=si)
   interpolation = 0._R_P
   do s=0, ord - 1 ! stencils loop
-    interpolation = interpolation + weights(ord) * interpolations(ord)
+    interpolation = interpolation + weights(s) * interpolations(s)
   enddo
   endsubroutine interpolate_int_debug
 

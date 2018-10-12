@@ -2,6 +2,7 @@
 module wenoof_test_ui
 !< WenOOF test UI: definition of common User Interface (UI) for WenOOF tests.
 
+!use, intrinsic :: iso_c_binding, only : C_BOOL
 use flap, only : command_line_interface
 use penf, only : FR_P, I_P, R_P
 
@@ -25,6 +26,7 @@ type :: test_ui
   integer(I_P), allocatable    :: points_number(:)                     !< Points number used to discretize the domain.
   integer(I_P)                 :: S_number                             !< Number of different stencils tested.
   integer(I_P), allocatable    :: S(:)                                 !< Stencils used.
+  logical                      :: ror                                  !< switch for ROR activation.
   real(R_P)                    :: eps                                  !< Small epsilon to avoid zero-division.
   real(R_P)                    :: x_target                             !< Interpolation target coordinate.
   logical                      :: interpolate=.false.                  !< Flag for activating interpolation.
@@ -71,6 +73,7 @@ contains
                    required=.false., act='store', def='50 100')
       call cli%add(switch='--stencils', switch_ab='-s', nargs='+', help='Stencils dimensions (and number)', required=.false., &
                    act='store', def='2 3 4 5 6 7 8 9', choices='2, 3, 4, 5, 6, 7, 8, 9')
+      call cli%add(switch='--ror', help='Switch for ROR activation', required=.false., act='store_true', def='.false.')
       call cli%add(switch='--eps', help='Small epsilon to avoid zero-division', required=.false., act='store', def='1.e-6')
       call cli%add(switch='--output_dir', help='Output directory', required=.false., act='store', def='./')
       call cli%add(switch='--results', switch_ab='-r', help='Save results', required=.false., act='store_true', def='.false.')
@@ -91,6 +94,7 @@ contains
     call self%cli%get(switch='-i', val=self%interpolator_type, error=self%error) ; if (self%error/=0) stop
     call self%cli%get_varying(switch='-pn', val=self%points_number, error=self%error) ; if (self%error/=0) stop
     call self%cli%get_varying(switch='-s', val=self%S, error=self%error) ; if (self%error/=0) stop
+    call self%cli%get(switch='--ror', val=self%ror, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='--eps', val=self%eps, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='--output_dir', val=self%output_dir, error=self%error) ; if (self%error/=0) stop
     call self%cli%get(switch='-r', val=self%results, error=self%error) ; if (self%error/=0) stop

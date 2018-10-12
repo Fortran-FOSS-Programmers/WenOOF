@@ -2,7 +2,7 @@
 module wenoof_interpolations_factory
 !< Wenoof interpolations factory.
 
-use, intrinsic :: iso_c_binding, only : C_BOOL
+!use, intrinsic :: iso_c_binding, only : C_BOOL
 use penf, only : I_P, R_P
 use wenoof_interpolations_object, only : interpolations_object, interpolations_object_constructor
 use wenoof_interpolations_rec_js, only : interpolations_rec_js, interpolations_rec_js_constructor
@@ -45,7 +45,7 @@ contains
   character(*),                                          intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                          intent(in)           :: S                 !< Stencils dimension.
   class(interpolations_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  logical(kind=C_BOOL),                                  intent(in), optional :: ror               !< Activate or not ROR strategy.
+  logical,                                               intent(in), optional :: ror               !< Activate or not ROR strategy.
 
   allocate(interpolations_rec_js_constructor :: constructor)
   call constructor%create(S=S, ror=ror)
@@ -55,9 +55,9 @@ contains
   !< Create an instance of concrete extension of [[beta_object_constructor]].
   character(*),                                          intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                          intent(in)           :: S                 !< Stencils dimension.
-  real(R_P),                                             intent(in)           :: x_target          !< Coordinate of the interp point.
+  real(R_P),                                             intent(in)           :: x_target          !< Coordinate of the int point.
   class(interpolations_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
-  logical(kind=C_BOOL),                                  intent(in), optional :: ror               !< Activate or not ROR strategy.
+  logical,                                               intent(in), optional :: ror               !< Activate or not ROR.
 
   allocate(interpolations_int_js_constructor :: constructor)
   select type(constructor)
