@@ -51,7 +51,6 @@ contains
   class(interpolator_object), allocatable, intent(out)          :: interpolator       !< The concrete WENO interpolator.
   logical,                                 intent(in), optional :: ror                !< Activate or not ROR strategy.
   real(R_P),                               intent(in), optional :: eps                !< Small epsilon to avoid zero-div.
-  integer(I_P)                                                  :: i                  !< Counter.
   type(objects_factory)                                         :: factory            !< The factory.
 
   if ((x_target < -0.5_R_P).or.(x_target > 0.5_R_P)) then
