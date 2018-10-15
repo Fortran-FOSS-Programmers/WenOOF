@@ -56,7 +56,7 @@ contains
   !< Create an instance of concrete extension of [[kappa_object_constructor]].
   character(*),                                 intent(in)           :: interpolator_type          !< Type of the interpolator.
   integer(I_P),                                 intent(in)           :: S                          !< Stencils dimension.
-  real(R_P),                                    intent(in)           :: x_target                   !< Coordinate of the interp point.
+  real(R_P),                                    intent(in)           :: x_target                   !< Coordinate of interp point.
   class(interpolations_object_constructor),     intent(in)           :: interpolations_constructor !< interpolations constructor.
   class(kappa_object_constructor), allocatable, intent(out)          :: constructor                !< Constructor.
   logical,                                      intent(in), optional :: ror                        !< Activate or not ROR strategy.

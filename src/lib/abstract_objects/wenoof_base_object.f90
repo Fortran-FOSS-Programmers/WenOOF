@@ -145,9 +145,6 @@ contains
   class is(base_object_constructor)
     self%S   = constructor%S
     self%ror = constructor%ror
-    if (self%ror==.true.) then
-       continue
-    endif
     self%eps = constructor%eps
   endselect
   endsubroutine create_

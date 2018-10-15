@@ -306,7 +306,7 @@ contains
   !< Create an instance of concrete extension of [[interpolations_object_constructor]].
   character(*),                                          intent(in)           :: interpolator_type !< Type of the interpolator.
   integer(I_P),                                          intent(in)           :: S                 !< Stencils dimension.
-  real(R_P),                                             intent(in)           :: x_target          !< Coordinate of the interp point.
+  real(R_P),                                             intent(in)           :: x_target          !< Coordinate of interp point.
   class(interpolations_object_constructor), allocatable, intent(out)          :: constructor       !< Constructor.
   logical,                                               intent(in), optional :: ror               !< ROR strategy switch.
   type(interpolations_factory)                                                :: factory           !< The factory.
