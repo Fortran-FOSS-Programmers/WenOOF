@@ -229,23 +229,23 @@ contains
         do i=1, self%ui%points_number(pn)
           if (interpolator%ror) then
             ROR_check_i: do ord=self%ui%S(s),2,-1
-              stencil_i(:) = self%solution(pn, s)%fx_cell(i+1-ord:i-1+ord)
+              stencil_i(1-ord:ord-1) = self%solution(pn, s)%fx_cell(i+1-ord:i-1+ord)
               call interpolator%interpolate(ord=ord,                                             &
                                             stencil=stencil_i,                                   &
                                             interpolation=self%solution(pn, s)%interpolation(i), &
                                             si=self%solution(pn, s)%si_i(i, 0:self%ui%S(s)-1),   &
                                             weights=self%solution(pn, s)%weights_i(i, 0:self%ui%S(s)-1))
-              chk1 = abs(self%solution(pn, s)%interpolation(i) - stencil_i(i  ))
-              chk2 = abs(self%solution(pn, s)%interpolation(i) - stencil_i(i+1))
+              chk1 = abs(self%solution(pn, s)%interpolation(i) - stencil_i(0))
+              chk2 = abs(self%solution(pn, s)%interpolation(i) - stencil_i(1))
               max_s1 = 0._R_P
               do j=i-1+ord,i-ord
                 if (abs(stencil_i(j+1)-stencil_i(j))>max_s1) max_s1=abs(stencil_i(j+1)-stencil_i(j))
               enddo
               if ((chk1<=0.5_R_P*max_s1).and.(chk2<=0.5_R_P*max_s1)) exit ROR_check_i
-              if (ord==2) then !High order interpolation failed: using 1st order interpolation`
-                self%solution(pn, s)%interpolation(i) = stencil_i(i)
-              endif
             enddo ROR_check_i
+            if (ord==1) then !High order interpolation failed: using 1st order interpolation`
+              self%solution(pn, s)%interpolation(i) = stencil_i(0)
+            endif
           else
             stencil_i(:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))
             call interpolator%interpolate(ord=1_I_P,                                           &
@@ -271,8 +271,10 @@ contains
         do i=1, self%ui%points_number(pn)
           if (interpolator%ror) then
             ROR_check_r: do ord=self%ui%S(s),2,-1
-              stencil_r(1,:) = self%solution(pn, s)%fx_cell(i+1-ord:i-1+ord)
-              stencil_r(2,:) = self%solution(pn, s)%fx_cell(i+1-ord:i-1+ord)
+              !stencil_r(1,:) = self%solution(pn, s)%fx_cell(i+1-ord:i-1+ord)
+              !stencil_r(2,:) = self%solution(pn, s)%fx_cell(i+1-ord:i-1+ord)
+              stencil_r(1,1-ord:ord-1) = self%solution(pn, s)%fx_cell(i-ord+1:i+ord-1)
+              stencil_r(2,1-ord:ord-1) = self%solution(pn, s)%fx_cell(i-ord+1:i+ord-1)
               call interpolator%interpolate(ord=ord,                                                &
                                             stencil=stencil_r,                                        &
                                             interpolation=self%solution(pn, s)%interpolations(:,i), &
@@ -280,17 +282,17 @@ contains
                                             weights=self%solution(pn, s)%weights_r(:, i, 0:ord-1))
               self%solution(pn, s)%reconstruction(i) = &
                 (self%solution(pn, s)%interpolations(2,i) - self%solution(pn, s)%interpolations(1,i))/self%solution(pn, s)%Dx
-              chk1 = abs(self%solution(pn, s)%interpolations(1,i) - stencil_i(i  ))
-              chk2 = abs(self%solution(pn, s)%interpolations(2,i) - stencil_i(i+1))
+              chk1 = abs(self%solution(pn, s)%interpolations(1,i) - stencil_r(1,0))
+              chk2 = abs(self%solution(pn, s)%interpolations(2,i) - stencil_r(2,1))
               max_s1 = 0._R_P
               do j=i-1+ord,i-ord
-                if (abs(stencil_i(j+1)-stencil_i(j))>max_s1) max_s1=abs(stencil_i(j+1)-stencil_i(j))
+                if (abs(stencil_r(1,j+1)-stencil_r(1,j))>max_s1) max_s1=abs(stencil_r(1,j+1)-stencil_r(1,j))
               enddo
               if ((chk1<=0.5_R_P*max_s1).and.(chk2<=0.5_R_P*max_s1)) exit ROR_check_r
-              if (ord==2) then !High order interpolation failed: using 1st order interpolation`
-                self%solution(pn, s)%reconstruction(i) = stencil_i(i)
-              endif
             enddo ROR_check_r
+            if (ord==1) then !High order interpolation failed: using 1st order interpolation`
+              self%solution(pn, s)%reconstruction(i) = (stencil_r(1,0) + stencil_r(2,0)) / 2.0_R_P
+            endif
           else
             stencil_r(1,:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))
             stencil_r(2,:) = self%solution(pn, s)%fx_cell(i+1-self%ui%S(s):i-1+self%ui%S(s))

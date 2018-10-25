@@ -40,13 +40,14 @@ contains
   endsubroutine create
 
   subroutine create_constructor(interpolator_type, S, interpolations_constructor, weights_constructor, &
-                                constructor)
+                                constructor,ror)
   !< Create an instance of concrete extension of [[interpolator_object_constructor]].
-  character(*),                                        intent(in)  :: interpolator_type          !< Type of interpolator.
-  integer(I_P),                                        intent(in)  :: S                          !< Stencils dimension.
-  class(interpolations_object_constructor),            intent(in)  :: interpolations_constructor !< Interpolations const.
-  class(weights_object_constructor),                   intent(in)  :: weights_constructor        !< Weights constructor.
-  class(interpolator_object_constructor), allocatable, intent(out) :: constructor                !< Constructor.
+  character(*),                                        intent(in)           :: interpolator_type          !< Type of interpolator.
+  integer(I_P),                                        intent(in)           :: S                          !< Stencils dimension.
+  class(interpolations_object_constructor),            intent(in)           :: interpolations_constructor !< Interpolations const.
+  class(weights_object_constructor),                   intent(in)           :: weights_constructor        !< Weights constructor.
+  class(interpolator_object_constructor), allocatable, intent(out)          :: constructor                !< Constructor.
+  logical,                                             intent(in), optional :: ror                        !< Activate or not ROR.
 
   select case(trim(adjustl(interpolator_type)))
   case('interpolator-JS', 'interpolator-M-JS', 'interpolator-M-Z', 'interpolator-Z')
@@ -57,7 +58,7 @@ contains
     write(stderr, '(A)') 'error: interpolator type "'//trim(adjustl(interpolator_type))//'" is unknown!'
     stop
   endselect
-  call constructor%create(S=S)
+  call constructor%create(S=S, ror=ror)
   select type(constructor)
   type is(interpolator_js_constructor)
     allocate(constructor%interpolations_constructor, mold=interpolations_constructor)

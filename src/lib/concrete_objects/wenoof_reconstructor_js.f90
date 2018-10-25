@@ -159,7 +159,7 @@ contains
   !< Interpolate values (without providing debug values).
   class(reconstructor_js), intent(in)  :: self                              !< Reconstructor.
   integer(I_P),            intent(in)  :: ord                               !< Reconstruction order..
-  real(R_P),               intent(in)  :: stencil(1:, 1 - self%S:)          !< Stencil of the interpolation [1:2, 1-S:-1+S].
+  real(R_P),               intent(in)  :: stencil(1:, 1-ord:)               !< Stencil of the interpolation [1:2, 1-S:-1+S].
   real(R_P),               intent(out) :: interpolation(1:)                 !< Result of the interpolation, [1:2].
   real(R_P)                            :: interpolations(1:2, 0:self%S - 1) !< Stencils interpolations.
   real(R_P)                            :: weights(1:2, 0:self%S - 1)        !< Weights of stencils interpolations.

@@ -150,7 +150,8 @@ contains
                                S=S,                                                   &
                                interpolations_constructor=interpolations_constructor, &
                                weights_constructor=weights_constructor,               &
-                               constructor=interpolator_constructor)
+                               constructor=interpolator_constructor,                  &
+                               ror=ror)
 
   call self%create_interpolator_object(constructor=interpolator_constructor, object=interpolator)
   endsubroutine create_reconstructor
@@ -205,7 +206,8 @@ contains
                                S=S,                                                   &
                                interpolations_constructor=interpolations_constructor, &
                                weights_constructor=weights_constructor,               &
-                               constructor=interpolator_constructor)
+                               constructor=interpolator_constructor,                  &
+                               ror=ror)
 
   call self%create_interpolator_object(constructor=interpolator_constructor, object=interpolator)
   endsubroutine create_interpolator
@@ -319,20 +321,22 @@ contains
   endsubroutine create_interpolations_int_object_constructor
 
   subroutine create_interpolator_object_constructor(interpolator_type, S, interpolations_constructor, weights_constructor, &
-                                                    constructor)
+                                                    constructor, ror)
   !< Create an instance of concrete extension of [[interpolator_object_constructor]].
   character(*),                                        intent(in)           :: interpolator_type          !< Type of interpolator.
   integer(I_P),                                        intent(in)           :: S                          !< Stencils dimension.
   class(interpolations_object_constructor),            intent(in)           :: interpolations_constructor !< Interpolations const.
   class(weights_object_constructor),                   intent(in)           :: weights_constructor        !< Weights constructor.
   class(interpolator_object_constructor), allocatable, intent(out)          :: constructor                !< Constructor.
+  logical,                                             intent(in), optional :: ror                        !< Activate or not ROR.
   type(interpolator_factory)                                                :: factory                    !< The factory.
 
   call factory%create_constructor(interpolator_type=interpolator_type,                   &
                                   S=S,                                                   &
                                   interpolations_constructor=interpolations_constructor, &
                                   weights_constructor=weights_constructor,               &
-                                  constructor=constructor)
+                                  constructor=constructor,                               &
+                                  ror=ror)
   endsubroutine create_interpolator_object_constructor
 
   subroutine create_weights_object_constructor(interpolator_type, S, alpha_constructor, beta_constructor, kappa_constructor, &
