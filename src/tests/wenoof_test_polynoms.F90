@@ -270,6 +270,7 @@ contains
   integer(I_P)                  :: i          !< Counter.
   integer(I_P)                  :: ss         !< Counter.
   integer(I_P)                  :: f          !< Counter.
+  integer(I_P)                  :: istat      !< Status IO error.
 
   output_dir = trim(adjustl(self%ui%output_dir))//'/'
   if (self%ui%results.or.self%ui%plots) call execute_command_line('mkdir -p '//output_dir)
@@ -405,15 +406,16 @@ contains
                             label='polynom',                                            &
                             linestyle='k-',                                             &
                             linewidth=2,                                                &
-                            ylim=[-1.1_R_P, 1.1_R_P])
+                            ylim=[-1.1_R_P, 1.1_R_P], istat=istat)
           call plt%add_plot(x=self%solution(pn, s)%x_int(1:self%ui%points_number(pn)), &
                             y=self%solution(pn, s)%interpolation(:),                   &
                             label='WENO interpolation',                                &
                             linestyle='ro',                                            &
                             markersize=6,                                              &
-                            ylim=[-1.1_R_P, 1.1_R_P])
-          call plt%savefig(file_bname//&
-                           '-S_'//trim(str(self%ui%S(s), .true.))//'-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.png')
+                            ylim=[-1.1_R_P, 1.1_R_P], istat=istat)
+          call plt%savefig(file_bname//                                                                                          &
+                           '-S_'//trim(str(self%ui%S(s), .true.))//'-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.png', &
+                           istat=istat)
         enddo
       enddo
     else
@@ -427,15 +429,16 @@ contains
                             label='dp',                                                  &
                             linestyle='k-',                                              &
                             linewidth=2,                                                 &
-                            ylim=[-1.1_R_P, 1.1_R_P])
+                            ylim=[-1.1_R_P, 1.1_R_P], istat=istat)
           call plt%add_plot(x=self%solution(pn, s)%x_cell(1:self%ui%points_number(pn)),  &
                             y=self%solution(pn, s)%reconstruction(:),                    &
                             label='WENO reconstruction',                                 &
                             linestyle='ro',                                              &
                             markersize=6,                                                &
-                            ylim=[-1.1_R_P, 1.1_R_P])
-          call plt%savefig(file_bname//&
-                           '-S_'//trim(str(self%ui%S(s), .true.))//'-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.png')
+                            ylim=[-1.1_R_P, 1.1_R_P], istat=istat)
+          call plt%savefig(file_bname//                                                                                          &
+                           '-S_'//trim(str(self%ui%S(s), .true.))//'-Np_'//trim(str(self%ui%points_number(pn), .true.))//'.png', &
+                           istat=istat)
         enddo
       enddo
     endif
